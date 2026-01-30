@@ -1,0 +1,216 @@
+version: '3.8'
+
+services:
+  # Database (PostgreSQL + PostGIS)
+  db:
+    image: postgis/postgis:16-3.4
+    container_name: postgres-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DB_DATABASE:-veloflott_db}
+      POSTGRES_USER: ${DB_USERNAME:-veloflott_user}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-password}
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - db-data:/var/lib/postgresql/data
+      - ./init-db.sh:/docker-entrypoint-initdb.d/init-db.sh
+    ports:
+      - "${DB_PORT:-5432}:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME:-veloflott_user} -d ${DB_DATABASE:-veloflott_db}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 10s
+    networks:
+      - app-network
+
+  # Cache (Redis)
+  redis:
+    image: redis:7-alpine
+    container_name: redis
+    restart: unless-stopped
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    networks:
+      - app-network
+
+  # Mail (MailHog)
+  mailhog:
+    image: mailhog/mailhog:latest
+    container_name: mailhog
+    restart: unless-stopped
+    ports:
+      - "${MAILHOG_SMTP_PORT:-1025}:1025"  # SMTP
+      - "${MAILHOG_UI_PORT:-8025}:8025"    # Web UI
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "http://localhost:8025"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+      start_period: 5s
+    networks:
+      - app-network
+
+  # SSO (Keycloak + PostgreSQL)
+  keycloak_db:
+    image: postgres:17
+    container_name: keycloak-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: keycloak
+      POSTGRES_USER: keycloak
+      POSTGRES_PASSWORD: keycloak
+    volumes:
+      - keycloak-db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U keycloak -d keycloak"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    networks:
+      - app-network
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:25.0.0
+    container_name: keycloak
+    restart: unless-stopped
+    environment:
+      KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN_USER:-admin}
+      KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD:-admin}
+      KC_DB: postgres
+      KC_DB_URL_HOST: keycloak_db
+      KC_DB_URL_DATABASE: keycloak
+      KC_DB_USERNAME: keycloak
+      KC_DB_PASSWORD: keycloak
+      KC_HOSTNAME: ${KEYCLOAK_HOSTNAME:-keycloak.localhost}
+      KC_PROXY: edge
+      KC_HTTP_ENABLED: "true"
+      # Redis Cache Configuration
+      KC_CACHE: ispn
+      KC_CACHE_STACK: tcp
+      KC_PROXY_HEADERS: xforwarded
+    command: [ "start-dev", "--import-realm", "--proxy=edge", "--hostname=keycloak.localhost"]
+    ports:
+      - "${KEYCLOAK_HTTP_PORT:-8080}:8080"
+      - "${KEYCLOAK_HTTPS_PORT:-8443}:8443"
+    volumes:
+      - keycloak-data:/opt/keycloak/data
+      - ./keycloak/realms:/opt/keycloak/data/import:ro
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/realms/master"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+    depends_on:
+      keycloak_db:
+        condition: service_healthy
+    networks:
+      - app-network
+
+  # API (PHP + Nginx)
+  php:
+    build:
+      context: ./docker/php
+      dockerfile: Dockerfile
+    container_name: php-api
+    restart: unless-stopped
+    environment:
+      # Database
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_NAME: ${DB_NAME:-veloflott_db}
+      DB_USER: ${DB_USER:-veloflott_user}
+      DB_PASSWORD: ${DB_PASSWORD:-password}
+      # Redis
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      # MailHog
+      MAIL_HOST: mailhog
+      MAIL_PORT: 1025
+      MAIL_ENCRYPTION: null
+      # Keycloak
+      KEYCLOAK_ISSUER: http://keycloak.localhost:8080/realms/master
+      KEYCLOAK_CLIENT_ID: ${KEYCLOAK_CLIENT_ID:-api-client}
+      KEYCLOAK_CLIENT_SECRET: ${KEYCLOAK_CLIENT_SECRET:-secret}
+    volumes:
+      - .:/var/www/veloflott
+    working_dir: /var/www/veloflott
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    healthcheck:
+      test: ["CMD", "php", "-r", "if (!@fsockopen('localhost', 9000, $errno, $errstr, 1)) exit(1);"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+      start_period: 10s
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - app-network
+
+  nginx:
+    image: nginx:stable-alpine
+    depends_on:
+      certs:
+        condition: service_completed_successfully
+      php:
+        condition: service_started
+    ports:
+      - "${NGINX_HTTP_PORT:-80}:80"
+      - "${NGINX_HTTPS_PORT:-443}:443"
+    volumes:
+      - ./docker/nginx/conf.d:/etc/nginx/conf.d
+      - ./docker/nginx/ssl:/etc/nginx/ssl
+      - ./public:/var/www/veloflott/public
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "http://localhost"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+      start_period: 5s
+    networks:
+      - app-network
+
+  certs:
+    image: alpine:latest
+    container_name: certs
+    volumes:
+      - ./nginx/ssl:/certs
+    command: >
+      /bin/sh -c "
+      apk add --no-cache openssl curl tar &&
+      curl -sL https://github.com/FiloSottile/mkcert/releases/download/v1.4.4/mkcert-v1.4.4-linux-amd64 -o /usr/local/bin/mkcert &&
+      chmod +x /usr/local/bin/mkcert &&
+      mkcert -install &&
+      mkcert -cert-file /certs/localhost.pem -key-file /certs/localhost-key.pem localhost keycloak.localhost veloflott.localhost kovoitt.localhost &&
+      chmod 644 /certs/*
+      "
+    healthcheck:
+      test: ["CMD-SHELL", "test -f /certs/localhost.pem && test -f /certs/localhost-key.pem"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    networks:
+      - app-network
+
+volumes:
+  db-data:
+  redis-data:
+  keycloak-data:
+  keycloak-db-data:
+
+networks:
+  app-network:
+    driver: bridge
