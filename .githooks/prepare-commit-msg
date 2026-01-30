@@ -1,0 +1,30 @@
+#!/bin/bash
+# Prepare commit message hook
+# Automatically adds branch name/ticket to commit message
+
+COMMIT_MSG_FILE=$1
+COMMIT_SOURCE=$2
+COMMIT_SHA=$3
+
+# Only run for regular commits (not merge, squash, etc.)
+if [ -n "$COMMIT_SOURCE" ]; then
+    exit 0
+fi
+
+# Get current branch name
+BRANCH=$(git rev-parse --abbrev-ref HEAD)
+
+# Extract JIRA ticket from branch name (if exists)
+# Expected format: feature/PROJ-123-description
+TICKET=$(echo "$BRANCH" | grep -oE "[A-Z]+-[0-9]+")
+
+if [ -n "$TICKET" ]; then
+    # Read current commit message
+    CURRENT_MSG=$(cat "$COMMIT_MSG_FILE")
+
+    # Check if ticket is already in message
+    if ! echo "$CURRENT_MSG" | grep -q "$TICKET"; then
+        # Prepend ticket to commit message
+        echo "[$TICKET] $CURRENT_MSG" > "$COMMIT_MSG_FILE"
+    fi
+fi
