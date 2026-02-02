@@ -35,4 +35,19 @@ return [
         ],
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Keycloak Configuration
+    |--------------------------------------------------------------------------
+    |
+    | Configuration pour l'authentification Keycloak.
+    |
+    */
+
+    'keycloak' => [
+        'url' => env('KEYCLOAK_URL', 'http://localhost:8080'),
+        'realm' => env('KEYCLOAK_REALM', 'fleet-manager'),
+        'client_id' => env('KEYCLOAK_CLIENT_ID', 'fleet-api'),
+    ],
+
 ];
