@@ -30,7 +30,13 @@ final class CreateCustomerHandler
             lastName: $command->lastName,
             email: $command->email,
             phone: $command->phone,
+            identityDocumentType: $command->identityDocumentType,
+            identityDocumentNumber: $command->identityDocumentNumber,
+            height: $command->height,
+            weight: $command->weight,
+            address: $command->address,
             notes: $command->notes,
+            isRisky: false,
             createdAt: new \DateTimeImmutable(),
             updatedAt: new \DateTimeImmutable(),
         );

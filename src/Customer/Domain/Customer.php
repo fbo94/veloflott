@@ -12,7 +12,13 @@ final class Customer
         private string $lastName,
         private ?string $email,
         private ?string $phone,
+        private ?string $identityDocumentType,
+        private ?string $identityDocumentNumber,
+        private ?int $height,
+        private ?int $weight,
+        private ?string $address,
         private ?string $notes,
+        private bool $isRisky = false,
         private readonly \DateTimeImmutable $createdAt,
         private \DateTimeImmutable $updatedAt,
     ) {}
@@ -52,6 +58,36 @@ final class Customer
         return $this->notes;
     }
 
+    public function identityDocumentType(): ?string
+    {
+        return $this->identityDocumentType;
+    }
+
+    public function identityDocumentNumber(): ?string
+    {
+        return $this->identityDocumentNumber;
+    }
+
+    public function height(): ?int
+    {
+        return $this->height;
+    }
+
+    public function weight(): ?int
+    {
+        return $this->weight;
+    }
+
+    public function address(): ?string
+    {
+        return $this->address;
+    }
+
+    public function isRisky(): bool
+    {
+        return $this->isRisky;
+    }
+
     public function createdAt(): \DateTimeImmutable
     {
         return $this->createdAt;
@@ -67,15 +103,37 @@ final class Customer
         string $lastName,
         ?string $email,
         ?string $phone,
+        ?string $identityDocumentType,
+        ?string $identityDocumentNumber,
+        ?int $height,
+        ?int $weight,
+        ?string $address,
         ?string $notes,
     ): self {
         $this->firstName = $firstName;
         $this->lastName = $lastName;
         $this->email = $email;
         $this->phone = $phone;
+        $this->identityDocumentType = $identityDocumentType;
+        $this->identityDocumentNumber = $identityDocumentNumber;
+        $this->height = $height;
+        $this->weight = $weight;
+        $this->address = $address;
         $this->notes = $notes;
         $this->updatedAt = new \DateTimeImmutable();
 
         return $this;
+    }
+
+    public function markAsRisky(): void
+    {
+        $this->isRisky = true;
+        $this->updatedAt = new \DateTimeImmutable();
+    }
+
+    public function unmarkAsRisky(): void
+    {
+        $this->isRisky = false;
+        $this->updatedAt = new \DateTimeImmutable();
     }
 }

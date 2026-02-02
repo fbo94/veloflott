@@ -1113,6 +1113,118 @@
                 ]
             }
         },
+        "/api/rentals/{id}/checkin": {
+            "post": {
+                "tags": [
+                    "Rentals"
+                ],
+                "summary": "Check-in a rental (record customer settings)",
+                "operationId": "ba2f9e35711a422918025d0f99033e31",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "bikes_check_in"
+                                ],
+                                "properties": {
+                                    "bikes_check_in": {
+                                        "type": "array",
+                                        "items": {
+                                            "properties": {
+                                                "bike_id": {
+                                                    "type": "string",
+                                                    "format": "uuid"
+                                                },
+                                                "client_height": {
+                                                    "description": "Client height in cm",
+                                                    "type": "integer",
+                                                    "example": 175
+                                                },
+                                                "client_weight": {
+                                                    "description": "Client weight in kg",
+                                                    "type": "integer",
+                                                    "example": 75
+                                                },
+                                                "saddle_height": {
+                                                    "description": "Saddle height in cm",
+                                                    "type": "integer",
+                                                    "example": 75
+                                                },
+                                                "front_suspension_pressure": {
+                                                    "description": "Front suspension pressure in PSI",
+                                                    "type": "integer",
+                                                    "example": 80,
+                                                    "nullable": true
+                                                },
+                                                "rear_suspension_pressure": {
+                                                    "description": "Rear suspension pressure in PSI",
+                                                    "type": "integer",
+                                                    "example": 100,
+                                                    "nullable": true
+                                                },
+                                                "pedal_type": {
+                                                    "description": "Type of pedals mounted",
+                                                    "type": "string",
+                                                    "example": "SPD",
+                                                    "nullable": true
+                                                },
+                                                "notes": {
+                                                    "type": "string",
+                                                    "example": "Client prefers softer suspension",
+                                                    "nullable": true
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "customer_signature": {
+                                        "description": "Base64 encoded signature image",
+                                        "type": "string",
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Check-in completed, rental is now active"
+                    },
+                    "400": {
+                        "description": "Validation error or rental cannot be checked in"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden - requires create_rentals permission"
+                    },
+                    "404": {
+                        "description": "Rental not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/rentals/{id}/checkout": {
             "post": {
                 "tags": [

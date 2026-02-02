@@ -22,6 +22,11 @@ final class CreateCustomerController
             lastName: $request->input('last_name'),
             email: $request->input('email'),
             phone: $request->input('phone'),
+            identityDocumentType: $request->input('identity_document_type'),
+            identityDocumentNumber: $request->input('identity_document_number'),
+            height: $request->input('height'),
+            weight: $request->input('weight'),
+            address: $request->input('address'),
             notes: $request->input('notes'),
         );
 

@@ -18,10 +18,17 @@ final class CustomerEloquentModel extends Model
         'last_name',
         'email',
         'phone',
+        'identity_document_type',
+        'identity_document_number',
+        'height',
+        'weight',
+        'address',
         'notes',
+        'is_risky',
     ];
 
     protected $casts = [
+        'is_risky' => 'boolean',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];

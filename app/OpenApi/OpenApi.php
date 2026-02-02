@@ -592,6 +592,55 @@ class DeleteRateEndpoint {}
 )]
 class CreateRentalEndpoint {}
 
+// POST /api/rentals/{id}/checkin
+#[OA\Post(
+    path: '/api/rentals/{id}/checkin',
+    summary: 'Check-in a rental (record customer settings)',
+    security: [['bearerAuth' => []]],
+    tags: ['Rentals'],
+    parameters: [
+        new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'string', format: 'uuid'))
+    ],
+    requestBody: new OA\RequestBody(
+        required: true,
+        content: new OA\MediaType(
+            mediaType: 'application/json',
+            schema: new OA\Schema(
+                required: ['bikes_check_in'],
+                properties: [
+                    new OA\Property(
+                        property: 'bikes_check_in',
+                        type: 'array',
+                        items: new OA\Items(
+                            properties: [
+                                new OA\Property(property: 'bike_id', type: 'string', format: 'uuid'),
+                                new OA\Property(property: 'client_height', type: 'integer', example: 175, description: 'Client height in cm'),
+                                new OA\Property(property: 'client_weight', type: 'integer', example: 75, description: 'Client weight in kg'),
+                                new OA\Property(property: 'saddle_height', type: 'integer', example: 75, description: 'Saddle height in cm'),
+                                new OA\Property(property: 'front_suspension_pressure', type: 'integer', nullable: true, example: 80, description: 'Front suspension pressure in PSI'),
+                                new OA\Property(property: 'rear_suspension_pressure', type: 'integer', nullable: true, example: 100, description: 'Rear suspension pressure in PSI'),
+                                new OA\Property(property: 'pedal_type', type: 'string', nullable: true, example: 'SPD', description: 'Type of pedals mounted'),
+                                new OA\Property(property: 'notes', type: 'string', nullable: true, example: 'Client prefers softer suspension'),
+                            ],
+                            type: 'object'
+                        )
+                    ),
+                    new OA\Property(property: 'customer_signature', type: 'string', nullable: true, description: 'Base64 encoded signature image'),
+                ],
+                type: 'object'
+            )
+        )
+    ),
+    responses: [
+        new OA\Response(response: 200, description: 'Check-in completed, rental is now active'),
+        new OA\Response(response: 400, description: 'Validation error or rental cannot be checked in'),
+        new OA\Response(response: 401, description: 'Unauthorized'),
+        new OA\Response(response: 403, description: 'Forbidden - requires create_rentals permission'),
+        new OA\Response(response: 404, description: 'Rental not found')
+    ]
+)]
+class CheckInRentalEndpoint {}
+
 // POST /api/rentals/{id}/checkout
 #[OA\Post(
     path: '/api/rentals/{id}/checkout',

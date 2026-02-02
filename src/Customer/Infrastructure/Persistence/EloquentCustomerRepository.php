@@ -63,7 +63,13 @@ final class EloquentCustomerRepository implements CustomerRepositoryInterface
                 'last_name' => $customer->lastName(),
                 'email' => $customer->email(),
                 'phone' => $customer->phone(),
+                'identity_document_type' => $customer->identityDocumentType(),
+                'identity_document_number' => $customer->identityDocumentNumber(),
+                'height' => $customer->height(),
+                'weight' => $customer->weight(),
+                'address' => $customer->address(),
                 'notes' => $customer->notes(),
+                'is_risky' => $customer->isRisky(),
             ]
         );
     }
@@ -76,9 +82,15 @@ final class EloquentCustomerRepository implements CustomerRepositoryInterface
             lastName: $model->last_name,
             email: $model->email,
             phone: $model->phone,
+            identityDocumentType: $model->identity_document_type,
+            identityDocumentNumber: $model->identity_document_number,
+            height: $model->height,
+            weight: $model->weight,
+            address: $model->address,
             notes: $model->notes,
-            createdAt: new \DateTimeImmutable($model->created_at),
-            updatedAt: new \DateTimeImmutable($model->updated_at),
+            isRisky: $model->is_risky ?? false,
+            createdAt: \DateTimeImmutable::createFromInterface($model->created_at),
+            updatedAt: \DateTimeImmutable::createFromInterface($model->updated_at),
         );
     }
 }
