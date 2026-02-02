@@ -8,7 +8,7 @@ use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Validation\ValidationException;
 use Shared\Domain\DomainException;
-use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Throwable;
 
 final class Handler extends ExceptionHandler
@@ -37,7 +37,7 @@ final class Handler extends ExceptionHandler
         }
 
         // HTTP (404, etc.)
-        if ($e instanceof HttpException) {
+        if ($e instanceof HttpExceptionInterface) {
             return $this->renderHttpException($e);
         }
 
@@ -69,14 +69,14 @@ final class Handler extends ExceptionHandler
         ], 422);
     }
 
-    private function renderHttpException(HttpException $e): JsonResponse
+    protected function renderHttpException(HttpExceptionInterface $e): JsonResponse
     {
         return response()->json([
             'error' => [
                 'code' => 'HTTP_ERROR',
                 'message' => $e->getMessage() ?: 'Une erreur est survenue.',
             ],
-        ], $e->getStatusCode());
+        ], method_exists($e, 'getStatusCode') ? $e->getStatusCode() : 500);
     }
 
     private function renderGenericException(Throwable $e): JsonResponse

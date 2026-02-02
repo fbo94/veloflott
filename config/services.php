@@ -48,6 +48,8 @@ return [
         'url' => env('KEYCLOAK_URL', 'http://localhost:8080'),
         'realm' => env('KEYCLOAK_REALM', 'fleet-manager'),
         'client_id' => env('KEYCLOAK_CLIENT_ID', 'fleet-api'),
+        'client_secret' => env('KEYCLOAK_CLIENT_SECRET'),
+        'redirect_uri' => env('KEYCLOAK_REDIRECT_URI', env('APP_URL').'/api/auth/authorization-url'),
     ],
 
 ];

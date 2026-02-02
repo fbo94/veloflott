@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Auth\Infrastructure;
 
 use Auth\Domain\UserRepositoryInterface;
+use Auth\Infrastructure\Keycloak\KeycloakOAuthService;
 use Auth\Infrastructure\Keycloak\KeycloakTokenValidator;
 use Auth\Infrastructure\Keycloak\UserSyncService;
 use Auth\Infrastructure\Persistence\EloquentUserRepository;
@@ -16,13 +17,11 @@ final class AuthServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
-        // Repository
         $this->app->bind(
             UserRepositoryInterface::class,
             EloquentUserRepository::class
         );
 
-        // Keycloak Token Validator (singleton car stateless)
         $this->app->singleton(KeycloakTokenValidator::class, function ($app) {
             return new KeycloakTokenValidator(
                 keycloakUrl: config('services.keycloak.url'),
@@ -30,13 +29,21 @@ final class AuthServiceProvider extends ServiceProvider
             );
         });
 
-        // User Sync Service
+        $this->app->singleton(KeycloakOAuthService::class, function ($app) {
+            return new KeycloakOAuthService(
+                keycloakUrl: config('services.keycloak.url'),
+                realm: config('services.keycloak.realm'),
+                clientId: config('services.keycloak.client_id'),
+                clientSecret: config('services.keycloak.client_secret'),
+                redirectUri: config('services.keycloak.redirect_uri'),
+            );
+        });
+
         $this->app->singleton(UserSyncService::class);
     }
 
     public function boot(): void
     {
-        // Enregistrer les middlewares
         $router = $this->app['router'];
         $router->aliasMiddleware('keycloak', KeycloakAuthenticate::class);
         $router->aliasMiddleware('permission', CheckPermission::class);

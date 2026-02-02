@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use Auth\Interface\Http\Authorize\AuthorizeController;
+use Auth\Interface\Http\GetAuthorizationUrl\GetAuthorizationUrlController;
 use Auth\Interface\Http\GetCurrentUser\GetCurrentUserController;
 use Auth\Interface\Http\ListUsers\ListUsersController;
 use Auth\Interface\Http\ToggleUserStatus\ToggleUserStatusController;
@@ -16,6 +18,15 @@ use Illuminate\Support\Facades\Route;
 | Routes pour le module d'authentification et gestion des utilisateurs.
 |
 */
+
+Route::prefix('api/auth')->group(function () {
+    // OAuth2 - Endpoints publics (pas d'authentification requise)
+    Route::get('/authorization-url', GetAuthorizationUrlController::class)
+        ->name('auth.authorization-url');
+
+    Route::post('/authorize', AuthorizeController::class)
+        ->name('auth.authorize');
+});
 
 Route::middleware(['keycloak'])->prefix('api')->group(function () {
     // Récupérer l'utilisateur courant
