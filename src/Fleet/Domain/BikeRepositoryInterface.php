@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Fleet\Domain;
 
+use Fleet\Infrastructure\Persistence\Models\BikeEloquentModel;
+
 interface BikeRepositoryInterface
 {
     public function findById(string $id): ?Bike;
@@ -51,7 +53,7 @@ interface BikeRepositoryInterface
      * Trouve un vélo par ID avec les relations chargées (pour les DTOs).
      * Retourne le model Eloquent pour accès direct aux relations.
      */
-    public function findByIdWithRelations(string $id): ?\Fleet\Infrastructure\Persistence\Models\BikeEloquentModel;
+    public function findByIdWithRelations(string $id): ?BikeEloquentModel;
 
     public function save(Bike $bike): void;
 }

@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace Fleet\Interface\Http\CreateBike;
 
+use Fleet\Application\CreateBike\BikeInternalNumberAlreadyExistsException;
+use Fleet\Application\CreateBike\CategoryNotFoundException;
 use Fleet\Application\CreateBike\CreateBikeCommand;
 use Fleet\Application\CreateBike\CreateBikeHandler;
+use Fleet\Application\CreateBike\ModelNotFoundException;
 use Fleet\Domain\BrakeType;
 use Fleet\Domain\FrameSizeLetter;
 use Fleet\Domain\FrameSizeUnit;
@@ -19,6 +22,11 @@ final class CreateBikeController
         private readonly CreateBikeHandler $handler,
     ) {}
 
+    /**
+     * @throws BikeInternalNumberAlreadyExistsException
+     * @throws CategoryNotFoundException
+     * @throws ModelNotFoundException
+     */
     public function __invoke(CreateBikeRequest $request): JsonResponse
     {
         $command = new CreateBikeCommand(
