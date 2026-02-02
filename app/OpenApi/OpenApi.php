@@ -222,6 +222,105 @@ class CreateCustomerEndpoint {}
 )]
 class SearchCustomersEndpoint {}
 
+// ------------------------------ FLEET - BIKES ------------------------------
+
+// POST /api/fleet/bikes
+#[OA\Post(
+    path: '/api/fleet/bikes',
+    summary: 'Create a new bike',
+    security: [['bearerAuth' => []]],
+    tags: ['Fleet - Bikes'],
+    requestBody: new OA\RequestBody(
+        required: true,
+        content: new OA\MediaType(
+            mediaType: 'application/json',
+            schema: new OA\Schema(
+                required: ['brand_id', 'model_id', 'category_id', 'serial_number', 'frame_number'],
+                properties: [
+                    new OA\Property(property: 'brand_id', type: 'string', format: 'uuid', example: '550e8400-e29b-41d4-a716-446655440000'),
+                    new OA\Property(property: 'model_id', type: 'string', format: 'uuid', example: '550e8400-e29b-41d4-a716-446655440001'),
+                    new OA\Property(property: 'category_id', type: 'string', format: 'uuid', example: '550e8400-e29b-41d4-a716-446655440002'),
+                    new OA\Property(property: 'serial_number', type: 'string', example: 'SN-2024-001'),
+                    new OA\Property(property: 'frame_number', type: 'string', example: 'FN-2024-001'),
+                    new OA\Property(property: 'purchase_date', type: 'string', format: 'date', example: '2024-01-15', nullable: true),
+                    new OA\Property(property: 'purchase_price', type: 'number', format: 'float', example: 1500.00, nullable: true),
+                    new OA\Property(property: 'notes', type: 'string', example: 'VTT électrique neuf', nullable: true),
+                ],
+                type: 'object'
+            )
+        )
+    ),
+    responses: [
+        new OA\Response(response: 201, description: 'Bike created successfully'),
+        new OA\Response(response: 400, description: 'Validation error'),
+        new OA\Response(response: 401, description: 'Unauthorized'),
+        new OA\Response(response: 403, description: 'Forbidden - requires manage_bikes permission')
+    ]
+)]
+class CreateBikeEndpoint {}
+
+// GET /api/fleet/bikes
+#[OA\Get(
+    path: '/api/fleet/bikes',
+    summary: 'List all bikes with filters',
+    security: [['bearerAuth' => []]],
+    tags: ['Fleet - Bikes'],
+    parameters: [
+        new OA\Parameter(
+            name: 'status',
+            in: 'query',
+            required: false,
+            schema: new OA\Schema(type: 'string', enum: ['available', 'rented', 'maintenance', 'retired']),
+            description: 'Filter by status'
+        ),
+        new OA\Parameter(
+            name: 'category_id',
+            in: 'query',
+            required: false,
+            schema: new OA\Schema(type: 'string', format: 'uuid'),
+            description: 'Filter by category'
+        ),
+        new OA\Parameter(
+            name: 'brand_id',
+            in: 'query',
+            required: false,
+            schema: new OA\Schema(type: 'string', format: 'uuid'),
+            description: 'Filter by brand'
+        ),
+        new OA\Parameter(
+            name: 'model_id',
+            in: 'query',
+            required: false,
+            schema: new OA\Schema(type: 'string', format: 'uuid'),
+            description: 'Filter by model'
+        )
+    ],
+    responses: [
+        new OA\Response(response: 200, description: 'List of bikes'),
+        new OA\Response(response: 401, description: 'Unauthorized'),
+        new OA\Response(response: 403, description: 'Forbidden - requires view_bikes permission')
+    ]
+)]
+class ListBikesEndpoint {}
+
+// GET /api/fleet/bikes/{id}
+#[OA\Get(
+    path: '/api/fleet/bikes/{id}',
+    summary: 'Get bike details',
+    security: [['bearerAuth' => []]],
+    tags: ['Fleet - Bikes'],
+    parameters: [
+        new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'string', format: 'uuid'))
+    ],
+    responses: [
+        new OA\Response(response: 200, description: 'Bike details'),
+        new OA\Response(response: 401, description: 'Unauthorized'),
+        new OA\Response(response: 403, description: 'Forbidden - requires view_bikes permission'),
+        new OA\Response(response: 404, description: 'Bike not found')
+    ]
+)]
+class GetBikeDetailEndpoint {}
+
 // ------------------------------ FLEET - CATEGORIES ------------------------------
 
 // POST /api/fleet/categories

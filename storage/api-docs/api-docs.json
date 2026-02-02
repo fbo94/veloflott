@@ -378,6 +378,202 @@
                 ]
             }
         },
+        "/api/fleet/bikes": {
+            "get": {
+                "tags": [
+                    "Fleet - Bikes"
+                ],
+                "summary": "List all bikes with filters",
+                "operationId": "df24abb3188b536c1e656e135f75214d",
+                "parameters": [
+                    {
+                        "name": "status",
+                        "in": "query",
+                        "description": "Filter by status",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "available",
+                                "rented",
+                                "maintenance",
+                                "retired"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "category_id",
+                        "in": "query",
+                        "description": "Filter by category",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    },
+                    {
+                        "name": "brand_id",
+                        "in": "query",
+                        "description": "Filter by brand",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    },
+                    {
+                        "name": "model_id",
+                        "in": "query",
+                        "description": "Filter by model",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of bikes"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden - requires view_bikes permission"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Fleet - Bikes"
+                ],
+                "summary": "Create a new bike",
+                "operationId": "c5a84480c96d50a555862943b2e584e2",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "brand_id",
+                                    "model_id",
+                                    "category_id",
+                                    "serial_number",
+                                    "frame_number"
+                                ],
+                                "properties": {
+                                    "brand_id": {
+                                        "type": "string",
+                                        "format": "uuid",
+                                        "example": "550e8400-e29b-41d4-a716-446655440000"
+                                    },
+                                    "model_id": {
+                                        "type": "string",
+                                        "format": "uuid",
+                                        "example": "550e8400-e29b-41d4-a716-446655440001"
+                                    },
+                                    "category_id": {
+                                        "type": "string",
+                                        "format": "uuid",
+                                        "example": "550e8400-e29b-41d4-a716-446655440002"
+                                    },
+                                    "serial_number": {
+                                        "type": "string",
+                                        "example": "SN-2024-001"
+                                    },
+                                    "frame_number": {
+                                        "type": "string",
+                                        "example": "FN-2024-001"
+                                    },
+                                    "purchase_date": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2024-01-15",
+                                        "nullable": true
+                                    },
+                                    "purchase_price": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 1500,
+                                        "nullable": true
+                                    },
+                                    "notes": {
+                                        "type": "string",
+                                        "example": "VTT électrique neuf",
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Bike created successfully"
+                    },
+                    "400": {
+                        "description": "Validation error"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden - requires manage_bikes permission"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/fleet/bikes/{id}": {
+            "get": {
+                "tags": [
+                    "Fleet - Bikes"
+                ],
+                "summary": "Get bike details",
+                "operationId": "aee26c89ae05efc97f69f22bdcd571af",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Bike details"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden - requires view_bikes permission"
+                    },
+                    "404": {
+                        "description": "Bike not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/fleet/categories": {
             "get": {
                 "tags": [
@@ -1102,6 +1298,10 @@
         {
             "name": "Customers",
             "description": "Customers"
+        },
+        {
+            "name": "Fleet - Bikes",
+            "description": "Fleet - Bikes"
         },
         {
             "name": "Fleet - Categories",
