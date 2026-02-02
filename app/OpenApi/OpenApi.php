@@ -118,3 +118,49 @@ class LaravelUserEndpoint {}
     ]
 )]
 class LoginEndpoint {}
+
+// GET /api/auth/authorization-url (public)
+#[OA\Get(
+    path: '/api/auth/authorization-url',
+    summary: 'Get OAuth2 authorization URL (public)',
+    tags: ['Auth'],
+    parameters: [
+        new OA\Parameter(
+            name: 'redirect_url',
+            in: 'query',
+            required: false,
+            schema: new OA\Schema(type: 'string', format: 'uri'),
+            description: 'Optional client redirect URL to include in the authorization flow'
+        ),
+    ],
+    responses: [
+        new OA\Response(response: 200, description: 'Authorization URL payload returned'),
+    ]
+)]
+class GetAuthorizationUrlEndpoint {}
+
+// POST /api/auth/authorize (public)
+#[OA\Post(
+    path: '/api/auth/authorize',
+    summary: 'OAuth2 authorization callback (public)',
+    tags: ['Auth'],
+    requestBody: new OA\RequestBody(
+        required: true,
+        content: new OA\MediaType(
+            mediaType: 'application/json',
+            schema: new OA\Schema(
+                required: ['code', 'state'],
+                properties: [
+                    new OA\Property(property: 'code', type: 'string', example: 'abc123'),
+                    new OA\Property(property: 'state', type: 'string', example: 'opaque-state'),
+                ],
+                type: 'object'
+            )
+        )
+    ),
+    responses: [
+        new OA\Response(response: 200, description: 'Tokens/user info returned'),
+        new OA\Response(response: 400, description: 'Invalid payload or state mismatch'),
+    ]
+)]
+class AuthorizeEndpoint {}

@@ -206,6 +206,73 @@
                     }
                 }
             }
+        },
+        "/api/auth/authorization-url": {
+            "get": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Get OAuth2 authorization URL (public)",
+                "operationId": "a4fadb2e604f80113e341953902c7b75",
+                "parameters": [
+                    {
+                        "name": "redirect_url",
+                        "in": "query",
+                        "description": "Optional client redirect URL to include in the authorization flow",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "uri"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Authorization URL payload returned"
+                    }
+                }
+            }
+        },
+        "/api/auth/authorize": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "OAuth2 authorization callback (public)",
+                "operationId": "075901d3c75b8395892955cada06163b",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "code",
+                                    "state"
+                                ],
+                                "properties": {
+                                    "code": {
+                                        "type": "string",
+                                        "example": "abc123"
+                                    },
+                                    "state": {
+                                        "type": "string",
+                                        "example": "opaque-state"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Tokens/user info returned"
+                    },
+                    "400": {
+                        "description": "Invalid payload or state mismatch"
+                    }
+                }
+            }
         }
     },
     "components": {
