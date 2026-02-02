@@ -54,21 +54,33 @@ final class KeycloakTokenValidator
      */
     private function getPublicKeys(): array
     {
-        return Cache::remember(
+        // Cache uniquement les données JSON brutes, pas les objets Key
+        $jwksData = Cache::remember(
             self::JWKS_CACHE_KEY,
             self::JWKS_CACHE_TTL,
             function () {
                 $url = "{$this->keycloakUrl}/realms/{$this->realm}/protocol/openid-connect/certs";
 
-                $response = Http::timeout(10)->get($url);
+                try {
+                    $response = Http::timeout(10)
+                        ->retry(2, 200)
+                        ->withOptions(['verify' => $this->shouldVerifyTls()])
+                        ->get($url);
+                } catch (\Throwable $e) {
+                    throw new Exception("Failed to fetch Keycloak JWKS: {$e->getMessage()}", 0, $e);
+                }
 
                 if (!$response->successful()) {
                     throw new Exception("Failed to fetch Keycloak JWKS: {$response->status()}");
                 }
 
-                return JWK::parseKeySet($response->json());
+                return $response->json();
             }
         );
+
+        // Parse le JSON en objets Key après récupération du cache
+        // Les objets Key contiennent des ressources OpenSSL non-sérialisables
+        return JWK::parseKeySet($jwksData);
     }
 
     /**
@@ -81,9 +93,17 @@ final class KeycloakTokenValidator
             throw new Exception('Token expired');
         }
 
-        // Vérifier l'issuer
-        $expectedIssuer = "{$this->keycloakUrl}/realms/{$this->realm}";
-        if (!isset($payload->iss) || $payload->iss !== $expectedIssuer) {
+        // Vérifier l'issuer - accepter plusieurs variantes d'URL
+        $internalIssuer = "{$this->keycloakUrl}/realms/{$this->realm}";
+        $publicUrl = env('KEYCLOAK_PUBLIC_URL', $this->keycloakUrl);
+        $publicIssuer = "{$publicUrl}/realms/{$this->realm}";
+
+        // Accepter aussi la variante sans port (Keycloak peut omettre le port standard 443)
+        $publicIssuerNoPort = "https://keycloak.localhost/realms/{$this->realm}";
+
+        $validIssuers = [$internalIssuer, $publicIssuer, $publicIssuerNoPort];
+
+        if (!isset($payload->iss) || !in_array($payload->iss, $validIssuers, true)) {
             throw new Exception('Invalid issuer');
         }
     }
@@ -95,5 +115,22 @@ final class KeycloakTokenValidator
     public function clearCache(): void
     {
         Cache::forget(self::JWKS_CACHE_KEY);
+    }
+
+    /**
+     * Indique si la vérification TLS doit être effectuée pour Keycloak.
+     * Permet de désactiver la vérification en environnement de dev (certificat auto-signé).
+     */
+    private function shouldVerifyTls(): bool
+    {
+        // KEYCLOAK_TLS_VERIFY=false pour désactiver la vérification en dev
+        $verify = env('KEYCLOAK_TLS_VERIFY', true);
+
+        // Si l'URL Keycloak est en HTTP, aucune vérification TLS n'est nécessaire
+        if (str_starts_with(strtolower($this->keycloakUrl), 'http://')) {
+            return false;
+        }
+
+        return (bool) $verify;
     }
 }

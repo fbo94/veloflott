@@ -273,6 +273,812 @@
                     }
                 }
             }
+        },
+        "/api/customers": {
+            "post": {
+                "tags": [
+                    "Customers"
+                ],
+                "summary": "Create a new customer",
+                "operationId": "e31befb2cdce12325f8202029581e84f",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "first_name",
+                                    "last_name"
+                                ],
+                                "properties": {
+                                    "first_name": {
+                                        "type": "string",
+                                        "example": "Jean"
+                                    },
+                                    "last_name": {
+                                        "type": "string",
+                                        "example": "Dupont"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "jean.dupont@example.com",
+                                        "nullable": true
+                                    },
+                                    "phone": {
+                                        "type": "string",
+                                        "example": "+33612345678",
+                                        "nullable": true
+                                    },
+                                    "notes": {
+                                        "type": "string",
+                                        "example": "Client régulier",
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Customer created successfully"
+                    },
+                    "400": {
+                        "description": "Validation error"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden - requires manage_customers permission"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/customers/search": {
+            "get": {
+                "tags": [
+                    "Customers"
+                ],
+                "summary": "Search customers by name, email, or phone",
+                "operationId": "5f60d69596d0ef0ad3eca7dbb5a9e6a2",
+                "parameters": [
+                    {
+                        "name": "query",
+                        "in": "query",
+                        "description": "Search query to match against first name, last name, email, or phone",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of matching customers"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden - requires view_customers permission"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/fleet/categories": {
+            "get": {
+                "tags": [
+                    "Fleet - Categories"
+                ],
+                "summary": "List all bike categories",
+                "operationId": "ecad3d0425372ed8c399d64b5a5d2699",
+                "responses": {
+                    "200": {
+                        "description": "List of categories"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden - requires view_fleet permission"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Fleet - Categories"
+                ],
+                "summary": "Create a new bike category",
+                "operationId": "d4eddbffe307b8dd5462ba7e157ea071",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "VTT Électrique"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "Vélos tout-terrain électriques",
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Category created successfully"
+                    },
+                    "400": {
+                        "description": "Validation error"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden - requires manage_fleet permission"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/fleet/categories/{id}": {
+            "put": {
+                "tags": [
+                    "Fleet - Categories"
+                ],
+                "summary": "Update a bike category",
+                "operationId": "b8291b10bf50470b988a9c724c05e150",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "VTT Électrique Pro"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "Vélos tout-terrain électriques haut de gamme",
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Category updated successfully"
+                    },
+                    "400": {
+                        "description": "Validation error"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden - requires manage_fleet permission"
+                    },
+                    "404": {
+                        "description": "Category not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Fleet - Categories"
+                ],
+                "summary": "Delete a bike category",
+                "operationId": "67224edb9bbeb7266798e988b8cc8258",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Category deleted successfully"
+                    },
+                    "400": {
+                        "description": "Cannot delete category with associated bikes"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden - requires manage_fleet permission"
+                    },
+                    "404": {
+                        "description": "Category not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/fleet/categories/{categoryId}/rates": {
+            "post": {
+                "tags": [
+                    "Fleet - Rates"
+                ],
+                "summary": "Create or update rate for a category",
+                "operationId": "23402035714cb59fc0212f84ac3e13a4",
+                "parameters": [
+                    {
+                        "name": "categoryId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "duration",
+                                    "price"
+                                ],
+                                "properties": {
+                                    "duration": {
+                                        "type": "string",
+                                        "enum": [
+                                            "half_day",
+                                            "full_day",
+                                            "two_days",
+                                            "three_days",
+                                            "week",
+                                            "custom"
+                                        ],
+                                        "example": "full_day"
+                                    },
+                                    "price": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 25
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Rate created or updated successfully"
+                    },
+                    "400": {
+                        "description": "Validation error"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden - requires manage_fleet permission"
+                    },
+                    "404": {
+                        "description": "Category not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/fleet/rates": {
+            "get": {
+                "tags": [
+                    "Fleet - Rates"
+                ],
+                "summary": "List all rates",
+                "operationId": "095ead02c31ee478731b76e255268cbc",
+                "parameters": [
+                    {
+                        "name": "category_id",
+                        "in": "query",
+                        "description": "Filter by category ID",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    },
+                    {
+                        "name": "bike_id",
+                        "in": "query",
+                        "description": "Filter by bike ID",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of rates"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden - requires view_fleet permission"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/fleet/rates/{id}": {
+            "put": {
+                "tags": [
+                    "Fleet - Rates"
+                ],
+                "summary": "Update a rate",
+                "operationId": "901919571bb0d7f67c8a12c3498b173e",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "duration": {
+                                        "type": "string",
+                                        "enum": [
+                                            "half_day",
+                                            "full_day",
+                                            "two_days",
+                                            "three_days",
+                                            "week",
+                                            "custom"
+                                        ],
+                                        "example": "full_day"
+                                    },
+                                    "price": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 30
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Rate updated successfully"
+                    },
+                    "400": {
+                        "description": "Validation error"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden - requires manage_fleet permission"
+                    },
+                    "404": {
+                        "description": "Rate not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Fleet - Rates"
+                ],
+                "summary": "Delete a rate",
+                "operationId": "b5fdcca9b024b31ade0569f527ac92eb",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Rate deleted successfully"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden - requires manage_fleet permission"
+                    },
+                    "404": {
+                        "description": "Rate not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/rentals": {
+            "post": {
+                "tags": [
+                    "Rentals"
+                ],
+                "summary": "Create a new rental",
+                "operationId": "b8b33e90c509e401e3125d9eeddcdef6",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "customer_id",
+                                    "start_date",
+                                    "duration",
+                                    "deposit_amount",
+                                    "bike_items"
+                                ],
+                                "properties": {
+                                    "customer_id": {
+                                        "type": "string",
+                                        "format": "uuid",
+                                        "example": "550e8400-e29b-41d4-a716-446655440000"
+                                    },
+                                    "start_date": {
+                                        "type": "string",
+                                        "format": "date-time",
+                                        "example": "2024-03-15T10:00:00Z"
+                                    },
+                                    "duration": {
+                                        "type": "string",
+                                        "enum": [
+                                            "half_day",
+                                            "full_day",
+                                            "two_days",
+                                            "three_days",
+                                            "week",
+                                            "custom"
+                                        ],
+                                        "example": "full_day"
+                                    },
+                                    "custom_end_date": {
+                                        "description": "Required when duration is \"custom\"",
+                                        "type": "string",
+                                        "format": "date-time",
+                                        "nullable": true
+                                    },
+                                    "deposit_amount": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 200
+                                    },
+                                    "bike_items": {
+                                        "type": "array",
+                                        "items": {
+                                            "properties": {
+                                                "bike_id": {
+                                                    "type": "string",
+                                                    "format": "uuid"
+                                                },
+                                                "daily_rate": {
+                                                    "type": "number",
+                                                    "format": "float"
+                                                },
+                                                "quantity": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "equipment_items": {
+                                        "type": "array",
+                                        "items": {
+                                            "properties": {
+                                                "type": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "helmet",
+                                                        "knee_pads",
+                                                        "elbow_pads",
+                                                        "gloves",
+                                                        "backpack",
+                                                        "lock",
+                                                        "other"
+                                                    ]
+                                                },
+                                                "quantity": {
+                                                    "type": "integer"
+                                                },
+                                                "price_per_unit": {
+                                                    "type": "number",
+                                                    "format": "float"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Rental created successfully"
+                    },
+                    "400": {
+                        "description": "Validation error or bike not available"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden - requires manage_rentals permission"
+                    },
+                    "404": {
+                        "description": "Customer or bike not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/rentals/{id}/checkout": {
+            "post": {
+                "tags": [
+                    "Rentals"
+                ],
+                "summary": "Check-out a rental (process return)",
+                "operationId": "9fe6160a100bd6587d19a83e19e3f9ef",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "actual_return_date",
+                                    "bikes_condition"
+                                ],
+                                "properties": {
+                                    "actual_return_date": {
+                                        "type": "string",
+                                        "format": "date-time",
+                                        "example": "2024-03-15T18:00:00Z"
+                                    },
+                                    "bikes_condition": {
+                                        "type": "array",
+                                        "items": {
+                                            "properties": {
+                                                "bike_id": {
+                                                    "type": "string",
+                                                    "format": "uuid"
+                                                },
+                                                "condition": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "ok",
+                                                        "minor_damage",
+                                                        "major_damage"
+                                                    ]
+                                                },
+                                                "damage_description": {
+                                                    "type": "string",
+                                                    "nullable": true
+                                                },
+                                                "damage_photos": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "description": "Photo URLs",
+                                                        "type": "string"
+                                                    },
+                                                    "nullable": true
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "deposit_retained": {
+                                        "description": "Amount of deposit to retain (for damages)",
+                                        "type": "number",
+                                        "format": "float",
+                                        "nullable": true
+                                    },
+                                    "hourly_late_rate": {
+                                        "description": "Hourly rate for late returns",
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 10
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Rental checked out successfully"
+                    },
+                    "400": {
+                        "description": "Validation error or rental cannot be checked out"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden - requires manage_rentals permission"
+                    },
+                    "404": {
+                        "description": "Rental not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/rentals/active": {
+            "get": {
+                "tags": [
+                    "Rentals"
+                ],
+                "summary": "List active rentals",
+                "operationId": "7d25fd68ae5d2f3c08b6b84c481359a4",
+                "parameters": [
+                    {
+                        "name": "customer_id",
+                        "in": "query",
+                        "description": "Filter by customer ID",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    },
+                    {
+                        "name": "bike_id",
+                        "in": "query",
+                        "description": "Filter by bike ID",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    },
+                    {
+                        "name": "only_late",
+                        "in": "query",
+                        "description": "Show only late rentals",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of active rentals with delay indicators (on_time, soon_late, late)"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden - requires view_rentals permission"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
         }
     },
     "components": {
@@ -292,6 +1098,22 @@
         {
             "name": "Users",
             "description": "Users"
+        },
+        {
+            "name": "Customers",
+            "description": "Customers"
+        },
+        {
+            "name": "Fleet - Categories",
+            "description": "Fleet - Categories"
+        },
+        {
+            "name": "Fleet - Rates",
+            "description": "Fleet - Rates"
+        },
+        {
+            "name": "Rentals",
+            "description": "Rentals"
         }
     ]
 }

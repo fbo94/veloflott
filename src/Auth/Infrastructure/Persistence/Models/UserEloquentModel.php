@@ -16,9 +16,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $last_name
  * @property string $role
  * @property bool $is_active
- * @property string|null $last_login_at
- * @property string $created_at
- * @property string $updated_at
+ * @property \DateTimeImmutable|null $last_login_at
+ * @property \DateTimeImmutable $created_at
+ * @property \DateTimeImmutable|null $updated_at
  */
 final class UserEloquentModel extends Model
 {
@@ -42,7 +42,7 @@ final class UserEloquentModel extends Model
     protected $casts = [
         'is_active' => 'boolean',
         'last_login_at' => 'datetime',
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime',
+        'created_at' => 'immutable_datetime',
+        'updated_at' => 'immutable_datetime',
     ];
 }

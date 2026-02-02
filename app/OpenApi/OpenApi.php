@@ -164,3 +164,420 @@ class GetAuthorizationUrlEndpoint {}
     ]
 )]
 class AuthorizeEndpoint {}
+
+// ------------------------------ CUSTOMERS ------------------------------
+
+// POST /api/customers
+#[OA\Post(
+    path: '/api/customers',
+    summary: 'Create a new customer',
+    security: [['bearerAuth' => []]],
+    tags: ['Customers'],
+    requestBody: new OA\RequestBody(
+        required: true,
+        content: new OA\MediaType(
+            mediaType: 'application/json',
+            schema: new OA\Schema(
+                required: ['first_name', 'last_name'],
+                properties: [
+                    new OA\Property(property: 'first_name', type: 'string', example: 'Jean'),
+                    new OA\Property(property: 'last_name', type: 'string', example: 'Dupont'),
+                    new OA\Property(property: 'email', type: 'string', format: 'email', example: 'jean.dupont@example.com', nullable: true),
+                    new OA\Property(property: 'phone', type: 'string', example: '+33612345678', nullable: true),
+                    new OA\Property(property: 'notes', type: 'string', example: 'Client régulier', nullable: true),
+                ],
+                type: 'object'
+            )
+        )
+    ),
+    responses: [
+        new OA\Response(response: 201, description: 'Customer created successfully'),
+        new OA\Response(response: 400, description: 'Validation error'),
+        new OA\Response(response: 401, description: 'Unauthorized'),
+        new OA\Response(response: 403, description: 'Forbidden - requires manage_customers permission')
+    ]
+)]
+class CreateCustomerEndpoint {}
+
+// GET /api/customers/search
+#[OA\Get(
+    path: '/api/customers/search',
+    summary: 'Search customers by name, email, or phone',
+    security: [['bearerAuth' => []]],
+    tags: ['Customers'],
+    parameters: [
+        new OA\Parameter(
+            name: 'query',
+            in: 'query',
+            required: false,
+            schema: new OA\Schema(type: 'string'),
+            description: 'Search query to match against first name, last name, email, or phone'
+        )
+    ],
+    responses: [
+        new OA\Response(response: 200, description: 'List of matching customers'),
+        new OA\Response(response: 401, description: 'Unauthorized'),
+        new OA\Response(response: 403, description: 'Forbidden - requires view_customers permission')
+    ]
+)]
+class SearchCustomersEndpoint {}
+
+// ------------------------------ FLEET - CATEGORIES ------------------------------
+
+// POST /api/fleet/categories
+#[OA\Post(
+    path: '/api/fleet/categories',
+    summary: 'Create a new bike category',
+    security: [['bearerAuth' => []]],
+    tags: ['Fleet - Categories'],
+    requestBody: new OA\RequestBody(
+        required: true,
+        content: new OA\MediaType(
+            mediaType: 'application/json',
+            schema: new OA\Schema(
+                required: ['name'],
+                properties: [
+                    new OA\Property(property: 'name', type: 'string', example: 'VTT Électrique'),
+                    new OA\Property(property: 'description', type: 'string', example: 'Vélos tout-terrain électriques', nullable: true),
+                ],
+                type: 'object'
+            )
+        )
+    ),
+    responses: [
+        new OA\Response(response: 201, description: 'Category created successfully'),
+        new OA\Response(response: 400, description: 'Validation error'),
+        new OA\Response(response: 401, description: 'Unauthorized'),
+        new OA\Response(response: 403, description: 'Forbidden - requires manage_fleet permission')
+    ]
+)]
+class CreateCategoryEndpoint {}
+
+// GET /api/fleet/categories
+#[OA\Get(
+    path: '/api/fleet/categories',
+    summary: 'List all bike categories',
+    security: [['bearerAuth' => []]],
+    tags: ['Fleet - Categories'],
+    responses: [
+        new OA\Response(response: 200, description: 'List of categories'),
+        new OA\Response(response: 401, description: 'Unauthorized'),
+        new OA\Response(response: 403, description: 'Forbidden - requires view_fleet permission')
+    ]
+)]
+class ListCategoriesEndpoint {}
+
+// PUT /api/fleet/categories/{id}
+#[OA\Put(
+    path: '/api/fleet/categories/{id}',
+    summary: 'Update a bike category',
+    security: [['bearerAuth' => []]],
+    tags: ['Fleet - Categories'],
+    parameters: [
+        new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'string', format: 'uuid'))
+    ],
+    requestBody: new OA\RequestBody(
+        required: true,
+        content: new OA\MediaType(
+            mediaType: 'application/json',
+            schema: new OA\Schema(
+                properties: [
+                    new OA\Property(property: 'name', type: 'string', example: 'VTT Électrique Pro'),
+                    new OA\Property(property: 'description', type: 'string', example: 'Vélos tout-terrain électriques haut de gamme', nullable: true),
+                ],
+                type: 'object'
+            )
+        )
+    ),
+    responses: [
+        new OA\Response(response: 200, description: 'Category updated successfully'),
+        new OA\Response(response: 400, description: 'Validation error'),
+        new OA\Response(response: 401, description: 'Unauthorized'),
+        new OA\Response(response: 403, description: 'Forbidden - requires manage_fleet permission'),
+        new OA\Response(response: 404, description: 'Category not found')
+    ]
+)]
+class UpdateCategoryEndpoint {}
+
+// DELETE /api/fleet/categories/{id}
+#[OA\Delete(
+    path: '/api/fleet/categories/{id}',
+    summary: 'Delete a bike category',
+    security: [['bearerAuth' => []]],
+    tags: ['Fleet - Categories'],
+    parameters: [
+        new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'string', format: 'uuid'))
+    ],
+    responses: [
+        new OA\Response(response: 204, description: 'Category deleted successfully'),
+        new OA\Response(response: 400, description: 'Cannot delete category with associated bikes'),
+        new OA\Response(response: 401, description: 'Unauthorized'),
+        new OA\Response(response: 403, description: 'Forbidden - requires manage_fleet permission'),
+        new OA\Response(response: 404, description: 'Category not found')
+    ]
+)]
+class DeleteCategoryEndpoint {}
+
+// ------------------------------ FLEET - RATES ------------------------------
+
+// POST /api/fleet/categories/{categoryId}/rates
+#[OA\Post(
+    path: '/api/fleet/categories/{categoryId}/rates',
+    summary: 'Create or update rate for a category',
+    security: [['bearerAuth' => []]],
+    tags: ['Fleet - Rates'],
+    parameters: [
+        new OA\Parameter(name: 'categoryId', in: 'path', required: true, schema: new OA\Schema(type: 'string', format: 'uuid'))
+    ],
+    requestBody: new OA\RequestBody(
+        required: true,
+        content: new OA\MediaType(
+            mediaType: 'application/json',
+            schema: new OA\Schema(
+                required: ['duration', 'price'],
+                properties: [
+                    new OA\Property(property: 'duration', type: 'string', enum: ['half_day', 'full_day', 'two_days', 'three_days', 'week', 'custom'], example: 'full_day'),
+                    new OA\Property(property: 'price', type: 'number', format: 'float', example: 25.00),
+                ],
+                type: 'object'
+            )
+        )
+    ),
+    responses: [
+        new OA\Response(response: 201, description: 'Rate created or updated successfully'),
+        new OA\Response(response: 400, description: 'Validation error'),
+        new OA\Response(response: 401, description: 'Unauthorized'),
+        new OA\Response(response: 403, description: 'Forbidden - requires manage_fleet permission'),
+        new OA\Response(response: 404, description: 'Category not found')
+    ]
+)]
+class SetCategoryRateEndpoint {}
+
+// GET /api/fleet/rates
+#[OA\Get(
+    path: '/api/fleet/rates',
+    summary: 'List all rates',
+    security: [['bearerAuth' => []]],
+    tags: ['Fleet - Rates'],
+    parameters: [
+        new OA\Parameter(
+            name: 'category_id',
+            in: 'query',
+            required: false,
+            schema: new OA\Schema(type: 'string', format: 'uuid'),
+            description: 'Filter by category ID'
+        ),
+        new OA\Parameter(
+            name: 'bike_id',
+            in: 'query',
+            required: false,
+            schema: new OA\Schema(type: 'string', format: 'uuid'),
+            description: 'Filter by bike ID'
+        )
+    ],
+    responses: [
+        new OA\Response(response: 200, description: 'List of rates'),
+        new OA\Response(response: 401, description: 'Unauthorized'),
+        new OA\Response(response: 403, description: 'Forbidden - requires view_fleet permission')
+    ]
+)]
+class ListRatesEndpoint {}
+
+// PUT /api/fleet/rates/{id}
+#[OA\Put(
+    path: '/api/fleet/rates/{id}',
+    summary: 'Update a rate',
+    security: [['bearerAuth' => []]],
+    tags: ['Fleet - Rates'],
+    parameters: [
+        new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'string', format: 'uuid'))
+    ],
+    requestBody: new OA\RequestBody(
+        required: true,
+        content: new OA\MediaType(
+            mediaType: 'application/json',
+            schema: new OA\Schema(
+                properties: [
+                    new OA\Property(property: 'duration', type: 'string', enum: ['half_day', 'full_day', 'two_days', 'three_days', 'week', 'custom'], example: 'full_day'),
+                    new OA\Property(property: 'price', type: 'number', format: 'float', example: 30.00),
+                ],
+                type: 'object'
+            )
+        )
+    ),
+    responses: [
+        new OA\Response(response: 200, description: 'Rate updated successfully'),
+        new OA\Response(response: 400, description: 'Validation error'),
+        new OA\Response(response: 401, description: 'Unauthorized'),
+        new OA\Response(response: 403, description: 'Forbidden - requires manage_fleet permission'),
+        new OA\Response(response: 404, description: 'Rate not found')
+    ]
+)]
+class UpdateRateEndpoint {}
+
+// DELETE /api/fleet/rates/{id}
+#[OA\Delete(
+    path: '/api/fleet/rates/{id}',
+    summary: 'Delete a rate',
+    security: [['bearerAuth' => []]],
+    tags: ['Fleet - Rates'],
+    parameters: [
+        new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'string', format: 'uuid'))
+    ],
+    responses: [
+        new OA\Response(response: 204, description: 'Rate deleted successfully'),
+        new OA\Response(response: 401, description: 'Unauthorized'),
+        new OA\Response(response: 403, description: 'Forbidden - requires manage_fleet permission'),
+        new OA\Response(response: 404, description: 'Rate not found')
+    ]
+)]
+class DeleteRateEndpoint {}
+
+// ------------------------------ RENTALS ------------------------------
+
+// POST /api/rentals
+#[OA\Post(
+    path: '/api/rentals',
+    summary: 'Create a new rental',
+    security: [['bearerAuth' => []]],
+    tags: ['Rentals'],
+    requestBody: new OA\RequestBody(
+        required: true,
+        content: new OA\MediaType(
+            mediaType: 'application/json',
+            schema: new OA\Schema(
+                required: ['customer_id', 'start_date', 'duration', 'deposit_amount', 'bike_items'],
+                properties: [
+                    new OA\Property(property: 'customer_id', type: 'string', format: 'uuid', example: '550e8400-e29b-41d4-a716-446655440000'),
+                    new OA\Property(property: 'start_date', type: 'string', format: 'date-time', example: '2024-03-15T10:00:00Z'),
+                    new OA\Property(property: 'duration', type: 'string', enum: ['half_day', 'full_day', 'two_days', 'three_days', 'week', 'custom'], example: 'full_day'),
+                    new OA\Property(property: 'custom_end_date', type: 'string', format: 'date-time', nullable: true, description: 'Required when duration is "custom"'),
+                    new OA\Property(property: 'deposit_amount', type: 'number', format: 'float', example: 200.00),
+                    new OA\Property(
+                        property: 'bike_items',
+                        type: 'array',
+                        items: new OA\Items(
+                            properties: [
+                                new OA\Property(property: 'bike_id', type: 'string', format: 'uuid'),
+                                new OA\Property(property: 'daily_rate', type: 'number', format: 'float'),
+                                new OA\Property(property: 'quantity', type: 'integer', example: 1),
+                            ],
+                            type: 'object'
+                        )
+                    ),
+                    new OA\Property(
+                        property: 'equipment_items',
+                        type: 'array',
+                        nullable: true,
+                        items: new OA\Items(
+                            properties: [
+                                new OA\Property(property: 'type', type: 'string', enum: ['helmet', 'knee_pads', 'elbow_pads', 'gloves', 'backpack', 'lock', 'other']),
+                                new OA\Property(property: 'quantity', type: 'integer'),
+                                new OA\Property(property: 'price_per_unit', type: 'number', format: 'float'),
+                            ],
+                            type: 'object'
+                        )
+                    ),
+                ],
+                type: 'object'
+            )
+        )
+    ),
+    responses: [
+        new OA\Response(response: 201, description: 'Rental created successfully'),
+        new OA\Response(response: 400, description: 'Validation error or bike not available'),
+        new OA\Response(response: 401, description: 'Unauthorized'),
+        new OA\Response(response: 403, description: 'Forbidden - requires manage_rentals permission'),
+        new OA\Response(response: 404, description: 'Customer or bike not found')
+    ]
+)]
+class CreateRentalEndpoint {}
+
+// POST /api/rentals/{id}/checkout
+#[OA\Post(
+    path: '/api/rentals/{id}/checkout',
+    summary: 'Check-out a rental (process return)',
+    security: [['bearerAuth' => []]],
+    tags: ['Rentals'],
+    parameters: [
+        new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'string', format: 'uuid'))
+    ],
+    requestBody: new OA\RequestBody(
+        required: true,
+        content: new OA\MediaType(
+            mediaType: 'application/json',
+            schema: new OA\Schema(
+                required: ['actual_return_date', 'bikes_condition'],
+                properties: [
+                    new OA\Property(property: 'actual_return_date', type: 'string', format: 'date-time', example: '2024-03-15T18:00:00Z'),
+                    new OA\Property(
+                        property: 'bikes_condition',
+                        type: 'array',
+                        items: new OA\Items(
+                            properties: [
+                                new OA\Property(property: 'bike_id', type: 'string', format: 'uuid'),
+                                new OA\Property(property: 'condition', type: 'string', enum: ['ok', 'minor_damage', 'major_damage']),
+                                new OA\Property(property: 'damage_description', type: 'string', nullable: true),
+                                new OA\Property(
+                                    property: 'damage_photos',
+                                    type: 'array',
+                                    nullable: true,
+                                    items: new OA\Items(type: 'string', description: 'Photo URLs')
+                                ),
+                            ],
+                            type: 'object'
+                        )
+                    ),
+                    new OA\Property(property: 'deposit_retained', type: 'number', format: 'float', nullable: true, description: 'Amount of deposit to retain (for damages)'),
+                    new OA\Property(property: 'hourly_late_rate', type: 'number', format: 'float', example: 10.00, description: 'Hourly rate for late returns'),
+                ],
+                type: 'object'
+            )
+        )
+    ),
+    responses: [
+        new OA\Response(response: 200, description: 'Rental checked out successfully'),
+        new OA\Response(response: 400, description: 'Validation error or rental cannot be checked out'),
+        new OA\Response(response: 401, description: 'Unauthorized'),
+        new OA\Response(response: 403, description: 'Forbidden - requires manage_rentals permission'),
+        new OA\Response(response: 404, description: 'Rental not found')
+    ]
+)]
+class CheckOutRentalEndpoint {}
+
+// GET /api/rentals/active
+#[OA\Get(
+    path: '/api/rentals/active',
+    summary: 'List active rentals',
+    security: [['bearerAuth' => []]],
+    tags: ['Rentals'],
+    parameters: [
+        new OA\Parameter(
+            name: 'customer_id',
+            in: 'query',
+            required: false,
+            schema: new OA\Schema(type: 'string', format: 'uuid'),
+            description: 'Filter by customer ID'
+        ),
+        new OA\Parameter(
+            name: 'bike_id',
+            in: 'query',
+            required: false,
+            schema: new OA\Schema(type: 'string', format: 'uuid'),
+            description: 'Filter by bike ID'
+        ),
+        new OA\Parameter(
+            name: 'only_late',
+            in: 'query',
+            required: false,
+            schema: new OA\Schema(type: 'boolean'),
+            description: 'Show only late rentals'
+        )
+    ],
+    responses: [
+        new OA\Response(response: 200, description: 'List of active rentals with delay indicators (on_time, soon_late, late)'),
+        new OA\Response(response: 401, description: 'Unauthorized'),
+        new OA\Response(response: 403, description: 'Forbidden - requires view_rentals permission')
+    ]
+)]
+class ListActiveRentalsEndpoint {}

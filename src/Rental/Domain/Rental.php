@@ -18,7 +18,7 @@ final class Rental
         private readonly string $customerId,
         private readonly \DateTimeImmutable $startDate,
         private readonly \DateTimeImmutable $expectedReturnDate,
-        private ?\ DateTimeImmutable $actualReturnDate,
+        private ?\DateTimeImmutable $actualReturnDate,
         private readonly RentalDuration $duration,
         private float $depositAmount,
         private float $totalAmount,

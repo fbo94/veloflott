@@ -79,9 +79,9 @@ final class EloquentUserRepository implements UserRepositoryInterface
             lastName: $model->last_name,
             role: Role::from($model->role),
             isActive: $model->is_active,
-            lastLoginAt: $model->last_login_at !== null ? new \DateTimeImmutable($model->last_login_at) : null,
-            createdAt: new \DateTimeImmutable($model->created_at),
-            updatedAt: new \DateTimeImmutable($model->updated_at),
+            lastLoginAt: $model->last_login_at !== null ? \DateTimeImmutable::createFromInterface($model->last_login_at) : null,
+            createdAt: \DateTimeImmutable::createFromInterface($model->created_at),
+            updatedAt: $model->updated_at ? \DateTimeImmutable::createFromInterface($model->updated_at) : null,
         );
     }
 }
