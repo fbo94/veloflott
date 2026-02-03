@@ -1,6 +1,15 @@
 # Multi-stage Dockerfile pour production GCP
 # Stage 1: Build dependencies
-FROM composer:2.7 AS composer-builder
+FROM php:8.4-cli-alpine AS composer-builder
+
+# Install composer
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+
+# Install dependencies needed for composer
+RUN apk add --no-cache \
+    git \
+    unzip \
+    && docker-php-ext-install pdo
 
 WORKDIR /app
 
@@ -21,7 +30,7 @@ COPY . .
 RUN composer dump-autoload --optimize --classmap-authoritative
 
 # Stage 2: Production image
-FROM php:8.3-fpm-alpine
+FROM php:8.4-fpm-alpine
 
 # Install system dependencies and PHP extensions
 RUN apk add --no-cache \

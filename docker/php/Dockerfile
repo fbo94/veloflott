@@ -19,21 +19,11 @@ RUN pecl install xdebug \
 
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-WORKDIR /var/www/webservices
+# Le workdir correspond au volume mount dans docker-compose.yml
+WORKDIR /var/www/veloflott
 
-COPY .. /var/www/webservices
-
-RUN mkdir "/var/www/webservices/storage" \
-    && mkdir -p /var/www/webservices/storage/logs \
-    && mkdir -p /var/www/webservices/storage/framework/sessions \
-    && mkdir -p /var/www/webservices/storage/framework/views \
-    && mkdir -p /var/www/webservices/storage/framework/cache
-
-# Installer les dépendances Composer (lance ça manuellement après build si besoin)
-# RUN composer install --no-dev --optimize-autoloader
-
-RUN chown -R www-data:www-data /var/www/webservices \
-    && chmod -R 755 /var/www/webservices/storage
+# Pas de COPY ici - le code est monté via volume dans docker-compose.yml
+# Les répertoires storage seront créés au démarrage via volume mount
 
 # Exposer le port FPM (Nginx y accède via réseau)
 EXPOSE 9000
