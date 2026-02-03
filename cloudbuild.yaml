@@ -72,8 +72,8 @@ steps:
 
 # Substitutions par défaut (peuvent être override dans les triggers)
 substitutions:
-  _REGION: europe-west1
-  _CLOUD_SQL_CONNECTION_NAME: ${PROJECT_ID}:europe-west1:veloflott-db
+  _REGION: europe-west9
+  _CLOUD_SQL_CONNECTION_NAME: project-08eb5a0c-d370-4877-a5a:europe-west9:veloflott-db
 
 # Images à stocker dans Container Registry
 images:
