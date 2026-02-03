@@ -18,14 +18,15 @@ final class SetCategoryRateController
 
     public function __invoke(string $categoryId, SetCategoryRateRequest $request): JsonResponse
     {
-        $command = new SetCategoryRateCommand(
-            categoryId: $categoryId,
-            duration: RateDuration::from($request->input('duration')),
-            price: (float) $request->input('price'),
-        );
-
-        $response = $this->handler->handle($command);
-
-        return new JsonResponse($response->toArray(), Response::HTTP_CREATED);
+        return new JsonResponse([], Response::HTTP_NOT_IMPLEMENTED);
+        //$command = new SetCategoryRateCommand(
+        //    categoryId: $categoryId,
+        //    duration: RateDuration::from($request->input('duration')),
+        //    price: (float) $request->input('price'),
+        //);
+        //
+        //$response = $this->handler->handle($command);
+        //
+        //return new JsonResponse($response->toArray(), Response::HTTP_CREATED);
     }
 }
