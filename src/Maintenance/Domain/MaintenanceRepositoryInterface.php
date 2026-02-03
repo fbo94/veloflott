@@ -58,5 +58,11 @@ interface MaintenanceRepositoryInterface
      */
     public function countUrgentPending(): int;
 
+    /**
+     * Trouve les maintenances en cours depuis plus de X jours
+     * @return array<int, array{maintenance_id: string, bike_id: string, days_in_progress: int, priority: string}>
+     */
+    public function findLongRunning(int $minDays = 7): array;
+
     public function delete(string $id): void;
 }

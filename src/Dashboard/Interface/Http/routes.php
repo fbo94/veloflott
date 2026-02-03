@@ -8,6 +8,7 @@ use Dashboard\Interface\Http\GetRevenueKpi\GetRevenueKpiController;
 use Dashboard\Interface\Http\GetMaintenanceKpi\GetMaintenanceKpiController;
 use Dashboard\Interface\Http\GetTopBikes\GetTopBikesController;
 use Dashboard\Interface\Http\GetTodayActivity\GetTodayActivityController;
+use Dashboard\Interface\Http\GetCentralizedAlerts\GetCentralizedAlertsController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['keycloak'])->prefix('api/dashboard')->group(function () {
@@ -30,5 +31,9 @@ Route::middleware(['keycloak'])->prefix('api/dashboard')->group(function () {
         ->middleware('permission:view_dashboard');
 
     Route::get('/kpis/top-bikes', GetTopBikesController::class)
+        ->middleware('permission:view_dashboard');
+
+    // US 6.4 : Alertes centralisées
+    Route::get('/alerts', GetCentralizedAlertsController::class)
         ->middleware('permission:view_dashboard');
 });

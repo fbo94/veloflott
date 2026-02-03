@@ -155,6 +155,26 @@ final class EloquentMaintenanceRepository implements MaintenanceRepositoryInterf
             ->count();
     }
 
+    public function findLongRunning(int $minDays = 7): array
+    {
+        $thresholdDate = now()->subDays($minDays);
+
+        return MaintenanceEloquentModel::query()
+            ->where('status', MaintenanceStatus::IN_PROGRESS->value)
+            ->where('started_at', '<=', $thresholdDate)
+            ->get()
+            ->map(function ($maintenance) {
+                $daysInProgress = now()->diffInDays($maintenance->started_at);
+                return [
+                    'maintenance_id' => $maintenance->id,
+                    'bike_id' => $maintenance->bike_id,
+                    'days_in_progress' => $daysInProgress,
+                    'priority' => $maintenance->priority,
+                ];
+            })
+            ->all();
+    }
+
     public function delete(string $id): void
     {
         MaintenanceEloquentModel::where('id', $id)->delete();

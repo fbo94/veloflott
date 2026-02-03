@@ -66,6 +66,12 @@ interface BikeRepositoryInterface
     public function getAverageAge(): float;
 
     /**
+     * Trouve les vélos UNAVAILABLE depuis plus de X jours
+     * @return array<int, array{bike_id: string, internal_number: string, days_unavailable: int}>
+     */
+    public function findLongUnavailable(int $minDays = 5): array;
+
+    /**
      * Trouve un vélo par ID avec les relations chargées (pour les DTOs).
      * Retourne le model Eloquent pour accès direct aux relations.
      */

@@ -206,6 +206,25 @@ final class EloquentBikeRepository implements BikeRepositoryInterface
         return round($currentYear - $averageYear, 1);
     }
 
+    public function findLongUnavailable(int $minDays = 5): array
+    {
+        $thresholdDate = now()->subDays($minDays);
+
+        return BikeEloquentModel::query()
+            ->where('status', BikeStatus::UNAVAILABLE->value)
+            ->where('updated_at', '<=', $thresholdDate)
+            ->get()
+            ->map(function ($bike) {
+                $daysUnavailable = now()->diffInDays($bike->updated_at);
+                return [
+                    'bike_id' => $bike->id,
+                    'internal_number' => $bike->internal_number,
+                    'days_unavailable' => $daysUnavailable,
+                ];
+            })
+            ->all();
+    }
+
     public function save(Bike $bike): void
     {
         BikeEloquentModel::updateOrCreate(
