@@ -19,6 +19,7 @@ final class UpdateCategoryController
         $command = new UpdateCategoryCommand(
             id: $id,
             name: $request->input('name'),
+            slug: $request->input('slug'),
             description: $request->input('description'),
         );
 

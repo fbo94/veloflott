@@ -19,8 +19,9 @@ final class UpdateCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:100'],
-            'description' => ['required', 'string', 'max:500'],
+            'name' => ['sometimes', 'string', 'max:100'],
+            'slug' => ['sometimes', 'nullable', 'string', 'max:100', 'regex:/^[a-z0-9-]+$/'],
+            'description' => ['sometimes', 'nullable', 'string', 'max:500'],
         ];
     }
 }

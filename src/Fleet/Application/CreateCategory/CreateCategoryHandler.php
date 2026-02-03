@@ -21,12 +21,22 @@ final class CreateCategoryHandler
             throw new CategoryAlreadyExistsException($command->name);
         }
 
+        // Vérifier que la catégorie parente existe si fournie
+        if ($command->parentId !== null) {
+            $parent = $this->categories->findById($command->parentId);
+            if ($parent === null) {
+                throw new \DomainException("Parent category not found: {$command->parentId}");
+            }
+        }
+
         $category = new Category(
             id: Str::uuid()->toString(),
             name: $command->name,
+            slug: $command->slug,
             description: $command->description,
             isDefault: false,
             displayOrder: 999, // Sera réordonné par l'utilisateur
+            parentId: $command->parentId,
         );
 
         $this->categories->save($category);

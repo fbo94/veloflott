@@ -57,9 +57,11 @@ final class EloquentCategoryRepository implements CategoryRepositoryInterface
             ['id' => $category->id()],
             [
                 'name' => $category->name(),
+                'slug' => $category->slug(),
                 'description' => $category->description(),
                 'is_default' => $category->isDefault(),
                 'display_order' => $category->displayOrder(),
+                'parent_id' => $category->parentId(),
             ]
         );
     }
@@ -74,9 +76,11 @@ final class EloquentCategoryRepository implements CategoryRepositoryInterface
         return new Category(
             id: $model->id,
             name: $model->name,
+            slug: $model->slug,
             description: $model->description,
             isDefault: $model->is_default,
             displayOrder: $model->display_order,
+            parentId: $model->parent_id,
             createdAt: new \DateTimeImmutable($model->created_at),
             updatedAt: new \DateTimeImmutable($model->updated_at),
         );

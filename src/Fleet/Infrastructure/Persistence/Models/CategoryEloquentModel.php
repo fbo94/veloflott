@@ -17,9 +17,11 @@ final class CategoryEloquentModel extends Model
     protected $fillable = [
         'id',
         'name',
+        'slug',
         'description',
         'is_default',
         'display_order',
+        'parent_id',
     ];
 
     protected $casts = [
@@ -28,4 +30,14 @@ final class CategoryEloquentModel extends Model
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
+
+    public function parent()
+    {
+        return $this->belongsTo(self::class, 'parent_id');
+    }
+
+    public function children()
+    {
+        return $this->hasMany(self::class, 'parent_id');
+    }
 }

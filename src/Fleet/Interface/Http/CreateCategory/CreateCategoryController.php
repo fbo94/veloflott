@@ -19,11 +19,13 @@ final class CreateCategoryController
     {
         $command = new CreateCategoryCommand(
             name: $request->input('name'),
+            slug: $request->input('slug'),
             description: $request->input('description'),
+            parentId: $request->input('parent_id'),
         );
 
-        $response = $this->handler->handle($command);
+        $categoryId = $this->handler->handle($command);
 
-        return new JsonResponse($response->toArray(), Response::HTTP_CREATED);
+        return new JsonResponse(['id' => $categoryId], Response::HTTP_CREATED);
     }
 }

@@ -27,7 +27,7 @@ final class UpdateCategoryHandler
         }
 
         // Mettre à jour
-        $category->rename($command->name, $command->description);
+        $category->update($command->name, $command->slug, $command->description);
 
         $this->categories->save($category);
 

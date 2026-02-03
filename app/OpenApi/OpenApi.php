@@ -418,8 +418,10 @@ class GetBikeDetailEndpoint {}
             schema: new OA\Schema(
                 required: ['name'],
                 properties: [
-                    new OA\Property(property: 'name', type: 'string', example: 'VTT Électrique'),
-                    new OA\Property(property: 'description', type: 'string', example: 'Vélos tout-terrain électriques', nullable: true),
+                    new OA\Property(property: 'name', type: 'string', example: 'XC'),
+                    new OA\Property(property: 'slug', type: 'string', example: 'xc', nullable: true, description: 'URL-friendly identifier (lowercase, alphanumeric and dashes only)'),
+                    new OA\Property(property: 'description', type: 'string', example: 'Vélos cross-country', nullable: true),
+                    new OA\Property(property: 'parent_id', type: 'string', format: 'uuid', example: '550e8400-e29b-41d4-a716-446655440003', nullable: true, description: 'ID of parent category for hierarchical organization'),
                 ],
                 type: 'object'
             )
@@ -463,8 +465,9 @@ class ListCategoriesEndpoint {}
             mediaType: 'application/json',
             schema: new OA\Schema(
                 properties: [
-                    new OA\Property(property: 'name', type: 'string', example: 'VTT Électrique Pro'),
-                    new OA\Property(property: 'description', type: 'string', example: 'Vélos tout-terrain électriques haut de gamme', nullable: true),
+                    new OA\Property(property: 'name', type: 'string', example: 'Enduro'),
+                    new OA\Property(property: 'slug', type: 'string', example: 'enduro', nullable: true, description: 'URL-friendly identifier'),
+                    new OA\Property(property: 'description', type: 'string', example: 'Vélos enduro all-mountain', nullable: true),
                 ],
                 type: 'object'
             )

@@ -827,11 +827,24 @@
                                 "properties": {
                                     "name": {
                                         "type": "string",
-                                        "example": "VTT Électrique"
+                                        "example": "XC"
+                                    },
+                                    "slug": {
+                                        "description": "URL-friendly identifier (lowercase, alphanumeric and dashes only)",
+                                        "type": "string",
+                                        "example": "xc",
+                                        "nullable": true
                                     },
                                     "description": {
                                         "type": "string",
-                                        "example": "Vélos tout-terrain électriques",
+                                        "example": "Vélos cross-country",
+                                        "nullable": true
+                                    },
+                                    "parent_id": {
+                                        "description": "ID of parent category for hierarchical organization",
+                                        "type": "string",
+                                        "format": "uuid",
+                                        "example": "550e8400-e29b-41d4-a716-446655440003",
                                         "nullable": true
                                     }
                                 },
@@ -887,11 +900,17 @@
                                 "properties": {
                                     "name": {
                                         "type": "string",
-                                        "example": "VTT Électrique Pro"
+                                        "example": "Enduro"
+                                    },
+                                    "slug": {
+                                        "description": "URL-friendly identifier",
+                                        "type": "string",
+                                        "example": "enduro",
+                                        "nullable": true
                                     },
                                     "description": {
                                         "type": "string",
-                                        "example": "Vélos tout-terrain électriques haut de gamme",
+                                        "example": "Vélos enduro all-mountain",
                                         "nullable": true
                                     }
                                 },
