@@ -41,5 +41,22 @@ interface MaintenanceRepositoryInterface
      */
     public function countByStatus(): array;
 
+    /**
+     * Trouve les maintenances planifiées à une date donnée
+     * @return Maintenance[]
+     */
+    public function findScheduledOnDate(\DateTimeImmutable $date): array;
+
+    /**
+     * Trouve les maintenances complétées à une date donnée
+     * @return Maintenance[]
+     */
+    public function findCompletedOnDate(\DateTimeImmutable $date): array;
+
+    /**
+     * Compte le nombre de maintenances urgentes en attente (TODO + URGENT)
+     */
+    public function countUrgentPending(): int;
+
     public function delete(string $id): void;
 }

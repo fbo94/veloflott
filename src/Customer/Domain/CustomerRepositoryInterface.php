@@ -20,5 +20,10 @@ interface CustomerRepositoryInterface
      */
     public function findAll(): array;
 
+    /**
+     * Compte le nombre total de clients
+     */
+    public function count(): int;
+
     public function save(Customer $customer): void;
 }

@@ -176,6 +176,36 @@ final class EloquentBikeRepository implements BikeRepositoryInterface
         return BikeEloquentModel::with(['model.brand', 'category'])->find($id);
     }
 
+    public function countByStatus(): array
+    {
+        return BikeEloquentModel::query()
+            ->selectRaw('status, COUNT(*) as count')
+            ->groupBy('status')
+            ->pluck('count', 'status')
+            ->toArray();
+    }
+
+    public function countActive(): int
+    {
+        return BikeEloquentModel::where('status', '!=', 'retired')->count();
+    }
+
+    public function getAverageAge(): float
+    {
+        $currentYear = (int) date('Y');
+
+        $averageYear = BikeEloquentModel::query()
+            ->where('status', '!=', 'retired')
+            ->whereNotNull('year')
+            ->avg('year');
+
+        if ($averageYear === null) {
+            return 0.0;
+        }
+
+        return round($currentYear - $averageYear, 1);
+    }
+
     public function save(Bike $bike): void
     {
         BikeEloquentModel::updateOrCreate(

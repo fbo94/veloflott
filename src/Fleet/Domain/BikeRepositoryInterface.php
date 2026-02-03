@@ -50,6 +50,22 @@ interface BikeRepositoryInterface
     public function countByCategoryId(string $categoryId): int;
 
     /**
+     * Compte le nombre de vélos par statut
+     * @return array<string, int> ex: ['available' => 95, 'rented' => 40, ...]
+     */
+    public function countByStatus(): array;
+
+    /**
+     * Compte le nombre total de vélos actifs (hors RETIRED)
+     */
+    public function countActive(): int;
+
+    /**
+     * Calcule l'âge moyen de la flotte en années
+     */
+    public function getAverageAge(): float;
+
+    /**
      * Trouve un vélo par ID avec les relations chargées (pour les DTOs).
      * Retourne le model Eloquent pour accès direct aux relations.
      */

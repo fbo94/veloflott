@@ -54,6 +54,11 @@ final class EloquentCustomerRepository implements CustomerRepositoryInterface
             ->all();
     }
 
+    public function count(): int
+    {
+        return CustomerEloquentModel::count();
+    }
+
     public function save(Customer $customer): void
     {
         CustomerEloquentModel::updateOrCreate(

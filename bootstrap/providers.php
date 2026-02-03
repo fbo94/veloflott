@@ -6,4 +6,5 @@ return [
     Customer\Infrastructure\CustomerServiceProvider::class,
     Rental\Infrastructure\RentalServiceProvider::class,
     Maintenance\Infrastructure\MaintenanceServiceProvider::class,
+    Dashboard\Infrastructure\DashboardServiceProvider::class,
 ];

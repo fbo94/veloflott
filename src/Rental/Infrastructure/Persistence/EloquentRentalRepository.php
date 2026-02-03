@@ -66,6 +66,103 @@ final class EloquentRentalRepository implements RentalRepositoryInterface
             ->all();
     }
 
+    public function countActive(): int
+    {
+        return RentalEloquentModel::where('status', RentalStatus::ACTIVE->value)->count();
+    }
+
+    public function findByPeriod(\DateTimeImmutable $from, \DateTimeImmutable $to): array
+    {
+        return RentalEloquentModel::with(['items', 'equipments'])
+            ->where(function ($query) use ($from, $to) {
+                $query->whereBetween('start_date', [$from->format('Y-m-d H:i:s'), $to->format('Y-m-d H:i:s')])
+                    ->orWhereBetween('expected_return_date', [$from->format('Y-m-d H:i:s'), $to->format('Y-m-d H:i:s')]);
+            })
+            ->orderBy('start_date', 'desc')
+            ->get()
+            ->map(fn ($model) => $this->toDomain($model))
+            ->all();
+    }
+
+    public function countByPeriod(\DateTimeImmutable $from, \DateTimeImmutable $to): int
+    {
+        return RentalEloquentModel::whereBetween('start_date', [
+            $from->format('Y-m-d H:i:s'),
+            $to->format('Y-m-d H:i:s')
+        ])->count();
+    }
+
+    public function sumRevenueByPeriod(\DateTimeImmutable $from, \DateTimeImmutable $to): int
+    {
+        return (int) RentalEloquentModel::whereBetween('start_date', [
+            $from->format('Y-m-d H:i:s'),
+            $to->format('Y-m-d H:i:s')
+        ])
+            ->where('status', '!=', RentalStatus::CANCELLED->value)
+            ->sum('total_amount');
+    }
+
+    public function getAverageRentalDurationHours(): float
+    {
+        $avgSeconds = RentalEloquentModel::query()
+            ->where('status', RentalStatus::COMPLETED->value)
+            ->whereNotNull('actual_return_date')
+            ->selectRaw('AVG(TIMESTAMPDIFF(SECOND, start_date, actual_return_date)) as avg_duration')
+            ->value('avg_duration');
+
+        if ($avgSeconds === null) {
+            return 0.0;
+        }
+
+        return round($avgSeconds / 3600, 1);
+    }
+
+    public function findStartedOnDate(\DateTimeImmutable $date): array
+    {
+        $startOfDay = $date->format('Y-m-d 00:00:00');
+        $endOfDay = $date->format('Y-m-d 23:59:59');
+
+        return RentalEloquentModel::with(['items', 'equipments', 'customer'])
+            ->whereBetween('start_date', [$startOfDay, $endOfDay])
+            ->orderBy('start_date', 'desc')
+            ->get()
+            ->map(fn ($model) => $this->toDomain($model))
+            ->all();
+    }
+
+    public function findExpectedReturnOnDate(\DateTimeImmutable $date): array
+    {
+        $startOfDay = $date->format('Y-m-d 00:00:00');
+        $endOfDay = $date->format('Y-m-d 23:59:59');
+
+        return RentalEloquentModel::with(['items', 'equipments', 'customer'])
+            ->whereBetween('expected_return_date', [$startOfDay, $endOfDay])
+            ->orderBy('expected_return_date')
+            ->get()
+            ->map(fn ($model) => $this->toDomain($model))
+            ->all();
+    }
+
+    public function getStatsByBike(?int $limit = null): array
+    {
+        $query = RentalItemEloquentModel::query()
+            ->selectRaw('bike_id, COUNT(*) as rental_count, SUM(daily_rate * quantity) as total_revenue')
+            ->groupBy('bike_id')
+            ->orderBy('rental_count', 'desc');
+
+        if ($limit !== null) {
+            $query->limit($limit);
+        }
+
+        return $query->get()->map(function ($item) {
+            return [
+                'bike_id' => $item->bike_id,
+                'rental_count' => $item->rental_count,
+                'total_revenue' => (int) $item->total_revenue,
+            ];
+        })->all();
+    }
+
     public function save(Rental $rental): void
     {
         RentalEloquentModel::updateOrCreate(

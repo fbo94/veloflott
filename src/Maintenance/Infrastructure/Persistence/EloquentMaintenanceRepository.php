@@ -123,6 +123,38 @@ final class EloquentMaintenanceRepository implements MaintenanceRepositoryInterf
         return $counts;
     }
 
+    public function findScheduledOnDate(\DateTimeImmutable $date): array
+    {
+        $startOfDay = $date->format('Y-m-d 00:00:00');
+        $endOfDay = $date->format('Y-m-d 23:59:59');
+
+        return MaintenanceEloquentModel::whereBetween('scheduled_at', [$startOfDay, $endOfDay])
+            ->orderBy('scheduled_at')
+            ->get()
+            ->map(fn ($model) => $this->toDomain($model))
+            ->all();
+    }
+
+    public function findCompletedOnDate(\DateTimeImmutable $date): array
+    {
+        $startOfDay = $date->format('Y-m-d 00:00:00');
+        $endOfDay = $date->format('Y-m-d 23:59:59');
+
+        return MaintenanceEloquentModel::where('status', MaintenanceStatus::COMPLETED->value)
+            ->whereBetween('completed_at', [$startOfDay, $endOfDay])
+            ->orderBy('completed_at', 'desc')
+            ->get()
+            ->map(fn ($model) => $this->toDomain($model))
+            ->all();
+    }
+
+    public function countUrgentPending(): int
+    {
+        return MaintenanceEloquentModel::where('priority', MaintenancePriority::URGENT->value)
+            ->where('status', MaintenanceStatus::TODO->value)
+            ->count();
+    }
+
     public function delete(string $id): void
     {
         MaintenanceEloquentModel::where('id', $id)->delete();
