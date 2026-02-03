@@ -1,0 +1,49 @@
+# gcloudignore - fichiers à ignorer lors du déploiement avec gcloud
+# Similaire à .dockerignore mais pour gcloud builds
+
+.gcloudignore
+.git
+.gitignore
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Tests
+/tests
+phpunit.xml
+.phpunit.result.cache
+
+# Documentation
+README.md
+*.md
+/docs
+
+# Docker local
+docker-compose.yml
+Dockerfile
+!Dockerfile.production
+
+# Node
+/node_modules
+npm-debug.log
+yarn-error.log
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# Vendor (sera reconstruit dans le build)
+/vendor
+
+# Storage
+/storage/*.key
+/storage/logs/*
+!/storage/logs/.gitkeep
+
+# OS
+.DS_Store
+Thumbs.db

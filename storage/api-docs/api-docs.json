@@ -310,6 +310,33 @@
                                         "example": "+33612345678",
                                         "nullable": true
                                     },
+                                    "identity_document_type": {
+                                        "type": "string",
+                                        "example": "Carte d'identité",
+                                        "nullable": true
+                                    },
+                                    "identity_document_number": {
+                                        "type": "string",
+                                        "example": "AB123456",
+                                        "nullable": true
+                                    },
+                                    "height": {
+                                        "description": "Height in cm",
+                                        "type": "integer",
+                                        "example": 175,
+                                        "nullable": true
+                                    },
+                                    "weight": {
+                                        "description": "Weight in kg",
+                                        "type": "integer",
+                                        "example": 75,
+                                        "nullable": true
+                                    },
+                                    "address": {
+                                        "type": "string",
+                                        "example": "123 Rue de la Paix, 75001 Paris",
+                                        "nullable": true
+                                    },
                                     "notes": {
                                         "type": "string",
                                         "example": "Client régulier",
@@ -369,6 +396,191 @@
                     },
                     "403": {
                         "description": "Forbidden - requires view_customers permission"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/customers/{id}": {
+            "get": {
+                "tags": [
+                    "Customers"
+                ],
+                "summary": "Get customer details with rental history and statistics",
+                "operationId": "0e254a7934b3686367479110390b34c9",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Customer details including rental history and statistics"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden - requires view_customers permission"
+                    },
+                    "404": {
+                        "description": "Customer not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Customers"
+                ],
+                "summary": "Update customer information",
+                "operationId": "6a23d336b9c77a7a4a676867adcfb28b",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "first_name",
+                                    "last_name"
+                                ],
+                                "properties": {
+                                    "first_name": {
+                                        "type": "string",
+                                        "example": "Jean"
+                                    },
+                                    "last_name": {
+                                        "type": "string",
+                                        "example": "Dupont"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "jean.dupont@example.com",
+                                        "nullable": true
+                                    },
+                                    "phone": {
+                                        "type": "string",
+                                        "example": "+33612345678",
+                                        "nullable": true
+                                    },
+                                    "identity_document_type": {
+                                        "type": "string",
+                                        "example": "Passeport",
+                                        "nullable": true
+                                    },
+                                    "identity_document_number": {
+                                        "type": "string",
+                                        "example": "CD789012",
+                                        "nullable": true
+                                    },
+                                    "height": {
+                                        "description": "Height in cm",
+                                        "type": "integer",
+                                        "example": 180,
+                                        "nullable": true
+                                    },
+                                    "weight": {
+                                        "description": "Weight in kg",
+                                        "type": "integer",
+                                        "example": 80,
+                                        "nullable": true
+                                    },
+                                    "address": {
+                                        "type": "string",
+                                        "example": "456 Avenue des Champs, 75008 Paris",
+                                        "nullable": true
+                                    },
+                                    "notes": {
+                                        "type": "string",
+                                        "example": "Préfère les vélos de route",
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Customer updated successfully"
+                    },
+                    "400": {
+                        "description": "Validation error"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden - requires manage_customers permission"
+                    },
+                    "404": {
+                        "description": "Customer not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/customers/{id}/toggle-risky": {
+            "post": {
+                "tags": [
+                    "Customers"
+                ],
+                "summary": "Toggle customer risky flag",
+                "operationId": "4d4bb848847312e7db059da56898b054",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Risky flag toggled successfully"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden - requires manage_customers permission"
+                    },
+                    "404": {
+                        "description": "Customer not found"
                     }
                 },
                 "security": [

@@ -184,6 +184,11 @@ class AuthorizeEndpoint {}
                     new OA\Property(property: 'last_name', type: 'string', example: 'Dupont'),
                     new OA\Property(property: 'email', type: 'string', format: 'email', example: 'jean.dupont@example.com', nullable: true),
                     new OA\Property(property: 'phone', type: 'string', example: '+33612345678', nullable: true),
+                    new OA\Property(property: 'identity_document_type', type: 'string', example: 'Carte d\'identité', nullable: true),
+                    new OA\Property(property: 'identity_document_number', type: 'string', example: 'AB123456', nullable: true),
+                    new OA\Property(property: 'height', type: 'integer', example: 175, description: 'Height in cm', nullable: true),
+                    new OA\Property(property: 'weight', type: 'integer', example: 75, description: 'Weight in kg', nullable: true),
+                    new OA\Property(property: 'address', type: 'string', example: '123 Rue de la Paix, 75001 Paris', nullable: true),
                     new OA\Property(property: 'notes', type: 'string', example: 'Client régulier', nullable: true),
                 ],
                 type: 'object'
@@ -221,6 +226,83 @@ class CreateCustomerEndpoint {}
     ]
 )]
 class SearchCustomersEndpoint {}
+
+// GET /api/customers/{id}
+#[OA\Get(
+    path: '/api/customers/{id}',
+    summary: 'Get customer details with rental history and statistics',
+    security: [['bearerAuth' => []]],
+    tags: ['Customers'],
+    parameters: [
+        new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'string', format: 'uuid'))
+    ],
+    responses: [
+        new OA\Response(response: 200, description: 'Customer details including rental history and statistics'),
+        new OA\Response(response: 401, description: 'Unauthorized'),
+        new OA\Response(response: 403, description: 'Forbidden - requires view_customers permission'),
+        new OA\Response(response: 404, description: 'Customer not found')
+    ]
+)]
+class GetCustomerDetailEndpoint {}
+
+// PUT /api/customers/{id}
+#[OA\Put(
+    path: '/api/customers/{id}',
+    summary: 'Update customer information',
+    security: [['bearerAuth' => []]],
+    tags: ['Customers'],
+    parameters: [
+        new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'string', format: 'uuid'))
+    ],
+    requestBody: new OA\RequestBody(
+        required: true,
+        content: new OA\MediaType(
+            mediaType: 'application/json',
+            schema: new OA\Schema(
+                required: ['first_name', 'last_name'],
+                properties: [
+                    new OA\Property(property: 'first_name', type: 'string', example: 'Jean'),
+                    new OA\Property(property: 'last_name', type: 'string', example: 'Dupont'),
+                    new OA\Property(property: 'email', type: 'string', format: 'email', example: 'jean.dupont@example.com', nullable: true),
+                    new OA\Property(property: 'phone', type: 'string', example: '+33612345678', nullable: true),
+                    new OA\Property(property: 'identity_document_type', type: 'string', example: 'Passeport', nullable: true),
+                    new OA\Property(property: 'identity_document_number', type: 'string', example: 'CD789012', nullable: true),
+                    new OA\Property(property: 'height', type: 'integer', example: 180, description: 'Height in cm', nullable: true),
+                    new OA\Property(property: 'weight', type: 'integer', example: 80, description: 'Weight in kg', nullable: true),
+                    new OA\Property(property: 'address', type: 'string', example: '456 Avenue des Champs, 75008 Paris', nullable: true),
+                    new OA\Property(property: 'notes', type: 'string', example: 'Préfère les vélos de route', nullable: true),
+                ],
+                type: 'object'
+            )
+        )
+    ),
+    responses: [
+        new OA\Response(response: 200, description: 'Customer updated successfully'),
+        new OA\Response(response: 400, description: 'Validation error'),
+        new OA\Response(response: 401, description: 'Unauthorized'),
+        new OA\Response(response: 403, description: 'Forbidden - requires manage_customers permission'),
+        new OA\Response(response: 404, description: 'Customer not found')
+    ]
+)]
+class UpdateCustomerEndpoint {}
+
+// POST /api/customers/{id}/toggle-risky
+#[OA\Post(
+    path: '/api/customers/{id}/toggle-risky',
+    summary: 'Toggle customer risky flag',
+    security: [['bearerAuth' => []]],
+    tags: ['Customers'],
+    parameters: [
+        new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'string', format: 'uuid'))
+    ],
+    responses: [
+        new OA\Response(response: 200, description: 'Risky flag toggled successfully'),
+        new OA\Response(response: 401, description: 'Unauthorized'),
+        new OA\Response(response: 403, description: 'Forbidden - requires manage_customers permission'),
+        new OA\Response(response: 404, description: 'Customer not found')
+    ]
+)]
+class ToggleRiskyFlagEndpoint {}
 
 // ------------------------------ FLEET - BIKES ------------------------------
 

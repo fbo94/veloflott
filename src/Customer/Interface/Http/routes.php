@@ -3,7 +3,10 @@
 declare(strict_types=1);
 
 use Customer\Interface\Http\CreateCustomer\CreateCustomerController;
+use Customer\Interface\Http\GetCustomerDetail\GetCustomerDetailController;
 use Customer\Interface\Http\SearchCustomers\SearchCustomersController;
+use Customer\Interface\Http\ToggleRiskyFlag\ToggleRiskyFlagController;
+use Customer\Interface\Http\UpdateCustomer\UpdateCustomerController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['keycloak'])->prefix('api/customers')->group(function () {
@@ -12,4 +15,13 @@ Route::middleware(['keycloak'])->prefix('api/customers')->group(function () {
 
     Route::get('/search', SearchCustomersController::class)
         ->middleware('permission:view_customers');
+
+    Route::get('/{id}', GetCustomerDetailController::class)
+        ->middleware('permission:view_customers');
+
+    Route::put('/{id}', UpdateCustomerController::class)
+        ->middleware('permission:manage_customers');
+
+    Route::post('/{id}/toggle-risky', ToggleRiskyFlagController::class)
+        ->middleware('permission:manage_customers');
 });
