@@ -811,3 +811,544 @@ class CheckOutRentalEndpoint {}
     ]
 )]
 class ListActiveRentalsEndpoint {}
+
+// ------------------------------ MAINTENANCE ------------------------------
+
+// GET /api/maintenance/reasons
+#[OA\Get(
+    path: '/api/maintenance/reasons',
+    summary: 'List all maintenance categories and reasons',
+    security: [['bearerAuth' => []]],
+    tags: ['Maintenance'],
+    responses: [
+        new OA\Response(
+            response: 200,
+            description: 'List of maintenance categories with their associated reasons',
+            content: new OA\MediaType(
+                mediaType: 'application/json',
+                schema: new OA\Schema(
+                    properties: [
+                        new OA\Property(
+                            property: 'categories',
+                            type: 'array',
+                            items: new OA\Items(
+                                properties: [
+                                    new OA\Property(property: 'code', type: 'string', example: 'transmission'),
+                                    new OA\Property(property: 'label', type: 'string', example: 'Transmission'),
+                                    new OA\Property(
+                                        property: 'reasons',
+                                        type: 'array',
+                                        items: new OA\Items(
+                                            properties: [
+                                                new OA\Property(property: 'code', type: 'string', example: 'chain_replacement'),
+                                                new OA\Property(property: 'label', type: 'string', example: 'Remplacement chaîne'),
+                                            ],
+                                            type: 'object'
+                                        )
+                                    ),
+                                ],
+                                type: 'object'
+                            )
+                        ),
+                    ],
+                    type: 'object'
+                )
+            )
+        ),
+        new OA\Response(response: 401, description: 'Unauthorized'),
+        new OA\Response(response: 403, description: 'Forbidden - requires view_maintenance permission')
+    ]
+)]
+class ListMaintenanceReasonsEndpoint {}
+
+// POST /api/maintenance/maintenances
+#[OA\Post(
+    path: '/api/maintenance/maintenances',
+    summary: 'Declare a new maintenance for a bike',
+    security: [['bearerAuth' => []]],
+    tags: ['Maintenance'],
+    requestBody: new OA\RequestBody(
+        required: true,
+        content: new OA\MediaType(
+            mediaType: 'application/json',
+            schema: new OA\Schema(
+                required: ['bike_id', 'type', 'reason', 'priority'],
+                properties: [
+                    new OA\Property(property: 'bike_id', type: 'string', format: 'uuid', example: '550e8400-e29b-41d4-a716-446655440000'),
+                    new OA\Property(property: 'type', type: 'string', enum: ['preventive', 'curative'], example: 'curative'),
+                    new OA\Property(property: 'reason', type: 'string', example: 'chain_replacement', description: 'Maintenance reason code from /api/maintenance/reasons'),
+                    new OA\Property(property: 'priority', type: 'string', enum: ['low', 'normal', 'urgent'], example: 'normal'),
+                    new OA\Property(property: 'scheduled_at', type: 'string', format: 'date-time', example: '2024-03-20T09:00:00Z'),
+                    new OA\Property(property: 'notes', type: 'string', nullable: true, example: 'Chaîne très usée, à remplacer rapidement'),
+                ],
+                type: 'object'
+            )
+        )
+    ),
+    responses: [
+        new OA\Response(response: 201, description: 'Maintenance declared successfully'),
+        new OA\Response(response: 400, description: 'Validation error or bike not available for maintenance'),
+        new OA\Response(response: 401, description: 'Unauthorized'),
+        new OA\Response(response: 403, description: 'Forbidden - requires manage_maintenance permission'),
+        new OA\Response(response: 404, description: 'Bike not found')
+    ]
+)]
+class DeclareMaintenanceEndpoint {}
+
+// GET /api/maintenance/maintenances
+#[OA\Get(
+    path: '/api/maintenance/maintenances',
+    summary: 'List maintenances with filters',
+    security: [['bearerAuth' => []]],
+    tags: ['Maintenance'],
+    parameters: [
+        new OA\Parameter(
+            name: 'status',
+            in: 'query',
+            required: false,
+            schema: new OA\Schema(type: 'string', enum: ['todo', 'in_progress', 'completed', 'cancelled']),
+            description: 'Filter by status'
+        ),
+        new OA\Parameter(
+            name: 'priority',
+            in: 'query',
+            required: false,
+            schema: new OA\Schema(type: 'string', enum: ['low', 'normal', 'urgent']),
+            description: 'Filter by priority'
+        ),
+        new OA\Parameter(
+            name: 'type',
+            in: 'query',
+            required: false,
+            schema: new OA\Schema(type: 'string', enum: ['preventive', 'curative']),
+            description: 'Filter by type'
+        ),
+        new OA\Parameter(
+            name: 'bike_id',
+            in: 'query',
+            required: false,
+            schema: new OA\Schema(type: 'string', format: 'uuid'),
+            description: 'Filter by bike'
+        ),
+        new OA\Parameter(
+            name: 'category',
+            in: 'query',
+            required: false,
+            schema: new OA\Schema(type: 'string', enum: ['transmission', 'brakes', 'suspension', 'wheels', 'steering', 'frame', 'electrical', 'full_service', 'other']),
+            description: 'Filter by maintenance category'
+        )
+    ],
+    responses: [
+        new OA\Response(response: 200, description: 'List of maintenances'),
+        new OA\Response(response: 401, description: 'Unauthorized'),
+        new OA\Response(response: 403, description: 'Forbidden - requires view_maintenance permission')
+    ]
+)]
+class ListMaintenancesEndpoint {}
+
+// PUT /api/maintenance/maintenances/{id}/start
+#[OA\Put(
+    path: '/api/maintenance/maintenances/{id}/start',
+    summary: 'Start a maintenance',
+    security: [['bearerAuth' => []]],
+    tags: ['Maintenance'],
+    parameters: [
+        new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'string', format: 'uuid'))
+    ],
+    requestBody: new OA\RequestBody(
+        required: false,
+        content: new OA\MediaType(
+            mediaType: 'application/json',
+            schema: new OA\Schema(
+                properties: [
+                    new OA\Property(property: 'notes', type: 'string', nullable: true, example: 'Début de la maintenance'),
+                ],
+                type: 'object'
+            )
+        )
+    ),
+    responses: [
+        new OA\Response(response: 200, description: 'Maintenance started, bike status changed to MAINTENANCE'),
+        new OA\Response(response: 400, description: 'Maintenance cannot be started (not in TODO status)'),
+        new OA\Response(response: 401, description: 'Unauthorized'),
+        new OA\Response(response: 403, description: 'Forbidden - requires manage_maintenance permission'),
+        new OA\Response(response: 404, description: 'Maintenance not found')
+    ]
+)]
+class StartMaintenanceEndpoint {}
+
+// PUT /api/maintenance/maintenances/{id}/complete
+#[OA\Put(
+    path: '/api/maintenance/maintenances/{id}/complete',
+    summary: 'Complete a maintenance',
+    security: [['bearerAuth' => []]],
+    tags: ['Maintenance'],
+    parameters: [
+        new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'string', format: 'uuid'))
+    ],
+    requestBody: new OA\RequestBody(
+        required: false,
+        content: new OA\MediaType(
+            mediaType: 'application/json',
+            schema: new OA\Schema(
+                properties: [
+                    new OA\Property(property: 'parts_cost', type: 'number', format: 'float', nullable: true, example: 25.50, description: 'Cost of parts in euros'),
+                    new OA\Property(property: 'labor_cost', type: 'number', format: 'float', nullable: true, example: 15.00, description: 'Labor cost in euros'),
+                    new OA\Property(property: 'notes', type: 'string', nullable: true, example: 'Chaîne remplacée, vélo prêt'),
+                ],
+                type: 'object'
+            )
+        )
+    ),
+    responses: [
+        new OA\Response(response: 200, description: 'Maintenance completed, bike status changed to AVAILABLE'),
+        new OA\Response(response: 400, description: 'Maintenance cannot be completed (not in IN_PROGRESS status)'),
+        new OA\Response(response: 401, description: 'Unauthorized'),
+        new OA\Response(response: 403, description: 'Forbidden - requires manage_maintenance permission'),
+        new OA\Response(response: 404, description: 'Maintenance not found')
+    ]
+)]
+class CompleteMaintenanceEndpoint {}
+
+// GET /api/maintenance/bikes/{bikeId}/maintenances
+#[OA\Get(
+    path: '/api/maintenance/bikes/{bikeId}/maintenances',
+    summary: 'Get maintenance history for a specific bike',
+    security: [['bearerAuth' => []]],
+    tags: ['Maintenance'],
+    parameters: [
+        new OA\Parameter(name: 'bikeId', in: 'path', required: true, schema: new OA\Schema(type: 'string', format: 'uuid'))
+    ],
+    responses: [
+        new OA\Response(response: 200, description: 'List of all maintenances for this bike'),
+        new OA\Response(response: 401, description: 'Unauthorized'),
+        new OA\Response(response: 403, description: 'Forbidden - requires view_maintenance permission'),
+        new OA\Response(response: 404, description: 'Bike not found')
+    ]
+)]
+class GetBikeMaintenanceHistoryEndpoint {}
+
+// ------------------------------ DASHBOARD ------------------------------
+
+// GET /api/dashboard/overview
+#[OA\Get(
+    path: '/api/dashboard/overview',
+    summary: 'Get fleet overview (US 6.1)',
+    security: [['bearerAuth' => []]],
+    tags: ['Dashboard'],
+    responses: [
+        new OA\Response(
+            response: 200,
+            description: 'Fleet overview with status counts',
+            content: new OA\MediaType(
+                mediaType: 'application/json',
+                schema: new OA\Schema(
+                    properties: [
+                        new OA\Property(property: 'total_bikes', type: 'integer', example: 50),
+                        new OA\Property(
+                            property: 'by_status',
+                            type: 'object',
+                            properties: [
+                                new OA\Property(property: 'available', type: 'integer', example: 30),
+                                new OA\Property(property: 'rented', type: 'integer', example: 15),
+                                new OA\Property(property: 'maintenance', type: 'integer', example: 4),
+                                new OA\Property(property: 'retired', type: 'integer', example: 1),
+                            ]
+                        ),
+                        new OA\Property(property: 'active_rentals', type: 'integer', example: 15),
+                        new OA\Property(property: 'total_customers', type: 'integer', example: 120),
+                    ],
+                    type: 'object'
+                )
+            )
+        ),
+        new OA\Response(response: 401, description: 'Unauthorized'),
+        new OA\Response(response: 403, description: 'Forbidden - requires view_dashboard permission')
+    ]
+)]
+class GetFleetOverviewEndpoint {}
+
+// GET /api/dashboard/today
+#[OA\Get(
+    path: '/api/dashboard/today',
+    summary: 'Get today\'s activity (US 6.2)',
+    security: [['bearerAuth' => []]],
+    tags: ['Dashboard'],
+    parameters: [
+        new OA\Parameter(
+            name: 'date',
+            in: 'query',
+            required: false,
+            schema: new OA\Schema(type: 'string', format: 'date'),
+            description: 'Specific date to query (defaults to today)'
+        )
+    ],
+    responses: [
+        new OA\Response(
+            response: 200,
+            description: 'Today\'s activity details',
+            content: new OA\MediaType(
+                mediaType: 'application/json',
+                schema: new OA\Schema(
+                    properties: [
+                        new OA\Property(property: 'date', type: 'string', format: 'date', example: '2024-03-15'),
+                        new OA\Property(
+                            property: 'rentals',
+                            type: 'object',
+                            properties: [
+                                new OA\Property(property: 'starting_today', type: 'integer', example: 5),
+                                new OA\Property(property: 'returning_today', type: 'integer', example: 3),
+                                new OA\Property(property: 'late_returns', type: 'integer', example: 1),
+                            ]
+                        ),
+                        new OA\Property(
+                            property: 'maintenances',
+                            type: 'object',
+                            properties: [
+                                new OA\Property(property: 'scheduled_today', type: 'integer', example: 2),
+                                new OA\Property(property: 'completed_today', type: 'integer', example: 1),
+                                new OA\Property(property: 'urgent_pending', type: 'integer', example: 0),
+                            ]
+                        ),
+                        new OA\Property(
+                            property: 'details',
+                            type: 'object',
+                            properties: [
+                                new OA\Property(property: 'starting_rentals', type: 'array', items: new OA\Items(type: 'object')),
+                                new OA\Property(property: 'expected_returns', type: 'array', items: new OA\Items(type: 'object')),
+                                new OA\Property(property: 'scheduled_maintenances', type: 'array', items: new OA\Items(type: 'object')),
+                            ]
+                        ),
+                    ],
+                    type: 'object'
+                )
+            )
+        ),
+        new OA\Response(response: 401, description: 'Unauthorized'),
+        new OA\Response(response: 403, description: 'Forbidden - requires view_dashboard permission')
+    ]
+)]
+class GetTodayActivityEndpoint {}
+
+// GET /api/dashboard/kpis/utilization
+#[OA\Get(
+    path: '/api/dashboard/kpis/utilization',
+    summary: 'Get utilization KPIs (US 6.3)',
+    security: [['bearerAuth' => []]],
+    tags: ['Dashboard - KPIs'],
+    parameters: [
+        new OA\Parameter(
+            name: 'period',
+            in: 'query',
+            required: false,
+            schema: new OA\Schema(type: 'string', enum: ['day', 'week', 'month', 'year']),
+            description: 'Period for KPI calculation (default: month)'
+        )
+    ],
+    responses: [
+        new OA\Response(
+            response: 200,
+            description: 'Utilization KPIs',
+            content: new OA\MediaType(
+                mediaType: 'application/json',
+                schema: new OA\Schema(
+                    properties: [
+                        new OA\Property(property: 'utilization_rate', type: 'number', format: 'float', example: 72.5, description: 'Percentage of fleet utilization'),
+                        new OA\Property(property: 'average_rental_duration_hours', type: 'number', format: 'float', example: 4.5),
+                        new OA\Property(property: 'total_rentals_period', type: 'integer', example: 150),
+                        new OA\Property(property: 'period', type: 'string', example: 'month'),
+                    ],
+                    type: 'object'
+                )
+            )
+        ),
+        new OA\Response(response: 401, description: 'Unauthorized'),
+        new OA\Response(response: 403, description: 'Forbidden - requires view_dashboard permission')
+    ]
+)]
+class GetUtilizationKpiEndpoint {}
+
+// GET /api/dashboard/kpis/revenue
+#[OA\Get(
+    path: '/api/dashboard/kpis/revenue',
+    summary: 'Get revenue KPIs (US 6.3)',
+    security: [['bearerAuth' => []]],
+    tags: ['Dashboard - KPIs'],
+    parameters: [
+        new OA\Parameter(
+            name: 'period',
+            in: 'query',
+            required: false,
+            schema: new OA\Schema(type: 'string', enum: ['day', 'week', 'month', 'year']),
+            description: 'Period for KPI calculation (default: month)'
+        )
+    ],
+    responses: [
+        new OA\Response(
+            response: 200,
+            description: 'Revenue KPIs',
+            content: new OA\MediaType(
+                mediaType: 'application/json',
+                schema: new OA\Schema(
+                    properties: [
+                        new OA\Property(property: 'total_revenue', type: 'number', format: 'float', example: 12500.00, description: 'Total revenue in euros'),
+                        new OA\Property(property: 'rev_pav', type: 'number', format: 'float', example: 250.00, description: 'Revenue Per Available Vehicle'),
+                        new OA\Property(property: 'average_ticket', type: 'number', format: 'float', example: 45.50, description: 'Average rental amount'),
+                        new OA\Property(property: 'period', type: 'string', example: 'month'),
+                    ],
+                    type: 'object'
+                )
+            )
+        ),
+        new OA\Response(response: 401, description: 'Unauthorized'),
+        new OA\Response(response: 403, description: 'Forbidden - requires view_dashboard permission')
+    ]
+)]
+class GetRevenueKpiEndpoint {}
+
+// GET /api/dashboard/kpis/maintenance
+#[OA\Get(
+    path: '/api/dashboard/kpis/maintenance',
+    summary: 'Get maintenance KPIs (US 6.3)',
+    security: [['bearerAuth' => []]],
+    tags: ['Dashboard - KPIs'],
+    parameters: [
+        new OA\Parameter(
+            name: 'period',
+            in: 'query',
+            required: false,
+            schema: new OA\Schema(type: 'string', enum: ['day', 'week', 'month', 'year']),
+            description: 'Period for KPI calculation (default: month)'
+        )
+    ],
+    responses: [
+        new OA\Response(
+            response: 200,
+            description: 'Maintenance KPIs',
+            content: new OA\MediaType(
+                mediaType: 'application/json',
+                schema: new OA\Schema(
+                    properties: [
+                        new OA\Property(property: 'total_maintenances', type: 'integer', example: 25),
+                        new OA\Property(property: 'mttr_hours', type: 'number', format: 'float', example: 4.2, description: 'Mean Time To Repair in hours'),
+                        new OA\Property(property: 'maintenance_cost', type: 'number', format: 'float', example: 850.00, description: 'Total maintenance cost in euros'),
+                        new OA\Property(
+                            property: 'by_type',
+                            type: 'object',
+                            properties: [
+                                new OA\Property(property: 'preventive', type: 'integer', example: 15),
+                                new OA\Property(property: 'curative', type: 'integer', example: 10),
+                            ]
+                        ),
+                        new OA\Property(property: 'period', type: 'string', example: 'month'),
+                    ],
+                    type: 'object'
+                )
+            )
+        ),
+        new OA\Response(response: 401, description: 'Unauthorized'),
+        new OA\Response(response: 403, description: 'Forbidden - requires view_dashboard permission')
+    ]
+)]
+class GetMaintenanceKpiEndpoint {}
+
+// GET /api/dashboard/kpis/top-bikes
+#[OA\Get(
+    path: '/api/dashboard/kpis/top-bikes',
+    summary: 'Get top performing bikes (US 6.3)',
+    security: [['bearerAuth' => []]],
+    tags: ['Dashboard - KPIs'],
+    parameters: [
+        new OA\Parameter(
+            name: 'limit',
+            in: 'query',
+            required: false,
+            schema: new OA\Schema(type: 'integer', default: 10),
+            description: 'Number of bikes to return'
+        )
+    ],
+    responses: [
+        new OA\Response(
+            response: 200,
+            description: 'Top performing bikes by revenue and rentals',
+            content: new OA\MediaType(
+                mediaType: 'application/json',
+                schema: new OA\Schema(
+                    properties: [
+                        new OA\Property(
+                            property: 'top_bikes',
+                            type: 'array',
+                            items: new OA\Items(
+                                properties: [
+                                    new OA\Property(property: 'bike_id', type: 'string', format: 'uuid'),
+                                    new OA\Property(property: 'internal_number', type: 'string', example: 'VTT-001'),
+                                    new OA\Property(property: 'brand_name', type: 'string', example: 'Giant'),
+                                    new OA\Property(property: 'model_name', type: 'string', example: 'Trance X'),
+                                    new OA\Property(property: 'total_rentals', type: 'integer', example: 45),
+                                    new OA\Property(property: 'total_revenue', type: 'number', format: 'float', example: 2250.00),
+                                ],
+                                type: 'object'
+                            )
+                        ),
+                    ],
+                    type: 'object'
+                )
+            )
+        ),
+        new OA\Response(response: 401, description: 'Unauthorized'),
+        new OA\Response(response: 403, description: 'Forbidden - requires view_dashboard permission')
+    ]
+)]
+class GetTopBikesKpiEndpoint {}
+
+// GET /api/dashboard/alerts
+#[OA\Get(
+    path: '/api/dashboard/alerts',
+    summary: 'Get centralized alerts (US 6.4)',
+    security: [['bearerAuth' => []]],
+    tags: ['Dashboard'],
+    responses: [
+        new OA\Response(
+            response: 200,
+            description: 'Centralized alerts from all sources',
+            content: new OA\MediaType(
+                mediaType: 'application/json',
+                schema: new OA\Schema(
+                    properties: [
+                        new OA\Property(
+                            property: 'alerts',
+                            type: 'array',
+                            items: new OA\Items(
+                                properties: [
+                                    new OA\Property(property: 'type', type: 'string', enum: ['late_return', 'urgent_maintenance', 'bike_long_unavailable', 'maintenance_long_running']),
+                                    new OA\Property(property: 'severity', type: 'string', enum: ['high', 'medium', 'low']),
+                                    new OA\Property(property: 'message', type: 'string', example: 'Retour en retard de 2 jour(s)'),
+                                    new OA\Property(property: 'rental_id', type: 'string', format: 'uuid', nullable: true),
+                                    new OA\Property(property: 'maintenance_id', type: 'string', format: 'uuid', nullable: true),
+                                    new OA\Property(property: 'bike_id', type: 'string', format: 'uuid', nullable: true),
+                                    new OA\Property(property: 'customer_id', type: 'string', format: 'uuid', nullable: true),
+                                    new OA\Property(property: 'created_at', type: 'string', format: 'date-time'),
+                                ],
+                                type: 'object'
+                            )
+                        ),
+                        new OA\Property(
+                            property: 'counts_by_severity',
+                            type: 'object',
+                            properties: [
+                                new OA\Property(property: 'high', type: 'integer', example: 3),
+                                new OA\Property(property: 'medium', type: 'integer', example: 5),
+                                new OA\Property(property: 'low', type: 'integer', example: 2),
+                            ]
+                        ),
+                        new OA\Property(property: 'total', type: 'integer', example: 10),
+                    ],
+                    type: 'object'
+                )
+            )
+        ),
+        new OA\Response(response: 401, description: 'Unauthorized'),
+        new OA\Response(response: 403, description: 'Forbidden - requires view_dashboard permission')
+    ]
+)]
+class GetCentralizedAlertsEndpoint {}

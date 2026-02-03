@@ -1599,6 +1599,1015 @@
                     }
                 ]
             }
+        },
+        "/api/maintenance/reasons": {
+            "get": {
+                "tags": [
+                    "Maintenance"
+                ],
+                "summary": "List all maintenance categories and reasons",
+                "operationId": "5016ccfd00551aec0d81b1f03bdc9823",
+                "responses": {
+                    "200": {
+                        "description": "List of maintenance categories with their associated reasons",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "categories": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "code": {
+                                                        "type": "string",
+                                                        "example": "transmission"
+                                                    },
+                                                    "label": {
+                                                        "type": "string",
+                                                        "example": "Transmission"
+                                                    },
+                                                    "reasons": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "properties": {
+                                                                "code": {
+                                                                    "type": "string",
+                                                                    "example": "chain_replacement"
+                                                                },
+                                                                "label": {
+                                                                    "type": "string",
+                                                                    "example": "Remplacement chaîne"
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        }
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden - requires view_maintenance permission"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/maintenance/maintenances": {
+            "get": {
+                "tags": [
+                    "Maintenance"
+                ],
+                "summary": "List maintenances with filters",
+                "operationId": "280006ba3667180517b258fbe596960a",
+                "parameters": [
+                    {
+                        "name": "status",
+                        "in": "query",
+                        "description": "Filter by status",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "todo",
+                                "in_progress",
+                                "completed",
+                                "cancelled"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "priority",
+                        "in": "query",
+                        "description": "Filter by priority",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "low",
+                                "normal",
+                                "urgent"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "type",
+                        "in": "query",
+                        "description": "Filter by type",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "preventive",
+                                "curative"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "bike_id",
+                        "in": "query",
+                        "description": "Filter by bike",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    },
+                    {
+                        "name": "category",
+                        "in": "query",
+                        "description": "Filter by maintenance category",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "transmission",
+                                "brakes",
+                                "suspension",
+                                "wheels",
+                                "steering",
+                                "frame",
+                                "electrical",
+                                "full_service",
+                                "other"
+                            ]
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of maintenances"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden - requires view_maintenance permission"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Maintenance"
+                ],
+                "summary": "Declare a new maintenance for a bike",
+                "operationId": "d1d513bdaf8dc15cbaf75440bc27095a",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "bike_id",
+                                    "type",
+                                    "reason",
+                                    "priority"
+                                ],
+                                "properties": {
+                                    "bike_id": {
+                                        "type": "string",
+                                        "format": "uuid",
+                                        "example": "550e8400-e29b-41d4-a716-446655440000"
+                                    },
+                                    "type": {
+                                        "type": "string",
+                                        "enum": [
+                                            "preventive",
+                                            "curative"
+                                        ],
+                                        "example": "curative"
+                                    },
+                                    "reason": {
+                                        "description": "Maintenance reason code from /api/maintenance/reasons",
+                                        "type": "string",
+                                        "example": "chain_replacement"
+                                    },
+                                    "priority": {
+                                        "type": "string",
+                                        "enum": [
+                                            "low",
+                                            "normal",
+                                            "urgent"
+                                        ],
+                                        "example": "normal"
+                                    },
+                                    "scheduled_at": {
+                                        "type": "string",
+                                        "format": "date-time",
+                                        "example": "2024-03-20T09:00:00Z"
+                                    },
+                                    "notes": {
+                                        "type": "string",
+                                        "example": "Chaîne très usée, à remplacer rapidement",
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Maintenance declared successfully"
+                    },
+                    "400": {
+                        "description": "Validation error or bike not available for maintenance"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden - requires manage_maintenance permission"
+                    },
+                    "404": {
+                        "description": "Bike not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/maintenance/maintenances/{id}/start": {
+            "put": {
+                "tags": [
+                    "Maintenance"
+                ],
+                "summary": "Start a maintenance",
+                "operationId": "2a6baa7be8a01c1abb419400774bbcea",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": false,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "notes": {
+                                        "type": "string",
+                                        "example": "Début de la maintenance",
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Maintenance started, bike status changed to MAINTENANCE"
+                    },
+                    "400": {
+                        "description": "Maintenance cannot be started (not in TODO status)"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden - requires manage_maintenance permission"
+                    },
+                    "404": {
+                        "description": "Maintenance not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/maintenance/maintenances/{id}/complete": {
+            "put": {
+                "tags": [
+                    "Maintenance"
+                ],
+                "summary": "Complete a maintenance",
+                "operationId": "cd542ea027648b03176a813fa645ca0b",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": false,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "parts_cost": {
+                                        "description": "Cost of parts in euros",
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 25.5,
+                                        "nullable": true
+                                    },
+                                    "labor_cost": {
+                                        "description": "Labor cost in euros",
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 15,
+                                        "nullable": true
+                                    },
+                                    "notes": {
+                                        "type": "string",
+                                        "example": "Chaîne remplacée, vélo prêt",
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Maintenance completed, bike status changed to AVAILABLE"
+                    },
+                    "400": {
+                        "description": "Maintenance cannot be completed (not in IN_PROGRESS status)"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden - requires manage_maintenance permission"
+                    },
+                    "404": {
+                        "description": "Maintenance not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/maintenance/bikes/{bikeId}/maintenances": {
+            "get": {
+                "tags": [
+                    "Maintenance"
+                ],
+                "summary": "Get maintenance history for a specific bike",
+                "operationId": "dc1adf6d7a778032b25ae0063cb223fb",
+                "parameters": [
+                    {
+                        "name": "bikeId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of all maintenances for this bike"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden - requires view_maintenance permission"
+                    },
+                    "404": {
+                        "description": "Bike not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/dashboard/overview": {
+            "get": {
+                "tags": [
+                    "Dashboard"
+                ],
+                "summary": "Get fleet overview (US 6.1)",
+                "operationId": "b872d1c86237dee42c76a07ac7862869",
+                "responses": {
+                    "200": {
+                        "description": "Fleet overview with status counts",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "total_bikes": {
+                                            "type": "integer",
+                                            "example": 50
+                                        },
+                                        "by_status": {
+                                            "properties": {
+                                                "available": {
+                                                    "type": "integer",
+                                                    "example": 30
+                                                },
+                                                "rented": {
+                                                    "type": "integer",
+                                                    "example": 15
+                                                },
+                                                "maintenance": {
+                                                    "type": "integer",
+                                                    "example": 4
+                                                },
+                                                "retired": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "active_rentals": {
+                                            "type": "integer",
+                                            "example": 15
+                                        },
+                                        "total_customers": {
+                                            "type": "integer",
+                                            "example": 120
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden - requires view_dashboard permission"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/dashboard/today": {
+            "get": {
+                "tags": [
+                    "Dashboard"
+                ],
+                "summary": "Get today's activity (US 6.2)",
+                "operationId": "8144452e56ab40deb5977ad2414ebd3b",
+                "parameters": [
+                    {
+                        "name": "date",
+                        "in": "query",
+                        "description": "Specific date to query (defaults to today)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Today's activity details",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "date": {
+                                            "type": "string",
+                                            "format": "date",
+                                            "example": "2024-03-15"
+                                        },
+                                        "rentals": {
+                                            "properties": {
+                                                "starting_today": {
+                                                    "type": "integer",
+                                                    "example": 5
+                                                },
+                                                "returning_today": {
+                                                    "type": "integer",
+                                                    "example": 3
+                                                },
+                                                "late_returns": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "maintenances": {
+                                            "properties": {
+                                                "scheduled_today": {
+                                                    "type": "integer",
+                                                    "example": 2
+                                                },
+                                                "completed_today": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "urgent_pending": {
+                                                    "type": "integer",
+                                                    "example": 0
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "details": {
+                                            "properties": {
+                                                "starting_rentals": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "expected_returns": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "scheduled_maintenances": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden - requires view_dashboard permission"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/dashboard/kpis/utilization": {
+            "get": {
+                "tags": [
+                    "Dashboard - KPIs"
+                ],
+                "summary": "Get utilization KPIs (US 6.3)",
+                "operationId": "ce78c8817c8c264065780bf90d9ffa04",
+                "parameters": [
+                    {
+                        "name": "period",
+                        "in": "query",
+                        "description": "Period for KPI calculation (default: month)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "day",
+                                "week",
+                                "month",
+                                "year"
+                            ]
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Utilization KPIs",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "utilization_rate": {
+                                            "description": "Percentage of fleet utilization",
+                                            "type": "number",
+                                            "format": "float",
+                                            "example": 72.5
+                                        },
+                                        "average_rental_duration_hours": {
+                                            "type": "number",
+                                            "format": "float",
+                                            "example": 4.5
+                                        },
+                                        "total_rentals_period": {
+                                            "type": "integer",
+                                            "example": 150
+                                        },
+                                        "period": {
+                                            "type": "string",
+                                            "example": "month"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden - requires view_dashboard permission"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/dashboard/kpis/revenue": {
+            "get": {
+                "tags": [
+                    "Dashboard - KPIs"
+                ],
+                "summary": "Get revenue KPIs (US 6.3)",
+                "operationId": "41f2c3699e62bc4e0ef9bb63a1cc6a79",
+                "parameters": [
+                    {
+                        "name": "period",
+                        "in": "query",
+                        "description": "Period for KPI calculation (default: month)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "day",
+                                "week",
+                                "month",
+                                "year"
+                            ]
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Revenue KPIs",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "total_revenue": {
+                                            "description": "Total revenue in euros",
+                                            "type": "number",
+                                            "format": "float",
+                                            "example": 12500
+                                        },
+                                        "rev_pav": {
+                                            "description": "Revenue Per Available Vehicle",
+                                            "type": "number",
+                                            "format": "float",
+                                            "example": 250
+                                        },
+                                        "average_ticket": {
+                                            "description": "Average rental amount",
+                                            "type": "number",
+                                            "format": "float",
+                                            "example": 45.5
+                                        },
+                                        "period": {
+                                            "type": "string",
+                                            "example": "month"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden - requires view_dashboard permission"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/dashboard/kpis/maintenance": {
+            "get": {
+                "tags": [
+                    "Dashboard - KPIs"
+                ],
+                "summary": "Get maintenance KPIs (US 6.3)",
+                "operationId": "c089d7efbec64dc7a8a2275b928c3da5",
+                "parameters": [
+                    {
+                        "name": "period",
+                        "in": "query",
+                        "description": "Period for KPI calculation (default: month)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "day",
+                                "week",
+                                "month",
+                                "year"
+                            ]
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Maintenance KPIs",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "total_maintenances": {
+                                            "type": "integer",
+                                            "example": 25
+                                        },
+                                        "mttr_hours": {
+                                            "description": "Mean Time To Repair in hours",
+                                            "type": "number",
+                                            "format": "float",
+                                            "example": 4.2
+                                        },
+                                        "maintenance_cost": {
+                                            "description": "Total maintenance cost in euros",
+                                            "type": "number",
+                                            "format": "float",
+                                            "example": 850
+                                        },
+                                        "by_type": {
+                                            "properties": {
+                                                "preventive": {
+                                                    "type": "integer",
+                                                    "example": 15
+                                                },
+                                                "curative": {
+                                                    "type": "integer",
+                                                    "example": 10
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "period": {
+                                            "type": "string",
+                                            "example": "month"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden - requires view_dashboard permission"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/dashboard/kpis/top-bikes": {
+            "get": {
+                "tags": [
+                    "Dashboard - KPIs"
+                ],
+                "summary": "Get top performing bikes (US 6.3)",
+                "operationId": "f5ad3b841d9013cf94b4b5fe2d753896",
+                "parameters": [
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Number of bikes to return",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 10
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Top performing bikes by revenue and rentals",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "top_bikes": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "bike_id": {
+                                                        "type": "string",
+                                                        "format": "uuid"
+                                                    },
+                                                    "internal_number": {
+                                                        "type": "string",
+                                                        "example": "VTT-001"
+                                                    },
+                                                    "brand_name": {
+                                                        "type": "string",
+                                                        "example": "Giant"
+                                                    },
+                                                    "model_name": {
+                                                        "type": "string",
+                                                        "example": "Trance X"
+                                                    },
+                                                    "total_rentals": {
+                                                        "type": "integer",
+                                                        "example": 45
+                                                    },
+                                                    "total_revenue": {
+                                                        "type": "number",
+                                                        "format": "float",
+                                                        "example": 2250
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden - requires view_dashboard permission"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/dashboard/alerts": {
+            "get": {
+                "tags": [
+                    "Dashboard"
+                ],
+                "summary": "Get centralized alerts (US 6.4)",
+                "operationId": "895ff533cebc3f12dbff65503ed3d9e3",
+                "responses": {
+                    "200": {
+                        "description": "Centralized alerts from all sources",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "alerts": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "type": {
+                                                        "type": "string",
+                                                        "enum": [
+                                                            "late_return",
+                                                            "urgent_maintenance",
+                                                            "bike_long_unavailable",
+                                                            "maintenance_long_running"
+                                                        ]
+                                                    },
+                                                    "severity": {
+                                                        "type": "string",
+                                                        "enum": [
+                                                            "high",
+                                                            "medium",
+                                                            "low"
+                                                        ]
+                                                    },
+                                                    "message": {
+                                                        "type": "string",
+                                                        "example": "Retour en retard de 2 jour(s)"
+                                                    },
+                                                    "rental_id": {
+                                                        "type": "string",
+                                                        "format": "uuid",
+                                                        "nullable": true
+                                                    },
+                                                    "maintenance_id": {
+                                                        "type": "string",
+                                                        "format": "uuid",
+                                                        "nullable": true
+                                                    },
+                                                    "bike_id": {
+                                                        "type": "string",
+                                                        "format": "uuid",
+                                                        "nullable": true
+                                                    },
+                                                    "customer_id": {
+                                                        "type": "string",
+                                                        "format": "uuid",
+                                                        "nullable": true
+                                                    },
+                                                    "created_at": {
+                                                        "type": "string",
+                                                        "format": "date-time"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "counts_by_severity": {
+                                            "properties": {
+                                                "high": {
+                                                    "type": "integer",
+                                                    "example": 3
+                                                },
+                                                "medium": {
+                                                    "type": "integer",
+                                                    "example": 5
+                                                },
+                                                "low": {
+                                                    "type": "integer",
+                                                    "example": 2
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "total": {
+                                            "type": "integer",
+                                            "example": 10
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden - requires view_dashboard permission"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
         }
     },
     "components": {
@@ -1638,6 +2647,18 @@
         {
             "name": "Rentals",
             "description": "Rentals"
+        },
+        {
+            "name": "Maintenance",
+            "description": "Maintenance"
+        },
+        {
+            "name": "Dashboard",
+            "description": "Dashboard"
+        },
+        {
+            "name": "Dashboard - KPIs",
+            "description": "Dashboard - KPIs"
         }
     ]
 }
