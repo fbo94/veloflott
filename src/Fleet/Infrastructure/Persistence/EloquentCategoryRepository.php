@@ -81,8 +81,8 @@ final class EloquentCategoryRepository implements CategoryRepositoryInterface
             isDefault: $model->is_default,
             displayOrder: $model->display_order,
             parentId: $model->parent_id,
-            createdAt: new \DateTimeImmutable($model->created_at),
-            updatedAt: new \DateTimeImmutable($model->updated_at),
+            createdAt: \DateTimeImmutable::createFromInterface($model->created_at),
+            updatedAt: \DateTimeImmutable::createFromInterface($model->updated_at),
         );
     }
 }

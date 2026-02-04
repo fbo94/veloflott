@@ -6,7 +6,6 @@ namespace Fleet\Domain;
 
 enum FrameSizeLetter: string
 {
-    case XXS = 'xxs';
     case XS = 'xs';
     case S = 's';
     case M = 'm';
@@ -27,7 +26,6 @@ enum FrameSizeLetter: string
     public function defaultCmRange(): array
     {
         return match ($this) {
-            self::XXS => ['min' => 44, 'max' => 47],
             self::XS => ['min' => 48, 'max' => 50],
             self::S => ['min' => 51, 'max' => 53],
             self::M => ['min' => 54, 'max' => 56],
@@ -45,7 +43,6 @@ enum FrameSizeLetter: string
     public function defaultInchRange(): array
     {
         return match ($this) {
-            self::XXS => ['min' => 12, 'max' => 12],
             self::XS => ['min' => 13, 'max' => 14],
             self::S => ['min' => 15, 'max' => 16],
             self::M => ['min' => 17, 'max' => 18],

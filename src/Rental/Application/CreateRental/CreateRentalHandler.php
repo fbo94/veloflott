@@ -83,9 +83,16 @@ final class CreateRentalHandler
             duration: $command->duration,
             depositAmount: $command->depositAmount,
             totalAmount: 0.0, // Sera recalculé
+            discountAmount: 0.0,
+            taxRate: 20.0, // TVA française par défaut
+            taxAmount: 0.0, // Sera recalculé
+            totalWithTax: 0.0, // Sera recalculé
             status: RentalStatus::PENDING,
             items: $rentalItems,
             equipments: $equipments,
+            depositStatus: null,
+            depositRetained: null,
+            cancellationReason: null,
             createdAt: new \DateTimeImmutable(),
             updatedAt: new \DateTimeImmutable(),
         );

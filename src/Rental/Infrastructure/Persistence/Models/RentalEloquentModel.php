@@ -17,6 +17,7 @@ final class RentalEloquentModel extends Model
     protected $table = 'rentals';
 
     protected $fillable = [
+        'id',
         'customer_id',
         'start_date',
         'expected_return_date',
@@ -24,6 +25,10 @@ final class RentalEloquentModel extends Model
         'duration',
         'deposit_amount',
         'total_amount',
+        'discount_amount',
+        'tax_rate',
+        'tax_amount',
+        'total_with_tax',
         'status',
         'deposit_status',
         'deposit_retained',
@@ -31,14 +36,18 @@ final class RentalEloquentModel extends Model
     ];
 
     protected $casts = [
-        'start_date' => 'datetime',
-        'expected_return_date' => 'datetime',
-        'actual_return_date' => 'datetime',
+        'start_date' => 'immutable_datetime',
+        'expected_return_date' => 'immutable_datetime',
+        'actual_return_date' => 'immutable_datetime',
         'deposit_amount' => 'float',
         'total_amount' => 'float',
+        'discount_amount' => 'float',
+        'tax_rate' => 'float',
+        'tax_amount' => 'float',
+        'total_with_tax' => 'float',
         'deposit_retained' => 'float',
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime',
+        'created_at' => 'immutable_datetime',
+        'updated_at' => 'immutable_datetime',
     ];
 
     public function customer(): BelongsTo

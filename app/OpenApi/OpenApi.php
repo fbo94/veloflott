@@ -304,6 +304,48 @@ class UpdateCustomerEndpoint {}
 )]
 class ToggleRiskyFlagEndpoint {}
 
+// ------------------------------ FLEET - BRANDS ------------------------------
+
+// GET /api/fleet/brands
+#[OA\Get(
+    path: '/api/fleet/brands',
+    summary: 'List all bike brands',
+    security: [['bearerAuth' => []]],
+    tags: ['Fleet - Brands'],
+    responses: [
+        new OA\Response(response: 200, description: 'List of bike brands'),
+        new OA\Response(response: 401, description: 'Unauthorized'),
+        new OA\Response(response: 403, description: 'Forbidden - requires view_bikes permission')
+    ]
+)]
+class ListBrandsEndpoint {}
+
+// ------------------------------ FLEET - MODELS ------------------------------
+
+// GET /api/fleet/models
+#[OA\Get(
+    path: '/api/fleet/models',
+    summary: 'List all bike models with optional brand filter',
+    security: [['bearerAuth' => []]],
+    tags: ['Fleet - Models'],
+    parameters: [
+        new OA\Parameter(
+            name: 'brand_id',
+            in: 'query',
+            required: false,
+            schema: new OA\Schema(type: 'string', format: 'uuid'),
+            description: 'Filter models by brand ID'
+        )
+    ],
+    responses: [
+        new OA\Response(response: 200, description: 'List of bike models'),
+        new OA\Response(response: 400, description: 'Validation error'),
+        new OA\Response(response: 401, description: 'Unauthorized'),
+        new OA\Response(response: 403, description: 'Forbidden - requires view_bikes permission')
+    ]
+)]
+class ListModelsEndpoint {}
+
 // ------------------------------ FLEET - BIKES ------------------------------
 
 // POST /api/fleet/bikes
@@ -777,6 +819,206 @@ class CheckInRentalEndpoint {}
     ]
 )]
 class CheckOutRentalEndpoint {}
+
+// GET /api/rentals
+#[OA\Get(
+    path: '/api/rentals',
+    summary: 'List rental history with filters and pagination',
+    security: [['bearerAuth' => []]],
+    tags: ['Rentals'],
+    parameters: [
+        new OA\Parameter(
+            name: 'customer_id',
+            in: 'query',
+            required: false,
+            schema: new OA\Schema(type: 'string', format: 'uuid'),
+            description: 'Filter by customer ID'
+        ),
+        new OA\Parameter(
+            name: 'status',
+            in: 'query',
+            required: false,
+            schema: new OA\Schema(type: 'string', enum: ['pending', 'active', 'completed', 'cancelled']),
+            description: 'Filter by rental status'
+        ),
+        new OA\Parameter(
+            name: 'start_date',
+            in: 'query',
+            required: false,
+            schema: new OA\Schema(type: 'string', format: 'date'),
+            description: 'Filter rentals starting from this date'
+        ),
+        new OA\Parameter(
+            name: 'end_date',
+            in: 'query',
+            required: false,
+            schema: new OA\Schema(type: 'string', format: 'date'),
+            description: 'Filter rentals until this date'
+        ),
+        new OA\Parameter(
+            name: 'page',
+            in: 'query',
+            required: false,
+            schema: new OA\Schema(type: 'integer', default: 1),
+            description: 'Page number'
+        ),
+        new OA\Parameter(
+            name: 'per_page',
+            in: 'query',
+            required: false,
+            schema: new OA\Schema(type: 'integer', default: 20, maximum: 100),
+            description: 'Items per page'
+        )
+    ],
+    responses: [
+        new OA\Response(
+            response: 200,
+            description: 'Paginated list of rentals with detailed information',
+            content: new OA\MediaType(
+                mediaType: 'application/json',
+                schema: new OA\Schema(
+                    properties: [
+                        new OA\Property(
+                            property: 'data',
+                            type: 'array',
+                            items: new OA\Items(
+                                properties: [
+                                    new OA\Property(property: 'id', type: 'string', format: 'uuid'),
+                                    new OA\Property(property: 'customer_id', type: 'string', format: 'uuid'),
+                                    new OA\Property(property: 'customer_name', type: 'string'),
+                                    new OA\Property(property: 'start_date', type: 'string', format: 'date-time'),
+                                    new OA\Property(property: 'expected_return_date', type: 'string', format: 'date-time'),
+                                    new OA\Property(property: 'actual_return_date', type: 'string', format: 'date-time', nullable: true),
+                                    new OA\Property(property: 'bikes', type: 'array', items: new OA\Items(type: 'string')),
+                                    new OA\Property(property: 'status', type: 'string'),
+                                    new OA\Property(property: 'duration', type: 'string'),
+                                    new OA\Property(property: 'total_amount', type: 'number'),
+                                    new OA\Property(property: 'deposit_amount', type: 'number'),
+                                    new OA\Property(property: 'deposit_status', type: 'string'),
+                                    new OA\Property(property: 'deposit_retained', type: 'number', nullable: true),
+                                    new OA\Property(property: 'created_at', type: 'string', format: 'date-time'),
+                                ],
+                                type: 'object'
+                            )
+                        ),
+                        new OA\Property(
+                            property: 'meta',
+                            properties: [
+                                new OA\Property(property: 'total', type: 'integer'),
+                                new OA\Property(property: 'current_page', type: 'integer'),
+                                new OA\Property(property: 'per_page', type: 'integer'),
+                                new OA\Property(property: 'last_page', type: 'integer'),
+                            ],
+                            type: 'object'
+                        ),
+                    ],
+                    type: 'object'
+                )
+            )
+        ),
+        new OA\Response(response: 401, description: 'Unauthorized'),
+        new OA\Response(response: 403, description: 'Forbidden - requires view_rentals permission')
+    ]
+)]
+class ListRentalsEndpoint {}
+
+// GET /api/rentals/{id}
+#[OA\Get(
+    path: '/api/rentals/{id}',
+    summary: 'Get rental details by ID',
+    security: [['bearerAuth' => []]],
+    tags: ['Rentals'],
+    parameters: [
+        new OA\Parameter(
+            name: 'id',
+            in: 'path',
+            required: true,
+            schema: new OA\Schema(type: 'string', format: 'uuid'),
+            description: 'Rental ID'
+        )
+    ],
+    responses: [
+        new OA\Response(
+            response: 200,
+            description: 'Detailed rental information with customer, bikes, and equipments',
+            content: new OA\MediaType(
+                mediaType: 'application/json',
+                schema: new OA\Schema(
+                    properties: [
+                        new OA\Property(property: 'id', type: 'string', format: 'uuid'),
+                        new OA\Property(
+                            property: 'customer',
+                            properties: [
+                                new OA\Property(property: 'id', type: 'string', format: 'uuid'),
+                                new OA\Property(property: 'first_name', type: 'string'),
+                                new OA\Property(property: 'last_name', type: 'string'),
+                                new OA\Property(property: 'email', type: 'string'),
+                                new OA\Property(property: 'phone', type: 'string', nullable: true),
+                            ],
+                            type: 'object'
+                        ),
+                        new OA\Property(property: 'start_date', type: 'string', format: 'date-time'),
+                        new OA\Property(property: 'expected_return_date', type: 'string', format: 'date-time'),
+                        new OA\Property(property: 'actual_return_date', type: 'string', format: 'date-time', nullable: true),
+                        new OA\Property(property: 'duration', type: 'string'),
+                        new OA\Property(property: 'deposit_amount', type: 'number'),
+                        new OA\Property(property: 'total_amount', type: 'number'),
+                        new OA\Property(property: 'status', type: 'string'),
+                        new OA\Property(property: 'deposit_status', type: 'string'),
+                        new OA\Property(property: 'deposit_retained', type: 'number', nullable: true),
+                        new OA\Property(property: 'cancellation_reason', type: 'string', nullable: true),
+                        new OA\Property(
+                            property: 'items',
+                            type: 'array',
+                            items: new OA\Items(
+                                properties: [
+                                    new OA\Property(property: 'id', type: 'string', format: 'uuid'),
+                                    new OA\Property(property: 'bike_id', type: 'string', format: 'uuid'),
+                                    new OA\Property(property: 'bike_brand', type: 'string'),
+                                    new OA\Property(property: 'bike_model', type: 'string'),
+                                    new OA\Property(property: 'bike_internal_number', type: 'string'),
+                                    new OA\Property(property: 'daily_rate', type: 'number'),
+                                    new OA\Property(property: 'quantity', type: 'integer'),
+                                    new OA\Property(property: 'client_height', type: 'integer', nullable: true),
+                                    new OA\Property(property: 'client_weight', type: 'integer', nullable: true),
+                                    new OA\Property(property: 'saddle_height', type: 'integer', nullable: true),
+                                    new OA\Property(property: 'front_suspension_pressure', type: 'integer', nullable: true),
+                                    new OA\Property(property: 'rear_suspension_pressure', type: 'integer', nullable: true),
+                                    new OA\Property(property: 'pedal_type', type: 'string', nullable: true),
+                                    new OA\Property(property: 'check_in_notes', type: 'string', nullable: true),
+                                    new OA\Property(property: 'return_condition', type: 'string', nullable: true),
+                                    new OA\Property(property: 'damage_description', type: 'string', nullable: true),
+                                    new OA\Property(property: 'damage_photos', type: 'array', items: new OA\Items(type: 'string')),
+                                ],
+                                type: 'object'
+                            )
+                        ),
+                        new OA\Property(
+                            property: 'equipments',
+                            type: 'array',
+                            items: new OA\Items(
+                                properties: [
+                                    new OA\Property(property: 'id', type: 'string', format: 'uuid'),
+                                    new OA\Property(property: 'type', type: 'string'),
+                                    new OA\Property(property: 'quantity', type: 'integer'),
+                                    new OA\Property(property: 'price_per_unit', type: 'number'),
+                                ],
+                                type: 'object'
+                            )
+                        ),
+                        new OA\Property(property: 'created_at', type: 'string', format: 'date-time'),
+                        new OA\Property(property: 'updated_at', type: 'string', format: 'date-time'),
+                    ],
+                    type: 'object'
+                )
+            )
+        ),
+        new OA\Response(response: 401, description: 'Unauthorized'),
+        new OA\Response(response: 403, description: 'Forbidden - requires view_rentals permission'),
+        new OA\Response(response: 404, description: 'Rental not found')
+    ]
+)]
+class GetRentalDetailEndpoint {}
 
 // GET /api/rentals/active
 #[OA\Get(

@@ -1,0 +1,444 @@
+brand_name,model_name
+Trek,Fuel EX
+Trek,Slash
+Trek,Top Fuel
+Trek,Remedy
+Trek,Supercaliber
+Trek,Émonda
+Trek,Madone
+Trek,Domane
+Trek,Checkpoint
+Trek,FX
+Trek,Marlin
+Trek,X-Caliber
+Trek,Powerfly
+Trek,Rail
+Specialized,Stumpjumper
+Specialized,Enduro
+Specialized,Epic
+Specialized,Chisel
+Specialized,Status
+Specialized,Demo
+Specialized,Turbo Levo
+Specialized,Turbo Kenevo
+Specialized,Tarmac
+Specialized,Roubaix
+Specialized,Venge
+Specialized,Allez
+Specialized,Diverge
+Specialized,Crux
+Specialized,Rockhopper
+Giant,Trance
+Giant,Reign
+Giant,Anthem
+Giant,Fathom
+Giant,Glory
+Giant,TCR Advanced
+Giant,Defy Advanced
+Giant,Propel Advanced
+Giant,Revolt
+Giant,Contend
+Giant,Talon
+Giant,Toughroad
+Giant,Stance E+
+Cannondale,Scalpel
+Cannondale,Habit
+Cannondale,Jekyll
+Cannondale,Trigger
+Cannondale,Trail
+Cannondale,F-Si
+Cannondale,SuperSix EVO
+Cannondale,SystemSix
+Cannondale,Synapse
+Cannondale,CAAD13
+Cannondale,Topstone
+Cannondale,Quick
+Cannondale,Moterra
+Cannondale,Moterra Neo
+Scott,Spark
+Scott,Genius
+Scott,Ransom
+Scott,Gambler
+Scott,Scale
+Scott,Aspect
+Scott,Addict
+Scott,Foil
+Scott,Speedster
+Scott,Contessa
+Scott,Patron
+Scott,Strike eRIDE
+Santa Cruz,Hightower
+Santa Cruz,5010
+Santa Cruz,Tallboy
+Santa Cruz,Bronson
+Santa Cruz,Nomad
+Santa Cruz,Megatower
+Santa Cruz,V10
+Santa Cruz,Blur
+Santa Cruz,Chameleon
+Santa Cruz,Stigmata
+Pivot,Switchblade
+Pivot,Mach 6
+Pivot,Trail 429
+Pivot,Firebird
+Pivot,Phoenix
+Pivot,Shuttle
+Pivot,Vault
+Yeti,SB130
+Yeti,SB150
+Yeti,SB165
+Yeti,SB140
+Yeti,ARC
+Commencal,Meta AM
+Commencal,Meta TR
+Commencal,Meta HT
+Commencal,Supreme DH
+Commencal,Clash
+Commencal,Furious
+Commencal,Tempo
+Canyon,Spectral
+Canyon,Neuron
+Canyon,Torque
+Canyon,Sender
+Canyon,Lux
+Canyon,Grand Canyon
+Canyon,Ultimate
+Canyon,Aeroad
+Canyon,Endurace
+Canyon,Grail
+Canyon,Grizl
+Canyon,Exceed
+Cube,Stereo
+Cube,AMS
+Cube,Reaction
+Cube,Fritzz
+Cube,Two15
+Cube,Agree
+Cube,Litening
+Cube,Attain
+Cube,Nuroad
+BMC,Fourstroke
+BMC,Speedfox
+BMC,Trailfox
+BMC,Teammachine
+BMC,Timemachine
+BMC,Roadmachine
+BMC,Alpenchallenge
+Cervélo,S5
+Cervélo,R5
+Cervélo,Caledonia
+Cervélo,Aspero
+Cervélo,P-Series
+Cervélo,Soloist
+Pinarello,Dogma F
+Pinarello,Paris
+Pinarello,Grevil
+Pinarello,Nytro
+Pinarello,Dyodo
+Colnago,C68
+Colnago,V4Rs
+Colnago,C64
+Colnago,G4-X
+Colnago,Prestige
+Bianchi,Oltre XR4
+Bianchi,Specialissima
+Bianchi,Aria
+Bianchi,Infinito CV
+Bianchi,Impulso
+Bianchi,Zolder Pro
+Bianchi,Methanol CV
+Wilier,Zero SLR
+Wilier,Filante SLR
+Wilier,Cento10
+Wilier,GTR
+Wilier,Jena
+Look,795 Blade RS
+Look,785 Huez RS
+Look,765 Optimum
+Look,E-765
+Time,Alpe d'Huez
+Time,Fluidity
+Time,Scylon
+Lapierre,Xelius
+Lapierre,Aircode
+Lapierre,Pulsium
+Lapierre,Zesty
+Lapierre,Spicy
+Lapierre,Overvolt
+Focus,Raven
+Focus,Jam
+Focus,Sam
+Focus,Izalco
+Focus,Paralane
+Orbea,Oiz
+Orbea,Occam
+Orbea,Rallon
+Orbea,Orca
+Orbea,Orca Aero
+Orbea,Terra
+Orbea,Gain
+Merida,One-Twenty
+Merida,One-Forty
+Merida,One-Sixty
+Merida,Big Nine
+Merida,Scultura
+Merida,Reacto
+Merida,Silex
+Ghost,Lector
+Ghost,Riot
+Ghost,Kato
+Ghost,Nivolet
+Ghost,Road Rage
+Haibike,XDURO AllMtn
+Haibike,SDURO HardSeven
+Haibike,FLYON
+Riese & Müller,Superdelite
+Riese & Müller,Charger
+Riese & Müller,Homage
+Riese & Müller,Load
+Moustache,Samedi
+Moustache,Friday
+Moustache,Dimanche
+Decathlon,Rockrider ST 100
+Decathlon,Rockrider ST 540
+Decathlon,Rockrider XC 500
+Decathlon,Van Rysel RCR
+Decathlon,Van Rysel EDR
+Decathlon,Riverside 500
+Decathlon,Riverside 900
+Decathlon,Elops 920
+Ridley,Helium SLX
+Ridley,Noah Fast
+Ridley,Fenix SLiC
+Ridley,X-Trail
+Kona,Process
+Kona,Hei Hei
+Kona,Honzo
+Kona,Operator
+Kona,Sutra
+Kona,Rove
+Salsa,Horsethief
+Salsa,Timberjack
+Salsa,Warbird
+Salsa,Cutthroat
+Salsa,Fargo
+Surly,Karate Monkey
+Surly,ECR
+Surly,Midnight Special
+Surly,Long Haul Trucker
+Surly,Bridge Club
+Niner,RIP 9
+Niner,JET 9
+Niner,AIR 9
+Niner,WFO 9
+Transition,Sentinel
+Transition,Scout
+Transition,Patrol
+Transition,Spire
+Transition,Smuggler
+Evil,The Offering
+Evil,The Following
+Evil,The Wreckoning
+Evil,Insurgent
+Intense,Primer
+Intense,Tracer
+Intense,ACV
+Intense,M29
+Devinci,Spartan
+Devinci,Troy
+Devinci,Django
+Devinci,Marshall
+Rocky Mountain,Altitude
+Rocky Mountain,Slayer
+Rocky Mountain,Instinct
+Rocky Mountain,Element
+Mondraker,Foxy
+Mondraker,Crafty
+Mondraker,Dune
+Mondraker,Podium
+Factor,One
+Factor,Ostro
+Factor,O2
+Argon 18,Gallium
+Argon 18,Krypton
+Argon 18,Nitrogen
+Argon 18,E-117
+Felt,Edict
+Felt,Doctrine
+Felt,Breed
+Felt,AR
+Felt,FR
+Felt,VR
+Fuji,Roubaix
+Fuji,Gran Fondo
+Fuji,Sportif
+Fuji,Altamira
+GT,Force
+GT,Fury
+GT,Sanction
+GT,Avalanche
+GT,Zaskar
+Brompton,M6L
+Brompton,P Line
+Brompton,C Line
+Brompton,Electric
+Tern,GSD
+Tern,HSD
+Tern,Vektron
+Tern,Link
+Urban Arrow,Family
+Urban Arrow,Cargo
+Urban Arrow,Shorty
+Bullitt,Classic
+Bullitt,E-Bullitt
+Bakfiets,Cargo Bike Classic
+Bakfiets,Cargo Bike Long
+YT Industries,Jeffsy
+YT Industries,Capra
+YT Industries,Izzo
+Propain,Hugene
+Propain,Tyee
+Propain,Frechdax
+Pole,Machine
+Pole,Stamina
+Pole,Voima
+Cotic,FlareMAX
+Cotic,SolarisMAX
+Cotic,RocketMAX
+Orange,Stage 6
+Orange,Alpine 6
+Orange,Crush
+Whyte,S-150
+Whyte,T-130
+Whyte,E-180
+Genesis,Croix de Fer
+Genesis,Datum
+Genesis,Equilibrium
+Kinesis,Tripster ATR
+Kinesis,RTD
+Kinesis,Gran Fondo
+Mason,Bokeh
+Mason,Resolution
+Mason,InSearchOf
+Fairlight,Secan
+Fairlight,Strael
+3T,Exploro
+3T,Strada
+Rondo,Ruut
+Rondo,Hvrt
+Bombtrack,Hook EXT
+Bombtrack,Arise
+Bombtrack,Beyond
+Marin,Rift Zone
+Marin,Alpine Trail
+Marin,Pine Mountain
+Jamis,Renegade
+Jamis,Dragon
+Jamis,Dragonslayer
+State Bicycle,4130 All-Road
+State Bicycle,Undefeated II
+Pure Cycles,Road
+Pure Cycles,Gravel
+Litespeed,Ultimate
+Litespeed,T5 Gravel
+Litespeed,T1
+Moots,Routt
+Moots,Vamoots
+Moots,Psychlo X
+Seven,Axiom
+Seven,Evergreen
+Seven,Mudhoney
+Lynskey,GR300
+Lynskey,R460
+Lynskey,Cooper CX
+Van Nicholas,Yukon
+Van Nicholas,Amazon
+Van Nicholas,Skeiron
+Enigma,Etape
+Enigma,Echo
+Enigma,Escape
+Guerrilla Gravity,Gnarvana
+Guerrilla Gravity,Trail Pistol
+Guerrilla Gravity,Shred Dogg
+Nicolai,G1
+Nicolai,Saturn
+Nicolai,Nucleon
+Raaw,Madonna
+Raaw,Jibb
+Starling,Murmur
+Starling,Twist
+Forbidden,Druid
+Forbidden,Dreadnought
+Vitus,Escarpe
+Vitus,Sommet
+Vitus,Mythique
+Nukeproof,Mega
+Nukeproof,Reactor
+Nukeproof,Scout
+Ribble,Endurance
+Ribble,CGR
+Ribble,Ultra
+Rose,Backroad
+Rose,Pro SL
+Rose,Reveal
+Radon,Slide
+Radon,Jealous
+Radon,Vaillant
+Stanton,Switchback
+Stanton,Sherpa
+On-One,Scandal
+On-One,Bootzipper
+Voodoo,Bizango
+Voodoo,Aizan
+Saracen,Ariel
+Saracen,Myst
+Charge,Cooker
+Charge,Plug
+Condor,Acciaio
+Condor,Leggero
+Standert,Kreissäge
+Standert,Triebwerk
+Tout Terrain,Amber Road
+Tout Terrain,Sitzmark
+Santos,Travelmaster
+Santos,New Age
+Thorn,Nomad
+Thorn,Raven
+Soma,Saga
+Soma,Double Cross
+Rawland,Ravn
+Rawland,Ulv
+Curve,Belgie
+Curve,GMX+
+Waterford,22-Series
+Waterford,14-Series
+Rodriguez,Phinney Ridge
+Rodriguez,Madrona
+Gunnar,Grand Tour
+Gunnar,Roadie
+Reilly,Gradient
+Reilly,Spectre
+Olmo,Gepin
+Olmo,La Biciclissima
+Guerciotti,Eureka
+Guerciotti,Lembeek
+Fondriest,TF2
+Fondriest,TF4
+Coluer,Radar
+Coluer,Ascent
+BH,Lynx
+BH,Quartz
+BH,G8
+Berria,Mako
+Berria,Belador
+Orro,Venturi
+Orro,Terra
+Orro,Gold STC
+Gios,Compact Pro
+Gios,Evoluzione
+Battaglin,Portofino
+Battaglin,Speed
+Tommasini,Tecno
+Tommasini,Sintesi
+Pegoretti,Responsorium
+Pegoretti,Marcelo

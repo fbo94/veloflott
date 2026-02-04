@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Auth\Domain;
 
+use function Symfony\Component\String\s;
+
 enum Permission: string
 {
     // ===== Fleet =====
@@ -26,6 +28,7 @@ enum Permission: string
     // ===== Maintenance =====
     case VIEW_MAINTENANCES = 'view_maintenances';
     case CREATE_MAINTENANCES = 'create_maintenances';
+    case MANAGE_MAINTENANCES = 'manage_maintenances';
     case CLOSE_MAINTENANCES = 'close_maintenances';
 
     // ===== Dashboard =====
@@ -52,6 +55,7 @@ enum Permission: string
             self::MANAGE_CUSTOMERS => 'Gérer les clients',
             self::DELETE_CUSTOMERS => 'Supprimer les clients',
             self::VIEW_MAINTENANCES => 'Voir les maintenances',
+            self::MANAGE_MAINTENANCES => 'Gérer les maintenances',
             self::CREATE_MAINTENANCES => 'Créer des maintenances',
             self::CLOSE_MAINTENANCES => 'Clôturer des maintenances',
             self::VIEW_STATS => 'Voir les statistiques',
@@ -74,7 +78,7 @@ enum Permission: string
             self::VIEW_CUSTOMERS, self::MANAGE_CUSTOMERS,
             self::DELETE_CUSTOMERS => 'customer',
 
-            self::VIEW_MAINTENANCES, self::CREATE_MAINTENANCES,
+            self::VIEW_MAINTENANCES, self::CREATE_MAINTENANCES, self::MANAGE_MAINTENANCES,
             self::CLOSE_MAINTENANCES => 'maintenance',
 
             self::VIEW_STATS => 'dashboard',

@@ -22,6 +22,10 @@ final class Rental
         private readonly RentalDuration $duration,
         private float $depositAmount,
         private float $totalAmount,
+        private float $discountAmount = 0.0,
+        private float $taxRate = 20.0,
+        private float $taxAmount = 0.0,
+        private float $totalWithTax = 0.0,
         private RentalStatus $status,
         private array $items,
         private array $equipments,
@@ -72,6 +76,26 @@ final class Rental
     public function totalAmount(): float
     {
         return $this->totalAmount;
+    }
+
+    public function discountAmount(): float
+    {
+        return $this->discountAmount;
+    }
+
+    public function taxRate(): float
+    {
+        return $this->taxRate;
+    }
+
+    public function taxAmount(): float
+    {
+        return $this->taxAmount;
+    }
+
+    public function totalWithTax(): float
+    {
+        return $this->totalWithTax;
     }
 
     public function status(): RentalStatus
@@ -170,7 +194,26 @@ final class Rental
             0.0
         );
 
-        $this->totalAmount = $bikesAmount + $equipmentsAmount;
+        $subtotal = $bikesAmount + $equipmentsAmount;
+        $this->totalAmount = $subtotal;
+
+        // Recalculer la TVA et le total TTC
+        $this->recalculateTax();
+
+        $this->updatedAt = new \DateTimeImmutable();
+    }
+
+    public function recalculateTax(): void
+    {
+        $subtotalAfterDiscount = $this->totalAmount - $this->discountAmount;
+        $this->taxAmount = round($subtotalAfterDiscount * ($this->taxRate / 100), 2);
+        $this->totalWithTax = $subtotalAfterDiscount + $this->taxAmount;
+    }
+
+    public function applyDiscount(float $discountAmount): void
+    {
+        $this->discountAmount = $discountAmount;
+        $this->recalculateTax();
         $this->updatedAt = new \DateTimeImmutable();
     }
 

@@ -175,6 +175,10 @@ final class EloquentRentalRepository implements RentalRepositoryInterface
                 'duration' => $rental->duration()->value,
                 'deposit_amount' => $rental->depositAmount(),
                 'total_amount' => $rental->totalAmount(),
+                'discount_amount' => $rental->discountAmount(),
+                'tax_rate' => $rental->taxRate(),
+                'tax_amount' => $rental->taxAmount(),
+                'total_with_tax' => $rental->totalWithTax(),
                 'status' => $rental->status()->value,
                 'deposit_status' => $rental->depositStatus()->value,
                 'deposit_retained' => $rental->depositRetained(),
@@ -258,22 +262,26 @@ final class EloquentRentalRepository implements RentalRepositoryInterface
         return new Rental(
             id: $model->id,
             customerId: $model->customer_id,
-            startDate: new \DateTimeImmutable($model->start_date),
-            expectedReturnDate: new \DateTimeImmutable($model->expected_return_date),
+            startDate: \DateTimeImmutable::createFromInterface($model->start_date),
+            expectedReturnDate: \DateTimeImmutable::createFromInterface($model->expected_return_date),
             actualReturnDate: $model->actual_return_date !== null
-                ? new \DateTimeImmutable($model->actual_return_date)
+                ? \DateTimeImmutable::createFromInterface($model->actual_return_date)
                 : null,
             duration: RentalDuration::from($model->duration),
             depositAmount: $model->deposit_amount,
             totalAmount: $model->total_amount,
+            discountAmount: $model->discount_amount ?? 0.0,
+            taxRate: $model->tax_rate ?? 20.0,
+            taxAmount: $model->tax_amount ?? 0.0,
+            totalWithTax: $model->total_with_tax ?? 0.0,
             status: RentalStatus::from($model->status),
             items: $items,
             equipments: $equipments,
             depositStatus: DepositStatus::from($model->deposit_status),
             depositRetained: $model->deposit_retained,
             cancellationReason: $model->cancellation_reason,
-            createdAt: new \DateTimeImmutable($model->created_at),
-            updatedAt: new \DateTimeImmutable($model->updated_at),
+            createdAt: \DateTimeImmutable::createFromInterface($model->created_at),
+            updatedAt: \DateTimeImmutable::createFromInterface($model->updated_at),
         );
     }
 }

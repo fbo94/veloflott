@@ -74,8 +74,8 @@ final class EloquentModelRepository implements ModelRepositoryInterface
             id: $model->id,
             name: $model->name,
             brandId: $model->brand_id,
-            createdAt: new \DateTimeImmutable($model->created_at),
-            updatedAt: new \DateTimeImmutable($model->updated_at),
+            createdAt: \DateTimeImmutable::createFromInterface($model->created_at),
+            updatedAt: \DateTimeImmutable::createFromInterface($model->updated_at),
         );
     }
 }

@@ -41,7 +41,7 @@ final class UserEloquentModel extends Model
 
     protected $casts = [
         'is_active' => 'boolean',
-        'last_login_at' => 'datetime',
+        'last_login_at' => 'immutable_datetime',
         'created_at' => 'immutable_datetime',
         'updated_at' => 'immutable_datetime',
     ];

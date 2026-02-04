@@ -25,6 +25,7 @@ final class AuthServiceProvider extends ServiceProvider
         $this->app->singleton(KeycloakTokenValidator::class, function ($app) {
             return new KeycloakTokenValidator(
                 keycloakUrl: config('services.keycloak.url'),
+                keycloakUrlInternal: config('services.keycloak.url_private'),
                 realm: config('services.keycloak.realm'),
             );
         });
@@ -32,6 +33,7 @@ final class AuthServiceProvider extends ServiceProvider
         $this->app->singleton(KeycloakOAuthService::class, function ($app) {
             return new KeycloakOAuthService(
                 keycloakUrl: config('services.keycloak.url'),
+                keycloakUrlPrivate: config('services.keycloak.url_private'),
                 realm: config('services.keycloak.realm'),
                 clientId: config('services.keycloak.client_id'),
                 clientSecret: config('services.keycloak.client_secret'),

@@ -60,8 +60,8 @@ final class BikeEloquentModel extends Model
         'purchase_price' => 'float',
         'purchase_date' => 'date',
         'photos' => 'array',
-        'retired_at' => 'datetime',
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime',
+        'retired_at' => 'immutable_datetime',
+        'created_at' => 'immutable_datetime',
+        'updated_at' => 'immutable_datetime',
     ];
 }

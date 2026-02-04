@@ -15,6 +15,7 @@ final class RentalEquipmentEloquentModel extends Model
     protected $table = 'rental_equipments';
 
     protected $fillable = [
+        'id',
         'rental_id',
         'type',
         'quantity',
@@ -24,8 +25,8 @@ final class RentalEquipmentEloquentModel extends Model
     protected $casts = [
         'quantity' => 'integer',
         'price_per_unit' => 'float',
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime',
+        'created_at' => 'immutable_datetime',
+        'updated_at' => 'immutable_datetime',
     ];
 
     public function rental(): BelongsTo

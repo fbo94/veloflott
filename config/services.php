@@ -46,10 +46,11 @@ return [
 
     'keycloak' => [
         'url' => env('KEYCLOAK_URL', 'http://localhost:8080'),
+        'url_private' => env('KEYCLOAK_INTERNAL_URL', env('KEYCLOAK_URL_PRIVATE', 'http://keycloak:8080')),
         'realm' => env('KEYCLOAK_REALM', 'fleet-manager'),
         'client_id' => env('KEYCLOAK_CLIENT_ID', 'fleet-api'),
         'client_secret' => env('KEYCLOAK_CLIENT_SECRET'),
-        'redirect_uri' => env('KEYCLOAK_REDIRECT_URI', env('APP_URL').'/api/auth/authorization-url'),
+        'redirect_uri' => env('KEYCLOAK_REDIRECT_URI', env('APP_URL').'/api/auth/callback'),
     ],
 
 ];

@@ -26,7 +26,7 @@ final readonly class ActiveRentalDto
     public static function fromEloquentModel(RentalEloquentModel $model): self
     {
         $now = new \DateTimeImmutable();
-        $expectedReturn = new \DateTimeImmutable($model->expected_return_date);
+        $expectedReturn = \DateTimeImmutable::createFromInterface($model->expected_return_date);
         $isLate = $now > $expectedReturn;
         $delayHours = $isLate
             ? (int) (($now->getTimestamp() - $expectedReturn->getTimestamp()) / 3600)

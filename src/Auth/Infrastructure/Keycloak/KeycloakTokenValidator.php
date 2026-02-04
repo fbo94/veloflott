@@ -16,11 +16,12 @@ use Exception;
  */
 final class KeycloakTokenValidator
 {
-    private const JWKS_CACHE_KEY = 'keycloak_jwks';
-    private const JWKS_CACHE_TTL = 3600; // 1 heure
+    private const string JWKS_CACHE_KEY = 'keycloak_jwks';
+    private const int JWKS_CACHE_TTL = 3600; // 1 heure
 
     public function __construct(
         private readonly string $keycloakUrl,
+        private readonly string $keycloakUrlInternal,
         private readonly string $realm,
     ) {}
 
@@ -41,6 +42,10 @@ final class KeycloakTokenValidator
             return $payload;
         } catch (Exception $e) {
             // Log pour debug, mais ne pas exposer l'erreur
+            \Log::error('JWT token validation failed', [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+            ]);
             report($e);
             return null;
         }
@@ -59,18 +64,30 @@ final class KeycloakTokenValidator
             self::JWKS_CACHE_KEY,
             self::JWKS_CACHE_TTL,
             function () {
-                $url = "{$this->keycloakUrl}/realms/{$this->realm}/protocol/openid-connect/certs";
+                // Utiliser l'URL interne pour récupérer les JWKS depuis le backend
+                $url = "{$this->keycloakUrlInternal}/realms/{$this->realm}/protocol/openid-connect/certs";
+
+                \Log::debug('Fetching Keycloak JWKS', ['url' => $url]);
 
                 try {
                     $response = Http::timeout(10)
                         ->retry(2, 200)
-                        ->withOptions(['verify' => $this->shouldVerifyTls()])
+                        ->withOptions(['verify' => $this->shouldVerifyTls($this->keycloakUrlInternal)])
                         ->get($url);
                 } catch (\Throwable $e) {
+                    \Log::error('Failed to fetch Keycloak JWKS', [
+                        'url' => $url,
+                        'error' => $e->getMessage(),
+                    ]);
                     throw new Exception("Failed to fetch Keycloak JWKS: {$e->getMessage()}", 0, $e);
                 }
 
                 if (!$response->successful()) {
+                    \Log::error('Failed to fetch Keycloak JWKS - HTTP error', [
+                        'url' => $url,
+                        'status' => $response->status(),
+                        'body' => $response->body(),
+                    ]);
                     throw new Exception("Failed to fetch Keycloak JWKS: {$response->status()}");
                 }
 
@@ -94,17 +111,40 @@ final class KeycloakTokenValidator
         }
 
         // Vérifier l'issuer - accepter plusieurs variantes d'URL
-        $internalIssuer = "{$this->keycloakUrl}/realms/{$this->realm}";
-        $publicUrl = env('KEYCLOAK_PUBLIC_URL', $this->keycloakUrl);
-        $publicIssuer = "{$publicUrl}/realms/{$this->realm}";
+        $validIssuers = [];
 
-        // Accepter aussi la variante sans port (Keycloak peut omettre le port standard 443)
-        $publicIssuerNoPort = "https://keycloak.localhost/realms/{$this->realm}";
+        // URL interne (depuis config)
+        $validIssuers[] = "{$this->keycloakUrl}/realms/{$this->realm}";
 
-        $validIssuers = [$internalIssuer, $publicIssuer, $publicIssuerNoPort];
+        // URL publique (depuis .env KEYCLOAK_PUBLIC_URL)
+        $publicUrl = env('KEYCLOAK_PUBLIC_URL');
+        if ($publicUrl) {
+            $validIssuers[] = "{$publicUrl}/realms/{$this->realm}";
+        }
 
-        if (!isset($payload->iss) || !in_array($payload->iss, $validIssuers, true)) {
-            throw new Exception('Invalid issuer');
+        // URL interne Docker (depuis .env KEYCLOAK_INTERNAL_URL)
+        $internalUrl = env('KEYCLOAK_INTERNAL_URL');
+        if ($internalUrl) {
+            $validIssuers[] = "{$internalUrl}/realms/{$this->realm}";
+        }
+
+        // Variantes sans port (Keycloak peut omettre le port standard 443)
+        $baseUrl = parse_url($this->keycloakUrl, PHP_URL_SCHEME) . '://' . parse_url($this->keycloakUrl, PHP_URL_HOST);
+        $validIssuers[] = "{$baseUrl}/realms/{$this->realm}";
+
+        // Dédupliquer les issuers
+        $validIssuers = array_unique($validIssuers);
+
+        if (!isset($payload->iss)) {
+            throw new Exception('Missing issuer claim');
+        }
+
+        if (!in_array($payload->iss, $validIssuers, true)) {
+            \Log::error('Invalid JWT issuer', [
+                'received' => $payload->iss,
+                'expected' => $validIssuers,
+            ]);
+            throw new Exception("Invalid issuer: {$payload->iss}");
         }
     }
 
@@ -121,13 +161,13 @@ final class KeycloakTokenValidator
      * Indique si la vérification TLS doit être effectuée pour Keycloak.
      * Permet de désactiver la vérification en environnement de dev (certificat auto-signé).
      */
-    private function shouldVerifyTls(): bool
+    private function shouldVerifyTls(string $url): bool
     {
         // KEYCLOAK_TLS_VERIFY=false pour désactiver la vérification en dev
         $verify = env('KEYCLOAK_TLS_VERIFY', true);
 
         // Si l'URL Keycloak est en HTTP, aucune vérification TLS n'est nécessaire
-        if (str_starts_with(strtolower($this->keycloakUrl), 'http://')) {
+        if (str_starts_with(strtolower($url), 'http://')) {
             return false;
         }
 

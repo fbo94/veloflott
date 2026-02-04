@@ -14,6 +14,7 @@ final class KeycloakOAuthService
 {
     public function __construct(
         private readonly string $keycloakUrl,
+        private readonly string $keycloakUrlPrivate,
         private readonly string $realm,
         private readonly string $clientId,
         private readonly string $clientSecret,
@@ -44,17 +45,30 @@ final class KeycloakOAuthService
      */
     public function exchangeCodeForToken(string $code): array
     {
-        $url = "{$this->keycloakUrl}/realms/{$this->realm}/protocol/openid-connect/token";
+        $url = "{$this->keycloakUrlPrivate}/realms/{$this->realm}/protocol/openid-connect/token";
 
-        $response = Http::asForm()->post($url, [
+        $payload = [
             'grant_type' => 'authorization_code',
             'client_id' => $this->clientId,
             'client_secret' => $this->clientSecret,
             'code' => $code,
             'redirect_uri' => $this->redirectUri,
+        ];
+
+        \Log::debug('Exchanging OAuth2 code for token', [
+            'url' => $url,
+            'client_id' => $this->clientId,
+            'redirect_uri' => $this->redirectUri,
         ]);
 
+        $response = Http::asForm()->post($url, $payload);
+
         if (!$response->successful()) {
+            \Log::error('Failed to exchange code for token', [
+                'status' => $response->status(),
+                'body' => $response->body(),
+                'url' => $url,
+            ]);
             throw new Exception("Failed to exchange code for token: {$response->body()}");
         }
 

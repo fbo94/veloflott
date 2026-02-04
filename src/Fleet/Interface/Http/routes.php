@@ -8,7 +8,9 @@ use Fleet\Interface\Http\DeleteCategory\DeleteCategoryController;
 use Fleet\Interface\Http\DeleteRate\DeleteRateController;
 use Fleet\Interface\Http\GetBikeDetail\GetBikeDetailController;
 use Fleet\Interface\Http\ListBikes\ListBikesController;
+use Fleet\Interface\Http\ListBrands\ListBrandsController;
 use Fleet\Interface\Http\ListCategories\ListCategoriesController;
+use Fleet\Interface\Http\ListModels\ListModelsController;
 use Fleet\Interface\Http\ListRates\ListRatesController;
 use Fleet\Interface\Http\SetCategoryRate\SetCategoryRateController;
 use Fleet\Interface\Http\UpdateCategory\UpdateCategoryController;
@@ -16,6 +18,14 @@ use Fleet\Interface\Http\UpdateRate\UpdateRateController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['keycloak'])->prefix('api/fleet')->group(function () {
+    // Gestion des marques
+    Route::get('/brands', ListBrandsController::class)
+        ->middleware('permission:view_bikes');
+
+    // Gestion des modèles
+    Route::get('/models', ListModelsController::class)
+        ->middleware('permission:view_bikes');
+
     // Gestion des vélos
     Route::post('/bikes', CreateBikeController::class)
         ->middleware('permission:manage_bikes');

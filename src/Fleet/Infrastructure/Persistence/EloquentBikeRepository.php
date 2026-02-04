@@ -275,14 +275,14 @@ final class EloquentBikeRepository implements BikeRepositoryInterface
             rearSuspension: $model->rear_suspension,
             brakeType: $model->brake_type !== null ? BrakeType::from($model->brake_type) : null,
             purchasePrice: $model->purchase_price,
-            purchaseDate: $model->purchase_date !== null ? new \DateTimeImmutable($model->purchase_date) : null,
+            purchaseDate: $model->purchase_date !== null ? \DateTimeImmutable::createFromInterface($model->purchase_date) : null,
             notes: $model->notes,
             photos: $model->photos ?? [],
             retirementReason: $model->retirement_reason !== null ? RetirementReason::from($model->retirement_reason) : null,
             retirementComment: $model->retirement_comment,
-            retiredAt: $model->retired_at !== null ? new \DateTimeImmutable($model->retired_at) : null,
-            createdAt: new \DateTimeImmutable($model->created_at),
-            updatedAt: new \DateTimeImmutable($model->updated_at),
+            retiredAt: $model->retired_at !== null ? \DateTimeImmutable::createFromInterface($model->retired_at) : null,
+            createdAt: \DateTimeImmutable::createFromInterface($model->created_at),
+            updatedAt: \DateTimeImmutable::createFromInterface($model->updated_at),
         );
     }
 

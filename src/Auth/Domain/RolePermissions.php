@@ -32,6 +32,7 @@ final class RolePermissions
             Permission::DELETE_CUSTOMERS,
             Permission::VIEW_MAINTENANCES,
             Permission::CREATE_MAINTENANCES,
+            Permission::MANAGE_MAINTENANCES,
             Permission::CLOSE_MAINTENANCES,
             Permission::VIEW_STATS,
             Permission::MANAGE_USERS,
@@ -47,6 +48,7 @@ final class RolePermissions
             Permission::MANAGE_CUSTOMERS,
             Permission::VIEW_MAINTENANCES,
             Permission::CREATE_MAINTENANCES,
+            Permission::MANAGE_MAINTENANCES,
             Permission::CLOSE_MAINTENANCES,
             Permission::VIEW_STATS,
         ],
@@ -58,6 +60,7 @@ final class RolePermissions
             Permission::MANAGE_CUSTOMERS,
             Permission::VIEW_MAINTENANCES,
             Permission::CREATE_MAINTENANCES,
+            Permission::MANAGE_MAINTENANCES,
         ],
     ];
 

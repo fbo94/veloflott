@@ -16,6 +16,7 @@ final class RentalItemEloquentModel extends Model
     protected $table = 'rental_items';
 
     protected $fillable = [
+        'id',
         'rental_id',
         'bike_id',
         'daily_rate',
@@ -41,8 +42,8 @@ final class RentalItemEloquentModel extends Model
         'front_suspension_pressure' => 'integer',
         'rear_suspension_pressure' => 'integer',
         'damage_photos' => 'array',
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime',
+        'created_at' => 'immutable_datetime',
+        'updated_at' => 'immutable_datetime',
     ];
 
     public function rental(): BelongsTo
