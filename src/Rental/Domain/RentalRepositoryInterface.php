@@ -67,6 +67,14 @@ interface RentalRepositoryInterface
      */
     public function getStatsByBike(?int $limit = null): array;
 
+    /**
+     * Trouve les locations d'un vélo spécifique
+     * @param string $bikeId
+     * @param RentalStatus[]|null $statuses Statuts à filtrer (null = tous)
+     * @return Rental[]
+     */
+    public function findByBikeId(string $bikeId, ?array $statuses = null): array;
+
     public function save(Rental $rental): void;
 
     public function saveWithItems(Rental $rental): void;

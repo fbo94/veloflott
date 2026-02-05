@@ -46,6 +46,17 @@ final readonly class FrameSize
         );
     }
 
+    public static function fromRequest(?string $unit, ?float $numericValue, ?string $letterValue): self
+    {
+        if ($unit === FrameSizeUnit::LETTER->value && $letterValue !== null) {
+            return self::fromLetter(FrameSizeLetter::from($letterValue));
+        } elseif ($unit === FrameSizeUnit::CM->value && $numericValue !== null) {
+            return self::fromCentimeters($numericValue);
+        } elseif ($unit === FrameSizeUnit::INCH->value && $numericValue !== null) {
+            return self::fromInches($numericValue);
+        }
+    }
+
     public function displayValue(): string
     {
         return match ($this->unit) {

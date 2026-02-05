@@ -244,6 +244,17 @@ final class Bike
         return $this;
     }
 
+    /**
+     * @param string[] $photos
+     */
+    public function updatePhotos(array $photos): self
+    {
+        $this->photos = $photos;
+        $this->updatedAt = new \DateTimeImmutable();
+
+        return $this;
+    }
+
     public function changeStatus(BikeStatus $newStatus): self
     {
         if ($this->status === BikeStatus::RENTED) {

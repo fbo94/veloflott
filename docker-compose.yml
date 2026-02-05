@@ -167,13 +167,17 @@ services:
         condition: service_completed_successfully
       php:
         condition: service_started
+    entrypoint: ["/entrypoint.sh"]
+    command: ["nginx", "-g", "daemon off;"]
     ports:
       - "${NGINX_HTTP_PORT:-80}:80"
       - "${NGINX_HTTPS_PORT:-443}:443"
     volumes:
+      - ./docker/nginx/entrypoint.sh:/entrypoint.sh:ro
       - ./docker/nginx/conf.d:/etc/nginx/conf.d
       - ./docker/nginx/ssl:/etc/nginx/ssl
       - ./public:/var/www/veloflott/public
+      - ./storage/app/public:/var/www/veloflott/storage/app/public:ro
     healthcheck:
       test: ["CMD", "wget", "--spider", "http://localhost"]
       interval: 5s

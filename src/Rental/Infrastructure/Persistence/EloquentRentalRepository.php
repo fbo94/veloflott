@@ -163,6 +163,26 @@ final class EloquentRentalRepository implements RentalRepositoryInterface
         })->all();
     }
 
+    public function findByBikeId(string $bikeId, ?array $statuses = null): array
+    {
+        $query = RentalEloquentModel::query()
+            ->with(['items', 'equipments'])
+            ->whereHas('items', function ($query) use ($bikeId) {
+                $query->where('bike_id', $bikeId);
+            });
+
+        if ($statuses !== null && !empty($statuses)) {
+            $statusValues = array_map(fn (RentalStatus $status) => $status->value, $statuses);
+            $query->whereIn('status', $statusValues);
+        }
+
+        return $query
+            ->orderBy('start_date', 'desc')
+            ->get()
+            ->map(fn ($model) => $this->toDomain($model))
+            ->all();
+    }
+
     public function save(Rental $rental): void
     {
         RentalEloquentModel::updateOrCreate(

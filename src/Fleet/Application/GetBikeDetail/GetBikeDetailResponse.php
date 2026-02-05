@@ -85,7 +85,7 @@ final readonly class GetBikeDetailResponse
             'internal_number' => $this->internalNumber,
             'model_id' => $this->modelId,
             'brand' => [
-               'id' => $this->brand,
+               'id' => $this->brandId,
                 'name' => $this->brand,
             ],
             'model' => [

@@ -9,6 +9,9 @@ use Fleet\Infrastructure\Persistence\Models\BikeEloquentModel;
 
 final readonly class BikeDto
 {
+    /**
+     * @param string[] $photos
+     */
     public function __construct(
         public string $id,
         public string $qrCodeUuid,
@@ -24,6 +27,7 @@ final readonly class BikeDto
         public array $frameSize,
         public ?int $year,
         public ?string $color,
+        public array $photos,
     ) {}
 
     public static function fromEloquentModel(BikeEloquentModel $bikeModel): self
@@ -48,6 +52,7 @@ final readonly class BikeDto
             ],
             year: $bikeModel->year,
             color: $bikeModel->color,
+            photos: $bikeModel->photos ?? [],
         );
     }
 
@@ -75,6 +80,7 @@ final readonly class BikeDto
             'frame_size' => $this->frameSize,
             'year' => $this->year,
             'color' => $this->color,
+            'photos' => $this->photos,
         ];
     }
 }

@@ -60,6 +60,27 @@ return [
             'report' => false,
         ],
 
+        'gcs' => [
+            'driver' => 'gcs',
+            'project_id' => env('GCS_PROJECT_ID'),
+            'key_file' => env('GCS_KEY_FILE'), // Path to service account JSON file
+            'bucket' => env('GCS_BUCKET'),
+            'path_prefix' => env('GCS_PATH_PREFIX', ''),
+            'storage_api_uri' => env('GCS_STORAGE_API_URI'),
+            'visibility' => 'public',
+            'throw' => false,
+            'report' => false,
+        ],
+
+        'bike_photos' => [
+            'driver' => env('BIKE_PHOTOS_DRIVER', 'local'),
+            'root' => storage_path('app/public/bikes'),
+            'url' => rtrim(env('APP_URL', 'http://localhost'), '/').'/storage/bikes',
+            'visibility' => 'public',
+            'throw' => false,
+            'report' => false,
+        ],
+
     ],
 
     /*

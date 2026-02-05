@@ -614,7 +614,36 @@ class CreateBikeEndpoint {}
         )
     ],
     responses: [
-        new OA\Response(response: 200, description: 'List of bikes'),
+        new OA\Response(
+            response: 200,
+            description: 'List of bikes with photos',
+            content: new OA\MediaType(
+                mediaType: 'application/json',
+                schema: new OA\Schema(
+                    type: 'array',
+                    items: new OA\Items(
+                        properties: [
+                            new OA\Property(property: 'id', type: 'string', format: 'uuid'),
+                            new OA\Property(property: 'internal_number', type: 'string'),
+                            new OA\Property(property: 'status', type: 'string'),
+                            new OA\Property(property: 'brand', type: 'object'),
+                            new OA\Property(property: 'model', type: 'object'),
+                            new OA\Property(property: 'category', type: 'object'),
+                            new OA\Property(property: 'frame_size', type: 'object'),
+                            new OA\Property(property: 'year', type: 'integer', nullable: true),
+                            new OA\Property(property: 'color', type: 'string', nullable: true),
+                            new OA\Property(
+                                property: 'photos',
+                                type: 'array',
+                                items: new OA\Items(type: 'string', format: 'uri'),
+                                description: 'Array of photo URLs'
+                            ),
+                        ],
+                        type: 'object'
+                    )
+                )
+            )
+        ),
         new OA\Response(response: 401, description: 'Unauthorized'),
         new OA\Response(response: 403, description: 'Forbidden - requires view_bikes permission')
     ]
@@ -631,13 +660,187 @@ class ListBikesEndpoint {}
         new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'string', format: 'uuid'))
     ],
     responses: [
-        new OA\Response(response: 200, description: 'Bike details'),
+        new OA\Response(
+            response: 200,
+            description: 'Bike details with photos',
+            content: new OA\MediaType(
+                mediaType: 'application/json',
+                schema: new OA\Schema(
+                    properties: [
+                        new OA\Property(property: 'id', type: 'string', format: 'uuid'),
+                        new OA\Property(property: 'internal_number', type: 'string'),
+                        new OA\Property(property: 'status', type: 'string'),
+                        new OA\Property(property: 'brand', type: 'string'),
+                        new OA\Property(property: 'model', type: 'string'),
+                        new OA\Property(property: 'category', type: 'string'),
+                        new OA\Property(property: 'frame_size', type: 'object'),
+                        new OA\Property(property: 'year', type: 'integer', nullable: true),
+                        new OA\Property(property: 'serial_number', type: 'string', nullable: true),
+                        new OA\Property(property: 'color', type: 'string', nullable: true),
+                        new OA\Property(property: 'wheel_size', type: 'string', nullable: true),
+                        new OA\Property(property: 'purchase_price', type: 'number', nullable: true),
+                        new OA\Property(property: 'purchase_date', type: 'string', nullable: true),
+                        new OA\Property(property: 'notes', type: 'string', nullable: true),
+                        new OA\Property(
+                            property: 'photos',
+                            type: 'array',
+                            items: new OA\Items(type: 'string', format: 'uri'),
+                            description: 'Array of photo URLs'
+                        ),
+                    ],
+                    type: 'object'
+                )
+            )
+        ),
         new OA\Response(response: 401, description: 'Unauthorized'),
         new OA\Response(response: 403, description: 'Forbidden - requires view_bikes permission'),
         new OA\Response(response: 404, description: 'Bike not found')
     ]
 )]
 class GetBikeDetailEndpoint {}
+
+// PUT /api/fleet/bikes/{id}
+#[OA\Put(
+    path: '/api/fleet/bikes/{id}',
+    summary: 'Update a bike',
+    security: [['bearerAuth' => []]],
+    tags: ['Fleet - Bikes'],
+    parameters: [
+        new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'string', format: 'uuid'))
+    ],
+    requestBody: new OA\RequestBody(
+        required: true,
+        content: new OA\MediaType(
+            mediaType: 'application/json',
+            schema: new OA\Schema(
+                required: ['model_id', 'category_id', 'frame_size_unit'],
+                properties: [
+                    new OA\Property(property: 'model_id', type: 'string', format: 'uuid', example: '550e8400-e29b-41d4-a716-446655440001'),
+                    new OA\Property(property: 'category_id', type: 'string', format: 'uuid', example: '550e8400-e29b-41d4-a716-446655440002'),
+                    new OA\Property(property: 'frame_size_unit', type: 'string', enum: ['cm', 'inch', 'letter'], example: 'cm'),
+                    new OA\Property(property: 'frame_size_numeric', type: 'number', example: 54, nullable: true),
+                    new OA\Property(property: 'frame_size_letter', type: 'string', enum: ['XS', 'S', 'M', 'L', 'XL', 'XXL'], nullable: true),
+                    new OA\Property(property: 'year', type: 'integer', example: 2024, nullable: true),
+                    new OA\Property(property: 'serial_number', type: 'string', example: 'SN-2024-001', nullable: true),
+                    new OA\Property(property: 'color', type: 'string', example: 'Noir', nullable: true),
+                    new OA\Property(property: 'wheel_size', type: 'string', enum: ['26', '27.5', '29', '700c'], nullable: true),
+                    new OA\Property(property: 'front_suspension', type: 'integer', example: 120, nullable: true, description: 'Front suspension travel in mm'),
+                    new OA\Property(property: 'rear_suspension', type: 'integer', example: 110, nullable: true, description: 'Rear suspension travel in mm'),
+                    new OA\Property(property: 'brake_type', type: 'string', enum: ['hydraulic_disc', 'mechanical_disc', 'rim'], nullable: true),
+                    new OA\Property(property: 'purchase_price', type: 'number', format: 'float', example: 1500.00, nullable: true),
+                    new OA\Property(property: 'purchase_date', type: 'string', format: 'date', example: '2024-01-15', nullable: true),
+                    new OA\Property(property: 'notes', type: 'string', example: 'VTT électrique neuf', nullable: true),
+                    new OA\Property(
+                        property: 'photos',
+                        type: 'array',
+                        items: new OA\Items(type: 'string'),
+                        nullable: true,
+                        description: 'Array of photos: existing URLs (to keep) or base64 encoded images (to upload). Format: "data:image/jpeg;base64,..." or "http://..."'
+                    ),
+                ],
+                type: 'object'
+            )
+        )
+    ),
+    responses: [
+        new OA\Response(
+            response: 200,
+            description: 'Bike updated successfully',
+            content: new OA\MediaType(
+                mediaType: 'application/json',
+                schema: new OA\Schema(
+                    properties: [
+                        new OA\Property(property: 'id', type: 'string', format: 'uuid'),
+                        new OA\Property(property: 'message', type: 'string', example: 'Bike updated successfully'),
+                    ],
+                    type: 'object'
+                )
+            )
+        ),
+        new OA\Response(response: 400, description: 'Validation error or bike cannot be modified'),
+        new OA\Response(response: 401, description: 'Unauthorized'),
+        new OA\Response(response: 403, description: 'Forbidden - requires manage_bikes permission'),
+        new OA\Response(response: 404, description: 'Bike not found')
+    ]
+)]
+class UpdateBikeEndpoint {}
+
+// POST /api/fleet/bikes/{id}/photos
+#[OA\Post(
+    path: '/api/fleet/bikes/{id}/photos',
+    summary: 'Upload a photo for a bike',
+    security: [['bearerAuth' => []]],
+    tags: ['Fleet - Bikes'],
+    parameters: [
+        new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'string', format: 'uuid'))
+    ],
+    requestBody: new OA\RequestBody(
+        required: true,
+        content: new OA\MediaType(
+            mediaType: 'multipart/form-data',
+            schema: new OA\Schema(
+                required: ['photo'],
+                properties: [
+                    new OA\Property(property: 'photo', type: 'string', format: 'binary', description: 'Photo file (max 5MB)'),
+                ],
+                type: 'object'
+            )
+        )
+    ),
+    responses: [
+        new OA\Response(
+            response: 201,
+            description: 'Photo uploaded successfully',
+            content: new OA\MediaType(
+                mediaType: 'application/json',
+                schema: new OA\Schema(
+                    properties: [
+                        new OA\Property(property: 'bike_id', type: 'string', format: 'uuid'),
+                        new OA\Property(property: 'photo_url', type: 'string', format: 'uri'),
+                    ],
+                    type: 'object'
+                )
+            )
+        ),
+        new OA\Response(response: 400, description: 'Validation error'),
+        new OA\Response(response: 401, description: 'Unauthorized'),
+        new OA\Response(response: 403, description: 'Forbidden - requires manage_bikes permission'),
+        new OA\Response(response: 404, description: 'Bike not found')
+    ]
+)]
+class UploadBikePhotoEndpoint {}
+
+// DELETE /api/fleet/bikes/{id}/photos
+#[OA\Delete(
+    path: '/api/fleet/bikes/{id}/photos',
+    summary: 'Delete a photo from a bike',
+    security: [['bearerAuth' => []]],
+    tags: ['Fleet - Bikes'],
+    parameters: [
+        new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'string', format: 'uuid'))
+    ],
+    requestBody: new OA\RequestBody(
+        required: true,
+        content: new OA\MediaType(
+            mediaType: 'application/json',
+            schema: new OA\Schema(
+                required: ['photo_url'],
+                properties: [
+                    new OA\Property(property: 'photo_url', type: 'string', format: 'uri', example: 'http://localhost/storage/bikes/{id}/{filename}'),
+                ],
+                type: 'object'
+            )
+        )
+    ),
+    responses: [
+        new OA\Response(response: 204, description: 'Photo deleted successfully'),
+        new OA\Response(response: 400, description: 'Validation error'),
+        new OA\Response(response: 401, description: 'Unauthorized'),
+        new OA\Response(response: 403, description: 'Forbidden - requires manage_bikes permission'),
+        new OA\Response(response: 404, description: 'Bike not found')
+    ]
+)]
+class DeleteBikePhotoEndpoint {}
 
 // ------------------------------ FLEET - CATEGORIES ------------------------------
 
@@ -1840,3 +2043,71 @@ class GetTopBikesKpiEndpoint {}
     ]
 )]
 class GetCentralizedAlertsEndpoint {}
+
+// GET /api/rentals/bikes/{bikeId}
+#[OA\Get(
+    path: '/api/rentals/bikes/{bikeId}',
+    summary: 'Get all rentals for a specific bike',
+    security: [['bearerAuth' => []]],
+    tags: ['Rentals'],
+    parameters: [
+        new OA\Parameter(
+            name: 'bikeId',
+            in: 'path',
+            required: true,
+            schema: new OA\Schema(type: 'string', format: 'uuid'),
+            description: 'Bike ID'
+        ),
+        new OA\Parameter(
+            name: 'filter',
+            in: 'query',
+            required: false,
+            schema: new OA\Schema(
+                type: 'string',
+                enum: ['all', 'past', 'current', 'upcoming'],
+                default: 'all'
+            ),
+            description: 'Filter rentals by status: all (default), past (completed/cancelled), current (active), upcoming (pending)'
+        )
+    ],
+    responses: [
+        new OA\Response(
+            response: 200,
+            description: 'List of rentals for the bike',
+            content: new OA\MediaType(
+                mediaType: 'application/json',
+                schema: new OA\Schema(
+                    properties: [
+                        new OA\Property(property: 'bike_id', type: 'string', format: 'uuid'),
+                        new OA\Property(property: 'total_count', type: 'integer', example: 15),
+                        new OA\Property(
+                            property: 'rentals',
+                            type: 'array',
+                            items: new OA\Items(
+                                properties: [
+                                    new OA\Property(property: 'id', type: 'string', format: 'uuid'),
+                                    new OA\Property(property: 'customer_id', type: 'string', format: 'uuid'),
+                                    new OA\Property(property: 'start_date', type: 'string', format: 'date-time', example: '2024-01-15 10:00:00'),
+                                    new OA\Property(property: 'expected_return_date', type: 'string', format: 'date-time', example: '2024-01-20 18:00:00'),
+                                    new OA\Property(property: 'actual_return_date', type: 'string', format: 'date-time', nullable: true, example: '2024-01-20 17:30:00'),
+                                    new OA\Property(property: 'status', type: 'string', enum: ['pending', 'active', 'completed', 'cancelled']),
+                                    new OA\Property(property: 'total_amount', type: 'number', format: 'float', example: 350.00),
+                                    new OA\Property(property: 'deposit_amount', type: 'number', format: 'float', example: 200.00),
+                                    new OA\Property(property: 'deposit_status', type: 'string', enum: ['held', 'released', 'partial', 'retained']),
+                                    new OA\Property(property: 'deposit_retained', type: 'number', format: 'float', nullable: true, example: 50.00),
+                                    new OA\Property(property: 'cancellation_reason', type: 'string', nullable: true, example: 'Customer request'),
+                                ],
+                                type: 'object'
+                            )
+                        ),
+                    ],
+                    type: 'object'
+                )
+            )
+        ),
+        new OA\Response(response: 400, description: 'Bad Request - Invalid filter parameter'),
+        new OA\Response(response: 401, description: 'Unauthorized'),
+        new OA\Response(response: 403, description: 'Forbidden - requires view_rentals permission')
+    ]
+)]
+class GetBikeRentalsEndpoint {}
