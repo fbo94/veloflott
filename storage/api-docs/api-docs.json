@@ -1806,6 +1806,99 @@
                 ]
             }
         },
+        "/api/rentals/{id}/cancel": {
+            "post": {
+                "tags": [
+                    "Rentals"
+                ],
+                "summary": "Cancel a rental",
+                "operationId": "3ae5fb818efa4613544a86972dada4cf",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "cancellation_reason"
+                                ],
+                                "properties": {
+                                    "cancellation_reason": {
+                                        "type": "string",
+                                        "maxLength": 500,
+                                        "minLength": 5,
+                                        "example": "Customer requested cancellation due to weather conditions"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Rental cancelled successfully. Deposit status changed to released and bikes marked as available.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "rental_id": {
+                                            "type": "string",
+                                            "format": "uuid"
+                                        },
+                                        "status": {
+                                            "type": "string",
+                                            "example": "cancelled"
+                                        },
+                                        "cancellation_reason": {
+                                            "type": "string"
+                                        },
+                                        "deposit_status": {
+                                            "type": "string",
+                                            "example": "released"
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Cannot cancel rental - rental is not in pending status"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden - requires create_rentals permission"
+                    },
+                    "404": {
+                        "description": "Rental not found"
+                    },
+                    "422": {
+                        "description": "Validation error - cancellation reason required"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/rentals/{id}": {
             "get": {
                 "tags": [

@@ -280,6 +280,18 @@ final class Bike
         return $this;
     }
 
+    public function markAsAvailable(): self
+    {
+        if ($this->status->isRentable()) {
+            throw new \DomainException('Bike is already available');
+        }
+
+        $this->status = BikeStatus::AVAILABLE;
+        $this->updatedAt = new \DateTimeImmutable();
+
+        return $this;
+    }
+
     public function retire(RetirementReason $reason, ?string $comment = null): self
     {
         if (!$this->canBeRetired()) {

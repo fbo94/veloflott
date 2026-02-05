@@ -8,6 +8,7 @@ use Rental\Interface\Http\CheckOutRental\CheckOutRentalController;
 use Rental\Interface\Http\ListActiveRentals\ListActiveRentalsController;
 use Rental\Interface\Http\ListRentals\ListRentalsController;
 use Rental\Interface\Http\GetRentalDetail\GetRentalDetailController;
+use Rental\Interface\Http\CancelRental\CancelRentalController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['keycloak'])->prefix('api/rentals')->group(function () {
@@ -27,5 +28,8 @@ Route::middleware(['keycloak'])->prefix('api/rentals')->group(function () {
         ->middleware('permission:create_rentals');
 
     Route::post('/{id}/checkout', CheckOutRentalController::class)
+        ->middleware('permission:create_rentals');
+
+    Route::post('/{id}/cancel', CancelRentalController::class)
         ->middleware('permission:create_rentals');
 });

@@ -820,6 +820,55 @@ class CheckInRentalEndpoint {}
 )]
 class CheckOutRentalEndpoint {}
 
+// POST /api/rentals/{id}/cancel
+#[OA\Post(
+    path: '/api/rentals/{id}/cancel',
+    summary: 'Cancel a rental',
+    security: [['bearerAuth' => []]],
+    tags: ['Rentals'],
+    parameters: [
+        new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'string', format: 'uuid'))
+    ],
+    requestBody: new OA\RequestBody(
+        required: true,
+        content: new OA\MediaType(
+            mediaType: 'application/json',
+            schema: new OA\Schema(
+                required: ['cancellation_reason'],
+                properties: [
+                    new OA\Property(property: 'cancellation_reason', type: 'string', minLength: 5, maxLength: 500, example: 'Customer requested cancellation due to weather conditions'),
+                ],
+                type: 'object'
+            )
+        )
+    ),
+    responses: [
+        new OA\Response(
+            response: 200,
+            description: 'Rental cancelled successfully. Deposit status changed to released and bikes marked as available.',
+            content: new OA\MediaType(
+                mediaType: 'application/json',
+                schema: new OA\Schema(
+                    properties: [
+                        new OA\Property(property: 'rental_id', type: 'string', format: 'uuid'),
+                        new OA\Property(property: 'status', type: 'string', example: 'cancelled'),
+                        new OA\Property(property: 'cancellation_reason', type: 'string'),
+                        new OA\Property(property: 'deposit_status', type: 'string', example: 'released'),
+                        new OA\Property(property: 'message', type: 'string'),
+                    ],
+                    type: 'object'
+                )
+            )
+        ),
+        new OA\Response(response: 400, description: 'Cannot cancel rental - rental is not in pending status'),
+        new OA\Response(response: 401, description: 'Unauthorized'),
+        new OA\Response(response: 403, description: 'Forbidden - requires create_rentals permission'),
+        new OA\Response(response: 404, description: 'Rental not found'),
+        new OA\Response(response: 422, description: 'Validation error - cancellation reason required')
+    ]
+)]
+class CancelRentalEndpoint {}
+
 // GET /api/rentals
 #[OA\Get(
     path: '/api/rentals',
