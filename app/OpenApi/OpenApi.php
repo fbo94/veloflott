@@ -320,6 +320,86 @@ class ToggleRiskyFlagEndpoint {}
 )]
 class ListBrandsEndpoint {}
 
+// POST /api/fleet/brands
+#[OA\Post(
+    path: '/api/fleet/brands',
+    summary: 'Create a new bike brand',
+    security: [['bearerAuth' => []]],
+    tags: ['Fleet - Brands'],
+    requestBody: new OA\RequestBody(
+        required: true,
+        content: new OA\MediaType(
+            mediaType: 'application/json',
+            schema: new OA\Schema(
+                required: ['name'],
+                properties: [
+                    new OA\Property(property: 'name', type: 'string', example: 'Specialized', maxLength: 100),
+                    new OA\Property(property: 'logo_url', type: 'string', format: 'uri', example: 'https://example.com/logo.png', nullable: true, maxLength: 500),
+                ],
+                type: 'object'
+            )
+        )
+    ),
+    responses: [
+        new OA\Response(response: 201, description: 'Brand created successfully'),
+        new OA\Response(response: 400, description: 'Validation error'),
+        new OA\Response(response: 401, description: 'Unauthorized'),
+        new OA\Response(response: 403, description: 'Forbidden - requires manage_bikes permission')
+    ]
+)]
+class CreateBrandEndpoint {}
+
+// PUT /api/fleet/brands/{id}
+#[OA\Put(
+    path: '/api/fleet/brands/{id}',
+    summary: 'Update a bike brand',
+    security: [['bearerAuth' => []]],
+    tags: ['Fleet - Brands'],
+    parameters: [
+        new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'string', format: 'uuid'))
+    ],
+    requestBody: new OA\RequestBody(
+        required: true,
+        content: new OA\MediaType(
+            mediaType: 'application/json',
+            schema: new OA\Schema(
+                required: ['name'],
+                properties: [
+                    new OA\Property(property: 'name', type: 'string', example: 'Specialized', maxLength: 100),
+                    new OA\Property(property: 'logo_url', type: 'string', format: 'uri', example: 'https://example.com/logo.png', nullable: true, maxLength: 500),
+                ],
+                type: 'object'
+            )
+        )
+    ),
+    responses: [
+        new OA\Response(response: 200, description: 'Brand updated successfully'),
+        new OA\Response(response: 400, description: 'Validation error'),
+        new OA\Response(response: 401, description: 'Unauthorized'),
+        new OA\Response(response: 403, description: 'Forbidden - requires manage_bikes permission'),
+        new OA\Response(response: 404, description: 'Brand not found')
+    ]
+)]
+class UpdateBrandEndpoint {}
+
+// DELETE /api/fleet/brands/{id}
+#[OA\Delete(
+    path: '/api/fleet/brands/{id}',
+    summary: 'Delete a bike brand',
+    security: [['bearerAuth' => []]],
+    tags: ['Fleet - Brands'],
+    parameters: [
+        new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'string', format: 'uuid'))
+    ],
+    responses: [
+        new OA\Response(response: 204, description: 'Brand deleted successfully'),
+        new OA\Response(response: 401, description: 'Unauthorized'),
+        new OA\Response(response: 403, description: 'Forbidden - requires manage_bikes permission'),
+        new OA\Response(response: 404, description: 'Brand not found')
+    ]
+)]
+class DeleteBrandEndpoint {}
+
 // ------------------------------ FLEET - MODELS ------------------------------
 
 // GET /api/fleet/models
@@ -345,6 +425,120 @@ class ListBrandsEndpoint {}
     ]
 )]
 class ListModelsEndpoint {}
+
+// GET /api/fleet/models/{id}
+#[OA\Get(
+    path: '/api/fleet/models/{id}',
+    summary: 'Get bike model details',
+    security: [['bearerAuth' => []]],
+    tags: ['Fleet - Models'],
+    parameters: [
+        new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'string', format: 'uuid'))
+    ],
+    responses: [
+        new OA\Response(
+            response: 200,
+            description: 'Model details',
+            content: new OA\MediaType(
+                mediaType: 'application/json',
+                schema: new OA\Schema(
+                    properties: [
+                        new OA\Property(property: 'id', type: 'string', format: 'uuid'),
+                        new OA\Property(property: 'name', type: 'string', example: 'Tarmac SL7'),
+                        new OA\Property(property: 'brand_id', type: 'string', format: 'uuid'),
+                        new OA\Property(property: 'brand_name', type: 'string', example: 'Specialized'),
+                        new OA\Property(property: 'brand_logo_url', type: 'string', format: 'uri', nullable: true),
+                    ],
+                    type: 'object'
+                )
+            )
+        ),
+        new OA\Response(response: 401, description: 'Unauthorized'),
+        new OA\Response(response: 403, description: 'Forbidden - requires view_bikes permission'),
+        new OA\Response(response: 404, description: 'Model not found')
+    ]
+)]
+class GetModelDetailEndpoint {}
+
+// POST /api/fleet/models
+#[OA\Post(
+    path: '/api/fleet/models',
+    summary: 'Create a new bike model',
+    security: [['bearerAuth' => []]],
+    tags: ['Fleet - Models'],
+    requestBody: new OA\RequestBody(
+        required: true,
+        content: new OA\MediaType(
+            mediaType: 'application/json',
+            schema: new OA\Schema(
+                required: ['name', 'brand_id'],
+                properties: [
+                    new OA\Property(property: 'name', type: 'string', example: 'Tarmac SL7', maxLength: 100),
+                    new OA\Property(property: 'brand_id', type: 'string', format: 'uuid', example: '550e8400-e29b-41d4-a716-446655440000'),
+                ],
+                type: 'object'
+            )
+        )
+    ),
+    responses: [
+        new OA\Response(response: 201, description: 'Model created successfully'),
+        new OA\Response(response: 400, description: 'Validation error'),
+        new OA\Response(response: 401, description: 'Unauthorized'),
+        new OA\Response(response: 403, description: 'Forbidden - requires manage_bikes permission')
+    ]
+)]
+class CreateModelEndpoint {}
+
+// PUT /api/fleet/models/{id}
+#[OA\Put(
+    path: '/api/fleet/models/{id}',
+    summary: 'Update a bike model',
+    security: [['bearerAuth' => []]],
+    tags: ['Fleet - Models'],
+    parameters: [
+        new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'string', format: 'uuid'))
+    ],
+    requestBody: new OA\RequestBody(
+        required: true,
+        content: new OA\MediaType(
+            mediaType: 'application/json',
+            schema: new OA\Schema(
+                required: ['name', 'brand_id'],
+                properties: [
+                    new OA\Property(property: 'name', type: 'string', example: 'Tarmac SL7', maxLength: 100),
+                    new OA\Property(property: 'brand_id', type: 'string', format: 'uuid'),
+                ],
+                type: 'object'
+            )
+        )
+    ),
+    responses: [
+        new OA\Response(response: 200, description: 'Model updated successfully'),
+        new OA\Response(response: 400, description: 'Validation error'),
+        new OA\Response(response: 401, description: 'Unauthorized'),
+        new OA\Response(response: 403, description: 'Forbidden - requires manage_bikes permission'),
+        new OA\Response(response: 404, description: 'Model not found')
+    ]
+)]
+class UpdateModelEndpoint {}
+
+// DELETE /api/fleet/models/{id}
+#[OA\Delete(
+    path: '/api/fleet/models/{id}',
+    summary: 'Delete a bike model',
+    security: [['bearerAuth' => []]],
+    tags: ['Fleet - Models'],
+    parameters: [
+        new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'string', format: 'uuid'))
+    ],
+    responses: [
+        new OA\Response(response: 204, description: 'Model deleted successfully'),
+        new OA\Response(response: 401, description: 'Unauthorized'),
+        new OA\Response(response: 403, description: 'Forbidden - requires manage_bikes permission'),
+        new OA\Response(response: 404, description: 'Model not found')
+    ]
+)]
+class DeleteModelEndpoint {}
 
 // ------------------------------ FLEET - BIKES ------------------------------
 
