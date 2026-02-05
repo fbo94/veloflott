@@ -34,6 +34,7 @@
             "Rental\\": "src/Rental/",
             "Customer\\": "src/Customer/",
             "Maintenance\\": "src/Maintenance/",
+            "Dashboard\\": "src/Dashboard/",
             "Shared\\": "src/Shared/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
@@ -64,6 +65,7 @@
         "test:unit": "./vendor/bin/pest --testsuite=Unit",
         "test:feature": "./vendor/bin/pest --testsuite=Feature",
         "test:coverage": "./vendor/bin/pest --coverage",
+        "test:parallel": "./vendor/bin/pest --parallel",
         "cs": "./vendor/bin/phpcs",
         "cs:fix": "./vendor/bin/phpcbf",
         "stan": "./vendor/bin/phpstan analyse --memory-limit=2G",
@@ -75,6 +77,32 @@
         "quality": [
             "@lint",
             "@test"
+        ],
+        "quality:fix": [
+            "@cs:fix",
+            "@stan",
+            "@test"
+        ],
+        "migrate": "@php artisan migrate --ansi",
+        "migrate:fresh": "@php artisan migrate:fresh --ansi",
+        "migrate:refresh": "@php artisan migrate:refresh --ansi",
+        "migrate:rollback": "@php artisan migrate:rollback --ansi",
+        "migrate:status": "@php artisan migrate:status --ansi",
+        "db:seed": "@php artisan db:seed --ansi",
+        "db:fresh": [
+            "@php artisan migrate:fresh --ansi",
+            "@php artisan db:seed --ansi"
+        ],
+        "cache:clear-all": [
+            "@php artisan config:clear --ansi",
+            "@php artisan cache:clear --ansi",
+            "@php artisan route:clear --ansi",
+            "@php artisan view:clear --ansi"
+        ],
+        "optimize": [
+            "@php artisan config:cache --ansi",
+            "@php artisan route:cache --ansi",
+            "@php artisan view:cache --ansi"
         ],
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",

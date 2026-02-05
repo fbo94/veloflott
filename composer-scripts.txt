@@ -1,0 +1,54 @@
+╔══════════════════════════════════════════════════════════════════╗
+║           COMMANDES COMPOSER DISPONIBLES                         ║
+╚══════════════════════════════════════════════════════════════════╝
+
+🧪 TESTS (Pest)
+  composer test              → Tous les tests
+  composer test:unit         → Tests unitaires
+  composer test:feature      → Tests feature
+  composer test:coverage     → Avec couverture
+  composer test:parallel     → Tests parallèles
+
+🎨 CODE STYLE (PHPCS - PSR-12)
+  composer cs                → Vérifier le style
+  composer cs:fix            → Corriger automatiquement
+
+🔍 ANALYSE STATIQUE (PHPStan niveau 7)
+  composer stan              → Analyser le code
+  composer stan:baseline     → Générer baseline
+
+✅ QUALITÉ GLOBALE
+  composer lint              → PHPCS + PHPStan
+  composer quality           → Lint + Tests
+  composer quality:fix       → Corriger + Analyser + Tester
+
+💾 MIGRATIONS
+  composer migrate           → Exécuter migrations
+  composer migrate:fresh     → Reset BDD
+  composer migrate:refresh   → Rollback + Re-migrer
+  composer migrate:rollback  → Annuler dernière migration
+  composer migrate:status    → État des migrations
+
+🌱 SEEDERS
+  composer db:seed           → Exécuter seeders
+  composer db:fresh          → Reset BDD + Seeders
+
+🧹 CACHE
+  composer cache:clear-all   → Vider tous les caches
+  composer optimize          → Optimiser (prod)
+
+🚀 SETUP
+  composer setup             → Installation complète
+  composer dev               → Serveur de dev
+
+🐳 DANS DOCKER
+  docker exec php-api composer [commande]
+
+📋 WORKFLOWS
+  Avant commit:       composer quality:fix
+  Après git pull:     composer install && composer migrate
+  Avant PR:           composer quality && composer test:coverage
+  Reset env:          composer db:fresh && composer cache:clear-all
+
+💡 AIDE COMPLÈTE
+  Voir COMMANDS.md pour la documentation détaillée
