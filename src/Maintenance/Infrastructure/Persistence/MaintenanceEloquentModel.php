@@ -31,6 +31,7 @@ final class MaintenanceEloquentModel extends Model
         'work_description',
         'parts_replaced',
         'cost',
+        'photos',
     ];
 
     protected $casts = [
@@ -38,5 +39,6 @@ final class MaintenanceEloquentModel extends Model
         'started_at' => 'datetime',
         'completed_at' => 'datetime',
         'cost' => 'integer',
+        'photos' => 'array',
     ];
 }

@@ -27,6 +27,7 @@ final class CompleteMaintenanceController
             workDescription: $request->input('work_description'),
             partsReplaced: $request->input('parts_replaced'),
             cost: $request->input('cost'),
+            photos: $request->input('photos', []),
         );
 
         $response = $this->handler->handle($command);

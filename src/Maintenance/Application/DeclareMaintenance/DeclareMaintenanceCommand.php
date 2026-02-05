@@ -8,6 +8,9 @@ use DateTimeImmutable;
 
 final readonly class DeclareMaintenanceCommand
 {
+    /**
+     * @param array<int, string> $photos
+     */
     public function __construct(
         public string $bikeId,
         public string $type, // 'preventive' | 'curative'
@@ -15,6 +18,7 @@ final readonly class DeclareMaintenanceCommand
         public string $priority, // 'normal' | 'urgent'
         public ?string $description = null,
         public ?DateTimeImmutable $scheduledAt = null,
+        public array $photos = [],
     ) {
     }
 }

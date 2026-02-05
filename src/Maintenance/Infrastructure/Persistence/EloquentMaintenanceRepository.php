@@ -32,6 +32,7 @@ final class EloquentMaintenanceRepository implements MaintenanceRepositoryInterf
                 'work_description' => $maintenance->workDescription(),
                 'parts_replaced' => $maintenance->partsReplaced(),
                 'cost' => $maintenance->cost(),
+                'photos' => $maintenance->photos(),
                 'updated_at' => $maintenance->updatedAt(),
             ]
         );
@@ -196,6 +197,7 @@ final class EloquentMaintenanceRepository implements MaintenanceRepositoryInterf
             workDescription: $model->work_description,
             partsReplaced: $model->parts_replaced,
             cost: $model->cost,
+            photos: $model->photos ?? [],
             createdAt: DateTimeImmutable::createFromInterface($model->created_at),
             updatedAt: DateTimeImmutable::createFromInterface($model->updated_at),
         );

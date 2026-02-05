@@ -28,6 +28,11 @@ final readonly class CompleteMaintenanceHandler
             cost: $command->cost,
         );
 
+        // Ajouter les photos si fournies
+        foreach ($command->photos as $photoUrl) {
+            $maintenance->addPhoto($photoUrl);
+        }
+
         // Sauvegarder la maintenance
         $this->maintenanceRepository->save($maintenance);
 

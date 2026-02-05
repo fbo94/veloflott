@@ -29,7 +29,17 @@ final class DeclareMaintenanceRequest extends FormRequest
             'priority' => ['required', 'string', Rule::in(array_column(MaintenancePriority::cases(), 'value'))],
             'description' => ['nullable', 'string', 'max:1000'],
             'scheduled_at' => ['nullable', 'date', 'date_format:Y-m-d H:i:s'],
+            'photos' => ['nullable', 'array'],
+            'photos.*' => ['string', 'max:500'],
         ];
+    }
+
+    protected function prepareForValidation(): void
+    {
+        // S'assurer que photos est un tableau vide si non fourni
+        if (!$this->has('photos')) {
+            $this->merge(['photos' => []]);
+        }
     }
 
     /**

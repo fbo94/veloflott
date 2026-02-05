@@ -9,6 +9,9 @@ use Maintenance\Domain\Exceptions\MaintenanceException;
 
 final class Maintenance
 {
+    /**
+     * @param array<int, string> $photos
+     */
     private function __construct(
         private readonly string $id,
         private readonly string $bikeId,
@@ -23,11 +26,15 @@ final class Maintenance
         private ?string $workDescription,
         private ?string $partsReplaced,
         private ?int $cost, // En centimes
+        private array $photos,
         private readonly DateTimeImmutable $createdAt,
         private DateTimeImmutable $updatedAt,
     ) {
     }
 
+    /**
+     * @param array<int, string> $photos
+     */
     public static function declare(
         string $id,
         string $bikeId,
@@ -36,6 +43,7 @@ final class Maintenance
         MaintenancePriority $priority,
         ?string $description = null,
         ?DateTimeImmutable $scheduledAt = null,
+        array $photos = [],
     ): self {
         $now = new DateTimeImmutable();
 
@@ -53,6 +61,7 @@ final class Maintenance
             workDescription: null,
             partsReplaced: null,
             cost: null,
+            photos: $photos,
             createdAt: $now,
             updatedAt: $now,
         );
@@ -181,7 +190,36 @@ final class Maintenance
         return $this->updatedAt;
     }
 
+    /**
+     * @return array<int, string>
+     */
+    public function photos(): array
+    {
+        return $this->photos;
+    }
+
+    public function addPhoto(string $photoUrl): self
+    {
+        $this->photos[] = $photoUrl;
+        $this->updatedAt = new DateTimeImmutable();
+
+        return $this;
+    }
+
+    public function removePhoto(string $photoUrl): self
+    {
+        $this->photos = array_values(
+            array_filter($this->photos, fn(string $photo) => $photo !== $photoUrl)
+        );
+        $this->updatedAt = new DateTimeImmutable();
+
+        return $this;
+    }
+
     // Reconstitution depuis la persistence
+    /**
+     * @param array<int, string> $photos
+     */
     public static function reconstitute(
         string $id,
         string $bikeId,
@@ -196,6 +234,7 @@ final class Maintenance
         ?string $workDescription,
         ?string $partsReplaced,
         ?int $cost,
+        array $photos,
         DateTimeImmutable $createdAt,
         DateTimeImmutable $updatedAt,
     ): self {
@@ -213,6 +252,7 @@ final class Maintenance
             workDescription: $workDescription,
             partsReplaced: $partsReplaced,
             cost: $cost,
+            photos: $photos,
             createdAt: $createdAt,
             updatedAt: $updatedAt,
         );

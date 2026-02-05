@@ -81,6 +81,15 @@ return [
             'report' => false,
         ],
 
+        'maintenance_photos' => [
+            'driver' => env('MAINTENANCE_PHOTOS_DRIVER', 'local'),
+            'root' => storage_path('app/public/maintenances'),
+            'url' => rtrim(env('APP_URL', 'http://localhost'), '/').'/storage/maintenances',
+            'visibility' => 'public',
+            'throw' => false,
+            'report' => false,
+        ],
+
     ],
 
     /*

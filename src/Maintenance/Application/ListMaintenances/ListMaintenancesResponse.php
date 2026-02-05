@@ -48,6 +48,7 @@ final readonly class ListMaintenancesResponse
                     'work_description' => $m->workDescription(),
                     'parts_replaced' => $m->partsReplaced(),
                     'cost' => $m->cost(),
+                    'photos' => $m->photos(),
                     'created_at' => $m->createdAt()->format('Y-m-d H:i:s'),
                     'updated_at' => $m->updatedAt()->format('Y-m-d H:i:s'),
                 ],

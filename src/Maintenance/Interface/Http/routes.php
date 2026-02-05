@@ -9,6 +9,8 @@ use Maintenance\Interface\Http\StartMaintenance\StartMaintenanceController;
 use Maintenance\Interface\Http\CompleteMaintenance\CompleteMaintenanceController;
 use Maintenance\Interface\Http\GetBikeMaintenanceHistory\GetBikeMaintenanceHistoryController;
 use Maintenance\Interface\Http\ListMaintenanceReasons\ListMaintenanceReasonsController;
+use Maintenance\Interface\Http\UploadMaintenancePhoto\UploadMaintenancePhotoController;
+use Maintenance\Interface\Http\DeleteMaintenancePhoto\DeleteMaintenancePhotoController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['keycloak'])->prefix('api/maintenance')->group(function () {
@@ -39,4 +41,11 @@ Route::middleware(['keycloak'])->prefix('api/maintenance')->group(function () {
     // US 4.5 : Historique des maintenances d'un vélo
     Route::get('/bikes/{bikeId}/maintenances', GetBikeMaintenanceHistoryController::class)
         ->middleware('permission:view_maintenances');
+
+    // Gestion des photos de maintenance
+    Route::post('/maintenances/{id}/photos', UploadMaintenancePhotoController::class)
+        ->middleware('permission:manage_maintenances');
+
+    Route::delete('/maintenances/{id}/photos', DeleteMaintenancePhotoController::class)
+        ->middleware('permission:manage_maintenances');
 });

@@ -56,6 +56,7 @@ final readonly class DeclareMaintenanceHandler
             priority: $priority,
             description: $command->description,
             scheduledAt: $command->scheduledAt,
+            photos: $command->photos,
         );
 
         // Sauvegarder la maintenance

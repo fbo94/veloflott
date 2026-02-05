@@ -9,6 +9,9 @@ use Fleet\Infrastructure\Persistence\Models\BikeEloquentModel;
 
 final readonly class GetMaintenanceDetailResponse
 {
+    /**
+     * @param array<int, string> $photos
+     */
     public function __construct(
         private string $id,
         private string $bikeId,
@@ -23,6 +26,7 @@ final readonly class GetMaintenanceDetailResponse
         private ?string $workDescription,
         private ?string $partsReplaced,
         private ?float $cost,
+        private array $photos,
         private string $createdAt,
         private string $updatedAt,
         private ?array $bike,
@@ -45,6 +49,7 @@ final readonly class GetMaintenanceDetailResponse
             workDescription: $maintenance->workDescription(),
             partsReplaced: $maintenance->partsReplaced(),
             cost: $maintenance->cost() !== null ? $maintenance->cost() / 100 : null,
+            photos: $maintenance->photos(),
             createdAt: $maintenance->createdAt()->format('Y-m-d H:i:s'),
             updatedAt: $maintenance->updatedAt()->format('Y-m-d H:i:s'),
             bike: $bikeModel !== null ? self::formatBike($bikeModel) : null,
@@ -87,6 +92,7 @@ final readonly class GetMaintenanceDetailResponse
             'work_description' => $this->workDescription,
             'parts_replaced' => $this->partsReplaced,
             'cost' => $this->cost,
+            'photos' => $this->photos,
             'created_at' => $this->createdAt,
             'updated_at' => $this->updatedAt,
             'bike' => $this->bike,

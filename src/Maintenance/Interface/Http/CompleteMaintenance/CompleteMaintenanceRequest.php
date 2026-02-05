@@ -22,7 +22,17 @@ final class CompleteMaintenanceRequest extends FormRequest
             'work_description' => ['nullable', 'string', 'max:2000'],
             'parts_replaced' => ['nullable', 'string', 'max:1000'],
             'cost' => ['nullable', 'integer', 'min:0'],
+            'photos' => ['nullable', 'array'],
+            'photos.*' => ['string', 'max:500'],
         ];
+    }
+
+    protected function prepareForValidation(): void
+    {
+        // S'assurer que photos est un tableau vide si non fourni
+        if (!$this->has('photos')) {
+            $this->merge(['photos' => []]);
+        }
     }
 
     /**
