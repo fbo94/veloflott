@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Maintenance\Application\CompleteMaintenance;
+namespace Fleet\Application\SetBikeRate;
 
-final readonly class CompleteMaintenanceResponse
+final readonly class SetBikeRateResponse
 {
     public function __construct(
-        public string $maintenanceId,
+        public string $rateId,
         public string $bikeId,
         public string $message,
     ) {
@@ -16,7 +16,7 @@ final readonly class CompleteMaintenanceResponse
     public function toArray(): array
     {
         return [
-            'id' => $this->maintenanceId,
+            'id' => $this->rateId,
             'bike_id' => $this->bikeId,
             'message' => $this->message,
         ];

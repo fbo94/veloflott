@@ -12,4 +12,13 @@ final readonly class DeclareMaintenanceResponse
         public string $message,
     ) {
     }
+
+    public function toArray(): array
+    {
+        return [
+            'id' => $this->maintenanceId,
+            'bike_id' => $this->bikeId,
+            'message' => $this->message,
+        ];
+    }
 }

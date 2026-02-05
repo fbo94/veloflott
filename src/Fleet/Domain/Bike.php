@@ -23,6 +23,7 @@ final class Bike
         private string $categoryId,
         private FrameSize $frameSize,
         private BikeStatus $status,
+        private PricingTier $pricingTier,
         private ?int $year,
         private ?string $serialNumber,
         private ?string $color,
@@ -79,6 +80,11 @@ final class Bike
     public function status(): BikeStatus
     {
         return $this->status;
+    }
+
+    public function pricingTier(): PricingTier
+    {
+        return $this->pricingTier;
     }
 
     public function year(): ?int
@@ -262,6 +268,14 @@ final class Bike
         }
 
         $this->status = $newStatus;
+        $this->updatedAt = new \DateTimeImmutable();
+
+        return $this;
+    }
+
+    public function changePricingTier(PricingTier $newTier): self
+    {
+        $this->pricingTier = $newTier;
         $this->updatedAt = new \DateTimeImmutable();
 
         return $this;

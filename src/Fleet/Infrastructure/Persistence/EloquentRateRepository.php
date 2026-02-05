@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Fleet\Infrastructure\Persistence;
 
+use Fleet\Domain\PricingTier;
 use Fleet\Domain\Rate;
 use Fleet\Domain\RateRepositoryInterface;
 use Fleet\Infrastructure\Persistence\Models\RateEloquentModel;
@@ -17,11 +18,24 @@ final class EloquentRateRepository implements RateRepositoryInterface
         return $model !== null ? $this->toDomain($model) : null;
     }
 
-    public function findByCategoryId(string $categoryId): ?Rate
+    public function findByCategoryIdAndTier(string $categoryId, PricingTier $tier): ?Rate
     {
-        $model = RateEloquentModel::where('category_id', $categoryId)->first();
+        $model = RateEloquentModel::where('category_id', $categoryId)
+            ->where('pricing_tier', $tier->value)
+            ->first();
 
         return $model !== null ? $this->toDomain($model) : null;
+    }
+
+    /**
+     * @return Rate[]
+     */
+    public function findByCategoryId(string $categoryId): array
+    {
+        return RateEloquentModel::where('category_id', $categoryId)
+            ->get()
+            ->map(fn ($model) => $this->toDomain($model))
+            ->all();
     }
 
     public function findByBikeId(string $bikeId): ?Rate
@@ -49,6 +63,7 @@ final class EloquentRateRepository implements RateRepositoryInterface
             [
                 'category_id' => $rate->categoryId(),
                 'bike_id' => $rate->bikeId(),
+                'pricing_tier' => $rate->pricingTier()?->value,
                 'half_day_price' => $rate->halfDayPrice(),
                 'day_price' => $rate->dayPrice(),
                 'weekend_price' => $rate->weekendPrice(),
@@ -68,6 +83,7 @@ final class EloquentRateRepository implements RateRepositoryInterface
             id: $model->id,
             categoryId: $model->category_id,
             bikeId: $model->bike_id,
+            pricingTier: $model->pricing_tier !== null ? PricingTier::from($model->pricing_tier) : null,
             halfDayPrice: $model->half_day_price,
             dayPrice: $model->day_price,
             weekendPrice: $model->weekend_price,

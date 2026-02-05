@@ -12,6 +12,7 @@ use Fleet\Domain\CategoryRepositoryInterface;
 use Fleet\Domain\FrameSize;
 use Fleet\Domain\FrameSizeUnit;
 use Fleet\Domain\ModelRepositoryInterface;
+use Fleet\Domain\PricingTier;
 use Illuminate\Support\Str;
 
 final class CreateBikeHandler
@@ -64,6 +65,7 @@ final class CreateBikeHandler
             categoryId: $command->categoryId,
             frameSize: $frameSize,
             status: BikeStatus::AVAILABLE,
+            pricingTier: PricingTier::STANDARD, // Par défaut, tous les vélos sont en tier standard
             year: $command->year,
             serialNumber: $command->serialNumber,
             color: $command->color,

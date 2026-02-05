@@ -2,25 +2,24 @@
 
 declare(strict_types=1);
 
-namespace Fleet\Interface\Http\SetCategoryRate;
+namespace Fleet\Interface\Http\SetBikeRate;
 
-use Fleet\Application\SetCategoryRate\SetCategoryRateCommand;
-use Fleet\Application\SetCategoryRate\SetCategoryRateHandler;
+use Fleet\Application\SetBikeRate\SetBikeRateCommand;
+use Fleet\Application\SetBikeRate\SetBikeRateHandler;
 use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
-final class SetCategoryRateController
+final class SetBikeRateController
 {
     public function __construct(
-        private readonly SetCategoryRateHandler $handler,
+        private readonly SetBikeRateHandler $handler,
     ) {
     }
 
-    public function __invoke(SetCategoryRateRequest $request): JsonResponse
+    public function __invoke(SetBikeRateRequest $request): JsonResponse
     {
-        $command = new SetCategoryRateCommand(
-            categoryId: $request->input('category_id'),
-            pricingTier: $request->input('pricing_tier'),
+        $command = new SetBikeRateCommand(
+            bikeId: $request->input('bike_id'),
             dayPrice: (float) $request->input('day_price'),
             halfDayPrice: $request->input('half_day_price') !== null
                 ? (float) $request->input('half_day_price')

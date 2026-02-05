@@ -12,6 +12,7 @@ use Fleet\Interface\Http\DeleteCategory\DeleteCategoryController;
 use Fleet\Interface\Http\DeleteModel\DeleteModelController;
 use Fleet\Interface\Http\DeleteRate\DeleteRateController;
 use Fleet\Interface\Http\GetBikeDetail\GetBikeDetailController;
+use Fleet\Interface\Http\GetBikeRate\GetBikeRateController;
 use Fleet\Interface\Http\GetModelDetail\GetModelDetailController;
 use Fleet\Interface\Http\UploadBikePhoto\UploadBikePhotoController;
 use Fleet\Interface\Http\UpdateBike\UpdateBikeController;
@@ -20,6 +21,7 @@ use Fleet\Interface\Http\ListBrands\ListBrandsController;
 use Fleet\Interface\Http\ListCategories\ListCategoriesController;
 use Fleet\Interface\Http\ListModels\ListModelsController;
 use Fleet\Interface\Http\ListRates\ListRatesController;
+use Fleet\Interface\Http\SetBikeRate\SetBikeRateController;
 use Fleet\Interface\Http\SetCategoryRate\SetCategoryRateController;
 use Fleet\Interface\Http\UpdateBrand\UpdateBrandController;
 use Fleet\Interface\Http\UpdateCategory\UpdateCategoryController;
@@ -90,8 +92,14 @@ Route::middleware(['keycloak'])->prefix('api/fleet')->group(function () {
         ->middleware('permission:manage_categories');
 
     // Gestion des tarifs (US 1.7)
-    Route::post('/categories/{categoryId}/rates', SetCategoryRateController::class)
+    Route::post('/rates/categories', SetCategoryRateController::class)
         ->middleware('permission:manage_rates');
+
+    Route::post('/rates/bikes', SetBikeRateController::class)
+        ->middleware('permission:manage_rates');
+
+    Route::get('/bikes/{bikeId}/rate', GetBikeRateController::class)
+        ->middleware('permission:view_bikes');
 
     Route::get('/rates', ListRatesController::class)
         ->middleware('permission:view_bikes');

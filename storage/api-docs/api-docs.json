@@ -613,6 +613,165 @@
                         "bearerAuth": []
                     }
                 ]
+            },
+            "post": {
+                "tags": [
+                    "Fleet - Brands"
+                ],
+                "summary": "Create a new bike brand",
+                "operationId": "77972baab8bb5aae74907d4687092c24",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "maxLength": 100,
+                                        "example": "Specialized"
+                                    },
+                                    "logo_url": {
+                                        "type": "string",
+                                        "format": "uri",
+                                        "maxLength": 500,
+                                        "example": "https://example.com/logo.png",
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Brand created successfully"
+                    },
+                    "400": {
+                        "description": "Validation error"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden - requires manage_bikes permission"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/fleet/brands/{id}": {
+            "put": {
+                "tags": [
+                    "Fleet - Brands"
+                ],
+                "summary": "Update a bike brand",
+                "operationId": "0d7071a9abd09a0ab0346ea3fe7176f6",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "maxLength": 100,
+                                        "example": "Specialized"
+                                    },
+                                    "logo_url": {
+                                        "type": "string",
+                                        "format": "uri",
+                                        "maxLength": 500,
+                                        "example": "https://example.com/logo.png",
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Brand updated successfully"
+                    },
+                    "400": {
+                        "description": "Validation error"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden - requires manage_bikes permission"
+                    },
+                    "404": {
+                        "description": "Brand not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Fleet - Brands"
+                ],
+                "summary": "Delete a bike brand",
+                "operationId": "04d647c597213142fb126065a2da8946",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Brand deleted successfully"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden - requires manage_bikes permission"
+                    },
+                    "404": {
+                        "description": "Brand not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/fleet/models": {
@@ -646,6 +805,229 @@
                     },
                     "403": {
                         "description": "Forbidden - requires view_bikes permission"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Fleet - Models"
+                ],
+                "summary": "Create a new bike model",
+                "operationId": "7e45bbd395740bdeaf68b4a658ff7c82",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "brand_id"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "maxLength": 100,
+                                        "example": "Tarmac SL7"
+                                    },
+                                    "brand_id": {
+                                        "type": "string",
+                                        "format": "uuid",
+                                        "example": "550e8400-e29b-41d4-a716-446655440000"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Model created successfully"
+                    },
+                    "400": {
+                        "description": "Validation error"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden - requires manage_bikes permission"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/fleet/models/{id}": {
+            "get": {
+                "tags": [
+                    "Fleet - Models"
+                ],
+                "summary": "Get bike model details",
+                "operationId": "c46d37fe522959b0589d04093df87e57",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Model details",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "string",
+                                            "format": "uuid"
+                                        },
+                                        "name": {
+                                            "type": "string",
+                                            "example": "Tarmac SL7"
+                                        },
+                                        "brand_id": {
+                                            "type": "string",
+                                            "format": "uuid"
+                                        },
+                                        "brand_name": {
+                                            "type": "string",
+                                            "example": "Specialized"
+                                        },
+                                        "brand_logo_url": {
+                                            "type": "string",
+                                            "format": "uri",
+                                            "nullable": true
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden - requires view_bikes permission"
+                    },
+                    "404": {
+                        "description": "Model not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Fleet - Models"
+                ],
+                "summary": "Update a bike model",
+                "operationId": "17df148c373e7e1a7d933315ddb845ae",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "brand_id"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "maxLength": 100,
+                                        "example": "Tarmac SL7"
+                                    },
+                                    "brand_id": {
+                                        "type": "string",
+                                        "format": "uuid"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Model updated successfully"
+                    },
+                    "400": {
+                        "description": "Validation error"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden - requires manage_bikes permission"
+                    },
+                    "404": {
+                        "description": "Model not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Fleet - Models"
+                ],
+                "summary": "Delete a bike model",
+                "operationId": "602a723d93aac06fd5b1eed94cef7f76",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Model deleted successfully"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden - requires manage_bikes permission"
+                    },
+                    "404": {
+                        "description": "Model not found"
                     }
                 },
                 "security": [
@@ -711,7 +1093,57 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "List of bikes"
+                        "description": "List of bikes with photos",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "type": "string",
+                                                "format": "uuid"
+                                            },
+                                            "internal_number": {
+                                                "type": "string"
+                                            },
+                                            "status": {
+                                                "type": "string"
+                                            },
+                                            "brand": {
+                                                "type": "object"
+                                            },
+                                            "model": {
+                                                "type": "object"
+                                            },
+                                            "category": {
+                                                "type": "object"
+                                            },
+                                            "frame_size": {
+                                                "type": "object"
+                                            },
+                                            "year": {
+                                                "type": "integer",
+                                                "nullable": true
+                                            },
+                                            "color": {
+                                                "type": "string",
+                                                "nullable": true
+                                            },
+                                            "photos": {
+                                                "description": "Array of photo URLs",
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "string",
+                                                    "format": "uri"
+                                                }
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
                     },
                     "401": {
                         "description": "Unauthorized"
@@ -832,13 +1264,400 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Bike details"
+                        "description": "Bike details with photos",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "string",
+                                            "format": "uuid"
+                                        },
+                                        "internal_number": {
+                                            "type": "string"
+                                        },
+                                        "status": {
+                                            "type": "string"
+                                        },
+                                        "brand": {
+                                            "type": "string"
+                                        },
+                                        "model": {
+                                            "type": "string"
+                                        },
+                                        "category": {
+                                            "type": "string"
+                                        },
+                                        "frame_size": {
+                                            "type": "object"
+                                        },
+                                        "year": {
+                                            "type": "integer",
+                                            "nullable": true
+                                        },
+                                        "serial_number": {
+                                            "type": "string",
+                                            "nullable": true
+                                        },
+                                        "color": {
+                                            "type": "string",
+                                            "nullable": true
+                                        },
+                                        "wheel_size": {
+                                            "type": "string",
+                                            "nullable": true
+                                        },
+                                        "purchase_price": {
+                                            "type": "number",
+                                            "nullable": true
+                                        },
+                                        "purchase_date": {
+                                            "type": "string",
+                                            "nullable": true
+                                        },
+                                        "notes": {
+                                            "type": "string",
+                                            "nullable": true
+                                        },
+                                        "photos": {
+                                            "description": "Array of photo URLs",
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string",
+                                                "format": "uri"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     },
                     "401": {
                         "description": "Unauthorized"
                     },
                     "403": {
                         "description": "Forbidden - requires view_bikes permission"
+                    },
+                    "404": {
+                        "description": "Bike not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Fleet - Bikes"
+                ],
+                "summary": "Update a bike",
+                "operationId": "f4388fcf40e4201eaba8de8ba1ac974e",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "model_id",
+                                    "category_id",
+                                    "frame_size_unit"
+                                ],
+                                "properties": {
+                                    "model_id": {
+                                        "type": "string",
+                                        "format": "uuid",
+                                        "example": "550e8400-e29b-41d4-a716-446655440001"
+                                    },
+                                    "category_id": {
+                                        "type": "string",
+                                        "format": "uuid",
+                                        "example": "550e8400-e29b-41d4-a716-446655440002"
+                                    },
+                                    "frame_size_unit": {
+                                        "type": "string",
+                                        "enum": [
+                                            "cm",
+                                            "inch",
+                                            "letter"
+                                        ],
+                                        "example": "cm"
+                                    },
+                                    "frame_size_numeric": {
+                                        "type": "number",
+                                        "example": 54,
+                                        "nullable": true
+                                    },
+                                    "frame_size_letter": {
+                                        "type": "string",
+                                        "enum": [
+                                            "XS",
+                                            "S",
+                                            "M",
+                                            "L",
+                                            "XL",
+                                            "XXL"
+                                        ],
+                                        "nullable": true
+                                    },
+                                    "year": {
+                                        "type": "integer",
+                                        "example": 2024,
+                                        "nullable": true
+                                    },
+                                    "serial_number": {
+                                        "type": "string",
+                                        "example": "SN-2024-001",
+                                        "nullable": true
+                                    },
+                                    "color": {
+                                        "type": "string",
+                                        "example": "Noir",
+                                        "nullable": true
+                                    },
+                                    "wheel_size": {
+                                        "type": "string",
+                                        "enum": [
+                                            "26",
+                                            "27.5",
+                                            "29",
+                                            "700c"
+                                        ],
+                                        "nullable": true
+                                    },
+                                    "front_suspension": {
+                                        "description": "Front suspension travel in mm",
+                                        "type": "integer",
+                                        "example": 120,
+                                        "nullable": true
+                                    },
+                                    "rear_suspension": {
+                                        "description": "Rear suspension travel in mm",
+                                        "type": "integer",
+                                        "example": 110,
+                                        "nullable": true
+                                    },
+                                    "brake_type": {
+                                        "type": "string",
+                                        "enum": [
+                                            "hydraulic_disc",
+                                            "mechanical_disc",
+                                            "rim"
+                                        ],
+                                        "nullable": true
+                                    },
+                                    "purchase_price": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 1500,
+                                        "nullable": true
+                                    },
+                                    "purchase_date": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2024-01-15",
+                                        "nullable": true
+                                    },
+                                    "notes": {
+                                        "type": "string",
+                                        "example": "VTT électrique neuf",
+                                        "nullable": true
+                                    },
+                                    "photos": {
+                                        "description": "Array of photos: existing URLs (to keep) or base64 encoded images (to upload). Format: \"data:image/jpeg;base64,...\" or \"http://...\"",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        },
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Bike updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "string",
+                                            "format": "uuid"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Bike updated successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Validation error or bike cannot be modified"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden - requires manage_bikes permission"
+                    },
+                    "404": {
+                        "description": "Bike not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/fleet/bikes/{id}/photos": {
+            "post": {
+                "tags": [
+                    "Fleet - Bikes"
+                ],
+                "summary": "Upload a photo for a bike",
+                "operationId": "25a25d33b37691428e669a1c49a06605",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "photo"
+                                ],
+                                "properties": {
+                                    "photo": {
+                                        "description": "Photo file (max 5MB)",
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Photo uploaded successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "bike_id": {
+                                            "type": "string",
+                                            "format": "uuid"
+                                        },
+                                        "photo_url": {
+                                            "type": "string",
+                                            "format": "uri"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Validation error"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden - requires manage_bikes permission"
+                    },
+                    "404": {
+                        "description": "Bike not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Fleet - Bikes"
+                ],
+                "summary": "Delete a photo from a bike",
+                "operationId": "54176a16ad29febf932bd793c6f084fc",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "photo_url"
+                                ],
+                                "properties": {
+                                    "photo_url": {
+                                        "type": "string",
+                                        "format": "uri",
+                                        "example": "http://localhost/storage/bikes/{id}/{filename}"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "204": {
+                        "description": "Photo deleted successfully"
+                    },
+                    "400": {
+                        "description": "Validation error"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden - requires manage_bikes permission"
                     },
                     "404": {
                         "description": "Bike not found"
@@ -3168,6 +3987,150 @@
                     },
                     "403": {
                         "description": "Forbidden - requires view_dashboard permission"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/rentals/bikes/{bikeId}": {
+            "get": {
+                "tags": [
+                    "Rentals"
+                ],
+                "summary": "Get all rentals for a specific bike",
+                "operationId": "96325619ef39b51742a52897c4573d26",
+                "parameters": [
+                    {
+                        "name": "bikeId",
+                        "in": "path",
+                        "description": "Bike ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    },
+                    {
+                        "name": "filter",
+                        "in": "query",
+                        "description": "Filter rentals by status: all (default), past (completed/cancelled), current (active), upcoming (pending)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "default": "all",
+                            "enum": [
+                                "all",
+                                "past",
+                                "current",
+                                "upcoming"
+                            ]
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of rentals for the bike",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "bike_id": {
+                                            "type": "string",
+                                            "format": "uuid"
+                                        },
+                                        "total_count": {
+                                            "type": "integer",
+                                            "example": 15
+                                        },
+                                        "rentals": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "string",
+                                                        "format": "uuid"
+                                                    },
+                                                    "customer_id": {
+                                                        "type": "string",
+                                                        "format": "uuid"
+                                                    },
+                                                    "start_date": {
+                                                        "type": "string",
+                                                        "format": "date-time",
+                                                        "example": "2024-01-15 10:00:00"
+                                                    },
+                                                    "expected_return_date": {
+                                                        "type": "string",
+                                                        "format": "date-time",
+                                                        "example": "2024-01-20 18:00:00"
+                                                    },
+                                                    "actual_return_date": {
+                                                        "type": "string",
+                                                        "format": "date-time",
+                                                        "example": "2024-01-20 17:30:00",
+                                                        "nullable": true
+                                                    },
+                                                    "status": {
+                                                        "type": "string",
+                                                        "enum": [
+                                                            "pending",
+                                                            "active",
+                                                            "completed",
+                                                            "cancelled"
+                                                        ]
+                                                    },
+                                                    "total_amount": {
+                                                        "type": "number",
+                                                        "format": "float",
+                                                        "example": 350
+                                                    },
+                                                    "deposit_amount": {
+                                                        "type": "number",
+                                                        "format": "float",
+                                                        "example": 200
+                                                    },
+                                                    "deposit_status": {
+                                                        "type": "string",
+                                                        "enum": [
+                                                            "held",
+                                                            "released",
+                                                            "partial",
+                                                            "retained"
+                                                        ]
+                                                    },
+                                                    "deposit_retained": {
+                                                        "type": "number",
+                                                        "format": "float",
+                                                        "example": 50,
+                                                        "nullable": true
+                                                    },
+                                                    "cancellation_reason": {
+                                                        "type": "string",
+                                                        "example": "Customer request",
+                                                        "nullable": true
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request - Invalid filter parameter"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden - requires view_rentals permission"
                     }
                 },
                 "security": [

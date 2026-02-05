@@ -30,7 +30,7 @@ final class DeclareMaintenanceRequest extends FormRequest
             'description' => ['nullable', 'string', 'max:1000'],
             'scheduled_at' => ['nullable', 'date', 'date_format:Y-m-d H:i:s'],
             'photos' => ['nullable', 'array'],
-            'photos.*' => ['string', 'max:500'],
+            'photos.*' => ['string'],
         ];
     }
 

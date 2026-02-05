@@ -11,6 +11,7 @@ use Fleet\Domain\BrakeType;
 use Fleet\Domain\FrameSize;
 use Fleet\Domain\FrameSizeLetter;
 use Fleet\Domain\FrameSizeUnit;
+use Fleet\Domain\PricingTier;
 use Fleet\Domain\RetirementReason;
 use Fleet\Domain\WheelSize;
 use Fleet\Infrastructure\Persistence\Models\BikeEloquentModel;
@@ -239,6 +240,7 @@ final class EloquentBikeRepository implements BikeRepositoryInterface
                 'frame_size_letter' => $bike->frameSize()->letterValue?->value,
                 'frame_size_letter_equivalent' => $bike->frameSize()->letterEquivalent->value,
                 'status' => $bike->status()->value,
+                'pricing_tier' => $bike->pricingTier()->value,
                 'year' => $bike->year(),
                 'serial_number' => $bike->serialNumber(),
                 'color' => $bike->color(),
@@ -267,6 +269,7 @@ final class EloquentBikeRepository implements BikeRepositoryInterface
             categoryId: $model->category_id,
             frameSize: $this->mapFrameSize($model),
             status: BikeStatus::from($model->status),
+            pricingTier: PricingTier::from($model->pricing_tier ?? 'standard'),
             year: $model->year,
             serialNumber: $model->serial_number,
             color: $model->color,

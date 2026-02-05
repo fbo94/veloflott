@@ -17,6 +17,7 @@ final class Rate
         private readonly string $id,
         private ?string $categoryId,
         private ?string $bikeId,
+        private ?PricingTier $pricingTier,
         private ?float $halfDayPrice,
         private float $dayPrice,
         private ?float $weekendPrice,
@@ -30,6 +31,16 @@ final class Rate
 
         if ($categoryId !== null && $bikeId !== null) {
             throw new \DomainException('A rate cannot be associated with both a category and a bike');
+        }
+
+        // Si c'est un tarif par catégorie, il DOIT avoir un pricing_tier
+        if ($categoryId !== null && $pricingTier === null) {
+            throw new \DomainException('A category rate must have a pricing tier');
+        }
+
+        // Si c'est un tarif spécifique au vélo, il NE DOIT PAS avoir de pricing_tier
+        if ($bikeId !== null && $pricingTier !== null) {
+            throw new \DomainException('A bike-specific rate must not have a pricing tier');
         }
 
         $this->createdAt = $createdAt ?? new \DateTimeImmutable();
@@ -51,6 +62,11 @@ final class Rate
     public function bikeId(): ?string
     {
         return $this->bikeId;
+    }
+
+    public function pricingTier(): ?PricingTier
+    {
+        return $this->pricingTier;
     }
 
     public function halfDayPrice(): ?float

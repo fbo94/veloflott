@@ -32,10 +32,6 @@ final class CompleteMaintenanceController
 
         $response = $this->handler->handle($command);
 
-        return new JsonResponse([
-            'maintenance_id' => $response->maintenanceId,
-            'bike_id' => $response->bikeId,
-            'message' => $response->message,
-        ], Response::HTTP_OK);
+        return new JsonResponse($response->toArray(), Response::HTTP_OK);
     }
 }

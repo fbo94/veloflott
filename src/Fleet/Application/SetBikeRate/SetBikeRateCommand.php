@@ -2,13 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Fleet\Application\SetCategoryRate;
+namespace Fleet\Application\SetBikeRate;
 
-final readonly class SetCategoryRateCommand
+final readonly class SetBikeRateCommand
 {
     public function __construct(
-        public string $categoryId,
-        public string $pricingTier,
+        public string $bikeId,
         public float $dayPrice,
         public ?float $halfDayPrice = null,
         public ?float $weekendPrice = null,

@@ -44,7 +44,7 @@ final class CreateBikeRequest extends FormRequest
             'purchase_date' => ['nullable', 'date'],
             'notes' => ['nullable', 'string', 'max:1000'],
             'photos' => ['nullable', 'array'],
-            'photos.*' => ['string', 'max:500'],
+            'photos.*' => ['string'],
         ];
     }
 

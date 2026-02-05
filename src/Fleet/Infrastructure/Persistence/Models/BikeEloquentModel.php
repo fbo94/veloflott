@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Fleet\Infrastructure\Persistence\Models;
 
+use Fleet\Domain\PricingTier;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -26,6 +27,7 @@ final class BikeEloquentModel extends Model
         'frame_size_letter',
         'frame_size_letter_equivalent',
         'status',
+        'pricing_tier',
         'year',
         'serial_number',
         'color',
@@ -53,6 +55,7 @@ final class BikeEloquentModel extends Model
     }
 
     protected $casts = [
+        'pricing_tier' => PricingTier::class,
         'year' => 'integer',
         'front_suspension' => 'integer',
         'rear_suspension' => 'integer',

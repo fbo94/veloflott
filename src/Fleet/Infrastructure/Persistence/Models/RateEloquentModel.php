@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Fleet\Infrastructure\Persistence\Models;
 
+use Fleet\Domain\PricingTier;
 use Illuminate\Database\Eloquent\Model;
 
 final class RateEloquentModel extends Model
@@ -18,6 +19,7 @@ final class RateEloquentModel extends Model
         'id',
         'category_id',
         'bike_id',
+        'pricing_tier',
         'half_day_price',
         'day_price',
         'weekend_price',
@@ -25,6 +27,7 @@ final class RateEloquentModel extends Model
     ];
 
     protected $casts = [
+        'pricing_tier' => PricingTier::class,
         'half_day_price' => 'float',
         'day_price' => 'float',
         'weekend_price' => 'float',

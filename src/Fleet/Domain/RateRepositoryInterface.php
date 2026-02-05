@@ -8,7 +8,7 @@ interface RateRepositoryInterface
 {
     public function findById(string $id): ?Rate;
 
-    public function findByCategoryId(string $categoryId): ?Rate;
+    public function findByCategoryIdAndTier(string $categoryId, PricingTier $tier): ?Rate;
 
     public function findByBikeId(string $bikeId): ?Rate;
 
@@ -16,6 +16,11 @@ interface RateRepositoryInterface
      * @return Rate[]
      */
     public function findAllCategoryRates(): array;
+
+    /**
+     * @return Rate[]
+     */
+    public function findByCategoryId(string $categoryId): array;
 
     public function save(Rate $rate): void;
 

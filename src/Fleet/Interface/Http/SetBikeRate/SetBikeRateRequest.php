@@ -2,12 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Fleet\Interface\Http\SetCategoryRate;
+namespace Fleet\Interface\Http\SetBikeRate;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
-final class SetCategoryRateRequest extends FormRequest
+final class SetBikeRateRequest extends FormRequest
 {
     public function authorize(): bool
     {
@@ -20,8 +19,7 @@ final class SetCategoryRateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'category_id' => ['required', 'uuid', 'exists:categories,id'],
-            'pricing_tier' => ['required', 'string', Rule::in(['standard', 'premium'])],
+            'bike_id' => ['required', 'uuid', 'exists:bikes,id'],
             'day_price' => ['required', 'numeric', 'min:0.01'],
             'half_day_price' => ['nullable', 'numeric', 'min:0.01'],
             'weekend_price' => ['nullable', 'numeric', 'min:0.01'],
@@ -32,11 +30,9 @@ final class SetCategoryRateRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'category_id.required' => 'L\'identifiant de catégorie est requis.',
-            'category_id.uuid' => 'L\'identifiant de catégorie doit être un UUID valide.',
-            'category_id.exists' => 'La catégorie spécifiée n\'existe pas.',
-            'pricing_tier.required' => 'Le tier de pricing est requis.',
-            'pricing_tier.in' => 'Le tier de pricing doit être "standard" ou "premium".',
+            'bike_id.required' => 'L\'identifiant du vélo est requis.',
+            'bike_id.uuid' => 'L\'identifiant du vélo doit être un UUID valide.',
+            'bike_id.exists' => 'Le vélo spécifié n\'existe pas.',
             'day_price.required' => 'Le prix journalier est requis.',
             'day_price.numeric' => 'Le prix journalier doit être un nombre.',
             'day_price.min' => 'Le prix journalier doit être supérieur à 0.',
