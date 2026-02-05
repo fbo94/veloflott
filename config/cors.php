@@ -19,13 +19,15 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => [
-        'http://localhost:3000',
-        'http://localhost:3001',
-        'http://localhost:5173',
-        'https://veloflott.localhost',
-        'https://veloflott-api-99101461725.europe-west9.run.app',
-    ],
+    'allowed_origins' => array_filter(array_merge(
+        [
+            'http://localhost:3000',
+            'http://localhost:3001',
+            'http://localhost:5173',
+            'https://veloflott.localhost',
+        ],
+        explode(',', env('CORS_ALLOWED_ORIGINS', ''))
+    )),
 
     'allowed_origins_patterns' => [],
 
