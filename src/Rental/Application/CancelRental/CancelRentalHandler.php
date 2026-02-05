@@ -12,7 +12,8 @@ final class CancelRentalHandler
     public function __construct(
         private readonly RentalRepositoryInterface $rentals,
         private readonly BikeRepositoryInterface $bikes,
-    ) {}
+    ) {
+    }
 
     public function handle(CancelRentalCommand $command): CancelRentalResponse
     {

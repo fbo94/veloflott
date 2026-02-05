@@ -12,5 +12,6 @@ final readonly class UpdateRateCommand
         public string $id,
         public RateDuration $duration,
         public float $price,
-    ) {}
+    ) {
+    }
 }

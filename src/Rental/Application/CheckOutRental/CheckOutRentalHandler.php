@@ -14,7 +14,8 @@ final class CheckOutRentalHandler
     public function __construct(
         private readonly RentalRepositoryInterface $rentals,
         private readonly BikeRepositoryInterface $bikes,
-    ) {}
+    ) {
+    }
 
     public function handle(CheckOutRentalCommand $command): CheckOutRentalResponse
     {

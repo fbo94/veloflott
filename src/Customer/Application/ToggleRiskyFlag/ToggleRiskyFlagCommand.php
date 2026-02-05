@@ -8,5 +8,6 @@ final readonly class ToggleRiskyFlagCommand
 {
     public function __construct(
         public string $customerId,
-    ) {}
+    ) {
+    }
 }

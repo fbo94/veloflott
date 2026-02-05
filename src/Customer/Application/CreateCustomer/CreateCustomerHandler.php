@@ -12,7 +12,8 @@ final class CreateCustomerHandler
 {
     public function __construct(
         private readonly CustomerRepositoryInterface $customers,
-    ) {}
+    ) {
+    }
 
     public function handle(CreateCustomerCommand $command): CreateCustomerResponse
     {

@@ -16,5 +16,6 @@ final readonly class BikeConditionData
         public BikeCondition $condition,
         public ?string $damageDescription = null,
         public ?array $damagePhotos = null,
-    ) {}
+    ) {
+    }
 }

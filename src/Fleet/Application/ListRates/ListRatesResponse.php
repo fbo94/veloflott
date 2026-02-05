@@ -11,7 +11,8 @@ final readonly class ListRatesResponse
      */
     public function __construct(
         public array $rates,
-    ) {}
+    ) {
+    }
 
     public function toArray(): array
     {

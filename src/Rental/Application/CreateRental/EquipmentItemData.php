@@ -12,5 +12,6 @@ final readonly class EquipmentItemData
         public EquipmentType $type,
         public int $quantity,
         public float $pricePerUnit,
-    ) {}
+    ) {
+    }
 }

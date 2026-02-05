@@ -10,7 +10,8 @@ final class SearchCustomersHandler
 {
     public function __construct(
         private readonly CustomerRepositoryInterface $customers,
-    ) {}
+    ) {
+    }
 
     public function handle(SearchCustomersQuery $query): SearchCustomersResponse
     {

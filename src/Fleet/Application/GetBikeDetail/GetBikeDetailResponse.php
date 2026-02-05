@@ -37,7 +37,8 @@ final readonly class GetBikeDetailResponse
         public ?string $retiredAt,
         public string $createdAt,
         public string $updatedAt,
-    ) {}
+    ) {
+    }
 
     public static function fromEloquentModel(BikeEloquentModel $bikeModel): self
     {

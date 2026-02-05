@@ -12,7 +12,8 @@ final class ListCategoriesController
 {
     public function __construct(
         private readonly ListCategoriesHandler $handler,
-    ) {}
+    ) {
+    }
 
     public function __invoke(): JsonResponse
     {

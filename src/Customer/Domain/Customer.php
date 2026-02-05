@@ -21,7 +21,8 @@ final class Customer
         private bool $isRisky = false,
         private readonly \DateTimeImmutable $createdAt,
         private \DateTimeImmutable $updatedAt,
-    ) {}
+    ) {
+    }
 
     public function id(): string
     {

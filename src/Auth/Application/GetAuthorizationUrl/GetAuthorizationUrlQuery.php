@@ -11,5 +11,6 @@ final readonly class GetAuthorizationUrlQuery
 {
     public function __construct(
         public ?string $redirectUrl = null,
-    ) {}
+    ) {
+    }
 }

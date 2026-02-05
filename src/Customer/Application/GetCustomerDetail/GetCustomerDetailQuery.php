@@ -8,5 +8,6 @@ final readonly class GetCustomerDetailQuery
 {
     public function __construct(
         public string $customerId,
-    ) {}
+    ) {
+    }
 }

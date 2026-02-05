@@ -17,7 +17,8 @@ final readonly class CheckOutRentalResponse
         public string $depositStatus,
         public float $depositRetained,
         public float $depositReturned,
-    ) {}
+    ) {
+    }
 
     public static function fromRental(Rental $rental, float $lateFee): self
     {

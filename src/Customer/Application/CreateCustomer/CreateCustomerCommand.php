@@ -17,5 +17,6 @@ final readonly class CreateCustomerCommand
         public ?int $weight,
         public ?string $address,
         public ?string $notes,
-    ) {}
+    ) {
+    }
 }

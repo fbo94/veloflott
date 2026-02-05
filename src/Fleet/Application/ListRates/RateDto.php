@@ -14,7 +14,8 @@ final readonly class RateDto
         public ?string $bikeId,
         public string $duration,
         public float $price,
-    ) {}
+    ) {
+    }
 
     public static function fromRate(Rate $rate): self
     {

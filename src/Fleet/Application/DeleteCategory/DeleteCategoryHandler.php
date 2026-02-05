@@ -12,7 +12,8 @@ final class DeleteCategoryHandler
     public function __construct(
         private readonly CategoryRepositoryInterface $categories,
         private readonly BikeRepositoryInterface $bikes,
-    ) {}
+    ) {
+    }
 
     public function handle(DeleteCategoryCommand $command): void
     {

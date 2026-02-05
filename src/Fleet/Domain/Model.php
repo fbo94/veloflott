@@ -12,7 +12,8 @@ final class Model
         private readonly string $brandId,
         private readonly \DateTimeImmutable $createdAt,
         private \DateTimeImmutable $updatedAt,
-    ) {}
+    ) {
+    }
 
     public function id(): string
     {

@@ -14,7 +14,8 @@ final readonly class CreateCustomerResponse
         public string $lastName,
         public ?string $email,
         public ?string $phone,
-    ) {}
+    ) {
+    }
 
     public static function fromCustomer(Customer $customer): self
     {

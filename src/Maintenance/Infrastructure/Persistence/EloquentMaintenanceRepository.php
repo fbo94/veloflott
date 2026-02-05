@@ -76,11 +76,11 @@ final class EloquentMaintenanceRepository implements MaintenanceRepositoryInterf
     }
 
     public function findWithFilters(
-        ?string              $bikeId = null,
-        ?MaintenanceStatus   $status = null,
+        ?string $bikeId = null,
+        ?MaintenanceStatus $status = null,
         ?MaintenancePriority $priority = null,
-        ?DateTimeImmutable   $dateFrom = null,
-        ?DateTimeImmutable   $dateTo = null,
+        ?DateTimeImmutable $dateFrom = null,
+        ?DateTimeImmutable $dateTo = null,
     ): array {
         $query = MaintenanceEloquentModel::query();
 

@@ -20,5 +20,6 @@ final readonly class CreateRentalCommand
         public float $depositAmount,
         public array $bikeItems,
         public array $equipmentItems,
-    ) {}
+    ) {
+    }
 }

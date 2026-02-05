@@ -21,7 +21,8 @@ final class CreateRentalHandler
         private readonly RentalRepositoryInterface $rentals,
         private readonly CustomerRepositoryInterface $customers,
         private readonly BikeRepositoryInterface $bikes,
-    ) {}
+    ) {
+    }
 
     public function handle(CreateRentalCommand $command): CreateRentalResponse
     {

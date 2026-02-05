@@ -23,7 +23,8 @@ final class KeycloakTokenValidator
         private readonly string $keycloakUrl,
         private readonly string $keycloakUrlInternal,
         private readonly string $realm,
-    ) {}
+    ) {
+    }
 
     /**
      * Valide le token et retourne le payload décodé.

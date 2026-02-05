@@ -10,7 +10,8 @@ final readonly class ToggleRiskyFlagHandler
 {
     public function __construct(
         private CustomerRepositoryInterface $customers,
-    ) {}
+    ) {
+    }
 
     public function handle(ToggleRiskyFlagCommand $command): ToggleRiskyFlagResponse
     {

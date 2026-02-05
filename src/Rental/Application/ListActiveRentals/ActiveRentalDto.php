@@ -21,7 +21,8 @@ final readonly class ActiveRentalDto
         public string $status,
         public bool $isLate,
         public int $delayHours,
-    ) {}
+    ) {
+    }
 
     public static function fromEloquentModel(RentalEloquentModel $model): self
     {

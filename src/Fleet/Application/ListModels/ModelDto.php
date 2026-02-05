@@ -14,7 +14,8 @@ final readonly class ModelDto
         public string $brandId,
         public ?string $brandName = null,
         public ?string $brandLogoUrl = null,
-    ) {}
+    ) {
+    }
 
     public static function fromModel(Model $model, ?string $brandName = null, ?string $brandLogoUrl = null): self
     {

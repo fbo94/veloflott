@@ -40,7 +40,8 @@ final readonly class GetRentalDetailResponse
         public array $equipments,
         public string $createdAt,
         public string $updatedAt,
-    ) {}
+    ) {
+    }
 
     public static function fromRental(Rental $rental, array $customerData, array $items, array $equipments, float $numberOfDays): self
     {

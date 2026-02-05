@@ -14,5 +14,6 @@ final readonly class ListUsersQuery
     public function __construct(
         public ?Role $role = null,
         public ?bool $isActive = null,
-    ) {}
+    ) {
+    }
 }

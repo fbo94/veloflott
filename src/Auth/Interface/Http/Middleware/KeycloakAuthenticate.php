@@ -24,7 +24,8 @@ final class KeycloakAuthenticate
     public function __construct(
         private readonly KeycloakTokenValidator $tokenValidator,
         private readonly UserSyncService $userSyncService,
-    ) {}
+    ) {
+    }
 
     public function handle(Request $request, Closure $next): Response
     {

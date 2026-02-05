@@ -13,7 +13,8 @@ final class SearchCustomersController
 {
     public function __construct(
         private readonly SearchCustomersHandler $handler,
-    ) {}
+    ) {
+    }
 
     public function __invoke(Request $request): JsonResponse
     {

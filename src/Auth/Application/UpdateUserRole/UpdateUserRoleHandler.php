@@ -11,7 +11,8 @@ final class UpdateUserRoleHandler
 {
     public function __construct(
         private readonly UserRepositoryInterface $users,
-    ) {}
+    ) {
+    }
 
     /**
      * @throws UserNotFoundException

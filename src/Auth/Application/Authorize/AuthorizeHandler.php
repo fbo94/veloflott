@@ -15,7 +15,8 @@ final class AuthorizeHandler
         private readonly KeycloakOAuthService $oauthService,
         private readonly KeycloakTokenValidator $tokenValidator,
         private readonly UserSyncService $userSyncService,
-    ) {}
+    ) {
+    }
 
     public function handle(AuthorizeCommand $command): AuthorizeResponse
     {

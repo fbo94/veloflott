@@ -12,7 +12,8 @@ final readonly class CancelRentalResponse
         public string $cancellationReason,
         public string $depositStatus,
         public string $message,
-    ) {}
+    ) {
+    }
 
     public function toArray(): array
     {

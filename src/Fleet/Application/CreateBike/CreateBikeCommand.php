@@ -34,5 +34,6 @@ final readonly class CreateBikeCommand
         public ?\DateTimeImmutable $purchaseDate,
         public ?string $notes,
         public array $photos,
-    ) {}
+    ) {
+    }
 }

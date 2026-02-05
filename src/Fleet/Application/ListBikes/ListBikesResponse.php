@@ -14,7 +14,8 @@ final readonly class ListBikesResponse
         public int $total,
         public int $page,
         public int $perPage,
-    ) {}
+    ) {
+    }
 
     public function toArray(): array
     {

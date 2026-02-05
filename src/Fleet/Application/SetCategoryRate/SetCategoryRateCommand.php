@@ -12,5 +12,6 @@ final readonly class SetCategoryRateCommand
         public float $dayPrice,
         public ?float $weekendPrice,
         public ?float $weekPrice,
-    ) {}
+    ) {
+    }
 }

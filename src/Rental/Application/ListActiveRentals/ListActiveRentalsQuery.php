@@ -10,5 +10,6 @@ final readonly class ListActiveRentalsQuery
         public ?string $customerId = null,
         public ?string $bikeId = null,
         public bool $onlyLate = false,
-    ) {}
+    ) {
+    }
 }

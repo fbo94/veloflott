@@ -16,6 +16,6 @@ final class DashboardServiceProvider extends ServiceProvider
     public function boot(): void
     {
         // Charger les routes
-        $this->loadRoutesFrom(__DIR__.'/../Interface/Http/routes.php');
+        $this->loadRoutesFrom(__DIR__ . '/../Interface/Http/routes.php');
     }
 }

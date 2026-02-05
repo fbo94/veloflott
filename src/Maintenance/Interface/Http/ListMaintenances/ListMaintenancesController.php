@@ -13,7 +13,8 @@ final class ListMaintenancesController
 {
     public function __construct(
         private readonly ListMaintenancesHandler $handler,
-    ) {}
+    ) {
+    }
 
     public function __invoke(ListMaintenancesRequest $request): JsonResponse
     {

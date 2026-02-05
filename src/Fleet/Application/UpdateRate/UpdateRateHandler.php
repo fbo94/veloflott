@@ -10,7 +10,8 @@ final class UpdateRateHandler
 {
     public function __construct(
         private readonly RateRepositoryInterface $rates,
-    ) {}
+    ) {
+    }
 
     public function handle(UpdateRateCommand $command): UpdateRateResponse
     {

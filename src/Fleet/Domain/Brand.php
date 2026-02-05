@@ -12,7 +12,8 @@ final class Brand
         private ?string $logoUrl,
         private readonly \DateTimeImmutable $createdAt,
         private \DateTimeImmutable $updatedAt,
-    ) {}
+    ) {
+    }
 
     public function id(): string
     {

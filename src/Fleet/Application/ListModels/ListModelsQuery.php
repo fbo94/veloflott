@@ -8,5 +8,6 @@ final readonly class ListModelsQuery
 {
     public function __construct(
         public ?string $brandId = null,
-    ) {}
+    ) {
+    }
 }

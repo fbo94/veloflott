@@ -12,7 +12,8 @@ final class ListModelsController
 {
     public function __construct(
         private readonly ListModelsHandler $handler,
-    ) {}
+    ) {
+    }
 
     public function __invoke(ListModelsRequest $request): JsonResponse
     {

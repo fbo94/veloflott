@@ -18,5 +18,6 @@ final readonly class UpdateCustomerCommand
         public ?int $weight,
         public ?string $address,
         public ?string $notes,
-    ) {}
+    ) {
+    }
 }

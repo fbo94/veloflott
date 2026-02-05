@@ -11,7 +11,8 @@ final class ToggleUserStatusHandler
 {
     public function __construct(
         private readonly UserRepositoryInterface $users,
-    ) {}
+    ) {
+    }
 
     /**
      * @throws CannotDeactivateSelfException

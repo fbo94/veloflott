@@ -21,7 +21,8 @@ final class CreateBikeHandler
         private readonly ModelRepositoryInterface $models,
         private readonly BrandRepositoryInterface $brands,
         private readonly CategoryRepositoryInterface $categories,
-    ) {}
+    ) {
+    }
 
     public function handle(CreateBikeCommand $command): CreateBikeResponse
     {

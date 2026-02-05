@@ -11,7 +11,8 @@ final readonly class ListModelsResponse
      */
     public function __construct(
         public array $models,
-    ) {}
+    ) {
+    }
 
     public function toArray(): array
     {
