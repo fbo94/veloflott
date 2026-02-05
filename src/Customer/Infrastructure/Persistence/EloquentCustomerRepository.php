@@ -74,6 +74,7 @@ final class EloquentCustomerRepository implements CustomerRepositoryInterface
                 'weight' => $customer->weight(),
                 'address' => $customer->address(),
                 'notes' => $customer->notes(),
+                'photos' => $customer->photos(),
                 'is_risky' => $customer->isRisky(),
             ]
         );
@@ -93,6 +94,7 @@ final class EloquentCustomerRepository implements CustomerRepositoryInterface
             weight: $model->weight,
             address: $model->address,
             notes: $model->notes,
+            photos: $model->photos ?? [],
             isRisky: $model->is_risky ?? false,
             createdAt: \DateTimeImmutable::createFromInterface($model->created_at),
             updatedAt: \DateTimeImmutable::createFromInterface($model->updated_at),

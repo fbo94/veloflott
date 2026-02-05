@@ -6,6 +6,9 @@ namespace Customer\Application\UpdateCustomer;
 
 final readonly class UpdateCustomerCommand
 {
+    /**
+     * @param array<int, string> $photos
+     */
     public function __construct(
         public string $customerId,
         public string $firstName,
@@ -18,6 +21,7 @@ final readonly class UpdateCustomerCommand
         public ?int $weight,
         public ?string $address,
         public ?string $notes,
+        public array $photos = [],
     ) {
     }
 }

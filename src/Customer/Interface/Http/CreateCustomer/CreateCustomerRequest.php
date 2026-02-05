@@ -29,6 +29,15 @@ final class CreateCustomerRequest extends FormRequest
             'weight' => ['nullable', 'integer', 'min:30', 'max:200'],
             'address' => ['nullable', 'string', 'max:500'],
             'notes' => ['nullable', 'string', 'max:1000'],
+            'photos' => ['nullable', 'array'],
+            'photos.*' => ['string', 'max:500'],
         ];
+    }
+
+    protected function prepareForValidation(): void
+    {
+        if (!$this->has('photos')) {
+            $this->merge(['photos' => []]);
+        }
     }
 }

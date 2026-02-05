@@ -18,6 +18,7 @@ final class Customer
         private ?int $weight,
         private ?string $address,
         private ?string $notes,
+        private array $photos = [],
         private bool $isRisky = false,
         private readonly \DateTimeImmutable $createdAt,
         private \DateTimeImmutable $updatedAt,
@@ -89,6 +90,35 @@ final class Customer
         return $this->isRisky;
     }
 
+    /**
+     * @return array<int, string>
+     */
+    public function photos(): array
+    {
+        return $this->photos;
+    }
+
+    public function addPhoto(string $photoUrl): self
+    {
+        if (!in_array($photoUrl, $this->photos, true)) {
+            $this->photos[] = $photoUrl;
+            $this->updatedAt = new \DateTimeImmutable();
+        }
+
+        return $this;
+    }
+
+    public function removePhoto(string $photoUrl): self
+    {
+        $this->photos = array_values(array_filter(
+            $this->photos,
+            fn (string $url) => $url !== $photoUrl
+        ));
+        $this->updatedAt = new \DateTimeImmutable();
+
+        return $this;
+    }
+
     public function createdAt(): \DateTimeImmutable
     {
         return $this->createdAt;
@@ -110,6 +140,7 @@ final class Customer
         ?int $weight,
         ?string $address,
         ?string $notes,
+        array $photos = [],
     ): self {
         $this->firstName = $firstName;
         $this->lastName = $lastName;
@@ -121,6 +152,7 @@ final class Customer
         $this->weight = $weight;
         $this->address = $address;
         $this->notes = $notes;
+        $this->photos = $photos;
         $this->updatedAt = new \DateTimeImmutable();
 
         return $this;

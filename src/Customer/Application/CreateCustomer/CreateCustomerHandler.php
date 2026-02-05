@@ -37,6 +37,7 @@ final class CreateCustomerHandler
             weight: $command->weight,
             address: $command->address,
             notes: $command->notes,
+            photos: $command->photos,
             isRisky: false,
             createdAt: new \DateTimeImmutable(),
             updatedAt: new \DateTimeImmutable(),

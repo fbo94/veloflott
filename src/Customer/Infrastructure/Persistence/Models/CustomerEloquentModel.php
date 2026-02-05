@@ -24,10 +24,12 @@ final class CustomerEloquentModel extends Model
         'weight',
         'address',
         'notes',
+        'photos',
         'is_risky',
     ];
 
     protected $casts = [
+        'photos' => 'array',
         'is_risky' => 'boolean',
         'created_at' => 'immutable_datetime',
         'updated_at' => 'immutable_datetime',

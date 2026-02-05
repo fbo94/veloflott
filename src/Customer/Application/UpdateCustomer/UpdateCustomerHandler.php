@@ -42,6 +42,7 @@ final readonly class UpdateCustomerHandler
             weight: $command->weight,
             address: $command->address,
             notes: $command->notes,
+            photos: $command->photos,
         );
 
         $this->customers->save($customer);

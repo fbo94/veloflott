@@ -29,6 +29,7 @@ final class CreateCustomerController
             weight: $request->input('weight'),
             address: $request->input('address'),
             notes: $request->input('notes'),
+            photos: $request->input('photos', []),
         );
 
         $response = $this->handler->handle($command);

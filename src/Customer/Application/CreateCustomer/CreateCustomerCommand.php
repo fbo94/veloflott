@@ -6,6 +6,9 @@ namespace Customer\Application\CreateCustomer;
 
 final readonly class CreateCustomerCommand
 {
+    /**
+     * @param array<int, string> $photos
+     */
     public function __construct(
         public string $firstName,
         public string $lastName,
@@ -17,6 +20,7 @@ final readonly class CreateCustomerCommand
         public ?int $weight,
         public ?string $address,
         public ?string $notes,
+        public array $photos = [],
     ) {
     }
 }
