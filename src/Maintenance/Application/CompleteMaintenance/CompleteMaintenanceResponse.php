@@ -1,0 +1,15 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Maintenance\Application\CompleteMaintenance;
+
+final readonly class CompleteMaintenanceResponse
+{
+    public function __construct(
+        public string $maintenanceId,
+        public string $bikeId,
+        public string $message,
+    ) {
+    }
+}

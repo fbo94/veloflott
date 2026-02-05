@@ -6,44 +6,41 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
+            // Clé primaire UUID
+            $table->uuid('id')->primary();
+
+            // Identifiant Keycloak (claim "sub" du JWT)
+            $table->string('keycloak_id')->unique();
+
+            // Infos synchronisées depuis Keycloak
             $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
+            $table->string('first_name')->nullable();
+            $table->string('last_name')->nullable();
+
+            // Rôle géré côté Laravel (pas Keycloak)
+            $table->enum('role', ['admin', 'manager', 'employee'])->default('employee');
+
+            // Statut actif/inactif
+            $table->boolean('is_active')->default(true);
+
+            // Dernière connexion
+            $table->timestamp('last_login_at')->nullable();
+
+            // Timestamps
             $table->timestamps();
-        });
 
-        Schema::create('password_reset_tokens', function (Blueprint $table) {
-            $table->string('email')->primary();
-            $table->string('token');
-            $table->timestamp('created_at')->nullable();
-        });
-
-        Schema::create('sessions', function (Blueprint $table) {
-            $table->string('id')->primary();
-            $table->foreignId('user_id')->nullable()->index();
-            $table->string('ip_address', 45)->nullable();
-            $table->text('user_agent')->nullable();
-            $table->longText('payload');
-            $table->integer('last_activity')->index();
+            // Index pour les filtres courants
+            $table->index('role');
+            $table->index('is_active');
+            $table->index(['role', 'is_active']);
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('users');
-        Schema::dropIfExists('password_reset_tokens');
-        Schema::dropIfExists('sessions');
     }
 };

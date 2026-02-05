@@ -1,0 +1,89 @@
+# Google Cloud Build Configuration
+# Déploiement automatique sur Cloud Run
+
+steps:
+  # Step 1: Build the Docker image
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'build'
+      - '-t'
+      - 'gcr.io/$PROJECT_ID/veloflott-api:$BUILD_ID'
+      - '-t'
+      - 'gcr.io/$PROJECT_ID/veloflott-api:latest'
+      - '-f'
+      - 'Dockerfile.production'
+      - '.'
+
+  # Step 2: Push the Docker image to Google Container Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'push'
+      - 'gcr.io/$PROJECT_ID/veloflott-api:$BUILD_ID'
+
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'push'
+      - 'gcr.io/$PROJECT_ID/veloflott-api:latest'
+
+  # Step 3: Run database migrations (optionnel, commenté par défaut)
+  # Décommenter seulement si vous voulez exécuter les migrations automatiquement
+  # - name: 'gcr.io/google-appengine/exec-wrapper'
+  #   args:
+  #     - '-i'
+  #     - 'gcr.io/$PROJECT_ID/veloflott-api:$COMMIT_SHA'
+  #     - '-s'
+  #     - '$_CLOUD_SQL_CONNECTION_NAME'
+  #     - '--'
+  #     - 'php'
+  #     - 'artisan'
+  #     - 'migrate'
+  #     - '--force'
+
+  # Step 4: Deploy to Cloud Run
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: gcloud
+    args:
+      - 'run'
+      - 'deploy'
+      - 'veloflott-api'
+      - '--image'
+      - 'gcr.io/$PROJECT_ID/veloflott-api:$BUILD_ID'
+      - '--region'
+      - '$_REGION'
+      - '--platform'
+      - 'managed'
+      - '--allow-unauthenticated'
+      - '--add-cloudsql-instances'
+      - '$_CLOUD_SQL_CONNECTION_NAME'
+      - '--set-env-vars'
+      - 'APP_ENV=production,APP_DEBUG=false,LOG_CHANNEL=stderr'
+      - '--set-secrets'
+      - 'APP_KEY=veloflott-app-key:latest,DB_PASSWORD=veloflott-db-password:latest,KEYCLOAK_CLIENT_SECRET=veloflott-keycloak-secret:latest'
+      - '--min-instances'
+      - '1'
+      - '--max-instances'
+      - '10'
+      - '--memory'
+      - '512Mi'
+      - '--cpu'
+      - '1'
+      - '--timeout'
+      - '300'
+
+# Substitutions par défaut (peuvent être override dans les triggers)
+substitutions:
+  _REGION: europe-west9
+  _CLOUD_SQL_CONNECTION_NAME: project-08eb5a0c-d370-4877-a5a:europe-west9:veloflott-db
+
+# Images à stocker dans Container Registry
+images:
+  - 'gcr.io/$PROJECT_ID/veloflott-api:$BUILD_ID'
+  - 'gcr.io/$PROJECT_ID/veloflott-api:latest'
+
+# Options de build
+options:
+  machineType: 'N1_HIGHCPU_8'
+  logging: CLOUD_LOGGING_ONLY
+
+# Timeout du build (10 minutes)
+timeout: 600s
