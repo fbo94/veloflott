@@ -46,7 +46,8 @@ final class AuthServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-        $router = $this->app['router'];
+        /** @var \Illuminate\Routing\Router $router */
+        $router = $this->app->make('router');
         $router->aliasMiddleware('keycloak', KeycloakAuthenticate::class);
         $router->aliasMiddleware('permission', CheckPermission::class);
 

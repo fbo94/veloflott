@@ -34,9 +34,13 @@ final readonly class UpdateBikeHandler
         );
         $wheelSize = $command->wheelSize !== null ? WheelSize::from($command->wheelSize) : null;
         $brakeType = $command->brakeType !== null ? BrakeType::from($command->brakeType) : null;
-        $purchaseDate = $command->purchaseDate !== null
-            ? \DateTimeImmutable::createFromFormat('Y-m-d', $command->purchaseDate)
-            : null;
+        $purchaseDate = null;
+        if ($command->purchaseDate !== null) {
+            $purchaseDate = \DateTimeImmutable::createFromFormat('Y-m-d', $command->purchaseDate);
+            if ($purchaseDate === false) {
+                throw new \InvalidArgumentException('Invalid purchase date format. Expected Y-m-d.');
+            }
+        }
 
         try {
             $bike->update(

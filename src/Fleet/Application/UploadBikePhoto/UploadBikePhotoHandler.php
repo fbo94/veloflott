@@ -33,6 +33,10 @@ final readonly class UploadBikePhotoHandler
             $filename
         );
 
+        if ($path === false) {
+            throw new \RuntimeException('Failed to store bike photo');
+        }
+
         // Get the URL for the stored photo
         $photoUrl = Storage::disk('bike_photos')->url($path);
 
