@@ -24,6 +24,7 @@ return [
         'http://localhost:3001',
         'http://localhost:5173',
         'https://veloflott.localhost',
+        'https://veloflott-api-99101461725.europe-west9.run.app',
     ],
 
     'allowed_origins_patterns' => [],

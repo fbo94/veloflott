@@ -1110,6 +1110,13 @@
                                             "status": {
                                                 "type": "string"
                                             },
+                                            "pricing_tier": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "standard",
+                                                    "premium"
+                                                ]
+                                            },
                                             "brand": {
                                                 "type": "object"
                                             },
@@ -1216,6 +1223,15 @@
                                         "type": "string",
                                         "example": "VTT électrique neuf",
                                         "nullable": true
+                                    },
+                                    "pricing_tier": {
+                                        "type": "string",
+                                        "enum": [
+                                            "standard",
+                                            "premium"
+                                        ],
+                                        "example": "standard",
+                                        "description": "Pricing tier for the bike (defaults to 'standard' if not provided)"
                                     }
                                 },
                                 "type": "object"
@@ -1278,6 +1294,15 @@
                                         },
                                         "status": {
                                             "type": "string"
+                                        },
+                                        "pricing_tier": {
+                                            "type": "string",
+                                            "enum": [
+                                                "standard",
+                                                "premium"
+                                            ],
+                                            "example": "standard",
+                                            "description": "Pricing tier of the bike"
                                         },
                                         "brand": {
                                             "type": "string"
@@ -1483,6 +1508,15 @@
                                             "type": "string"
                                         },
                                         "nullable": true
+                                    },
+                                    "pricing_tier": {
+                                        "type": "string",
+                                        "enum": [
+                                            "standard",
+                                            "premium"
+                                        ],
+                                        "example": "standard",
+                                        "description": "Pricing tier for the bike"
                                     }
                                 },
                                 "type": "object"
@@ -1867,50 +1901,67 @@
                 ]
             }
         },
-        "/api/fleet/categories/{categoryId}/rates": {
+        "/api/fleet/rates/categories": {
             "post": {
                 "tags": [
                     "Fleet - Rates"
                 ],
-                "summary": "Create or update rate for a category",
-                "operationId": "23402035714cb59fc0212f84ac3e13a4",
-                "parameters": [
-                    {
-                        "name": "categoryId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "format": "uuid"
-                        }
-                    }
-                ],
+                "summary": "Create or update rate for a category with pricing tier",
+                "description": "Define pricing for a category (or subcategory) with a specific tier (standard or premium). All durations can be specified at once.",
+                "operationId": "set_category_rate",
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
                                 "required": [
-                                    "duration",
-                                    "price"
+                                    "category_id",
+                                    "pricing_tier",
+                                    "day_price"
                                 ],
                                 "properties": {
-                                    "duration": {
+                                    "category_id": {
+                                        "type": "string",
+                                        "format": "uuid",
+                                        "example": "550e8400-e29b-41d4-a716-446655440000",
+                                        "description": "Category or subcategory ID"
+                                    },
+                                    "pricing_tier": {
                                         "type": "string",
                                         "enum": [
-                                            "half_day",
-                                            "full_day",
-                                            "two_days",
-                                            "three_days",
-                                            "week",
-                                            "custom"
+                                            "standard",
+                                            "premium"
                                         ],
-                                        "example": "full_day"
+                                        "example": "standard",
+                                        "description": "Pricing tier (standard or premium)"
                                     },
-                                    "price": {
+                                    "day_price": {
                                         "type": "number",
                                         "format": "float",
-                                        "example": 25
+                                        "minimum": 0.01,
+                                        "example": 25.00,
+                                        "description": "Daily rental price (required)"
+                                    },
+                                    "half_day_price": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "minimum": 0.01,
+                                        "example": 15.00,
+                                        "description": "Half-day rental price (optional)"
+                                    },
+                                    "weekend_price": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "minimum": 0.01,
+                                        "example": 40.00,
+                                        "description": "Weekend rental price (optional)"
+                                    },
+                                    "week_price": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "minimum": 0.01,
+                                        "example": 100.00,
+                                        "description": "Weekly rental price (optional)"
                                     }
                                 },
                                 "type": "object"
@@ -1919,8 +1970,37 @@
                     }
                 },
                 "responses": {
-                    "201": {
-                        "description": "Rate created or updated successfully"
+                    "200": {
+                        "description": "Rate created or updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "string",
+                                            "format": "uuid",
+                                            "example": "650e8400-e29b-41d4-a716-446655440000"
+                                        },
+                                        "category_id": {
+                                            "type": "string",
+                                            "format": "uuid"
+                                        },
+                                        "pricing_tier": {
+                                            "type": "string",
+                                            "enum": [
+                                                "standard",
+                                                "premium"
+                                            ]
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Tarif créé avec succès"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     },
                     "400": {
                         "description": "Validation error"
@@ -1929,10 +2009,225 @@
                         "description": "Unauthorized"
                     },
                     "403": {
-                        "description": "Forbidden - requires manage_fleet permission"
+                        "description": "Forbidden - requires manage_rates permission"
                     },
                     "404": {
                         "description": "Category not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/fleet/rates/bikes": {
+            "post": {
+                "tags": [
+                    "Fleet - Rates"
+                ],
+                "summary": "Create or update bike-specific rate",
+                "description": "Define a custom pricing for a specific bike. This overrides category-level pricing for this bike.",
+                "operationId": "set_bike_rate",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "bike_id",
+                                    "day_price"
+                                ],
+                                "properties": {
+                                    "bike_id": {
+                                        "type": "string",
+                                        "format": "uuid",
+                                        "example": "450e8400-e29b-41d4-a716-446655440000",
+                                        "description": "Bike ID"
+                                    },
+                                    "day_price": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "minimum": 0.01,
+                                        "example": 30.00,
+                                        "description": "Daily rental price (required)"
+                                    },
+                                    "half_day_price": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "minimum": 0.01,
+                                        "example": 18.00,
+                                        "description": "Half-day rental price (optional)"
+                                    },
+                                    "weekend_price": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "minimum": 0.01,
+                                        "example": 50.00,
+                                        "description": "Weekend rental price (optional)"
+                                    },
+                                    "week_price": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "minimum": 0.01,
+                                        "example": 120.00,
+                                        "description": "Weekly rental price (optional)"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Bike rate created or updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "string",
+                                            "format": "uuid",
+                                            "example": "750e8400-e29b-41d4-a716-446655440000"
+                                        },
+                                        "bike_id": {
+                                            "type": "string",
+                                            "format": "uuid"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Tarif créé avec succès"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Validation error"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden - requires manage_rates permission"
+                    },
+                    "404": {
+                        "description": "Bike not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/fleet/bikes/{bikeId}/rate": {
+            "get": {
+                "tags": [
+                    "Fleet - Rates"
+                ],
+                "summary": "Get applicable rate for a bike",
+                "description": "Resolves and returns the applicable rate for a specific bike using hierarchy: bike-specific > category+tier > parent category+tier",
+                "operationId": "get_bike_rate",
+                "parameters": [
+                    {
+                        "name": "bikeId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        },
+                        "description": "Bike ID"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Applicable rate for the bike",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "rate_id": {
+                                            "type": "string",
+                                            "format": "uuid",
+                                            "example": "850e8400-e29b-41d4-a716-446655440000"
+                                        },
+                                        "bike_id": {
+                                            "type": "string",
+                                            "format": "uuid"
+                                        },
+                                        "category_id": {
+                                            "type": "string",
+                                            "format": "uuid",
+                                            "nullable": true,
+                                            "description": "Category ID if this is a category rate"
+                                        },
+                                        "pricing_tier": {
+                                            "type": "string",
+                                            "enum": [
+                                                "standard",
+                                                "premium"
+                                            ],
+                                            "nullable": true,
+                                            "description": "Pricing tier if this is a category rate"
+                                        },
+                                        "rate_type": {
+                                            "type": "string",
+                                            "enum": [
+                                                "bike_specific",
+                                                "category"
+                                            ],
+                                            "example": "category",
+                                            "description": "Type of rate applied"
+                                        },
+                                        "prices": {
+                                            "type": "object",
+                                            "properties": {
+                                                "half_day": {
+                                                    "type": "number",
+                                                    "format": "float",
+                                                    "nullable": true,
+                                                    "example": 15.00
+                                                },
+                                                "day": {
+                                                    "type": "number",
+                                                    "format": "float",
+                                                    "example": 25.00
+                                                },
+                                                "weekend": {
+                                                    "type": "number",
+                                                    "format": "float",
+                                                    "nullable": true,
+                                                    "example": 40.00
+                                                },
+                                                "week": {
+                                                    "type": "number",
+                                                    "format": "float",
+                                                    "nullable": true,
+                                                    "example": 100.00
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden - requires view_bikes permission"
+                    },
+                    "404": {
+                        "description": "Bike not found or no rate configured"
                     }
                 },
                 "security": [
