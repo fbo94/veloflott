@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Maintenance\Interface\Http\DeclareMaintenance\DeclareMaintenanceController;
 use Maintenance\Interface\Http\ListMaintenances\ListMaintenancesController;
+use Maintenance\Interface\Http\GetMaintenanceDetail\GetMaintenanceDetailController;
 use Maintenance\Interface\Http\StartMaintenance\StartMaintenanceController;
 use Maintenance\Interface\Http\CompleteMaintenance\CompleteMaintenanceController;
 use Maintenance\Interface\Http\GetBikeMaintenanceHistory\GetBikeMaintenanceHistoryController;
@@ -21,6 +22,10 @@ Route::middleware(['keycloak'])->prefix('api/maintenance')->group(function () {
 
     // US 4.2 : Suivre les maintenances en cours
     Route::get('/maintenances', ListMaintenancesController::class)
+        ->middleware('permission:view_maintenances');
+
+    // Détail d'une maintenance
+    Route::get('/maintenances/{id}', GetMaintenanceDetailController::class)
         ->middleware('permission:view_maintenances');
 
     // Bonus : Démarrer une maintenance (TODO → IN_PROGRESS)

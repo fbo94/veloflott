@@ -10,10 +10,12 @@ final readonly class ListMaintenancesResponse
 {
     /**
      * @param Maintenance[] $maintenances
+     * @param \Illuminate\Support\Collection $bikes
      * @param array<string, int> $countsByStatus
      */
     public function __construct(
         public array $maintenances,
+        public \Illuminate\Support\Collection $bikes,
         public array $countsByStatus,
         public int $total,
     ) {
@@ -29,6 +31,7 @@ final readonly class ListMaintenancesResponse
                 fn (Maintenance $m) => [
                     'id' => $m->id(),
                     'bike_id' => $m->bikeId(),
+                    'bike' => $this->getBikeData($m->bikeId()),
                     'type' => $m->type()->value,
                     'type_label' => $m->type()->label(),
                     'reason' => $m->reason()->value,
@@ -52,6 +55,24 @@ final readonly class ListMaintenancesResponse
             ),
             'counts_by_status' => $this->countsByStatus,
             'total' => $this->total,
+        ];
+    }
+
+    private function getBikeData(string $bikeId): ?array
+    {
+        $bike = $this->bikes->get($bikeId);
+
+        if ($bike === null) {
+            return null;
+        }
+
+        return [
+            'id' => $bike->id,
+            'internal_number' => $bike->internal_number,
+            'brand' => $bike->model->brand->name,
+            'model' => $bike->model->name,
+            'category_id' => $bike->category_id,
+            'category_name' => $bike->category->name,
         ];
     }
 }
