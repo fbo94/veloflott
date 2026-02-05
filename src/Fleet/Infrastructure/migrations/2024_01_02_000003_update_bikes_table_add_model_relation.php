@@ -11,6 +11,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('bikes', function (Blueprint $table) {
+            // Supprimer l'index sur brand avant de supprimer la colonne
+            $table->dropIndex(['brand']);
+
             // Supprimer les anciennes colonnes brand et model
             $table->dropColumn(['brand', 'model']);
 
@@ -32,6 +35,9 @@ return new class extends Migration
 
             $table->string('brand', 100)->after('internal_number');
             $table->string('model', 100)->after('brand');
+
+            // Recréer l'index sur brand
+            $table->index('brand');
         });
     }
 };
