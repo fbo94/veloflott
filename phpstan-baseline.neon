@@ -1,0 +1,1051 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Method App\\Console\\Commands\\MigrateBikePhotosUrls\:\:handle\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Console/Commands/MigrateBikePhotosUrls.php
+
+		-
+			message: '#^Call to function method_exists\(\) with Symfony\\Component\\HttpKernel\\Exception\\HttpExceptionInterface and ''getStatusCode'' will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: app/Exceptions/Handler.php
+
+		-
+			message: '#^Method Auth\\Application\\Authorize\\AuthorizeResponse\:\:toArray\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Auth/Application/Authorize/AuthorizeResponse.php
+
+		-
+			message: '#^Method Auth\\Application\\GetAuthorizationUrl\\GetAuthorizationUrlResponse\:\:toArray\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Auth/Application/GetAuthorizationUrl/GetAuthorizationUrlResponse.php
+
+		-
+			message: '#^Method Auth\\Application\\GetCurrentUser\\GetCurrentUserResponse\:\:__construct\(\) has parameter \$permissions with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Auth/Application/GetCurrentUser/GetCurrentUserResponse.php
+
+		-
+			message: '#^Method Auth\\Application\\GetCurrentUser\\GetCurrentUserResponse\:\:toArray\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Auth/Application/GetCurrentUser/GetCurrentUserResponse.php
+
+		-
+			message: '#^Method Auth\\Application\\GetCurrentUser\\UserNotFoundException\:\:context\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Auth/Application/GetCurrentUser/UserNotFoundException.php
+
+		-
+			message: '#^Method Auth\\Application\\ListUsers\\ListUsersResponse\:\:toArray\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Auth/Application/ListUsers/ListUsersResponse.php
+
+		-
+			message: '#^Method Auth\\Domain\\Role\:\:all\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Auth/Domain/Role.php
+
+		-
+			message: '#^Offset ''admin''\|''employee''\|''manager'' on array\{admin\: array\{Auth\\Domain\\Permission\:\:VIEW_BIKES, Auth\\Domain\\Permission\:\:MANAGE_BIKES, Auth\\Domain\\Permission\:\:DELETE_BIKES, Auth\\Domain\\Permission\:\:MANAGE_CATEGORIES, Auth\\Domain\\Permission\:\:MANAGE_RATES, Auth\\Domain\\Permission\:\:VIEW_RENTALS, Auth\\Domain\\Permission\:\:CREATE_RENTALS, Auth\\Domain\\Permission\:\:CANCEL_RENTALS, \.\.\.\}, manager\: array\{Auth\\Domain\\Permission\:\:VIEW_BIKES, Auth\\Domain\\Permission\:\:MANAGE_BIKES, Auth\\Domain\\Permission\:\:MANAGE_RATES, Auth\\Domain\\Permission\:\:VIEW_RENTALS, Auth\\Domain\\Permission\:\:CREATE_RENTALS, Auth\\Domain\\Permission\:\:CANCEL_RENTALS, Auth\\Domain\\Permission\:\:VIEW_CUSTOMERS, Auth\\Domain\\Permission\:\:MANAGE_CUSTOMERS, \.\.\.\}, employee\: array\{Auth\\Domain\\Permission\:\:VIEW_BIKES, Auth\\Domain\\Permission\:\:VIEW_RENTALS, Auth\\Domain\\Permission\:\:CREATE_RENTALS, Auth\\Domain\\Permission\:\:VIEW_CUSTOMERS, Auth\\Domain\\Permission\:\:MANAGE_CUSTOMERS, Auth\\Domain\\Permission\:\:VIEW_MAINTENANCES, Auth\\Domain\\Permission\:\:CREATE_MAINTENANCES, Auth\\Domain\\Permission\:\:MANAGE_MAINTENANCES\}\} on left side of \?\? always exists and is not nullable\.$#'
+			identifier: nullCoalesce.offset
+			count: 1
+			path: src/Auth/Domain/RolePermissions.php
+
+		-
+			message: '#^Called ''env'' outside of the config directory which returns null when the config is cached, use ''config''\.$#'
+			identifier: larastan.noEnvCallsOutsideOfConfig
+			count: 3
+			path: src/Auth/Infrastructure/Keycloak/KeycloakTokenValidator.php
+
+		-
+			message: '#^Method Auth\\Interface\\Http\\Authorize\\AuthorizeRequest\:\:rules\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Auth/Interface/Http/Authorize/AuthorizeRequest.php
+
+		-
+			message: '#^Call to an undefined method App\\Models\\User\:\:id\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Auth/Interface/Http/GetCurrentUser/GetCurrentUserController.php
+
+		-
+			message: '#^Call to an undefined method App\\Models\\User\:\:hasPermission\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Auth/Interface/Http/Middleware/CheckPermission.php
+
+		-
+			message: '#^Call to an undefined method App\\Models\\User\:\:id\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Auth/Interface/Http/ToggleUserStatus/ToggleUserStatusController.php
+
+		-
+			message: '#^Call to an undefined method App\\Models\\User\:\:id\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Auth/Interface/Http/UpdateUserRole/UpdateUserRoleController.php
+
+		-
+			message: '#^Method Auth\\Interface\\Http\\UpdateUserRole\\UpdateUserRoleRequest\:\:rules\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Auth/Interface/Http/UpdateUserRole/UpdateUserRoleRequest.php
+
+		-
+			message: '#^Method Customer\\Application\\CreateCustomer\\CreateCustomerResponse\:\:toArray\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Customer/Application/CreateCustomer/CreateCustomerResponse.php
+
+		-
+			message: '#^Method Customer\\Application\\CreateCustomer\\CustomerEmailAlreadyExistsException\:\:context\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Customer/Application/CreateCustomer/CustomerEmailAlreadyExistsException.php
+
+		-
+			message: '#^Method Customer\\Application\\GetCustomerDetail\\CustomerDetailDto\:\:toArray\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Customer/Application/GetCustomerDetail/CustomerDetailDto.php
+
+		-
+			message: '#^Parameter \#1 \$callback of method Illuminate\\Database\\Eloquent\\Collection\<int,Rental\\Infrastructure\\Persistence\\Models\\RentalEloquentModel\>\:\:map\(\) contains unresolvable type\.$#'
+			identifier: argument.unresolvableType
+			count: 1
+			path: src/Customer/Application/GetCustomerDetail/GetCustomerDetailHandler.php
+
+		-
+			message: '#^Return type of call to method Illuminate\\Database\\Eloquent\\Collection\<int,Rental\\Infrastructure\\Persistence\\Models\\RentalEloquentModel\>\:\:map\(\) contains unresolvable type\.$#'
+			identifier: method.unresolvableReturnType
+			count: 1
+			path: src/Customer/Application/GetCustomerDetail/GetCustomerDetailHandler.php
+
+		-
+			message: '#^Method Customer\\Application\\SearchCustomers\\CustomerDto\:\:toArray\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Customer/Application/SearchCustomers/CustomerDto.php
+
+		-
+			message: '#^Method Customer\\Application\\SearchCustomers\\SearchCustomersResponse\:\:toArray\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Customer/Application/SearchCustomers/SearchCustomersResponse.php
+
+		-
+			message: '#^Method Customer\\Application\\ToggleRiskyFlag\\ToggleRiskyFlagResponse\:\:toArray\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Customer/Application/ToggleRiskyFlag/ToggleRiskyFlagResponse.php
+
+		-
+			message: '#^Method Customer\\Application\\UpdateCustomer\\UpdateCustomerResponse\:\:toArray\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Customer/Application/UpdateCustomer/UpdateCustomerResponse.php
+
+		-
+			message: '#^Deprecated in PHP 8\.0\: Required parameter \$createdAt follows optional parameter \$isRisky\.$#'
+			identifier: parameter.requiredAfterOptional
+			count: 1
+			path: src/Customer/Domain/Customer.php
+
+		-
+			message: '#^Deprecated in PHP 8\.0\: Required parameter \$updatedAt follows optional parameter \$isRisky\.$#'
+			identifier: parameter.requiredAfterOptional
+			count: 1
+			path: src/Customer/Domain/Customer.php
+
+		-
+			message: '#^Parameter \$id of class Customer\\Domain\\Customer constructor expects string, int given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Customer/Infrastructure/Persistence/EloquentCustomerRepository.php
+
+		-
+			message: '#^Expression on left side of \?\? is not nullable\.$#'
+			identifier: nullCoalesce.expr
+			count: 1
+			path: src/Dashboard/Application/GetCentralizedAlerts/GetCentralizedAlertsHandler.php
+
+		-
+			message: '#^Parameter \$recentRentals of class Dashboard\\Application\\GetTodayActivity\\GetTodayActivityResponse constructor expects array\<int, array\{id\: string, customer_id\: string, start_date\: string, expected_return_date\: string, status\: string, total_amount\: int\}\>, array\<array\{id\: string, customer_id\: string, start_date\: non\-falsy\-string, expected_return_date\: non\-falsy\-string, status\: ''active''\|''cancelled''\|''completed''\|''pending'', total_amount\: float\}\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Dashboard/Application/GetTodayActivity/GetTodayActivityHandler.php
+
+		-
+			message: '#^Call to method handle\(\) on an unknown class Dashboard\\Application\\GetPerformanceIndicators\\GetPerformanceIndicatorsHandler\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Dashboard/Interface/Http/GetPerformanceIndicators/GetPerformanceIndicatorsController.php
+
+		-
+			message: '#^Instantiated class Dashboard\\Application\\GetPerformanceIndicators\\GetPerformanceIndicatorsQuery not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Dashboard/Interface/Http/GetPerformanceIndicators/GetPerformanceIndicatorsController.php
+
+		-
+			message: '#^Parameter \$handler of method Dashboard\\Interface\\Http\\GetPerformanceIndicators\\GetPerformanceIndicatorsController\:\:__construct\(\) has invalid type Dashboard\\Application\\GetPerformanceIndicators\\GetPerformanceIndicatorsHandler\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Dashboard/Interface/Http/GetPerformanceIndicators/GetPerformanceIndicatorsController.php
+
+		-
+			message: '#^Property Dashboard\\Interface\\Http\\GetPerformanceIndicators\\GetPerformanceIndicatorsController\:\:\$handler has unknown class Dashboard\\Application\\GetPerformanceIndicators\\GetPerformanceIndicatorsHandler as its type\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Dashboard/Interface/Http/GetPerformanceIndicators/GetPerformanceIndicatorsController.php
+
+		-
+			message: '#^Method Fleet\\Application\\CreateBike\\BikeInternalNumberAlreadyExistsException\:\:context\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Fleet/Application/CreateBike/BikeInternalNumberAlreadyExistsException.php
+
+		-
+			message: '#^Method Fleet\\Application\\CreateBike\\CategoryNotFoundException\:\:context\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Fleet/Application/CreateBike/CategoryNotFoundException.php
+
+		-
+			message: '#^Method Fleet\\Application\\CreateBike\\CreateBikeResponse\:\:__construct\(\) has parameter \$frameSize with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Fleet/Application/CreateBike/CreateBikeResponse.php
+
+		-
+			message: '#^Method Fleet\\Application\\CreateBike\\CreateBikeResponse\:\:toArray\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Fleet/Application/CreateBike/CreateBikeResponse.php
+
+		-
+			message: '#^Method Fleet\\Application\\CreateBike\\ModelNotFoundException\:\:context\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Fleet/Application/CreateBike/ModelNotFoundException.php
+
+		-
+			message: '#^Method Fleet\\Application\\CreateBrand\\CreateBrandResponse\:\:toArray\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Fleet/Application/CreateBrand/CreateBrandResponse.php
+
+		-
+			message: '#^Method Fleet\\Application\\CreateCategory\\CategoryAlreadyExistsException\:\:context\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Fleet/Application/CreateCategory/CategoryAlreadyExistsException.php
+
+		-
+			message: '#^Method Fleet\\Application\\CreateModel\\CreateModelResponse\:\:toArray\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Fleet/Application/CreateModel/CreateModelResponse.php
+
+		-
+			message: '#^Method Fleet\\Application\\DeleteCategory\\CategoryHasBikesException\:\:context\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Fleet/Application/DeleteCategory/CategoryHasBikesException.php
+
+		-
+			message: '#^Method Fleet\\Application\\DeleteCategory\\CategoryNotFoundException\:\:context\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Fleet/Application/DeleteCategory/CategoryNotFoundException.php
+
+		-
+			message: '#^Parameter \#1 \$category of method Fleet\\Domain\\CategoryRepositoryInterface\:\:delete\(\) expects Fleet\\Domain\\Category, string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Fleet/Application/DeleteCategory/DeleteCategoryHandler.php
+
+		-
+			message: '#^Parameter \#1 \$rate of method Fleet\\Domain\\RateRepositoryInterface\:\:delete\(\) expects Fleet\\Domain\\Rate, string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Fleet/Application/DeleteRate/DeleteRateHandler.php
+
+		-
+			message: '#^Method Fleet\\Application\\DeleteRate\\RateNotFoundException\:\:context\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Fleet/Application/DeleteRate/RateNotFoundException.php
+
+		-
+			message: '#^Method Fleet\\Application\\GetBikeDetail\\BikeNotFoundException\:\:context\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Fleet/Application/GetBikeDetail/BikeNotFoundException.php
+
+		-
+			message: '#^Method Fleet\\Application\\GetBikeDetail\\GetBikeDetailResponse\:\:__construct\(\) has parameter \$frameSize with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Fleet/Application/GetBikeDetail/GetBikeDetailResponse.php
+
+		-
+			message: '#^Method Fleet\\Application\\GetBikeDetail\\GetBikeDetailResponse\:\:__construct\(\) has parameter \$photos with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Fleet/Application/GetBikeDetail/GetBikeDetailResponse.php
+
+		-
+			message: '#^Method Fleet\\Application\\GetBikeDetail\\GetBikeDetailResponse\:\:toArray\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Fleet/Application/GetBikeDetail/GetBikeDetailResponse.php
+
+		-
+			message: '#^Method Fleet\\Application\\GetModelDetail\\GetModelDetailResponse\:\:toArray\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Fleet/Application/GetModelDetail/GetModelDetailResponse.php
+
+		-
+			message: '#^Method Fleet\\Application\\ListBikes\\BikeDto\:\:__construct\(\) has parameter \$frameSize with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Fleet/Application/ListBikes/BikeDto.php
+
+		-
+			message: '#^Method Fleet\\Application\\ListBikes\\BikeDto\:\:toArray\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Fleet/Application/ListBikes/BikeDto.php
+
+		-
+			message: '#^Parameter \#1 \$bikeModel of static method Fleet\\Application\\ListBikes\\BikeDto\:\:fromEloquentModel\(\) expects Fleet\\Infrastructure\\Persistence\\Models\\BikeEloquentModel, Fleet\\Domain\\Bike given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Fleet/Application/ListBikes/ListBikesHandler.php
+
+		-
+			message: '#^Method Fleet\\Application\\ListBikes\\ListBikesResponse\:\:toArray\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Fleet/Application/ListBikes/ListBikesResponse.php
+
+		-
+			message: '#^Method Fleet\\Application\\ListBrands\\BrandDto\:\:toArray\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Fleet/Application/ListBrands/BrandDto.php
+
+		-
+			message: '#^Method Fleet\\Application\\ListBrands\\ListBrandsResponse\:\:toArray\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Fleet/Application/ListBrands/ListBrandsResponse.php
+
+		-
+			message: '#^Method Fleet\\Application\\ListCategories\\CategoryDto\:\:fromCategory\(\) has parameter \$children with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Fleet/Application/ListCategories/CategoryDto.php
+
+		-
+			message: '#^Method Fleet\\Application\\ListCategories\\CategoryDto\:\:toArray\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Fleet/Application/ListCategories/CategoryDto.php
+
+		-
+			message: '#^Method Fleet\\Application\\ListCategories\\ListCategoriesResponse\:\:toArray\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Fleet/Application/ListCategories/ListCategoriesResponse.php
+
+		-
+			message: '#^Method Fleet\\Application\\ListModels\\ListModelsResponse\:\:toArray\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Fleet/Application/ListModels/ListModelsResponse.php
+
+		-
+			message: '#^Method Fleet\\Application\\ListModels\\ModelDto\:\:toArray\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Fleet/Application/ListModels/ModelDto.php
+
+		-
+			message: '#^Call to an undefined method Fleet\\Domain\\RateRepositoryInterface\:\:findAll\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Fleet/Application/ListRates/ListRatesHandler.php
+
+		-
+			message: '#^Method Fleet\\Application\\ListRates\\ListRatesResponse\:\:toArray\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Fleet/Application/ListRates/ListRatesResponse.php
+
+		-
+			message: '#^Call to an undefined method Fleet\\Domain\\Rate\:\:duration\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Fleet/Application/ListRates/RateDto.php
+
+		-
+			message: '#^Call to an undefined method Fleet\\Domain\\Rate\:\:price\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Fleet/Application/ListRates/RateDto.php
+
+		-
+			message: '#^Method Fleet\\Application\\ListRates\\RateDto\:\:toArray\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Fleet/Application/ListRates/RateDto.php
+
+		-
+			message: '#^Method Fleet\\Application\\SetCategoryRate\\CategoryNotFoundException\:\:context\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Fleet/Application/SetCategoryRate/CategoryNotFoundException.php
+
+		-
+			message: '#^Method Fleet\\Application\\UpdateBike\\UpdateBikeResponse\:\:toArray\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Fleet/Application/UpdateBike/UpdateBikeResponse.php
+
+		-
+			message: '#^Method Fleet\\Application\\UpdateBrand\\UpdateBrandResponse\:\:toArray\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Fleet/Application/UpdateBrand/UpdateBrandResponse.php
+
+		-
+			message: '#^Method Fleet\\Application\\UpdateCategory\\CategoryNameAlreadyExistsException\:\:context\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Fleet/Application/UpdateCategory/CategoryNameAlreadyExistsException.php
+
+		-
+			message: '#^Method Fleet\\Application\\UpdateCategory\\CategoryNotFoundException\:\:context\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Fleet/Application/UpdateCategory/CategoryNotFoundException.php
+
+		-
+			message: '#^Method Fleet\\Application\\UpdateCategory\\UpdateCategoryResponse\:\:toArray\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Fleet/Application/UpdateCategory/UpdateCategoryResponse.php
+
+		-
+			message: '#^Method Fleet\\Application\\UpdateModel\\UpdateModelResponse\:\:toArray\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Fleet/Application/UpdateModel/UpdateModelResponse.php
+
+		-
+			message: '#^Method Fleet\\Application\\UpdateRate\\RateNotFoundException\:\:context\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Fleet/Application/UpdateRate/RateNotFoundException.php
+
+		-
+			message: '#^Call to an undefined method Fleet\\Domain\\Rate\:\:updatePrice\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Fleet/Application/UpdateRate/UpdateRateHandler.php
+
+		-
+			message: '#^Call to an undefined method Fleet\\Domain\\Rate\:\:duration\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Fleet/Application/UpdateRate/UpdateRateResponse.php
+
+		-
+			message: '#^Call to an undefined method Fleet\\Domain\\Rate\:\:price\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Fleet/Application/UpdateRate/UpdateRateResponse.php
+
+		-
+			message: '#^Method Fleet\\Application\\UpdateRate\\UpdateRateResponse\:\:toArray\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Fleet/Application/UpdateRate/UpdateRateResponse.php
+
+		-
+			message: '#^Method Fleet\\Application\\UploadBikePhoto\\UploadBikePhotoResponse\:\:toArray\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Fleet/Application/UploadBikePhoto/UploadBikePhotoResponse.php
+
+		-
+			message: '#^Match expression does not handle remaining value\: Fleet\\Domain\\BrakeType\:\:NONE$#'
+			identifier: match.unhandled
+			count: 1
+			path: src/Fleet/Domain/BrakeType.php
+
+		-
+			message: '#^Method Fleet\\Domain\\FrameSize\:\:toArray\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Fleet/Domain/FrameSize.php
+
+		-
+			message: '#^Method Fleet\\Infrastructure\\Persistence\\EloquentBikeRepository\:\:findFiltered\(\) should return array\{bikes\: array\<Fleet\\Domain\\Bike\>, total\: int\} but returns array\{bikes\: array\<int, Fleet\\Infrastructure\\Persistence\\Models\\BikeEloquentModel\>, total\: int\<0, max\>\}\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Fleet/Infrastructure/Persistence/EloquentBikeRepository.php
+
+		-
+			message: '#^Method Fleet\\Infrastructure\\Persistence\\EloquentBikeRepository\:\:findLongUnavailable\(\) should return array\<int, array\{bike_id\: string, internal_number\: string, days_unavailable\: int\}\> but returns array\<int, array\{bike_id\: string, internal_number\: mixed, days_unavailable\: float\}\>\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Fleet/Infrastructure/Persistence/EloquentBikeRepository.php
+
+		-
+			message: '#^Parameter \#1 \$callback of method Illuminate\\Database\\Eloquent\\Collection\<int,Fleet\\Infrastructure\\Persistence\\Models\\BikeEloquentModel\>\:\:map\(\) contains unresolvable type\.$#'
+			identifier: argument.unresolvableType
+			count: 1
+			path: src/Fleet/Infrastructure/Persistence/EloquentBikeRepository.php
+
+		-
+			message: '#^Return type of call to method Illuminate\\Database\\Eloquent\\Collection\<int,Fleet\\Infrastructure\\Persistence\\Models\\BikeEloquentModel\>\:\:map\(\) contains unresolvable type\.$#'
+			identifier: method.unresolvableReturnType
+			count: 1
+			path: src/Fleet/Infrastructure/Persistence/EloquentBikeRepository.php
+
+		-
+			message: '#^Return type of call to method Illuminate\\Support\\Collection\<int,array\<string, mixed\>\>\:\:all\(\) contains unresolvable type\.$#'
+			identifier: method.unresolvableReturnType
+			count: 1
+			path: src/Fleet/Infrastructure/Persistence/EloquentBikeRepository.php
+
+		-
+			message: '#^Parameter \$id of class Fleet\\Domain\\Brand constructor expects string, int given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Fleet/Infrastructure/Persistence/EloquentBrandRepository.php
+
+		-
+			message: '#^Parameter \$id of class Fleet\\Domain\\Model constructor expects string, int given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Fleet/Infrastructure/Persistence/EloquentModelRepository.php
+
+		-
+			message: '#^Method Fleet\\Infrastructure\\Persistence\\Models\\BikeEloquentModel\:\:category\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Fleet/Infrastructure/Persistence/Models/BikeEloquentModel.php
+
+		-
+			message: '#^Method Fleet\\Infrastructure\\Persistence\\Models\\BikeEloquentModel\:\:model\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Fleet/Infrastructure/Persistence/Models/BikeEloquentModel.php
+
+		-
+			message: '#^Method Fleet\\Infrastructure\\Persistence\\Models\\BrandEloquentModel\:\:models\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\HasMany does not specify its types\: TRelatedModel, TDeclaringModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Fleet/Infrastructure/Persistence/Models/BrandEloquentModel.php
+
+		-
+			message: '#^Method Fleet\\Infrastructure\\Persistence\\Models\\CategoryEloquentModel\:\:children\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Fleet/Infrastructure/Persistence/Models/CategoryEloquentModel.php
+
+		-
+			message: '#^Method Fleet\\Infrastructure\\Persistence\\Models\\CategoryEloquentModel\:\:parent\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Fleet/Infrastructure/Persistence/Models/CategoryEloquentModel.php
+
+		-
+			message: '#^Method Fleet\\Infrastructure\\Persistence\\Models\\ModelEloquentModel\:\:bikes\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\HasMany does not specify its types\: TRelatedModel, TDeclaringModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Fleet/Infrastructure/Persistence/Models/ModelEloquentModel.php
+
+		-
+			message: '#^Method Fleet\\Infrastructure\\Persistence\\Models\\ModelEloquentModel\:\:brand\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Fleet/Infrastructure/Persistence/Models/ModelEloquentModel.php
+
+		-
+			message: '#^Method Fleet\\Interface\\Http\\CreateBrand\\CreateBrandRequest\:\:rules\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Fleet/Interface/Http/CreateBrand/CreateBrandRequest.php
+
+		-
+			message: '#^Method Fleet\\Interface\\Http\\CreateModel\\CreateModelRequest\:\:rules\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Fleet/Interface/Http/CreateModel/CreateModelRequest.php
+
+		-
+			message: '#^Method Fleet\\Interface\\Http\\DeleteBikePhoto\\DeleteBikePhotoRequest\:\:rules\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Fleet/Interface/Http/DeleteBikePhoto/DeleteBikePhotoRequest.php
+
+		-
+			message: '#^Property Fleet\\Interface\\Http\\SetCategoryRate\\SetCategoryRateController\:\:\$handler is never read, only written\.$#'
+			identifier: property.onlyWritten
+			count: 1
+			path: src/Fleet/Interface/Http/SetCategoryRate/SetCategoryRateController.php
+
+		-
+			message: '#^Method Fleet\\Interface\\Http\\UpdateBrand\\UpdateBrandRequest\:\:rules\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Fleet/Interface/Http/UpdateBrand/UpdateBrandRequest.php
+
+		-
+			message: '#^Method Fleet\\Interface\\Http\\UpdateModel\\UpdateModelRequest\:\:rules\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Fleet/Interface/Http/UpdateModel/UpdateModelRequest.php
+
+		-
+			message: '#^Method Fleet\\Interface\\Http\\UploadBikePhoto\\UploadBikePhotoRequest\:\:rules\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Fleet/Interface/Http/UploadBikePhoto/UploadBikePhotoRequest.php
+
+		-
+			message: '#^Strict comparison using \=\=\= between Maintenance\\Domain\\Maintenance and null will always evaluate to false\.$#'
+			identifier: identical.alwaysFalse
+			count: 1
+			path: src/Maintenance/Application/GetMaintenanceDetail/GetMaintenanceDetailHandler.php
+
+		-
+			message: '#^Method Maintenance\\Application\\GetMaintenanceDetail\\GetMaintenanceDetailResponse\:\:__construct\(\) has parameter \$bike with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Maintenance/Application/GetMaintenanceDetail/GetMaintenanceDetailResponse.php
+
+		-
+			message: '#^Method Maintenance\\Application\\GetMaintenanceDetail\\GetMaintenanceDetailResponse\:\:formatBike\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Maintenance/Application/GetMaintenanceDetail/GetMaintenanceDetailResponse.php
+
+		-
+			message: '#^Method Maintenance\\Application\\GetMaintenanceDetail\\GetMaintenanceDetailResponse\:\:toArray\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Maintenance/Application/GetMaintenanceDetail/GetMaintenanceDetailResponse.php
+
+		-
+			message: '#^Method Maintenance\\Application\\ListMaintenances\\ListMaintenancesResponse\:\:__construct\(\) has parameter \$bikes with generic class Illuminate\\Support\\Collection but does not specify its types\: TKey, TValue$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Maintenance/Application/ListMaintenances/ListMaintenancesResponse.php
+
+		-
+			message: '#^Method Maintenance\\Application\\ListMaintenances\\ListMaintenancesResponse\:\:getBikeData\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Maintenance/Application/ListMaintenances/ListMaintenancesResponse.php
+
+		-
+			message: '#^Method Maintenance\\Infrastructure\\Persistence\\EloquentMaintenanceRepository\:\:findLongRunning\(\) should return array\<int, array\{maintenance_id\: string, bike_id\: string, days_in_progress\: int, priority\: string\}\> but returns array\<int, array\{maintenance_id\: string, bike_id\: mixed, days_in_progress\: float, priority\: mixed\}\>\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Maintenance/Infrastructure/Persistence/EloquentMaintenanceRepository.php
+
+		-
+			message: '#^Parameter \#1 \$callback of method Illuminate\\Database\\Eloquent\\Collection\<int,Maintenance\\Infrastructure\\Persistence\\MaintenanceEloquentModel\>\:\:map\(\) contains unresolvable type\.$#'
+			identifier: argument.unresolvableType
+			count: 1
+			path: src/Maintenance/Infrastructure/Persistence/EloquentMaintenanceRepository.php
+
+		-
+			message: '#^Return type of call to method Illuminate\\Database\\Eloquent\\Collection\<int,Maintenance\\Infrastructure\\Persistence\\MaintenanceEloquentModel\>\:\:map\(\) contains unresolvable type\.$#'
+			identifier: method.unresolvableReturnType
+			count: 1
+			path: src/Maintenance/Infrastructure/Persistence/EloquentMaintenanceRepository.php
+
+		-
+			message: '#^Return type of call to method Illuminate\\Support\\Collection\<int,array\<string, mixed\>\>\:\:all\(\) contains unresolvable type\.$#'
+			identifier: method.unresolvableReturnType
+			count: 1
+			path: src/Maintenance/Infrastructure/Persistence/EloquentMaintenanceRepository.php
+
+		-
+			message: '#^PHPDoc tag @throws with type Maintenance\\Domain\\MaintenanceException is not subtype of Throwable$#'
+			identifier: throws.notThrowable
+			count: 1
+			path: src/Maintenance/Interface/Http/CompleteMaintenance/CompleteMaintenanceController.php
+
+		-
+			message: '#^PHPDoc tag @throws with type Maintenance\\Domain\\MaintenanceException is not subtype of Throwable$#'
+			identifier: throws.notThrowable
+			count: 1
+			path: src/Maintenance/Interface/Http/DeclareMaintenance/DeclareMaintenanceController.php
+
+		-
+			message: '#^PHPDoc tag @throws with type Fleet\\Domain\\BikeException is not subtype of Throwable$#'
+			identifier: throws.notThrowable
+			count: 1
+			path: src/Maintenance/Interface/Http/GetBikeMaintenanceHistory/GetBikeMaintenanceHistoryController.php
+
+		-
+			message: '#^PHPDoc tag @throws with type Maintenance\\Domain\\MaintenanceException is not subtype of Throwable$#'
+			identifier: throws.notThrowable
+			count: 1
+			path: src/Maintenance/Interface/Http/StartMaintenance/StartMaintenanceController.php
+
+		-
+			message: '#^Method Rental\\Application\\CancelRental\\CancelRentalResponse\:\:toArray\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Rental/Application/CancelRental/CancelRentalResponse.php
+
+		-
+			message: '#^Method Rental\\Application\\CheckOutRental\\BikeNotInRentalException\:\:context\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Rental/Application/CheckOutRental/BikeNotInRentalException.php
+
+		-
+			message: '#^Method Rental\\Application\\CheckOutRental\\CheckOutRentalHandler\:\:findRentalItemByBikeId\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Rental/Application/CheckOutRental/CheckOutRentalHandler.php
+
+		-
+			message: '#^Method Rental\\Application\\CheckOutRental\\CheckOutRentalHandler\:\:findRentalItemByBikeId\(\) has parameter \$rental with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/Rental/Application/CheckOutRental/CheckOutRentalHandler.php
+
+		-
+			message: '#^Method Rental\\Application\\CheckOutRental\\CheckOutRentalResponse\:\:toArray\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Rental/Application/CheckOutRental/CheckOutRentalResponse.php
+
+		-
+			message: '#^Method Rental\\Application\\CheckOutRental\\RentalCannotBeCheckedOutException\:\:context\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Rental/Application/CheckOutRental/RentalCannotBeCheckedOutException.php
+
+		-
+			message: '#^Method Rental\\Application\\CheckOutRental\\RentalNotFoundException\:\:context\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Rental/Application/CheckOutRental/RentalNotFoundException.php
+
+		-
+			message: '#^Method Rental\\Application\\CreateRental\\BikeNotAvailableException\:\:context\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Rental/Application/CreateRental/BikeNotAvailableException.php
+
+		-
+			message: '#^Method Rental\\Application\\CreateRental\\BikeNotFoundException\:\:context\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Rental/Application/CreateRental/BikeNotFoundException.php
+
+		-
+			message: '#^Method Rental\\Application\\CreateRental\\CreateRentalResponse\:\:toArray\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Rental/Application/CreateRental/CreateRentalResponse.php
+
+		-
+			message: '#^Method Rental\\Application\\CreateRental\\CustomerNotFoundException\:\:context\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Rental/Application/CreateRental/CustomerNotFoundException.php
+
+		-
+			message: '#^Method Rental\\Application\\GetBikeRentals\\BikeRentalDto\:\:toArray\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Rental/Application/GetBikeRentals/BikeRentalDto.php
+
+		-
+			message: '#^Method Rental\\Application\\GetBikeRentals\\GetBikeRentalsResponse\:\:toArray\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Rental/Application/GetBikeRentals/GetBikeRentalsResponse.php
+
+		-
+			message: '#^Method Rental\\Application\\GetRentalDetail\\GetRentalDetailResponse\:\:fromRental\(\) has parameter \$customerData with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Rental/Application/GetRentalDetail/GetRentalDetailResponse.php
+
+		-
+			message: '#^Method Rental\\Application\\GetRentalDetail\\GetRentalDetailResponse\:\:fromRental\(\) has parameter \$equipments with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Rental/Application/GetRentalDetail/GetRentalDetailResponse.php
+
+		-
+			message: '#^Method Rental\\Application\\GetRentalDetail\\GetRentalDetailResponse\:\:fromRental\(\) has parameter \$items with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Rental/Application/GetRentalDetail/GetRentalDetailResponse.php
+
+		-
+			message: '#^Method Rental\\Application\\GetRentalDetail\\GetRentalDetailResponse\:\:toArray\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Rental/Application/GetRentalDetail/GetRentalDetailResponse.php
+
+		-
+			message: '#^Method Rental\\Application\\GetRentalDetail\\RentalEquipmentDto\:\:toArray\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Rental/Application/GetRentalDetail/RentalEquipmentDto.php
+
+		-
+			message: '#^Method Rental\\Application\\GetRentalDetail\\RentalItemDto\:\:__construct\(\) has parameter \$damagePhotos with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Rental/Application/GetRentalDetail/RentalItemDto.php
+
+		-
+			message: '#^Method Rental\\Application\\GetRentalDetail\\RentalItemDto\:\:fromRentalItem\(\) has parameter \$bikeDetails with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Rental/Application/GetRentalDetail/RentalItemDto.php
+
+		-
+			message: '#^Method Rental\\Application\\GetRentalDetail\\RentalItemDto\:\:toArray\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Rental/Application/GetRentalDetail/RentalItemDto.php
+
+		-
+			message: '#^Method Rental\\Application\\ListActiveRentals\\ActiveRentalDto\:\:toArray\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Rental/Application/ListActiveRentals/ActiveRentalDto.php
+
+		-
+			message: '#^Parameter \$id of class Rental\\Application\\ListActiveRentals\\ActiveRentalDto constructor expects string, int given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Rental/Application/ListActiveRentals/ActiveRentalDto.php
+
+		-
+			message: '#^Method Rental\\Application\\ListActiveRentals\\ListActiveRentalsHandler\:\:findActiveRentalsWithFilters\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Rental/Application/ListActiveRentals/ListActiveRentalsHandler.php
+
+		-
+			message: '#^Method Rental\\Application\\ListActiveRentals\\ListActiveRentalsHandler\:\:findLateRentalsWithFilters\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Rental/Application/ListActiveRentals/ListActiveRentalsHandler.php
+
+		-
+			message: '#^Property Rental\\Application\\ListActiveRentals\\ListActiveRentalsHandler\:\:\$rentals is never read, only written\.$#'
+			identifier: property.onlyWritten
+			count: 1
+			path: src/Rental/Application/ListActiveRentals/ListActiveRentalsHandler.php
+
+		-
+			message: '#^Method Rental\\Application\\ListActiveRentals\\ListActiveRentalsResponse\:\:toArray\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Rental/Application/ListActiveRentals/ListActiveRentalsResponse.php
+
+		-
+			message: '#^Parameter \#1 \$id of method Rental\\Infrastructure\\Persistence\\EloquentRentalRepository\:\:findById\(\) expects string, int given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Rental/Application/ListRentals/ListRentalsHandler.php
+
+		-
+			message: '#^Property Rental\\Application\\ListRentals\\ListRentalsHandler\:\:\$bikes is never read, only written\.$#'
+			identifier: property.onlyWritten
+			count: 1
+			path: src/Rental/Application/ListRentals/ListRentalsHandler.php
+
+		-
+			message: '#^Property Rental\\Application\\ListRentals\\ListRentalsHandler\:\:\$customers is never read, only written\.$#'
+			identifier: property.onlyWritten
+			count: 1
+			path: src/Rental/Application/ListRentals/ListRentalsHandler.php
+
+		-
+			message: '#^Method Rental\\Application\\ListRentals\\ListRentalsResponse\:\:toArray\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Rental/Application/ListRentals/ListRentalsResponse.php
+
+		-
+			message: '#^Method Rental\\Application\\ListRentals\\RentalDto\:\:fromRental\(\) has parameter \$bikeDetails with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Rental/Application/ListRentals/RentalDto.php
+
+		-
+			message: '#^Method Rental\\Application\\ListRentals\\RentalDto\:\:toArray\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Rental/Application/ListRentals/RentalDto.php
+
+		-
+			message: '#^Deprecated in PHP 8\.0\: Required parameter \$equipments follows optional parameter \$totalWithTax\.$#'
+			identifier: parameter.requiredAfterOptional
+			count: 1
+			path: src/Rental/Domain/Rental.php
+
+		-
+			message: '#^Deprecated in PHP 8\.0\: Required parameter \$items follows optional parameter \$totalWithTax\.$#'
+			identifier: parameter.requiredAfterOptional
+			count: 1
+			path: src/Rental/Domain/Rental.php
+
+		-
+			message: '#^Deprecated in PHP 8\.0\: Required parameter \$status follows optional parameter \$totalWithTax\.$#'
+			identifier: parameter.requiredAfterOptional
+			count: 1
+			path: src/Rental/Domain/Rental.php
+
+		-
+			message: '#^Deprecated in PHP 8\.0\: Required parameter \$updatedAt follows optional parameter \$cancellationReason\.$#'
+			identifier: parameter.requiredAfterOptional
+			count: 1
+			path: src/Rental/Domain/Rental.php
+
+		-
+			message: '#^Deprecated in PHP 8\.1\: Required parameter \$createdAt follows optional parameter \$cancellationReason\.$#'
+			identifier: parameter.requiredAfterOptional
+			count: 1
+			path: src/Rental/Domain/Rental.php
+
+		-
+			message: '#^Method Rental\\Domain\\RentalItem\:\:__construct\(\) has parameter \$damagePhotos with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Rental/Domain/RentalItem.php
+
+		-
+			message: '#^Method Rental\\Domain\\RentalItem\:\:damagePhotos\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Rental/Domain/RentalItem.php
+
+		-
+			message: '#^Method Rental\\Domain\\RentalItem\:\:recordCheckOut\(\) has parameter \$damagePhotos with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Rental/Domain/RentalItem.php
+
+		-
+			message: '#^Parameter \#1 \$callback of method Illuminate\\Database\\Eloquent\\Collection\<int,Rental\\Infrastructure\\Persistence\\Models\\RentalItemEloquentModel\>\:\:map\(\) contains unresolvable type\.$#'
+			identifier: argument.unresolvableType
+			count: 1
+			path: src/Rental/Infrastructure/Persistence/EloquentRentalRepository.php
+
+		-
+			message: '#^Parameter \$id of class Rental\\Domain\\Rental constructor expects string, int given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Rental/Infrastructure/Persistence/EloquentRentalRepository.php
+
+		-
+			message: '#^Return type of call to method Illuminate\\Database\\Eloquent\\Collection\<int,Rental\\Infrastructure\\Persistence\\Models\\RentalItemEloquentModel\>\:\:map\(\) contains unresolvable type\.$#'
+			identifier: method.unresolvableReturnType
+			count: 1
+			path: src/Rental/Infrastructure/Persistence/EloquentRentalRepository.php
+
+		-
+			message: '#^Return type of call to method Illuminate\\Support\\Collection\<int,array\<string, mixed\>\>\:\:all\(\) contains unresolvable type\.$#'
+			identifier: method.unresolvableReturnType
+			count: 1
+			path: src/Rental/Infrastructure/Persistence/EloquentRentalRepository.php
+
+		-
+			message: '#^Method Rental\\Infrastructure\\Persistence\\Models\\RentalEloquentModel\:\:customer\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Rental/Infrastructure/Persistence/Models/RentalEloquentModel.php
+
+		-
+			message: '#^Method Rental\\Infrastructure\\Persistence\\Models\\RentalEloquentModel\:\:equipments\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\HasMany does not specify its types\: TRelatedModel, TDeclaringModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Rental/Infrastructure/Persistence/Models/RentalEloquentModel.php
+
+		-
+			message: '#^Method Rental\\Infrastructure\\Persistence\\Models\\RentalEloquentModel\:\:items\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\HasMany does not specify its types\: TRelatedModel, TDeclaringModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Rental/Infrastructure/Persistence/Models/RentalEloquentModel.php
+
+		-
+			message: '#^Method Rental\\Infrastructure\\Persistence\\Models\\RentalEquipmentEloquentModel\:\:rental\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Rental/Infrastructure/Persistence/Models/RentalEquipmentEloquentModel.php
+
+		-
+			message: '#^Method Rental\\Infrastructure\\Persistence\\Models\\RentalItemEloquentModel\:\:bike\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Rental/Infrastructure/Persistence/Models/RentalItemEloquentModel.php
+
+		-
+			message: '#^Method Rental\\Infrastructure\\Persistence\\Models\\RentalItemEloquentModel\:\:rental\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Rental/Infrastructure/Persistence/Models/RentalItemEloquentModel.php
+
+		-
+			message: '#^Method Rental\\Interface\\Http\\CancelRental\\CancelRentalRequest\:\:rules\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Rental/Interface/Http/CancelRental/CancelRentalRequest.php
+
+		-
+			message: '#^Method Shared\\Domain\\DomainException\:\:context\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Shared/Domain/DomainException.php
+
+		-
+			message: '#^Call to an undefined method PHPUnit\\Framework\\TestCase\:\:get\(\)\.$#'
+			identifier: method.notFound
+			count: 2
+			path: tests/Feature/ExampleTest.php
+
+		-
+			message: '#^Function something\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Pest.php
+
+		-
+			message: '#^Undefined variable\: \$this$#'
+			identifier: variable.undefined
+			count: 1
+			path: tests/Pest.php

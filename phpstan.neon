@@ -1,0 +1,29 @@
+includes:
+    - vendor/larastan/larastan/extension.neon
+    - phpstan-baseline.neon
+
+parameters:
+    level: 6
+
+    paths:
+        - app
+        - src
+        - tests
+
+    excludePaths:
+        - vendor
+        - storage
+        - bootstrap/cache
+        - database/migrations
+        - app/OpenApi/OpenApi.php
+
+    # Laravel specific
+    ignoreErrors:
+        # Allow dynamic properties on Eloquent models
+        - '#Access to an undefined property [a-zA-Z0-9\\_]+::\$[a-zA-Z0-9_]+#'
+
+    # Report unmatched ignored errors
+    reportUnmatchedIgnoredErrors: false
+
+    # Treat mixed as any for now
+    treatPhpDocTypesAsCertain: true

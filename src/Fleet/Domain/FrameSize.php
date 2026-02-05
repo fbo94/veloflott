@@ -14,7 +14,8 @@ final readonly class FrameSize
         public ?float $numericValue,
         public ?FrameSizeLetter $letterValue,
         public FrameSizeLetter $letterEquivalent,
-    ) {}
+    ) {
+    }
 
     public static function fromLetter(FrameSizeLetter $letter): self
     {
@@ -55,6 +56,8 @@ final readonly class FrameSize
         } elseif ($unit === FrameSizeUnit::INCH->value && $numericValue !== null) {
             return self::fromInches($numericValue);
         }
+
+        throw new \InvalidArgumentException('Invalid frame size parameters');
     }
 
     public function displayValue(): string

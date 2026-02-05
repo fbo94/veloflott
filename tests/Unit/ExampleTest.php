@@ -1,16 +1,19 @@
 <?php
 
-namespace Tests\Unit;
+declare(strict_types=1);
 
-use PHPUnit\Framework\TestCase;
+test('example unit test', function () {
+    expect(true)->toBeTrue();
+});
 
-class ExampleTest extends TestCase
-{
-    /**
-     * A basic test example.
-     */
-    public function test_that_true_is_true(): void
-    {
-        $this->assertTrue(true);
-    }
-}
+test('basic math operations', function () {
+    expect(1 + 1)->toBe(2);
+    expect(10 * 5)->toBe(50);
+});
+
+test('strings can be concatenated', function () {
+    $hello = 'Hello';
+    $world = 'World';
+
+    expect($hello . ' ' . $world)->toBe('Hello World');
+});

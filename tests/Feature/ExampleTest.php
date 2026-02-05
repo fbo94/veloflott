@@ -1,19 +1,16 @@
 <?php
 
-namespace Tests\Feature;
+declare(strict_types=1);
 
-// use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
+test('application returns a successful response', function () {
+    $response = $this->get('/');
 
-class ExampleTest extends TestCase
-{
-    /**
-     * A basic test example.
-     */
-    public function test_the_application_returns_a_successful_response(): void
-    {
-        $response = $this->get('/');
+    $response->assertStatus(200);
+});
 
-        $response->assertStatus(200);
-    }
-}
+test('api health check endpoint', function () {
+    $response = $this->get('/api/health');
+
+    $response->assertStatus(200)
+        ->assertJson(['status' => 'ok']);
+});
