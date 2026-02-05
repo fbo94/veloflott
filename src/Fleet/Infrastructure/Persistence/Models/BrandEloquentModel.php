@@ -16,6 +16,7 @@ final class BrandEloquentModel extends Model
 
     protected $fillable = [
         'name',
+        'logo_url',
     ];
 
     protected $casts = [

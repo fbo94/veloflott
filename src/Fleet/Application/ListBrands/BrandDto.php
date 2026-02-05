@@ -11,6 +11,7 @@ final readonly class BrandDto
     public function __construct(
         public string $id,
         public string $name,
+        public ?string $logoUrl,
     ) {}
 
     public static function fromBrand(Brand $brand): self
@@ -18,6 +19,7 @@ final readonly class BrandDto
         return new self(
             id: $brand->id(),
             name: $brand->name(),
+            logoUrl: $brand->logoUrl(),
         );
     }
 
@@ -26,6 +28,7 @@ final readonly class BrandDto
         return [
             'id' => $this->id,
             'name' => $this->name,
+            'logo_url' => $this->logoUrl,
         ];
     }
 }

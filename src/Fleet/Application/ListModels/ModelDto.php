@@ -13,15 +13,17 @@ final readonly class ModelDto
         public string $name,
         public string $brandId,
         public ?string $brandName = null,
+        public ?string $brandLogoUrl = null,
     ) {}
 
-    public static function fromModel(Model $model, ?string $brandName = null): self
+    public static function fromModel(Model $model, ?string $brandName = null, ?string $brandLogoUrl = null): self
     {
         return new self(
             id: $model->id(),
             name: $model->name(),
             brandId: $model->brandId(),
             brandName: $brandName,
+            brandLogoUrl: $brandLogoUrl,
         );
     }
 
@@ -32,6 +34,7 @@ final readonly class ModelDto
             'name' => $this->name,
             'brand_id' => $this->brandId,
             'brand_name' => $this->brandName,
+            'brand_logo_url' => $this->brandLogoUrl,
         ];
     }
 }

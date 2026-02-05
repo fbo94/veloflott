@@ -25,14 +25,21 @@ final class ListModelsHandler
         $allBrands = $this->brands->findAll();
         $brandsById = [];
         foreach ($allBrands as $brand) {
-            $brandsById[$brand->id()] = $brand->name();
+            $brandsById[$brand->id()] = [
+                'name' => $brand->name(),
+                'logo_url' => $brand->logoUrl(),
+            ];
         }
 
-        // Convertir en DTOs avec le nom de la marque
+        // Convertir en DTOs avec le nom de la marque et son logo
         $modelDtos = array_map(
             function ($model) use ($brandsById) {
-                $brandName = $brandsById[$model->brandId()] ?? null;
-                return ModelDto::fromModel($model, $brandName);
+                $brandData = $brandsById[$model->brandId()] ?? null;
+                return ModelDto::fromModel(
+                    $model,
+                    $brandData['name'] ?? null,
+                    $brandData['logo_url'] ?? null
+                );
             },
             $models
         );

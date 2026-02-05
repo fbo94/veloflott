@@ -41,6 +41,7 @@ final class EloquentBrandRepository implements BrandRepositoryInterface
             ['id' => $brand->id()],
             [
                 'name' => $brand->name(),
+                'logo_url' => $brand->logoUrl(),
             ]
         );
     }
@@ -55,6 +56,7 @@ final class EloquentBrandRepository implements BrandRepositoryInterface
         return new Brand(
             id: $model->id,
             name: $model->name,
+            logoUrl: $model->logo_url,
             createdAt: \DateTimeImmutable::createFromInterface($model->created_at),
             updatedAt: \DateTimeImmutable::createFromInterface($model->updated_at),
         );
