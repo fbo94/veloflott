@@ -1,0 +1,75 @@
+# .github/workflows/dependencies.yml
+name: Dependencies
+
+on:
+  schedule:
+    - cron: '0 0 * * 1' # Every Monday at midnight
+  workflow_dispatch:
+
+env:
+  PHP_VERSION: '8.4'
+  NODE_VERSION: '18'
+
+jobs:
+  update-dependencies:
+    name: Update Dependencies
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ env.PHP_VERSION }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install Composer dependencies
+        run: composer install --prefer-dist --no-progress --no-interaction
+
+      - name: Update Composer dependencies
+        run: |
+          composer outdated --direct --format=json > composer-outdated.json
+          if [ -s composer-outdated.json ]; then
+            composer update --with-all-dependencies --prefer-stable --no-progress
+            git config --global user.name "github-actions"
+            git config --global user.email "github-actions@github.com"
+            git add composer.json composer.lock
+            git commit -m "chore: update PHP dependencies" || echo "No PHP updates to commit"
+          fi
+
+      - name: Update npm dependencies
+        run: |
+          npm outdated --json > npm-outdated.json
+          if [ -s npm-outdated.json ]; then
+            npm update --save
+            git add package.json package-lock.json
+            git commit -m "chore: update npm dependencies" || echo "No npm updates to commit"
+          fi
+
+      - name: Create Pull Request
+        if: success()
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "chore: update dependencies"
+          title: "chore: update dependencies"
+          body: |
+            Automated dependency updates.
+
+            **PHP Updates:**
+            ```json
+            ${{ toJSON(fromJSON(file('composer-outdated.json'))) }}
+            ```
+
+            **Node Updates:**
+            ```json
+            ${{ toJSON(fromJSON(file('npm-outdated.json'))) }}
+            ```
+          branch: "chore/update-dependencies-${{ github.run_id }}"
+          delete-branch: true
+          labels: "dependencies"
