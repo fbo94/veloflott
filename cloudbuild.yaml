@@ -31,6 +31,8 @@ steps:
   # Step 3: Run database migrations
   # Exécute les migrations avant le déploiement pour s'assurer que la base de données est à jour
   - name: 'gcr.io/google-appengine/exec-wrapper'
+    env:
+      - 'DB_DATABASE=veloflott_db'
     args:
       - '-i'
       - 'gcr.io/$PROJECT_ID/veloflott-api:$BUILD_ID'

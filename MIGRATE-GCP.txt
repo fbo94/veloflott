@@ -1,0 +1,79 @@
+╔══════════════════════════════════════════════════════════════╗
+║                                                              ║
+║   🚀 MIGRATION RAPIDE SUR GCP - 2 MINUTES                   ║
+║                                                              ║
+╚══════════════════════════════════════════════════════════════╝
+
+┌──────────────────────────────────────────────────────────────┐
+│ MÉTHODE MANUELLE (copier-coller dans Cloud Shell)           │
+└──────────────────────────────────────────────────────────────┘
+
+1. Ouvrir https://console.cloud.google.com
+2. Cliquer sur l'icône Terminal (>_) en haut à droite
+3. Copier-coller ce bloc complet :
+
+PROJECT_ID=$(gcloud config get-value project)
+INSTANCE=$(gcloud sql instances list --format="value(name)" --limit=1)
+CONNECTION=$(gcloud sql instances describe $INSTANCE --format="value(connectionName)")
+IMAGE="gcr.io/$PROJECT_ID/veloflott-api:latest"
+
+gcloud builds submit --no-source --config=- <<YAML
+steps:
+  - name: 'gcr.io/google-appengine/exec-wrapper'
+    args:
+      - '-i'
+      - '$IMAGE'
+      - '-s'
+      - '$CONNECTION'
+      - '--'
+      - 'php'
+      - 'artisan'
+      - 'migrate'
+      - '--force'
+      - '-v'
+timeout: '600s'
+YAML
+
+
+┌──────────────────────────────────────────────────────────────┐
+│ VÉRIFIER QUE ÇA A MARCHÉ                                     │
+└──────────────────────────────────────────────────────────────┘
+
+gcloud sql connect $(gcloud sql instances list --format="value(name)" --limit=1) \
+  --user=veloflott_user --database=veloflott_db
+
+Puis :
+\dt pricing*
+
+Vous devriez voir 5 tables du système de pricing.
+
+
+┌──────────────────────────────────────────────────────────────┐
+│ SEED LES DONNÉES (optionnel)                                │
+└──────────────────────────────────────────────────────────────┘
+
+PROJECT_ID=$(gcloud config get-value project)
+INSTANCE=$(gcloud sql instances list --format="value(name)" --limit=1)
+CONNECTION=$(gcloud sql instances describe $INSTANCE --format="value(connectionName)")
+IMAGE="gcr.io/$PROJECT_ID/veloflott-api:latest"
+
+gcloud builds submit --no-source --config=- <<YAML
+steps:
+  - name: 'gcr.io/google-appengine/exec-wrapper'
+    args:
+      - '-i'
+      - '$IMAGE'
+      - '-s'
+      - '$CONNECTION'
+      - '--'
+      - 'php'
+      - 'artisan'
+      - 'db:seed'
+      - '--class=PricingSystemSeeder'
+      - '--force'
+YAML
+
+
+╔══════════════════════════════════════════════════════════════╗
+║  Documentation complète : docs/deployment/RUN-MIGRATIONS-GCP.md
+╚══════════════════════════════════════════════════════════════╝
