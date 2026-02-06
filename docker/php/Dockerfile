@@ -17,6 +17,9 @@ RUN pecl install xdebug \
         echo "xdebug.client_port=9003"; \
       } > /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 
+# Copy custom PHP configuration for file uploads
+COPY uploads.ini /usr/local/etc/php/conf.d/uploads.ini
+
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 # Le workdir correspond au volume mount dans docker-compose.yml
