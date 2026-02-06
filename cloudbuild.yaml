@@ -32,12 +32,15 @@ steps:
   # Exécute les migrations avant le déploiement pour s'assurer que la base de données est à jour
   - name: 'gcr.io/google-appengine/exec-wrapper'
     env:
+      - 'APP_ENV=production'
+      - 'APP_DEBUG=false'
+      - 'LOG_CHANNEL=stderr'
       - 'DB_CONNECTION=pgsql'
       - 'DB_HOST=/cloudsql/project-08eb5a0c-d370-4877-a5a:europe-west9:veloflott-db'
       - 'DB_PORT=5432'
       - 'DB_DATABASE=veloflott_db'
       - 'DB_USERNAME=veloflott_user'
-    secretEnv: ['DB_PASSWORD']
+    secretEnv: ['DB_PASSWORD', 'APP_KEY']
     args:
       - '-i'
       - 'gcr.io/$PROJECT_ID/veloflott-api:$BUILD_ID'
@@ -103,6 +106,8 @@ availableSecrets:
   secretManager:
     - versionName: projects/$PROJECT_ID/secrets/veloflott-db-password/versions/latest
       env: 'DB_PASSWORD'
+    - versionName: projects/$PROJECT_ID/secrets/veloflott-app-key/versions/latest
+      env: 'APP_KEY'
 
 # Timeout du build (10 minutes)
 timeout: 600s
