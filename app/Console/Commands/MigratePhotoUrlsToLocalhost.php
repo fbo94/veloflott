@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
@@ -8,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 class MigratePhotoUrlsToLocalhost extends Command
 {
     protected $signature = 'bikes:migrate-photos-to-localhost';
+
     protected $description = 'Migrate bike photo URLs from veloflott.localhost to localhost';
 
     public function handle(): int
@@ -32,8 +35,10 @@ class MigratePhotoUrlsToLocalhost extends Command
             $updatedPhotos = array_map(function ($photo) use (&$hasChanges) {
                 if (str_contains($photo, 'https://veloflott.localhost/storage/')) {
                     $hasChanges = true;
+
                     return str_replace('https://veloflott.localhost/storage/', 'http://localhost/storage/', $photo);
                 }
+
                 return $photo;
             }, $photos);
 
@@ -50,7 +55,7 @@ class MigratePhotoUrlsToLocalhost extends Command
             }
         }
 
-        $this->info("Migration completed!");
+        $this->info('Migration completed!');
         $this->info("Total bikes: {$totalBikes}");
         $this->info("Updated bikes: {$updatedBikes}");
 

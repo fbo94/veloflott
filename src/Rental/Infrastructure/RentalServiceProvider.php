@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Rental\Infrastructure;
 
+use Illuminate\Support\ServiceProvider;
 use Rental\Domain\RentalRepositoryInterface;
 use Rental\Infrastructure\Persistence\EloquentRentalRepository;
-use Illuminate\Support\ServiceProvider;
 
 final class RentalServiceProvider extends ServiceProvider
 {

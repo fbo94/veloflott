@@ -35,6 +35,7 @@ final readonly class ActiveRentalDto
 
         $bikes = $model->items->map(function ($item) {
             $bike = $item->bike;
+
             return "{$bike->model->brand->name} {$bike->model->name} ({$bike->internal_number})";
         })->all();
 
@@ -77,6 +78,7 @@ final readonly class ActiveRentalDto
             if ($hoursRemaining <= 2) {
                 return 'soon_late'; // Bientôt en retard
             }
+
             return 'on_time'; // Dans les temps
         }
 

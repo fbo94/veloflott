@@ -6,14 +6,13 @@ namespace Rental\Application\CreateRental;
 
 use Customer\Domain\CustomerRepositoryInterface;
 use Fleet\Domain\BikeRepositoryInterface;
-use Fleet\Domain\BikeStatus;
+use Illuminate\Support\Str;
 use Rental\Domain\Rental;
 use Rental\Domain\RentalDuration;
 use Rental\Domain\RentalEquipment;
 use Rental\Domain\RentalItem;
 use Rental\Domain\RentalRepositoryInterface;
 use Rental\Domain\RentalStatus;
-use Illuminate\Support\Str;
 
 final class CreateRentalHandler
 {
@@ -123,10 +122,12 @@ final class CreateRentalHandler
             if ($customEndDate === null) {
                 throw new \DomainException('Custom duration requires a custom end date');
             }
+
             return $customEndDate;
         }
 
         $hours = $duration->hours();
+
         return $startDate->modify("+{$hours} hours");
     }
 }

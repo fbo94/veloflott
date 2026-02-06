@@ -20,7 +20,7 @@ final readonly class ListMaintenanceReasonsHandler
                 'category' => $category->value,
                 'category_label' => $category->label(),
                 'reasons' => array_map(
-                    fn(MaintenanceReason $reason) => [
+                    fn (MaintenanceReason $reason) => [
                         'value' => $reason->value,
                         'label' => $reason->label(),
                     ],

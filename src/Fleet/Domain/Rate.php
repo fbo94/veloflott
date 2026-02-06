@@ -11,6 +11,7 @@ namespace Fleet\Domain;
 final class Rate
 {
     private \DateTimeImmutable $createdAt;
+
     private \DateTimeImmutable $updatedAt;
 
     public function __construct(

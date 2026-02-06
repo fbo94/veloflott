@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Auth\Domain;
 
-use function Symfony\Component\String\s;
-
 enum Permission: string
 {
     // ===== Fleet =====

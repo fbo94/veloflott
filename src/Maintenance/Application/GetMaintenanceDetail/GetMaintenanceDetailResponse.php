@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Maintenance\Application\GetMaintenanceDetail;
 
-use Maintenance\Domain\Maintenance;
 use Fleet\Infrastructure\Persistence\Models\BikeEloquentModel;
+use Maintenance\Domain\Maintenance;
 
 final readonly class GetMaintenanceDetailResponse
 {

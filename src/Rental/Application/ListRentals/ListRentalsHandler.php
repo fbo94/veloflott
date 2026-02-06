@@ -52,6 +52,7 @@ final class ListRentalsHandler
 
             $bikes = $model->items->map(function ($item) {
                 $bike = $item->bike;
+
                 return "{$bike->model->brand->name} {$bike->model->name} ({$bike->internal_number})";
             })->all();
 

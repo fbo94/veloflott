@@ -118,6 +118,7 @@ final readonly class UpdateBikeHandler
         if (base64_decode($string, true) !== false) {
             // Verify it's actually an image by checking magic bytes
             $decoded = base64_decode($string);
+
             return $this->isImageData($decoded);
         }
 
@@ -130,9 +131,9 @@ final readonly class UpdateBikeHandler
         $signatures = [
             "\xFF\xD8\xFF",        // JPEG
             "\x89PNG\r\n\x1a\n",   // PNG
-            "GIF87a",              // GIF87a
-            "GIF89a",              // GIF89a
-            "RIFF",                // WebP (starts with RIFF)
+            'GIF87a',              // GIF87a
+            'GIF89a',              // GIF89a
+            'RIFF',                // WebP (starts with RIFF)
         ];
 
         foreach ($signatures as $signature) {

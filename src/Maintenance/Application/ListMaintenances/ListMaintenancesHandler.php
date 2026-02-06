@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Maintenance\Application\ListMaintenances;
 
 use Fleet\Infrastructure\Persistence\Models\BikeEloquentModel;
-use Maintenance\Domain\MaintenanceRepositoryInterface;
 use Maintenance\Domain\MaintenancePriority;
+use Maintenance\Domain\MaintenanceRepositoryInterface;
 use Maintenance\Domain\MaintenanceStatus;
 
 final readonly class ListMaintenancesHandler

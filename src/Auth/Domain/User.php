@@ -10,7 +10,9 @@ namespace Auth\Domain;
 final class User
 {
     private ?\DateTimeImmutable $lastLoginAt;
+
     private \DateTimeImmutable $createdAt;
+
     private \DateTimeImmutable $updatedAt;
 
     public function __construct(
@@ -60,6 +62,7 @@ final class User
     public function fullName(): string
     {
         $name = trim("{$this->firstName} {$this->lastName}");
+
         return $name !== '' ? $name : $this->email;
     }
 

@@ -93,6 +93,7 @@ final class RolePermissions
         foreach (Permission::cases() as $permission) {
             $matrix[$permission->value] = self::has($role, $permission);
         }
+
         return $matrix;
     }
 }

@@ -36,6 +36,7 @@ final class ListModelsHandler
         $modelDtos = array_map(
             function ($model) use ($brandsById) {
                 $brandData = $brandsById[$model->brandId()] ?? null;
+
                 return ModelDto::fromModel(
                     $model,
                     $brandData['name'] ?? null,

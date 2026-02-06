@@ -6,7 +6,6 @@ namespace Rental\Application\CheckOutRental;
 
 use Fleet\Domain\BikeRepositoryInterface;
 use Fleet\Domain\BikeStatus;
-use Rental\Domain\BikeCondition;
 use Rental\Domain\RentalRepositoryInterface;
 
 final class CheckOutRentalHandler
@@ -81,6 +80,7 @@ final class CheckOutRentalHandler
                 return $item;
             }
         }
+
         return null;
     }
 }

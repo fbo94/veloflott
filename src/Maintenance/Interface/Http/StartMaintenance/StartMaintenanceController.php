@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Maintenance\Interface\Http\StartMaintenance;
 
+use Illuminate\Http\JsonResponse;
 use Maintenance\Application\StartMaintenance\StartMaintenanceCommand;
 use Maintenance\Application\StartMaintenance\StartMaintenanceHandler;
 use Maintenance\Domain\MaintenanceException;
-use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 final class StartMaintenanceController

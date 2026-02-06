@@ -10,6 +10,7 @@ namespace Fleet\Domain;
 final class Bike
 {
     private \DateTimeImmutable $createdAt;
+
     private \DateTimeImmutable $updatedAt;
 
     /**

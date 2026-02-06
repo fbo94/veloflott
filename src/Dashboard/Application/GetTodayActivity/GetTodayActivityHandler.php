@@ -45,7 +45,7 @@ final readonly class GetTodayActivityHandler
             lateReturns: count($lateRentals),
             recentRentals: array_slice(
                 array_map(
-                    fn($rental) => [
+                    fn ($rental) => [
                         'id' => $rental->id(),
                         'customer_id' => $rental->customerId(),
                         'start_date' => $rental->startDate()->format('Y-m-d H:i:s'),

@@ -217,6 +217,7 @@ final class EloquentBikeRepository implements BikeRepositoryInterface
             ->get()
             ->map(function ($bike) {
                 $daysUnavailable = now()->diffInDays($bike->updated_at);
+
                 return [
                     'bike_id' => $bike->id,
                     'internal_number' => $bike->internal_number,

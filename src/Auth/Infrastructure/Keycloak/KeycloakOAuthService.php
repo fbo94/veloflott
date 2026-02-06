@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Auth\Infrastructure\Keycloak;
 
-use Illuminate\Support\Facades\Http;
 use Exception;
+use Illuminate\Support\Facades\Http;
 
 /**
  * Service pour gérer le flow OAuth2 avec Keycloak.
@@ -70,6 +70,7 @@ final class KeycloakOAuthService
                 'body' => $response->body(),
                 'url' => $url,
             ]);
+
             throw new Exception("Failed to exchange code for token: {$response->body()}");
         }
 

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Maintenance\Interface\Http\ListMaintenanceReasons;
 
-use Maintenance\Application\ListMaintenanceReasons\ListMaintenanceReasonsHandler;
 use Illuminate\Http\JsonResponse;
+use Maintenance\Application\ListMaintenanceReasons\ListMaintenanceReasonsHandler;
 use Symfony\Component\HttpFoundation\Response;
 
 final class ListMaintenanceReasonsController

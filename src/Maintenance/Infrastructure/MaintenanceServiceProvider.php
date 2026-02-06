@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Maintenance\Infrastructure;
 
+use Illuminate\Support\ServiceProvider;
 use Maintenance\Domain\MaintenanceRepositoryInterface;
 use Maintenance\Infrastructure\Persistence\EloquentMaintenanceRepository;
-use Illuminate\Support\ServiceProvider;
 
 final class MaintenanceServiceProvider extends ServiceProvider
 {

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 use Customer\Application\GetCustomerDetail\GetCustomerDetailHandler;
 use Customer\Application\GetCustomerDetail\GetCustomerDetailQuery;
-use Customer\Domain\Customer;
 use Customer\Domain\CustomerRepositoryInterface;
 use Rental\Infrastructure\Persistence\Models\RentalEloquentModel;
 

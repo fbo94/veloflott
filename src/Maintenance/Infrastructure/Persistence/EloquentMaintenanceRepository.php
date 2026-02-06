@@ -166,6 +166,7 @@ final class EloquentMaintenanceRepository implements MaintenanceRepositoryInterf
             ->get()
             ->map(function ($maintenance) {
                 $daysInProgress = now()->diffInDays($maintenance->started_at);
+
                 return [
                     'maintenance_id' => $maintenance->id,
                     'bike_id' => $maintenance->bike_id,

@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Rental\Interface\Http\CreateRental;
 
+use Illuminate\Http\JsonResponse;
 use Rental\Application\CreateRental\BikeItemData;
 use Rental\Application\CreateRental\CreateRentalCommand;
 use Rental\Application\CreateRental\CreateRentalHandler;
 use Rental\Application\CreateRental\EquipmentItemData;
 use Rental\Domain\EquipmentType;
 use Rental\Domain\RentalDuration;
-use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 final class CreateRentalController

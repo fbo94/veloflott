@@ -10,6 +10,7 @@ namespace Fleet\Domain;
 final class Category
 {
     private \DateTimeImmutable $createdAt;
+
     private \DateTimeImmutable $updatedAt;
 
     public function __construct(

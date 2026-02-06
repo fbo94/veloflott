@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Rental\Interface\Http\ListActiveRentals;
 
-use Rental\Application\ListActiveRentals\ListActiveRentalsHandler;
-use Rental\Application\ListActiveRentals\ListActiveRentalsQuery;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Rental\Application\ListActiveRentals\ListActiveRentalsHandler;
+use Rental\Application\ListActiveRentals\ListActiveRentalsQuery;
 
 final class ListActiveRentalsController
 {

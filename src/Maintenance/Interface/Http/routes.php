@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-use Maintenance\Interface\Http\DeclareMaintenance\DeclareMaintenanceController;
-use Maintenance\Interface\Http\ListMaintenances\ListMaintenancesController;
-use Maintenance\Interface\Http\GetMaintenanceDetail\GetMaintenanceDetailController;
-use Maintenance\Interface\Http\StartMaintenance\StartMaintenanceController;
-use Maintenance\Interface\Http\CompleteMaintenance\CompleteMaintenanceController;
-use Maintenance\Interface\Http\GetBikeMaintenanceHistory\GetBikeMaintenanceHistoryController;
-use Maintenance\Interface\Http\ListMaintenanceReasons\ListMaintenanceReasonsController;
-use Maintenance\Interface\Http\UploadMaintenancePhoto\UploadMaintenancePhotoController;
-use Maintenance\Interface\Http\DeleteMaintenancePhoto\DeleteMaintenancePhotoController;
 use Illuminate\Support\Facades\Route;
+use Maintenance\Interface\Http\CompleteMaintenance\CompleteMaintenanceController;
+use Maintenance\Interface\Http\DeclareMaintenance\DeclareMaintenanceController;
+use Maintenance\Interface\Http\DeleteMaintenancePhoto\DeleteMaintenancePhotoController;
+use Maintenance\Interface\Http\GetBikeMaintenanceHistory\GetBikeMaintenanceHistoryController;
+use Maintenance\Interface\Http\GetMaintenanceDetail\GetMaintenanceDetailController;
+use Maintenance\Interface\Http\ListMaintenanceReasons\ListMaintenanceReasonsController;
+use Maintenance\Interface\Http\ListMaintenances\ListMaintenancesController;
+use Maintenance\Interface\Http\StartMaintenance\StartMaintenanceController;
+use Maintenance\Interface\Http\UploadMaintenancePhoto\UploadMaintenancePhotoController;
 
 Route::middleware(['keycloak'])->prefix('api/maintenance')->group(function () {
     // Référentiel : Lister toutes les catégories et raisons de maintenance disponibles

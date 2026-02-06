@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Maintenance\Interface\Http\GetBikeMaintenanceHistory;
 
-use Maintenance\Application\GetBikeMaintenanceHistory\GetBikeMaintenanceHistoryQuery;
-use Maintenance\Application\GetBikeMaintenanceHistory\GetBikeMaintenanceHistoryHandler;
 use Fleet\Domain\BikeException;
 use Illuminate\Http\JsonResponse;
+use Maintenance\Application\GetBikeMaintenanceHistory\GetBikeMaintenanceHistoryHandler;
+use Maintenance\Application\GetBikeMaintenanceHistory\GetBikeMaintenanceHistoryQuery;
 use Symfony\Component\HttpFoundation\Response;
 
 final class GetBikeMaintenanceHistoryController

@@ -209,7 +209,7 @@ final class Maintenance
     public function removePhoto(string $photoUrl): self
     {
         $this->photos = array_values(
-            array_filter($this->photos, fn(string $photo) => $photo !== $photoUrl)
+            array_filter($this->photos, fn (string $photo) => $photo !== $photoUrl)
         );
         $this->updatedAt = new DateTimeImmutable();
 

@@ -2,16 +2,15 @@
 
 declare(strict_types=1);
 
-use Fleet\Application\CreateBike\BikeInternalNumberAlreadyExistsException;
 use Fleet\Application\CreateBike\CategoryNotFoundException;
 use Fleet\Application\CreateBike\CreateBikeCommand;
 use Fleet\Application\CreateBike\CreateBikeHandler;
 use Fleet\Application\CreateBike\ModelNotFoundException;
 use Fleet\Domain\Bike;
 use Fleet\Domain\BikeRepositoryInterface;
+use Fleet\Domain\BrakeType;
 use Fleet\Domain\Brand;
 use Fleet\Domain\BrandRepositoryInterface;
-use Fleet\Domain\BrakeType;
 use Fleet\Domain\Category;
 use Fleet\Domain\CategoryRepositoryInterface;
 use Fleet\Domain\FrameSizeLetter;

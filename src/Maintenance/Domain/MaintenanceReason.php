@@ -187,8 +187,7 @@ enum MaintenanceReason: string
             self::CHAINRING_REPLACEMENT,
             self::CRANKSET_REPLACEMENT,
             self::BOTTOM_BRACKET_SERVICE,
-            self::CABLE_HOUSING_REPLACEMENT
-                => MaintenanceCategory::TRANSMISSION,
+            self::CABLE_HOUSING_REPLACEMENT => MaintenanceCategory::TRANSMISSION,
 
             // FREINS
             self::BRAKE_BLEEDING,
@@ -197,8 +196,7 @@ enum MaintenanceReason: string
             self::BRAKE_CALIPER_SERVICE,
             self::BRAKE_LEVER_REPLACEMENT,
             self::BRAKE_CABLE_REPLACEMENT,
-            self::BRAKE_ADJUSTMENT
-                => MaintenanceCategory::BRAKES,
+            self::BRAKE_ADJUSTMENT => MaintenanceCategory::BRAKES,
 
             // SUSPENSIONS
             self::FORK_SERVICE,
@@ -206,8 +204,7 @@ enum MaintenanceReason: string
             self::FORK_SEAL_REPLACEMENT,
             self::REAR_SHOCK_SERVICE,
             self::SUSPENSION_TUNING,
-            self::SUSPENSION_LOCKOUT_REPAIR
-                => MaintenanceCategory::SUSPENSION,
+            self::SUSPENSION_LOCKOUT_REPAIR => MaintenanceCategory::SUSPENSION,
 
             // ROUES
             self::WHEEL_TRUING,
@@ -218,24 +215,21 @@ enum MaintenanceReason: string
             self::TIRE_REPLACEMENT,
             self::INNER_TUBE_REPLACEMENT,
             self::TUBELESS_SETUP,
-            self::WHEEL_BUILDING
-                => MaintenanceCategory::WHEELS,
+            self::WHEEL_BUILDING => MaintenanceCategory::WHEELS,
 
             // DIRECTION
             self::HEADSET_SERVICE,
             self::HEADSET_BEARING_REPLACEMENT,
             self::STEM_REPLACEMENT,
             self::HANDLEBAR_REPLACEMENT,
-            self::GRIPS_BAR_TAPE_REPLACEMENT
-                => MaintenanceCategory::STEERING,
+            self::GRIPS_BAR_TAPE_REPLACEMENT => MaintenanceCategory::STEERING,
 
             // CADRE
             self::FRAME_INSPECTION,
             self::FRAME_CRACK_REPAIR,
             self::FRAME_ALIGNMENT,
             self::PAINT_TOUCH_UP,
-            self::DROPOUT_REPAIR
-                => MaintenanceCategory::FRAME,
+            self::DROPOUT_REPAIR => MaintenanceCategory::FRAME,
 
             // ÉLECTRIQUE (VAE)
             self::BATTERY_CHECK,
@@ -245,15 +239,13 @@ enum MaintenanceReason: string
             self::DISPLAY_REPLACEMENT,
             self::ELECTRICAL_WIRING,
             self::CONTROLLER_REPLACEMENT,
-            self::SENSOR_REPLACEMENT
-                => MaintenanceCategory::ELECTRICAL,
+            self::SENSOR_REPLACEMENT => MaintenanceCategory::ELECTRICAL,
 
             // RÉVISION COMPLÈTE
             self::FULL_SERVICE_BASIC,
             self::FULL_SERVICE_ADVANCED,
             self::PRE_SEASON_SERVICE,
-            self::POST_SEASON_SERVICE
-                => MaintenanceCategory::FULL_SERVICE,
+            self::POST_SEASON_SERVICE => MaintenanceCategory::FULL_SERVICE,
 
             // AUTRES
             self::SADDLE_REPLACEMENT,
@@ -266,8 +258,7 @@ enum MaintenanceReason: string
             self::ACCESSORIES_INSTALLATION,
             self::GENERAL_CLEANING,
             self::SAFETY_INSPECTION,
-            self::OTHER
-                => MaintenanceCategory::OTHER,
+            self::OTHER => MaintenanceCategory::OTHER,
         };
     }
 
@@ -279,7 +270,7 @@ enum MaintenanceReason: string
     {
         return array_filter(
             self::cases(),
-            fn(self $reason) => $reason->category() === $category
+            fn (self $reason) => $reason->category() === $category
         );
     }
 }

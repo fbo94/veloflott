@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Rental\Interface\Http\GetRentalDetail;
 
+use Illuminate\Http\JsonResponse;
 use Rental\Application\GetRentalDetail\GetRentalDetailHandler;
 use Rental\Application\GetRentalDetail\GetRentalDetailQuery;
 use Rental\Application\GetRentalDetail\RentalNotFoundException;
-use Illuminate\Http\JsonResponse;
 
 final class GetRentalDetailController
 {

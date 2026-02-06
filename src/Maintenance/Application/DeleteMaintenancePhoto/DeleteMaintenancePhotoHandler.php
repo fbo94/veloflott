@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Maintenance\Application\DeleteMaintenancePhoto;
 
+use Illuminate\Support\Facades\Storage;
 use Maintenance\Domain\Exceptions\MaintenanceException;
 use Maintenance\Domain\MaintenanceRepositoryInterface;
-use Illuminate\Support\Facades\Storage;
 
 final readonly class DeleteMaintenancePhotoHandler
 {

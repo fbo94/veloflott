@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-use Dashboard\Interface\Http\GetFleetOverview\GetFleetOverviewController;
-use Dashboard\Interface\Http\GetUtilizationKpi\GetUtilizationKpiController;
-use Dashboard\Interface\Http\GetRevenueKpi\GetRevenueKpiController;
-use Dashboard\Interface\Http\GetMaintenanceKpi\GetMaintenanceKpiController;
-use Dashboard\Interface\Http\GetTopBikes\GetTopBikesController;
-use Dashboard\Interface\Http\GetTodayActivity\GetTodayActivityController;
 use Dashboard\Interface\Http\GetCentralizedAlerts\GetCentralizedAlertsController;
+use Dashboard\Interface\Http\GetFleetOverview\GetFleetOverviewController;
+use Dashboard\Interface\Http\GetMaintenanceKpi\GetMaintenanceKpiController;
+use Dashboard\Interface\Http\GetRevenueKpi\GetRevenueKpiController;
+use Dashboard\Interface\Http\GetTodayActivity\GetTodayActivityController;
+use Dashboard\Interface\Http\GetTopBikes\GetTopBikesController;
+use Dashboard\Interface\Http\GetUtilizationKpi\GetUtilizationKpiController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['keycloak'])->prefix('api/dashboard')->group(function () {

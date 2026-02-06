@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace Fleet\Application\ListBikes;
 
-use Fleet\Domain\BikeStatus;
-use Fleet\Domain\FrameSizeLetter;
-
 final readonly class ListBikesQuery
 {
     /**

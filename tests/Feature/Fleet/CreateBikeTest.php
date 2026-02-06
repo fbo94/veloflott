@@ -2,9 +2,6 @@
 
 declare(strict_types=1);
 
-use Fleet\Domain\BrakeType;
-use Fleet\Domain\FrameSizeLetter;
-use Fleet\Domain\WheelSize;
 use Fleet\Infrastructure\Persistence\Models\BrandEloquentModel;
 use Fleet\Infrastructure\Persistence\Models\CategoryEloquentModel;
 use Fleet\Infrastructure\Persistence\Models\ModelEloquentModel;
@@ -57,7 +54,7 @@ test('can create a bike via API with letter frame size', function () {
         'purchase_price' => 2500.00,
         'purchase_date' => '2024-01-15',
         'notes' => 'Test bike',
-        'photos' => []
+        'photos' => [],
     ]);
 
     $response->assertStatus(201)
@@ -75,12 +72,12 @@ test('can create a bike via API with letter frame size', function () {
             'internal_number' => 'VTT-001',
             'status' => 'available',
             'model' => 'Trance X',
-            'brand' => 'Giant'
+            'brand' => 'Giant',
         ]);
 
     $this->assertDatabaseHas('bikes', [
         'internal_number' => 'VTT-001',
-        'status' => 'available'
+        'status' => 'available',
     ]);
 });
 
@@ -91,16 +88,16 @@ test('can create a bike with numeric frame size in cm', function () {
         'category_id' => $this->category->id,
         'frame_size_unit' => 'cm',
         'frame_size_numeric' => 54.0,
-        'photos' => []
+        'photos' => [],
     ]);
 
     $response->assertStatus(201)
         ->assertJson([
-            'internal_number' => 'VTT-002'
+            'internal_number' => 'VTT-002',
         ]);
 
     $this->assertDatabaseHas('bikes', [
-        'internal_number' => 'VTT-002'
+        'internal_number' => 'VTT-002',
     ]);
 });
 
@@ -112,7 +109,7 @@ test('cannot create bike with duplicate internal number', function () {
         'category_id' => $this->category->id,
         'frame_size_unit' => 'letter',
         'frame_size_letter' => 'm',
-        'photos' => []
+        'photos' => [],
     ]);
 
     // Try to create second bike with same internal number
@@ -122,7 +119,7 @@ test('cannot create bike with duplicate internal number', function () {
         'category_id' => $this->category->id,
         'frame_size_unit' => 'letter',
         'frame_size_letter' => 'l',
-        'photos' => []
+        'photos' => [],
     ]);
 
     // With withoutMiddleware, exception handler doesn't work properly
@@ -138,7 +135,7 @@ test('cannot create bike with invalid model', function () {
         'category_id' => $this->category->id,
         'frame_size_unit' => 'letter',
         'frame_size_letter' => 'm',
-        'photos' => []
+        'photos' => [],
     ]);
 
     // With withoutMiddleware, exception handler doesn't work properly
@@ -154,7 +151,7 @@ test('cannot create bike with invalid category', function () {
         'category_id' => $invalidUuid,
         'frame_size_unit' => 'letter',
         'frame_size_letter' => 'm',
-        'photos' => []
+        'photos' => [],
     ]);
 
     // With withoutMiddleware, exception handler doesn't work properly
@@ -170,7 +167,7 @@ test('validates required fields', function () {
             'internal_number',
             'model_id',
             'category_id',
-            'frame_size_unit'
+            'frame_size_unit',
         ]);
 });
 
@@ -181,7 +178,7 @@ test('validates internal number format', function () {
         'category_id' => $this->category->id,
         'frame_size_unit' => 'letter',
         'frame_size_letter' => 'm',
-        'photos' => []
+        'photos' => [],
     ]);
 
     $response->assertStatus(422)
@@ -195,7 +192,7 @@ test('validates frame size letter value', function () {
         'category_id' => $this->category->id,
         'frame_size_unit' => 'letter',
         'frame_size_letter' => 'INVALID',
-        'photos' => []
+        'photos' => [],
     ]);
 
     $response->assertStatus(422)
@@ -209,7 +206,7 @@ test('validates numeric frame size is positive', function () {
         'category_id' => $this->category->id,
         'frame_size_unit' => 'cm',
         'frame_size_numeric' => -10,
-        'photos' => []
+        'photos' => [],
     ]);
 
     $response->assertStatus(422)
@@ -224,7 +221,7 @@ test('validates year is reasonable', function () {
         'frame_size_unit' => 'letter',
         'frame_size_letter' => 'm',
         'year' => 1800,
-        'photos' => []
+        'photos' => [],
     ]);
 
     $response->assertStatus(422)
@@ -248,7 +245,7 @@ test('can create bike with all optional fields', function () {
         'purchase_price' => 3500.00,
         'purchase_date' => '2024-01-01',
         'notes' => 'Full spec bike',
-        'photos' => []
+        'photos' => [],
     ]);
 
     $response->assertStatus(201);
@@ -261,7 +258,6 @@ test('can create bike with all optional fields', function () {
         'front_suspension' => 150,
         'rear_suspension' => 140,
         'purchase_price' => 3500.00,
-        'notes' => 'Full spec bike'
+        'notes' => 'Full spec bike',
     ]);
 });
-

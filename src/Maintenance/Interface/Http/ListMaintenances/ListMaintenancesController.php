@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Maintenance\Interface\Http\ListMaintenances;
 
-use Maintenance\Application\ListMaintenances\ListMaintenancesQuery;
-use Maintenance\Application\ListMaintenances\ListMaintenancesHandler;
 use Illuminate\Http\JsonResponse;
+use Maintenance\Application\ListMaintenances\ListMaintenancesHandler;
+use Maintenance\Application\ListMaintenances\ListMaintenancesQuery;
 use Symfony\Component\HttpFoundation\Response;
 
 final class ListMaintenancesController

@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Rental\Interface\Http\CheckOutRental;
 
+use Illuminate\Http\JsonResponse;
 use Rental\Application\CheckOutRental\BikeConditionData;
 use Rental\Application\CheckOutRental\CheckOutRentalCommand;
 use Rental\Application\CheckOutRental\CheckOutRentalHandler;
 use Rental\Domain\BikeCondition;
-use Illuminate\Http\JsonResponse;
 
 final class CheckOutRentalController
 {

@@ -167,6 +167,7 @@ final class Rental
         }
 
         $now = new \DateTimeImmutable();
+
         return (int) (($now->getTimestamp() - $this->expectedReturnDate->getTimestamp()) / 3600);
     }
 

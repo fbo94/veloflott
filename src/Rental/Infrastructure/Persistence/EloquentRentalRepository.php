@@ -88,7 +88,7 @@ final class EloquentRentalRepository implements RentalRepositoryInterface
     {
         return RentalEloquentModel::whereBetween('start_date', [
             $from->format('Y-m-d H:i:s'),
-            $to->format('Y-m-d H:i:s')
+            $to->format('Y-m-d H:i:s'),
         ])->count();
     }
 
@@ -96,7 +96,7 @@ final class EloquentRentalRepository implements RentalRepositoryInterface
     {
         return (int) RentalEloquentModel::whereBetween('start_date', [
             $from->format('Y-m-d H:i:s'),
-            $to->format('Y-m-d H:i:s')
+            $to->format('Y-m-d H:i:s'),
         ])
             ->where('status', '!=', RentalStatus::CANCELLED->value)
             ->sum('total_amount');

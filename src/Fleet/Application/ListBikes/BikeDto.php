@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Fleet\Application\ListBikes;
 
-use Fleet\Domain\Bike;
 use Fleet\Infrastructure\Persistence\Models\BikeEloquentModel;
 
 final readonly class BikeDto

@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Auth\Infrastructure\Keycloak;
 
-use Firebase\JWT\JWT;
+use Exception;
 use Firebase\JWT\JWK;
+use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
-use Exception;
 
 /**
  * Valide les tokens JWT émis par Keycloak.
@@ -48,6 +48,7 @@ final class KeycloakTokenValidator
                 'trace' => $e->getTraceAsString(),
             ]);
             report($e);
+
             return null;
         }
     }
@@ -80,6 +81,7 @@ final class KeycloakTokenValidator
                         'url' => $url,
                         'error' => $e->getMessage(),
                     ]);
+
                     throw new Exception("Failed to fetch Keycloak JWKS: {$e->getMessage()}", 0, $e);
                 }
 
@@ -89,6 +91,7 @@ final class KeycloakTokenValidator
                         'status' => $response->status(),
                         'body' => $response->body(),
                     ]);
+
                     throw new Exception("Failed to fetch Keycloak JWKS: {$response->status()}");
                 }
 
@@ -145,6 +148,7 @@ final class KeycloakTokenValidator
                 'received' => $payload->iss,
                 'expected' => $validIssuers,
             ]);
+
             throw new Exception("Invalid issuer: {$payload->iss}");
         }
     }

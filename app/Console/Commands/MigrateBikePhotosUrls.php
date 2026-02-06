@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
@@ -46,8 +48,10 @@ class MigrateBikePhotosUrls extends Command
                 // Fix URLs with duplicate bikes/bikes
                 if (str_contains($photo, '/storage/bikes/bikes/')) {
                     $hasChanges = true;
+
                     return str_replace('/storage/bikes/bikes/', '/storage/bikes/', $photo);
                 }
+
                 return $photo;
             }, $photos);
 

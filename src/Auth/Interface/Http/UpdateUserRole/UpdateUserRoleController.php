@@ -8,7 +8,6 @@ use Auth\Application\UpdateUserRole\UpdateUserRoleCommand;
 use Auth\Application\UpdateUserRole\UpdateUserRoleHandler;
 use Auth\Domain\Role;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 /**
  * Controller pour changer le rôle d'un utilisateur.

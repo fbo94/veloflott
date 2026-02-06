@@ -18,7 +18,9 @@ use OpenApi\Attributes as OA;
     scheme: 'bearer',
     bearerFormat: 'JWT'
 )]
-class OpenApi {}
+class OpenApi
+{
+}
 
 // ------------------------------ PATHS ------------------------------
 
@@ -30,10 +32,12 @@ class OpenApi {}
     tags: ['Auth'],
     responses: [
         new OA\Response(response: 200, description: 'Current user returned'),
-        new OA\Response(response: 401, description: 'Unauthorized')
+        new OA\Response(response: 401, description: 'Unauthorized'),
     ]
 )]
-class MeEndpoint {}
+class MeEndpoint
+{
+}
 
 // GET /api/users
 #[OA\Get(
@@ -43,15 +47,17 @@ class MeEndpoint {}
     tags: ['Users'],
     parameters: [
         new OA\Parameter(name: 'role', in: 'query', required: false, schema: new OA\Schema(type: 'string'), description: 'Filter by role'),
-        new OA\Parameter(name: 'is_active', in: 'query', required: false, schema: new OA\Schema(type: 'boolean'), description: 'Filter by active status')
+        new OA\Parameter(name: 'is_active', in: 'query', required: false, schema: new OA\Schema(type: 'boolean'), description: 'Filter by active status'),
     ],
     responses: [
         new OA\Response(response: 200, description: 'List of users'),
         new OA\Response(response: 401, description: 'Unauthorized'),
-        new OA\Response(response: 403, description: 'Forbidden')
+        new OA\Response(response: 403, description: 'Forbidden'),
     ]
 )]
-class ListUsersEndpoint {}
+class ListUsersEndpoint
+{
+}
 
 // PUT /api/users/{id}/role
 #[OA\Put(
@@ -65,7 +71,7 @@ class ListUsersEndpoint {}
     requestBody: new OA\RequestBody(required: true, content: new OA\MediaType(mediaType: 'application/json', schema: new OA\Schema(
         required: ['role'],
         properties: [
-            new OA\Property(property: 'role', type: 'string', example: 'ADMIN')
+            new OA\Property(property: 'role', type: 'string', example: 'ADMIN'),
         ],
         type: 'object'
     ))),
@@ -73,10 +79,12 @@ class ListUsersEndpoint {}
         new OA\Response(response: 200, description: 'Role updated'),
         new OA\Response(response: 400, description: 'Bad request'),
         new OA\Response(response: 401, description: 'Unauthorized'),
-        new OA\Response(response: 403, description: 'Forbidden')
+        new OA\Response(response: 403, description: 'Forbidden'),
     ]
 )]
-class UpdateUserRoleEndpoint {}
+class UpdateUserRoleEndpoint
+{
+}
 
 // POST /api/users/{id}/toggle-status
 #[OA\Post(
@@ -90,10 +98,12 @@ class UpdateUserRoleEndpoint {}
     responses: [
         new OA\Response(response: 200, description: 'Status toggled'),
         new OA\Response(response: 401, description: 'Unauthorized'),
-        new OA\Response(response: 403, description: 'Forbidden')
+        new OA\Response(response: 403, description: 'Forbidden'),
     ]
 )]
-class ToggleUserStatusEndpoint {}
+class ToggleUserStatusEndpoint
+{
+}
 
 // GET /api/user (Sanctum protected default route)
 #[OA\Get(
@@ -103,10 +113,12 @@ class ToggleUserStatusEndpoint {}
     tags: ['Auth'],
     responses: [
         new OA\Response(response: 200, description: 'Current user returned'),
-        new OA\Response(response: 401, description: 'Unauthorized')
+        new OA\Response(response: 401, description: 'Unauthorized'),
     ]
 )]
-class LaravelUserEndpoint {}
+class LaravelUserEndpoint
+{
+}
 
 // GET /api/login (public example route)
 #[OA\Get(
@@ -114,10 +126,12 @@ class LaravelUserEndpoint {}
     summary: 'Login endpoint (placeholder)',
     tags: ['Auth'],
     responses: [
-        new OA\Response(response: 200, description: 'Message returned')
+        new OA\Response(response: 200, description: 'Message returned'),
     ]
 )]
-class LoginEndpoint {}
+class LoginEndpoint
+{
+}
 
 // GET /api/auth/authorization-url (public)
 #[OA\Get(
@@ -137,7 +151,9 @@ class LoginEndpoint {}
         new OA\Response(response: 200, description: 'Authorization URL payload returned'),
     ]
 )]
-class GetAuthorizationUrlEndpoint {}
+class GetAuthorizationUrlEndpoint
+{
+}
 
 // POST /api/auth/authorize (public)
 #[OA\Post(
@@ -163,7 +179,9 @@ class GetAuthorizationUrlEndpoint {}
         new OA\Response(response: 400, description: 'Invalid payload or state mismatch'),
     ]
 )]
-class AuthorizeEndpoint {}
+class AuthorizeEndpoint
+{
+}
 
 // ------------------------------ CUSTOMERS ------------------------------
 
@@ -199,10 +217,12 @@ class AuthorizeEndpoint {}
         new OA\Response(response: 201, description: 'Customer created successfully'),
         new OA\Response(response: 400, description: 'Validation error'),
         new OA\Response(response: 401, description: 'Unauthorized'),
-        new OA\Response(response: 403, description: 'Forbidden - requires manage_customers permission')
+        new OA\Response(response: 403, description: 'Forbidden - requires manage_customers permission'),
     ]
 )]
-class CreateCustomerEndpoint {}
+class CreateCustomerEndpoint
+{
+}
 
 // GET /api/customers/search
 #[OA\Get(
@@ -217,15 +237,17 @@ class CreateCustomerEndpoint {}
             required: false,
             schema: new OA\Schema(type: 'string'),
             description: 'Search query to match against first name, last name, email, or phone'
-        )
+        ),
     ],
     responses: [
         new OA\Response(response: 200, description: 'List of matching customers'),
         new OA\Response(response: 401, description: 'Unauthorized'),
-        new OA\Response(response: 403, description: 'Forbidden - requires view_customers permission')
+        new OA\Response(response: 403, description: 'Forbidden - requires view_customers permission'),
     ]
 )]
-class SearchCustomersEndpoint {}
+class SearchCustomersEndpoint
+{
+}
 
 // GET /api/customers/{id}
 #[OA\Get(
@@ -234,16 +256,18 @@ class SearchCustomersEndpoint {}
     security: [['bearerAuth' => []]],
     tags: ['Customers'],
     parameters: [
-        new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'string', format: 'uuid'))
+        new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'string', format: 'uuid')),
     ],
     responses: [
         new OA\Response(response: 200, description: 'Customer details including rental history and statistics'),
         new OA\Response(response: 401, description: 'Unauthorized'),
         new OA\Response(response: 403, description: 'Forbidden - requires view_customers permission'),
-        new OA\Response(response: 404, description: 'Customer not found')
+        new OA\Response(response: 404, description: 'Customer not found'),
     ]
 )]
-class GetCustomerDetailEndpoint {}
+class GetCustomerDetailEndpoint
+{
+}
 
 // PUT /api/customers/{id}
 #[OA\Put(
@@ -252,7 +276,7 @@ class GetCustomerDetailEndpoint {}
     security: [['bearerAuth' => []]],
     tags: ['Customers'],
     parameters: [
-        new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'string', format: 'uuid'))
+        new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'string', format: 'uuid')),
     ],
     requestBody: new OA\RequestBody(
         required: true,
@@ -281,10 +305,12 @@ class GetCustomerDetailEndpoint {}
         new OA\Response(response: 400, description: 'Validation error'),
         new OA\Response(response: 401, description: 'Unauthorized'),
         new OA\Response(response: 403, description: 'Forbidden - requires manage_customers permission'),
-        new OA\Response(response: 404, description: 'Customer not found')
+        new OA\Response(response: 404, description: 'Customer not found'),
     ]
 )]
-class UpdateCustomerEndpoint {}
+class UpdateCustomerEndpoint
+{
+}
 
 // POST /api/customers/{id}/toggle-risky
 #[OA\Post(
@@ -293,16 +319,18 @@ class UpdateCustomerEndpoint {}
     security: [['bearerAuth' => []]],
     tags: ['Customers'],
     parameters: [
-        new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'string', format: 'uuid'))
+        new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'string', format: 'uuid')),
     ],
     responses: [
         new OA\Response(response: 200, description: 'Risky flag toggled successfully'),
         new OA\Response(response: 401, description: 'Unauthorized'),
         new OA\Response(response: 403, description: 'Forbidden - requires manage_customers permission'),
-        new OA\Response(response: 404, description: 'Customer not found')
+        new OA\Response(response: 404, description: 'Customer not found'),
     ]
 )]
-class ToggleRiskyFlagEndpoint {}
+class ToggleRiskyFlagEndpoint
+{
+}
 
 // ------------------------------ FLEET - BRANDS ------------------------------
 
@@ -315,10 +343,12 @@ class ToggleRiskyFlagEndpoint {}
     responses: [
         new OA\Response(response: 200, description: 'List of bike brands'),
         new OA\Response(response: 401, description: 'Unauthorized'),
-        new OA\Response(response: 403, description: 'Forbidden - requires view_bikes permission')
+        new OA\Response(response: 403, description: 'Forbidden - requires view_bikes permission'),
     ]
 )]
-class ListBrandsEndpoint {}
+class ListBrandsEndpoint
+{
+}
 
 // POST /api/fleet/brands
 #[OA\Post(
@@ -344,10 +374,12 @@ class ListBrandsEndpoint {}
         new OA\Response(response: 201, description: 'Brand created successfully'),
         new OA\Response(response: 400, description: 'Validation error'),
         new OA\Response(response: 401, description: 'Unauthorized'),
-        new OA\Response(response: 403, description: 'Forbidden - requires manage_bikes permission')
+        new OA\Response(response: 403, description: 'Forbidden - requires manage_bikes permission'),
     ]
 )]
-class CreateBrandEndpoint {}
+class CreateBrandEndpoint
+{
+}
 
 // PUT /api/fleet/brands/{id}
 #[OA\Put(
@@ -356,7 +388,7 @@ class CreateBrandEndpoint {}
     security: [['bearerAuth' => []]],
     tags: ['Fleet - Brands'],
     parameters: [
-        new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'string', format: 'uuid'))
+        new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'string', format: 'uuid')),
     ],
     requestBody: new OA\RequestBody(
         required: true,
@@ -377,10 +409,12 @@ class CreateBrandEndpoint {}
         new OA\Response(response: 400, description: 'Validation error'),
         new OA\Response(response: 401, description: 'Unauthorized'),
         new OA\Response(response: 403, description: 'Forbidden - requires manage_bikes permission'),
-        new OA\Response(response: 404, description: 'Brand not found')
+        new OA\Response(response: 404, description: 'Brand not found'),
     ]
 )]
-class UpdateBrandEndpoint {}
+class UpdateBrandEndpoint
+{
+}
 
 // DELETE /api/fleet/brands/{id}
 #[OA\Delete(
@@ -389,16 +423,18 @@ class UpdateBrandEndpoint {}
     security: [['bearerAuth' => []]],
     tags: ['Fleet - Brands'],
     parameters: [
-        new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'string', format: 'uuid'))
+        new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'string', format: 'uuid')),
     ],
     responses: [
         new OA\Response(response: 204, description: 'Brand deleted successfully'),
         new OA\Response(response: 401, description: 'Unauthorized'),
         new OA\Response(response: 403, description: 'Forbidden - requires manage_bikes permission'),
-        new OA\Response(response: 404, description: 'Brand not found')
+        new OA\Response(response: 404, description: 'Brand not found'),
     ]
 )]
-class DeleteBrandEndpoint {}
+class DeleteBrandEndpoint
+{
+}
 
 // ------------------------------ FLEET - MODELS ------------------------------
 
@@ -415,16 +451,18 @@ class DeleteBrandEndpoint {}
             required: false,
             schema: new OA\Schema(type: 'string', format: 'uuid'),
             description: 'Filter models by brand ID'
-        )
+        ),
     ],
     responses: [
         new OA\Response(response: 200, description: 'List of bike models'),
         new OA\Response(response: 400, description: 'Validation error'),
         new OA\Response(response: 401, description: 'Unauthorized'),
-        new OA\Response(response: 403, description: 'Forbidden - requires view_bikes permission')
+        new OA\Response(response: 403, description: 'Forbidden - requires view_bikes permission'),
     ]
 )]
-class ListModelsEndpoint {}
+class ListModelsEndpoint
+{
+}
 
 // GET /api/fleet/models/{id}
 #[OA\Get(
@@ -433,7 +471,7 @@ class ListModelsEndpoint {}
     security: [['bearerAuth' => []]],
     tags: ['Fleet - Models'],
     parameters: [
-        new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'string', format: 'uuid'))
+        new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'string', format: 'uuid')),
     ],
     responses: [
         new OA\Response(
@@ -455,10 +493,12 @@ class ListModelsEndpoint {}
         ),
         new OA\Response(response: 401, description: 'Unauthorized'),
         new OA\Response(response: 403, description: 'Forbidden - requires view_bikes permission'),
-        new OA\Response(response: 404, description: 'Model not found')
+        new OA\Response(response: 404, description: 'Model not found'),
     ]
 )]
-class GetModelDetailEndpoint {}
+class GetModelDetailEndpoint
+{
+}
 
 // POST /api/fleet/models
 #[OA\Post(
@@ -484,10 +524,12 @@ class GetModelDetailEndpoint {}
         new OA\Response(response: 201, description: 'Model created successfully'),
         new OA\Response(response: 400, description: 'Validation error'),
         new OA\Response(response: 401, description: 'Unauthorized'),
-        new OA\Response(response: 403, description: 'Forbidden - requires manage_bikes permission')
+        new OA\Response(response: 403, description: 'Forbidden - requires manage_bikes permission'),
     ]
 )]
-class CreateModelEndpoint {}
+class CreateModelEndpoint
+{
+}
 
 // PUT /api/fleet/models/{id}
 #[OA\Put(
@@ -496,7 +538,7 @@ class CreateModelEndpoint {}
     security: [['bearerAuth' => []]],
     tags: ['Fleet - Models'],
     parameters: [
-        new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'string', format: 'uuid'))
+        new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'string', format: 'uuid')),
     ],
     requestBody: new OA\RequestBody(
         required: true,
@@ -517,10 +559,12 @@ class CreateModelEndpoint {}
         new OA\Response(response: 400, description: 'Validation error'),
         new OA\Response(response: 401, description: 'Unauthorized'),
         new OA\Response(response: 403, description: 'Forbidden - requires manage_bikes permission'),
-        new OA\Response(response: 404, description: 'Model not found')
+        new OA\Response(response: 404, description: 'Model not found'),
     ]
 )]
-class UpdateModelEndpoint {}
+class UpdateModelEndpoint
+{
+}
 
 // DELETE /api/fleet/models/{id}
 #[OA\Delete(
@@ -529,16 +573,18 @@ class UpdateModelEndpoint {}
     security: [['bearerAuth' => []]],
     tags: ['Fleet - Models'],
     parameters: [
-        new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'string', format: 'uuid'))
+        new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'string', format: 'uuid')),
     ],
     responses: [
         new OA\Response(response: 204, description: 'Model deleted successfully'),
         new OA\Response(response: 401, description: 'Unauthorized'),
         new OA\Response(response: 403, description: 'Forbidden - requires manage_bikes permission'),
-        new OA\Response(response: 404, description: 'Model not found')
+        new OA\Response(response: 404, description: 'Model not found'),
     ]
 )]
-class DeleteModelEndpoint {}
+class DeleteModelEndpoint
+{
+}
 
 // ------------------------------ FLEET - BIKES ------------------------------
 
@@ -572,10 +618,12 @@ class DeleteModelEndpoint {}
         new OA\Response(response: 201, description: 'Bike created successfully'),
         new OA\Response(response: 400, description: 'Validation error'),
         new OA\Response(response: 401, description: 'Unauthorized'),
-        new OA\Response(response: 403, description: 'Forbidden - requires manage_bikes permission')
+        new OA\Response(response: 403, description: 'Forbidden - requires manage_bikes permission'),
     ]
 )]
-class CreateBikeEndpoint {}
+class CreateBikeEndpoint
+{
+}
 
 // GET /api/fleet/bikes
 #[OA\Get(
@@ -611,7 +659,7 @@ class CreateBikeEndpoint {}
             required: false,
             schema: new OA\Schema(type: 'string', format: 'uuid'),
             description: 'Filter by model'
-        )
+        ),
     ],
     responses: [
         new OA\Response(
@@ -645,10 +693,12 @@ class CreateBikeEndpoint {}
             )
         ),
         new OA\Response(response: 401, description: 'Unauthorized'),
-        new OA\Response(response: 403, description: 'Forbidden - requires view_bikes permission')
+        new OA\Response(response: 403, description: 'Forbidden - requires view_bikes permission'),
     ]
 )]
-class ListBikesEndpoint {}
+class ListBikesEndpoint
+{
+}
 
 // GET /api/fleet/bikes/{id}
 #[OA\Get(
@@ -657,7 +707,7 @@ class ListBikesEndpoint {}
     security: [['bearerAuth' => []]],
     tags: ['Fleet - Bikes'],
     parameters: [
-        new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'string', format: 'uuid'))
+        new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'string', format: 'uuid')),
     ],
     responses: [
         new OA\Response(
@@ -694,10 +744,12 @@ class ListBikesEndpoint {}
         ),
         new OA\Response(response: 401, description: 'Unauthorized'),
         new OA\Response(response: 403, description: 'Forbidden - requires view_bikes permission'),
-        new OA\Response(response: 404, description: 'Bike not found')
+        new OA\Response(response: 404, description: 'Bike not found'),
     ]
 )]
-class GetBikeDetailEndpoint {}
+class GetBikeDetailEndpoint
+{
+}
 
 // PUT /api/fleet/bikes/{id}
 #[OA\Put(
@@ -706,7 +758,7 @@ class GetBikeDetailEndpoint {}
     security: [['bearerAuth' => []]],
     tags: ['Fleet - Bikes'],
     parameters: [
-        new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'string', format: 'uuid'))
+        new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'string', format: 'uuid')),
     ],
     requestBody: new OA\RequestBody(
         required: true,
@@ -760,10 +812,12 @@ class GetBikeDetailEndpoint {}
         new OA\Response(response: 400, description: 'Validation error or bike cannot be modified'),
         new OA\Response(response: 401, description: 'Unauthorized'),
         new OA\Response(response: 403, description: 'Forbidden - requires manage_bikes permission'),
-        new OA\Response(response: 404, description: 'Bike not found')
+        new OA\Response(response: 404, description: 'Bike not found'),
     ]
 )]
-class UpdateBikeEndpoint {}
+class UpdateBikeEndpoint
+{
+}
 
 // POST /api/fleet/bikes/{id}/photos
 #[OA\Post(
@@ -772,7 +826,7 @@ class UpdateBikeEndpoint {}
     security: [['bearerAuth' => []]],
     tags: ['Fleet - Bikes'],
     parameters: [
-        new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'string', format: 'uuid'))
+        new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'string', format: 'uuid')),
     ],
     requestBody: new OA\RequestBody(
         required: true,
@@ -805,10 +859,12 @@ class UpdateBikeEndpoint {}
         new OA\Response(response: 400, description: 'Validation error'),
         new OA\Response(response: 401, description: 'Unauthorized'),
         new OA\Response(response: 403, description: 'Forbidden - requires manage_bikes permission'),
-        new OA\Response(response: 404, description: 'Bike not found')
+        new OA\Response(response: 404, description: 'Bike not found'),
     ]
 )]
-class UploadBikePhotoEndpoint {}
+class UploadBikePhotoEndpoint
+{
+}
 
 // DELETE /api/fleet/bikes/{id}/photos
 #[OA\Delete(
@@ -817,7 +873,7 @@ class UploadBikePhotoEndpoint {}
     security: [['bearerAuth' => []]],
     tags: ['Fleet - Bikes'],
     parameters: [
-        new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'string', format: 'uuid'))
+        new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'string', format: 'uuid')),
     ],
     requestBody: new OA\RequestBody(
         required: true,
@@ -837,10 +893,12 @@ class UploadBikePhotoEndpoint {}
         new OA\Response(response: 400, description: 'Validation error'),
         new OA\Response(response: 401, description: 'Unauthorized'),
         new OA\Response(response: 403, description: 'Forbidden - requires manage_bikes permission'),
-        new OA\Response(response: 404, description: 'Bike not found')
+        new OA\Response(response: 404, description: 'Bike not found'),
     ]
 )]
-class DeleteBikePhotoEndpoint {}
+class DeleteBikePhotoEndpoint
+{
+}
 
 // ------------------------------ FLEET - CATEGORIES ------------------------------
 
@@ -870,10 +928,12 @@ class DeleteBikePhotoEndpoint {}
         new OA\Response(response: 201, description: 'Category created successfully'),
         new OA\Response(response: 400, description: 'Validation error'),
         new OA\Response(response: 401, description: 'Unauthorized'),
-        new OA\Response(response: 403, description: 'Forbidden - requires manage_fleet permission')
+        new OA\Response(response: 403, description: 'Forbidden - requires manage_fleet permission'),
     ]
 )]
-class CreateCategoryEndpoint {}
+class CreateCategoryEndpoint
+{
+}
 
 // GET /api/fleet/categories
 #[OA\Get(
@@ -884,10 +944,12 @@ class CreateCategoryEndpoint {}
     responses: [
         new OA\Response(response: 200, description: 'List of categories'),
         new OA\Response(response: 401, description: 'Unauthorized'),
-        new OA\Response(response: 403, description: 'Forbidden - requires view_fleet permission')
+        new OA\Response(response: 403, description: 'Forbidden - requires view_fleet permission'),
     ]
 )]
-class ListCategoriesEndpoint {}
+class ListCategoriesEndpoint
+{
+}
 
 // PUT /api/fleet/categories/{id}
 #[OA\Put(
@@ -896,7 +958,7 @@ class ListCategoriesEndpoint {}
     security: [['bearerAuth' => []]],
     tags: ['Fleet - Categories'],
     parameters: [
-        new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'string', format: 'uuid'))
+        new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'string', format: 'uuid')),
     ],
     requestBody: new OA\RequestBody(
         required: true,
@@ -917,10 +979,12 @@ class ListCategoriesEndpoint {}
         new OA\Response(response: 400, description: 'Validation error'),
         new OA\Response(response: 401, description: 'Unauthorized'),
         new OA\Response(response: 403, description: 'Forbidden - requires manage_fleet permission'),
-        new OA\Response(response: 404, description: 'Category not found')
+        new OA\Response(response: 404, description: 'Category not found'),
     ]
 )]
-class UpdateCategoryEndpoint {}
+class UpdateCategoryEndpoint
+{
+}
 
 // DELETE /api/fleet/categories/{id}
 #[OA\Delete(
@@ -929,17 +993,19 @@ class UpdateCategoryEndpoint {}
     security: [['bearerAuth' => []]],
     tags: ['Fleet - Categories'],
     parameters: [
-        new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'string', format: 'uuid'))
+        new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'string', format: 'uuid')),
     ],
     responses: [
         new OA\Response(response: 204, description: 'Category deleted successfully'),
         new OA\Response(response: 400, description: 'Cannot delete category with associated bikes'),
         new OA\Response(response: 401, description: 'Unauthorized'),
         new OA\Response(response: 403, description: 'Forbidden - requires manage_fleet permission'),
-        new OA\Response(response: 404, description: 'Category not found')
+        new OA\Response(response: 404, description: 'Category not found'),
     ]
 )]
-class DeleteCategoryEndpoint {}
+class DeleteCategoryEndpoint
+{
+}
 
 // ------------------------------ FLEET - RATES ------------------------------
 
@@ -950,7 +1016,7 @@ class DeleteCategoryEndpoint {}
     security: [['bearerAuth' => []]],
     tags: ['Fleet - Rates'],
     parameters: [
-        new OA\Parameter(name: 'categoryId', in: 'path', required: true, schema: new OA\Schema(type: 'string', format: 'uuid'))
+        new OA\Parameter(name: 'categoryId', in: 'path', required: true, schema: new OA\Schema(type: 'string', format: 'uuid')),
     ],
     requestBody: new OA\RequestBody(
         required: true,
@@ -971,10 +1037,12 @@ class DeleteCategoryEndpoint {}
         new OA\Response(response: 400, description: 'Validation error'),
         new OA\Response(response: 401, description: 'Unauthorized'),
         new OA\Response(response: 403, description: 'Forbidden - requires manage_fleet permission'),
-        new OA\Response(response: 404, description: 'Category not found')
+        new OA\Response(response: 404, description: 'Category not found'),
     ]
 )]
-class SetCategoryRateEndpoint {}
+class SetCategoryRateEndpoint
+{
+}
 
 // GET /api/fleet/rates
 #[OA\Get(
@@ -996,15 +1064,17 @@ class SetCategoryRateEndpoint {}
             required: false,
             schema: new OA\Schema(type: 'string', format: 'uuid'),
             description: 'Filter by bike ID'
-        )
+        ),
     ],
     responses: [
         new OA\Response(response: 200, description: 'List of rates'),
         new OA\Response(response: 401, description: 'Unauthorized'),
-        new OA\Response(response: 403, description: 'Forbidden - requires view_fleet permission')
+        new OA\Response(response: 403, description: 'Forbidden - requires view_fleet permission'),
     ]
 )]
-class ListRatesEndpoint {}
+class ListRatesEndpoint
+{
+}
 
 // PUT /api/fleet/rates/{id}
 #[OA\Put(
@@ -1013,7 +1083,7 @@ class ListRatesEndpoint {}
     security: [['bearerAuth' => []]],
     tags: ['Fleet - Rates'],
     parameters: [
-        new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'string', format: 'uuid'))
+        new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'string', format: 'uuid')),
     ],
     requestBody: new OA\RequestBody(
         required: true,
@@ -1033,10 +1103,12 @@ class ListRatesEndpoint {}
         new OA\Response(response: 400, description: 'Validation error'),
         new OA\Response(response: 401, description: 'Unauthorized'),
         new OA\Response(response: 403, description: 'Forbidden - requires manage_fleet permission'),
-        new OA\Response(response: 404, description: 'Rate not found')
+        new OA\Response(response: 404, description: 'Rate not found'),
     ]
 )]
-class UpdateRateEndpoint {}
+class UpdateRateEndpoint
+{
+}
 
 // DELETE /api/fleet/rates/{id}
 #[OA\Delete(
@@ -1045,16 +1117,18 @@ class UpdateRateEndpoint {}
     security: [['bearerAuth' => []]],
     tags: ['Fleet - Rates'],
     parameters: [
-        new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'string', format: 'uuid'))
+        new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'string', format: 'uuid')),
     ],
     responses: [
         new OA\Response(response: 204, description: 'Rate deleted successfully'),
         new OA\Response(response: 401, description: 'Unauthorized'),
         new OA\Response(response: 403, description: 'Forbidden - requires manage_fleet permission'),
-        new OA\Response(response: 404, description: 'Rate not found')
+        new OA\Response(response: 404, description: 'Rate not found'),
     ]
 )]
-class DeleteRateEndpoint {}
+class DeleteRateEndpoint
+{
+}
 
 // ------------------------------ RENTALS ------------------------------
 
@@ -1111,10 +1185,12 @@ class DeleteRateEndpoint {}
         new OA\Response(response: 400, description: 'Validation error or bike not available'),
         new OA\Response(response: 401, description: 'Unauthorized'),
         new OA\Response(response: 403, description: 'Forbidden - requires manage_rentals permission'),
-        new OA\Response(response: 404, description: 'Customer or bike not found')
+        new OA\Response(response: 404, description: 'Customer or bike not found'),
     ]
 )]
-class CreateRentalEndpoint {}
+class CreateRentalEndpoint
+{
+}
 
 // POST /api/rentals/{id}/checkin
 #[OA\Post(
@@ -1123,7 +1199,7 @@ class CreateRentalEndpoint {}
     security: [['bearerAuth' => []]],
     tags: ['Rentals'],
     parameters: [
-        new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'string', format: 'uuid'))
+        new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'string', format: 'uuid')),
     ],
     requestBody: new OA\RequestBody(
         required: true,
@@ -1160,10 +1236,12 @@ class CreateRentalEndpoint {}
         new OA\Response(response: 400, description: 'Validation error or rental cannot be checked in'),
         new OA\Response(response: 401, description: 'Unauthorized'),
         new OA\Response(response: 403, description: 'Forbidden - requires create_rentals permission'),
-        new OA\Response(response: 404, description: 'Rental not found')
+        new OA\Response(response: 404, description: 'Rental not found'),
     ]
 )]
-class CheckInRentalEndpoint {}
+class CheckInRentalEndpoint
+{
+}
 
 // POST /api/rentals/{id}/checkout
 #[OA\Post(
@@ -1172,7 +1250,7 @@ class CheckInRentalEndpoint {}
     security: [['bearerAuth' => []]],
     tags: ['Rentals'],
     parameters: [
-        new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'string', format: 'uuid'))
+        new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'string', format: 'uuid')),
     ],
     requestBody: new OA\RequestBody(
         required: true,
@@ -1212,10 +1290,12 @@ class CheckInRentalEndpoint {}
         new OA\Response(response: 400, description: 'Validation error or rental cannot be checked out'),
         new OA\Response(response: 401, description: 'Unauthorized'),
         new OA\Response(response: 403, description: 'Forbidden - requires manage_rentals permission'),
-        new OA\Response(response: 404, description: 'Rental not found')
+        new OA\Response(response: 404, description: 'Rental not found'),
     ]
 )]
-class CheckOutRentalEndpoint {}
+class CheckOutRentalEndpoint
+{
+}
 
 // POST /api/rentals/{id}/cancel
 #[OA\Post(
@@ -1224,7 +1304,7 @@ class CheckOutRentalEndpoint {}
     security: [['bearerAuth' => []]],
     tags: ['Rentals'],
     parameters: [
-        new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'string', format: 'uuid'))
+        new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'string', format: 'uuid')),
     ],
     requestBody: new OA\RequestBody(
         required: true,
@@ -1261,10 +1341,12 @@ class CheckOutRentalEndpoint {}
         new OA\Response(response: 401, description: 'Unauthorized'),
         new OA\Response(response: 403, description: 'Forbidden - requires create_rentals permission'),
         new OA\Response(response: 404, description: 'Rental not found'),
-        new OA\Response(response: 422, description: 'Validation error - cancellation reason required')
+        new OA\Response(response: 422, description: 'Validation error - cancellation reason required'),
     ]
 )]
-class CancelRentalEndpoint {}
+class CancelRentalEndpoint
+{
+}
 
 // GET /api/rentals
 #[OA\Get(
@@ -1314,7 +1396,7 @@ class CancelRentalEndpoint {}
             required: false,
             schema: new OA\Schema(type: 'integer', default: 20, maximum: 100),
             description: 'Items per page'
-        )
+        ),
     ],
     responses: [
         new OA\Response(
@@ -1363,10 +1445,12 @@ class CancelRentalEndpoint {}
             )
         ),
         new OA\Response(response: 401, description: 'Unauthorized'),
-        new OA\Response(response: 403, description: 'Forbidden - requires view_rentals permission')
+        new OA\Response(response: 403, description: 'Forbidden - requires view_rentals permission'),
     ]
 )]
-class ListRentalsEndpoint {}
+class ListRentalsEndpoint
+{
+}
 
 // GET /api/rentals/{id}
 #[OA\Get(
@@ -1381,7 +1465,7 @@ class ListRentalsEndpoint {}
             required: true,
             schema: new OA\Schema(type: 'string', format: 'uuid'),
             description: 'Rental ID'
-        )
+        ),
     ],
     responses: [
         new OA\Response(
@@ -1461,10 +1545,12 @@ class ListRentalsEndpoint {}
         ),
         new OA\Response(response: 401, description: 'Unauthorized'),
         new OA\Response(response: 403, description: 'Forbidden - requires view_rentals permission'),
-        new OA\Response(response: 404, description: 'Rental not found')
+        new OA\Response(response: 404, description: 'Rental not found'),
     ]
 )]
-class GetRentalDetailEndpoint {}
+class GetRentalDetailEndpoint
+{
+}
 
 // GET /api/rentals/active
 #[OA\Get(
@@ -1493,15 +1579,17 @@ class GetRentalDetailEndpoint {}
             required: false,
             schema: new OA\Schema(type: 'boolean'),
             description: 'Show only late rentals'
-        )
+        ),
     ],
     responses: [
         new OA\Response(response: 200, description: 'List of active rentals with delay indicators (on_time, soon_late, late)'),
         new OA\Response(response: 401, description: 'Unauthorized'),
-        new OA\Response(response: 403, description: 'Forbidden - requires view_rentals permission')
+        new OA\Response(response: 403, description: 'Forbidden - requires view_rentals permission'),
     ]
 )]
-class ListActiveRentalsEndpoint {}
+class ListActiveRentalsEndpoint
+{
+}
 
 // ------------------------------ MAINTENANCE ------------------------------
 
@@ -1547,10 +1635,12 @@ class ListActiveRentalsEndpoint {}
             )
         ),
         new OA\Response(response: 401, description: 'Unauthorized'),
-        new OA\Response(response: 403, description: 'Forbidden - requires view_maintenance permission')
+        new OA\Response(response: 403, description: 'Forbidden - requires view_maintenance permission'),
     ]
 )]
-class ListMaintenanceReasonsEndpoint {}
+class ListMaintenanceReasonsEndpoint
+{
+}
 
 // POST /api/maintenance/maintenances
 #[OA\Post(
@@ -1581,10 +1671,12 @@ class ListMaintenanceReasonsEndpoint {}
         new OA\Response(response: 400, description: 'Validation error or bike not available for maintenance'),
         new OA\Response(response: 401, description: 'Unauthorized'),
         new OA\Response(response: 403, description: 'Forbidden - requires manage_maintenance permission'),
-        new OA\Response(response: 404, description: 'Bike not found')
+        new OA\Response(response: 404, description: 'Bike not found'),
     ]
 )]
-class DeclareMaintenanceEndpoint {}
+class DeclareMaintenanceEndpoint
+{
+}
 
 // GET /api/maintenance/maintenances
 #[OA\Get(
@@ -1627,15 +1719,17 @@ class DeclareMaintenanceEndpoint {}
             required: false,
             schema: new OA\Schema(type: 'string', enum: ['transmission', 'brakes', 'suspension', 'wheels', 'steering', 'frame', 'electrical', 'full_service', 'other']),
             description: 'Filter by maintenance category'
-        )
+        ),
     ],
     responses: [
         new OA\Response(response: 200, description: 'List of maintenances'),
         new OA\Response(response: 401, description: 'Unauthorized'),
-        new OA\Response(response: 403, description: 'Forbidden - requires view_maintenance permission')
+        new OA\Response(response: 403, description: 'Forbidden - requires view_maintenance permission'),
     ]
 )]
-class ListMaintenancesEndpoint {}
+class ListMaintenancesEndpoint
+{
+}
 
 // PUT /api/maintenance/maintenances/{id}/start
 #[OA\Put(
@@ -1644,7 +1738,7 @@ class ListMaintenancesEndpoint {}
     security: [['bearerAuth' => []]],
     tags: ['Maintenance'],
     parameters: [
-        new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'string', format: 'uuid'))
+        new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'string', format: 'uuid')),
     ],
     requestBody: new OA\RequestBody(
         required: false,
@@ -1663,10 +1757,12 @@ class ListMaintenancesEndpoint {}
         new OA\Response(response: 400, description: 'Maintenance cannot be started (not in TODO status)'),
         new OA\Response(response: 401, description: 'Unauthorized'),
         new OA\Response(response: 403, description: 'Forbidden - requires manage_maintenance permission'),
-        new OA\Response(response: 404, description: 'Maintenance not found')
+        new OA\Response(response: 404, description: 'Maintenance not found'),
     ]
 )]
-class StartMaintenanceEndpoint {}
+class StartMaintenanceEndpoint
+{
+}
 
 // PUT /api/maintenance/maintenances/{id}/complete
 #[OA\Put(
@@ -1675,7 +1771,7 @@ class StartMaintenanceEndpoint {}
     security: [['bearerAuth' => []]],
     tags: ['Maintenance'],
     parameters: [
-        new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'string', format: 'uuid'))
+        new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'string', format: 'uuid')),
     ],
     requestBody: new OA\RequestBody(
         required: false,
@@ -1696,10 +1792,12 @@ class StartMaintenanceEndpoint {}
         new OA\Response(response: 400, description: 'Maintenance cannot be completed (not in IN_PROGRESS status)'),
         new OA\Response(response: 401, description: 'Unauthorized'),
         new OA\Response(response: 403, description: 'Forbidden - requires manage_maintenance permission'),
-        new OA\Response(response: 404, description: 'Maintenance not found')
+        new OA\Response(response: 404, description: 'Maintenance not found'),
     ]
 )]
-class CompleteMaintenanceEndpoint {}
+class CompleteMaintenanceEndpoint
+{
+}
 
 // GET /api/maintenance/bikes/{bikeId}/maintenances
 #[OA\Get(
@@ -1708,16 +1806,18 @@ class CompleteMaintenanceEndpoint {}
     security: [['bearerAuth' => []]],
     tags: ['Maintenance'],
     parameters: [
-        new OA\Parameter(name: 'bikeId', in: 'path', required: true, schema: new OA\Schema(type: 'string', format: 'uuid'))
+        new OA\Parameter(name: 'bikeId', in: 'path', required: true, schema: new OA\Schema(type: 'string', format: 'uuid')),
     ],
     responses: [
         new OA\Response(response: 200, description: 'List of all maintenances for this bike'),
         new OA\Response(response: 401, description: 'Unauthorized'),
         new OA\Response(response: 403, description: 'Forbidden - requires view_maintenance permission'),
-        new OA\Response(response: 404, description: 'Bike not found')
+        new OA\Response(response: 404, description: 'Bike not found'),
     ]
 )]
-class GetBikeMaintenanceHistoryEndpoint {}
+class GetBikeMaintenanceHistoryEndpoint
+{
+}
 
 // ------------------------------ DASHBOARD ------------------------------
 
@@ -1754,10 +1854,12 @@ class GetBikeMaintenanceHistoryEndpoint {}
             )
         ),
         new OA\Response(response: 401, description: 'Unauthorized'),
-        new OA\Response(response: 403, description: 'Forbidden - requires view_dashboard permission')
+        new OA\Response(response: 403, description: 'Forbidden - requires view_dashboard permission'),
     ]
 )]
-class GetFleetOverviewEndpoint {}
+class GetFleetOverviewEndpoint
+{
+}
 
 // GET /api/dashboard/today
 #[OA\Get(
@@ -1772,7 +1874,7 @@ class GetFleetOverviewEndpoint {}
             required: false,
             schema: new OA\Schema(type: 'string', format: 'date'),
             description: 'Specific date to query (defaults to today)'
-        )
+        ),
     ],
     responses: [
         new OA\Response(
@@ -1816,10 +1918,12 @@ class GetFleetOverviewEndpoint {}
             )
         ),
         new OA\Response(response: 401, description: 'Unauthorized'),
-        new OA\Response(response: 403, description: 'Forbidden - requires view_dashboard permission')
+        new OA\Response(response: 403, description: 'Forbidden - requires view_dashboard permission'),
     ]
 )]
-class GetTodayActivityEndpoint {}
+class GetTodayActivityEndpoint
+{
+}
 
 // GET /api/dashboard/kpis/utilization
 #[OA\Get(
@@ -1834,7 +1938,7 @@ class GetTodayActivityEndpoint {}
             required: false,
             schema: new OA\Schema(type: 'string', enum: ['day', 'week', 'month', 'year']),
             description: 'Period for KPI calculation (default: month)'
-        )
+        ),
     ],
     responses: [
         new OA\Response(
@@ -1854,10 +1958,12 @@ class GetTodayActivityEndpoint {}
             )
         ),
         new OA\Response(response: 401, description: 'Unauthorized'),
-        new OA\Response(response: 403, description: 'Forbidden - requires view_dashboard permission')
+        new OA\Response(response: 403, description: 'Forbidden - requires view_dashboard permission'),
     ]
 )]
-class GetUtilizationKpiEndpoint {}
+class GetUtilizationKpiEndpoint
+{
+}
 
 // GET /api/dashboard/kpis/revenue
 #[OA\Get(
@@ -1872,7 +1978,7 @@ class GetUtilizationKpiEndpoint {}
             required: false,
             schema: new OA\Schema(type: 'string', enum: ['day', 'week', 'month', 'year']),
             description: 'Period for KPI calculation (default: month)'
-        )
+        ),
     ],
     responses: [
         new OA\Response(
@@ -1892,10 +1998,12 @@ class GetUtilizationKpiEndpoint {}
             )
         ),
         new OA\Response(response: 401, description: 'Unauthorized'),
-        new OA\Response(response: 403, description: 'Forbidden - requires view_dashboard permission')
+        new OA\Response(response: 403, description: 'Forbidden - requires view_dashboard permission'),
     ]
 )]
-class GetRevenueKpiEndpoint {}
+class GetRevenueKpiEndpoint
+{
+}
 
 // GET /api/dashboard/kpis/maintenance
 #[OA\Get(
@@ -1910,7 +2018,7 @@ class GetRevenueKpiEndpoint {}
             required: false,
             schema: new OA\Schema(type: 'string', enum: ['day', 'week', 'month', 'year']),
             description: 'Period for KPI calculation (default: month)'
-        )
+        ),
     ],
     responses: [
         new OA\Response(
@@ -1938,10 +2046,12 @@ class GetRevenueKpiEndpoint {}
             )
         ),
         new OA\Response(response: 401, description: 'Unauthorized'),
-        new OA\Response(response: 403, description: 'Forbidden - requires view_dashboard permission')
+        new OA\Response(response: 403, description: 'Forbidden - requires view_dashboard permission'),
     ]
 )]
-class GetMaintenanceKpiEndpoint {}
+class GetMaintenanceKpiEndpoint
+{
+}
 
 // GET /api/dashboard/kpis/top-bikes
 #[OA\Get(
@@ -1956,7 +2066,7 @@ class GetMaintenanceKpiEndpoint {}
             required: false,
             schema: new OA\Schema(type: 'integer', default: 10),
             description: 'Number of bikes to return'
-        )
+        ),
     ],
     responses: [
         new OA\Response(
@@ -1987,10 +2097,12 @@ class GetMaintenanceKpiEndpoint {}
             )
         ),
         new OA\Response(response: 401, description: 'Unauthorized'),
-        new OA\Response(response: 403, description: 'Forbidden - requires view_dashboard permission')
+        new OA\Response(response: 403, description: 'Forbidden - requires view_dashboard permission'),
     ]
 )]
-class GetTopBikesKpiEndpoint {}
+class GetTopBikesKpiEndpoint
+{
+}
 
 // GET /api/dashboard/alerts
 #[OA\Get(
@@ -2039,10 +2151,12 @@ class GetTopBikesKpiEndpoint {}
             )
         ),
         new OA\Response(response: 401, description: 'Unauthorized'),
-        new OA\Response(response: 403, description: 'Forbidden - requires view_dashboard permission')
+        new OA\Response(response: 403, description: 'Forbidden - requires view_dashboard permission'),
     ]
 )]
-class GetCentralizedAlertsEndpoint {}
+class GetCentralizedAlertsEndpoint
+{
+}
 
 // GET /api/rentals/bikes/{bikeId}
 #[OA\Get(
@@ -2068,7 +2182,7 @@ class GetCentralizedAlertsEndpoint {}
                 default: 'all'
             ),
             description: 'Filter rentals by status: all (default), past (completed/cancelled), current (active), upcoming (pending)'
-        )
+        ),
     ],
     responses: [
         new OA\Response(
@@ -2107,7 +2221,9 @@ class GetCentralizedAlertsEndpoint {}
         ),
         new OA\Response(response: 400, description: 'Bad Request - Invalid filter parameter'),
         new OA\Response(response: 401, description: 'Unauthorized'),
-        new OA\Response(response: 403, description: 'Forbidden - requires view_rentals permission')
+        new OA\Response(response: 403, description: 'Forbidden - requires view_rentals permission'),
     ]
 )]
-class GetBikeRentalsEndpoint {}
+class GetBikeRentalsEndpoint
+{
+}

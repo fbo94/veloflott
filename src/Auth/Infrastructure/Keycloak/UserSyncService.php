@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Auth\Infrastructure\Keycloak;
 
+use Auth\Domain\Role;
 use Auth\Domain\User;
 use Auth\Domain\UserRepositoryInterface;
-use Auth\Domain\Role;
 use Illuminate\Support\Str;
 
 /**

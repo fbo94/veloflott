@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Rental\Interface\Http\CancelRental;
 
+use Illuminate\Http\JsonResponse;
 use Rental\Application\CancelRental\CancelRentalCommand;
 use Rental\Application\CancelRental\CancelRentalHandler;
-use Rental\Application\CancelRental\RentalNotFoundException;
 use Rental\Application\CancelRental\CannotCancelRentalException;
-use Illuminate\Http\JsonResponse;
+use Rental\Application\CancelRental\RentalNotFoundException;
 
 final class CancelRentalController
 {

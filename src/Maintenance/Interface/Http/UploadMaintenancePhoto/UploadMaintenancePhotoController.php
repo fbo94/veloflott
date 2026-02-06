@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Maintenance\Interface\Http\UploadMaintenancePhoto;
 
+use Illuminate\Http\JsonResponse;
 use Maintenance\Application\UploadMaintenancePhoto\MaintenanceNotFoundException;
 use Maintenance\Application\UploadMaintenancePhoto\UploadMaintenancePhotoCommand;
 use Maintenance\Application\UploadMaintenancePhoto\UploadMaintenancePhotoHandler;
-use Illuminate\Http\JsonResponse;
 
 final readonly class UploadMaintenancePhotoController
 {

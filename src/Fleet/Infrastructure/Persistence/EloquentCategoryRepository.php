@@ -6,8 +6,8 @@ namespace Fleet\Infrastructure\Persistence;
 
 use Fleet\Domain\Category;
 use Fleet\Domain\CategoryRepositoryInterface;
-use Fleet\Infrastructure\Persistence\Models\CategoryEloquentModel;
 use Fleet\Infrastructure\Persistence\Models\BikeEloquentModel;
+use Fleet\Infrastructure\Persistence\Models\CategoryEloquentModel;
 
 final class EloquentCategoryRepository implements CategoryRepositoryInterface
 {

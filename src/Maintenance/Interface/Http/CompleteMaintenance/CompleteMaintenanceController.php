@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Maintenance\Interface\Http\CompleteMaintenance;
 
+use Illuminate\Http\JsonResponse;
 use Maintenance\Application\CompleteMaintenance\CompleteMaintenanceCommand;
 use Maintenance\Application\CompleteMaintenance\CompleteMaintenanceHandler;
 use Maintenance\Domain\MaintenanceException;
-use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 final class CompleteMaintenanceController
