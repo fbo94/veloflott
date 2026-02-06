@@ -7,7 +7,7 @@ namespace Maintenance\Interface\Http\DeclareMaintenance;
 use Illuminate\Http\JsonResponse;
 use Maintenance\Application\DeclareMaintenance\DeclareMaintenanceCommand;
 use Maintenance\Application\DeclareMaintenance\DeclareMaintenanceHandler;
-use Maintenance\Domain\MaintenanceException;
+use Maintenance\Domain\Exceptions\MaintenanceException;
 use Symfony\Component\HttpFoundation\Response;
 
 final class DeclareMaintenanceController
