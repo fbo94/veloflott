@@ -24,8 +24,8 @@ final class Category
         ?\DateTimeImmutable $createdAt = null,
         ?\DateTimeImmutable $updatedAt = null,
     ) {
-        $this->createdAt = $createdAt ?? new \DateTimeImmutable();
-        $this->updatedAt = $updatedAt ?? new \DateTimeImmutable();
+        $this->createdAt = $createdAt ?? new \DateTimeImmutable;
+        $this->updatedAt = $updatedAt ?? new \DateTimeImmutable;
     }
 
     // ===== Getters =====
@@ -96,7 +96,7 @@ final class Category
         $this->name = $name;
         $this->slug = $slug;
         $this->description = $description;
-        $this->updatedAt = new \DateTimeImmutable();
+        $this->updatedAt = new \DateTimeImmutable;
 
         return $this;
     }
@@ -104,13 +104,13 @@ final class Category
     public function changeOrder(int $order): self
     {
         $this->displayOrder = $order;
-        $this->updatedAt = new \DateTimeImmutable();
+        $this->updatedAt = new \DateTimeImmutable;
 
         return $this;
     }
 
     public function canBeDeleted(): bool
     {
-        return !$this->isDefault;
+        return ! $this->isDefault;
     }
 }

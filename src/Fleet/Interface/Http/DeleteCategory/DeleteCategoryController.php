@@ -13,8 +13,7 @@ final class DeleteCategoryController
 {
     public function __construct(
         private readonly DeleteCategoryHandler $handler,
-    ) {
-    }
+    ) {}
 
     public function __invoke(string $id): JsonResponse
     {

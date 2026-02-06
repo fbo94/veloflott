@@ -9,6 +9,5 @@ final readonly class ListRatesQuery
     public function __construct(
         public ?string $categoryId = null,
         public ?string $bikeId = null,
-    ) {
-    }
+    ) {}
 }

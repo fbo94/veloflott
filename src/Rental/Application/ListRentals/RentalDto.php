@@ -9,7 +9,7 @@ use Rental\Domain\Rental;
 final readonly class RentalDto
 {
     /**
-     * @param string[] $bikes
+     * @param  string[]  $bikes
      */
     public function __construct(
         public string $id,
@@ -26,8 +26,7 @@ final readonly class RentalDto
         public string $depositStatus,
         public ?float $depositRetained,
         public string $createdAt,
-    ) {
-    }
+    ) {}
 
     public static function fromRental(Rental $rental, string $customerName, array $bikeDetails): self
     {

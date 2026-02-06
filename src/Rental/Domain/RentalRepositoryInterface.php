@@ -30,6 +30,7 @@ interface RentalRepositoryInterface
 
     /**
      * Trouve les locations par période
+     *
      * @return Rental[]
      */
     public function findByPeriod(\DateTimeImmutable $from, \DateTimeImmutable $to): array;
@@ -51,26 +52,29 @@ interface RentalRepositoryInterface
 
     /**
      * Trouve les locations qui ont démarré à une date donnée
+     *
      * @return Rental[]
      */
     public function findStartedOnDate(\DateTimeImmutable $date): array;
 
     /**
      * Trouve les locations dont le retour est prévu à une date donnée
+     *
      * @return Rental[]
      */
     public function findExpectedReturnOnDate(\DateTimeImmutable $date): array;
 
     /**
      * Récupère les statistiques par vélo (nombre de locations, revenu total)
+     *
      * @return array<int, array{bike_id: string, rental_count: int, total_revenue: int}>
      */
     public function getStatsByBike(?int $limit = null): array;
 
     /**
      * Trouve les locations d'un vélo spécifique
-     * @param string $bikeId
-     * @param RentalStatus[]|null $statuses Statuts à filtrer (null = tous)
+     *
+     * @param  RentalStatus[]|null  $statuses  Statuts à filtrer (null = tous)
      * @return Rental[]
      */
     public function findByBikeId(string $bikeId, ?array $statuses = null): array;

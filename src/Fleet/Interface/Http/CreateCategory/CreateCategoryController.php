@@ -13,8 +13,7 @@ final class CreateCategoryController
 {
     public function __construct(
         private readonly CreateCategoryHandler $handler,
-    ) {
-    }
+    ) {}
 
     public function __invoke(CreateCategoryRequest $request): JsonResponse
     {

@@ -13,6 +13,5 @@ final readonly class ListRentalsQuery
         public ?string $endDate = null,
         public int $page = 1,
         public int $perPage = 20,
-    ) {
-    }
+    ) {}
 }

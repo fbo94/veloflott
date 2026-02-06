@@ -7,14 +7,13 @@ namespace Rental\Application\GetBikeRentals;
 final readonly class GetBikeRentalsResponse
 {
     /**
-     * @param BikeRentalDto[] $rentals
+     * @param  BikeRentalDto[]  $rentals
      */
     public function __construct(
         public string $bikeId,
         public array $rentals,
         public int $totalCount,
-    ) {
-    }
+    ) {}
 
     public function toArray(): array
     {

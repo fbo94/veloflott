@@ -18,9 +18,7 @@ use OpenApi\Attributes as OA;
     scheme: 'bearer',
     bearerFormat: 'JWT'
 )]
-class OpenApi
-{
-}
+class OpenApi {}
 
 // ------------------------------ PATHS ------------------------------
 
@@ -35,9 +33,7 @@ class OpenApi
         new OA\Response(response: 401, description: 'Unauthorized'),
     ]
 )]
-class MeEndpoint
-{
-}
+class MeEndpoint {}
 
 // GET /api/users
 #[OA\Get(
@@ -55,9 +51,7 @@ class MeEndpoint
         new OA\Response(response: 403, description: 'Forbidden'),
     ]
 )]
-class ListUsersEndpoint
-{
-}
+class ListUsersEndpoint {}
 
 // PUT /api/users/{id}/role
 #[OA\Put(
@@ -82,9 +76,7 @@ class ListUsersEndpoint
         new OA\Response(response: 403, description: 'Forbidden'),
     ]
 )]
-class UpdateUserRoleEndpoint
-{
-}
+class UpdateUserRoleEndpoint {}
 
 // POST /api/users/{id}/toggle-status
 #[OA\Post(
@@ -101,9 +93,7 @@ class UpdateUserRoleEndpoint
         new OA\Response(response: 403, description: 'Forbidden'),
     ]
 )]
-class ToggleUserStatusEndpoint
-{
-}
+class ToggleUserStatusEndpoint {}
 
 // GET /api/user (Sanctum protected default route)
 #[OA\Get(
@@ -116,9 +106,7 @@ class ToggleUserStatusEndpoint
         new OA\Response(response: 401, description: 'Unauthorized'),
     ]
 )]
-class LaravelUserEndpoint
-{
-}
+class LaravelUserEndpoint {}
 
 // GET /api/login (public example route)
 #[OA\Get(
@@ -129,9 +117,7 @@ class LaravelUserEndpoint
         new OA\Response(response: 200, description: 'Message returned'),
     ]
 )]
-class LoginEndpoint
-{
-}
+class LoginEndpoint {}
 
 // GET /api/auth/authorization-url (public)
 #[OA\Get(
@@ -151,9 +137,7 @@ class LoginEndpoint
         new OA\Response(response: 200, description: 'Authorization URL payload returned'),
     ]
 )]
-class GetAuthorizationUrlEndpoint
-{
-}
+class GetAuthorizationUrlEndpoint {}
 
 // POST /api/auth/authorize (public)
 #[OA\Post(
@@ -179,9 +163,7 @@ class GetAuthorizationUrlEndpoint
         new OA\Response(response: 400, description: 'Invalid payload or state mismatch'),
     ]
 )]
-class AuthorizeEndpoint
-{
-}
+class AuthorizeEndpoint {}
 
 // ------------------------------ CUSTOMERS ------------------------------
 
@@ -220,9 +202,7 @@ class AuthorizeEndpoint
         new OA\Response(response: 403, description: 'Forbidden - requires manage_customers permission'),
     ]
 )]
-class CreateCustomerEndpoint
-{
-}
+class CreateCustomerEndpoint {}
 
 // GET /api/customers/search
 #[OA\Get(
@@ -245,9 +225,7 @@ class CreateCustomerEndpoint
         new OA\Response(response: 403, description: 'Forbidden - requires view_customers permission'),
     ]
 )]
-class SearchCustomersEndpoint
-{
-}
+class SearchCustomersEndpoint {}
 
 // GET /api/customers/{id}
 #[OA\Get(
@@ -265,9 +243,7 @@ class SearchCustomersEndpoint
         new OA\Response(response: 404, description: 'Customer not found'),
     ]
 )]
-class GetCustomerDetailEndpoint
-{
-}
+class GetCustomerDetailEndpoint {}
 
 // PUT /api/customers/{id}
 #[OA\Put(
@@ -308,9 +284,7 @@ class GetCustomerDetailEndpoint
         new OA\Response(response: 404, description: 'Customer not found'),
     ]
 )]
-class UpdateCustomerEndpoint
-{
-}
+class UpdateCustomerEndpoint {}
 
 // POST /api/customers/{id}/toggle-risky
 #[OA\Post(
@@ -328,9 +302,7 @@ class UpdateCustomerEndpoint
         new OA\Response(response: 404, description: 'Customer not found'),
     ]
 )]
-class ToggleRiskyFlagEndpoint
-{
-}
+class ToggleRiskyFlagEndpoint {}
 
 // POST /api/customers/{id}/annotation
 #[OA\Post(
@@ -363,9 +335,7 @@ class ToggleRiskyFlagEndpoint
         new OA\Response(response: 404, description: 'Customer not found'),
     ]
 )]
-class AnnotateCustomerEndpoint
-{
-}
+class AnnotateCustomerEndpoint {}
 
 // ------------------------------ FLEET - BRANDS ------------------------------
 
@@ -381,9 +351,7 @@ class AnnotateCustomerEndpoint
         new OA\Response(response: 403, description: 'Forbidden - requires view_bikes permission'),
     ]
 )]
-class ListBrandsEndpoint
-{
-}
+class ListBrandsEndpoint {}
 
 // POST /api/fleet/brands
 #[OA\Post(
@@ -412,9 +380,7 @@ class ListBrandsEndpoint
         new OA\Response(response: 403, description: 'Forbidden - requires manage_bikes permission'),
     ]
 )]
-class CreateBrandEndpoint
-{
-}
+class CreateBrandEndpoint {}
 
 // PUT /api/fleet/brands/{id}
 #[OA\Put(
@@ -447,9 +413,7 @@ class CreateBrandEndpoint
         new OA\Response(response: 404, description: 'Brand not found'),
     ]
 )]
-class UpdateBrandEndpoint
-{
-}
+class UpdateBrandEndpoint {}
 
 // DELETE /api/fleet/brands/{id}
 #[OA\Delete(
@@ -467,9 +431,7 @@ class UpdateBrandEndpoint
         new OA\Response(response: 404, description: 'Brand not found'),
     ]
 )]
-class DeleteBrandEndpoint
-{
-}
+class DeleteBrandEndpoint {}
 
 // ------------------------------ FLEET - MODELS ------------------------------
 
@@ -495,9 +457,7 @@ class DeleteBrandEndpoint
         new OA\Response(response: 403, description: 'Forbidden - requires view_bikes permission'),
     ]
 )]
-class ListModelsEndpoint
-{
-}
+class ListModelsEndpoint {}
 
 // GET /api/fleet/models/{id}
 #[OA\Get(
@@ -531,9 +491,7 @@ class ListModelsEndpoint
         new OA\Response(response: 404, description: 'Model not found'),
     ]
 )]
-class GetModelDetailEndpoint
-{
-}
+class GetModelDetailEndpoint {}
 
 // POST /api/fleet/models
 #[OA\Post(
@@ -562,9 +520,7 @@ class GetModelDetailEndpoint
         new OA\Response(response: 403, description: 'Forbidden - requires manage_bikes permission'),
     ]
 )]
-class CreateModelEndpoint
-{
-}
+class CreateModelEndpoint {}
 
 // PUT /api/fleet/models/{id}
 #[OA\Put(
@@ -597,9 +553,7 @@ class CreateModelEndpoint
         new OA\Response(response: 404, description: 'Model not found'),
     ]
 )]
-class UpdateModelEndpoint
-{
-}
+class UpdateModelEndpoint {}
 
 // DELETE /api/fleet/models/{id}
 #[OA\Delete(
@@ -617,9 +571,7 @@ class UpdateModelEndpoint
         new OA\Response(response: 404, description: 'Model not found'),
     ]
 )]
-class DeleteModelEndpoint
-{
-}
+class DeleteModelEndpoint {}
 
 // ------------------------------ FLEET - BIKES ------------------------------
 
@@ -656,9 +608,7 @@ class DeleteModelEndpoint
         new OA\Response(response: 403, description: 'Forbidden - requires manage_bikes permission'),
     ]
 )]
-class CreateBikeEndpoint
-{
-}
+class CreateBikeEndpoint {}
 
 // GET /api/fleet/bikes
 #[OA\Get(
@@ -731,9 +681,7 @@ class CreateBikeEndpoint
         new OA\Response(response: 403, description: 'Forbidden - requires view_bikes permission'),
     ]
 )]
-class ListBikesEndpoint
-{
-}
+class ListBikesEndpoint {}
 
 // GET /api/fleet/bikes/{id}
 #[OA\Get(
@@ -782,9 +730,7 @@ class ListBikesEndpoint
         new OA\Response(response: 404, description: 'Bike not found'),
     ]
 )]
-class GetBikeDetailEndpoint
-{
-}
+class GetBikeDetailEndpoint {}
 
 // PUT /api/fleet/bikes/{id}
 #[OA\Put(
@@ -850,9 +796,7 @@ class GetBikeDetailEndpoint
         new OA\Response(response: 404, description: 'Bike not found'),
     ]
 )]
-class UpdateBikeEndpoint
-{
-}
+class UpdateBikeEndpoint {}
 
 // POST /api/fleet/bikes/{id}/photos
 #[OA\Post(
@@ -897,9 +841,7 @@ class UpdateBikeEndpoint
         new OA\Response(response: 404, description: 'Bike not found'),
     ]
 )]
-class UploadBikePhotoEndpoint
-{
-}
+class UploadBikePhotoEndpoint {}
 
 // DELETE /api/fleet/bikes/{id}/photos
 #[OA\Delete(
@@ -931,9 +873,7 @@ class UploadBikePhotoEndpoint
         new OA\Response(response: 404, description: 'Bike not found'),
     ]
 )]
-class DeleteBikePhotoEndpoint
-{
-}
+class DeleteBikePhotoEndpoint {}
 
 // POST /api/fleet/bikes/{id}/retire
 #[OA\Post(
@@ -967,9 +907,7 @@ class DeleteBikePhotoEndpoint
         new OA\Response(response: 422, description: 'Validation error'),
     ]
 )]
-class RetireBikeEndpoint
-{
-}
+class RetireBikeEndpoint {}
 
 // PUT /api/fleet/bikes/{id}/status
 #[OA\Put(
@@ -1005,9 +943,7 @@ class RetireBikeEndpoint
         new OA\Response(response: 422, description: 'Validation error'),
     ]
 )]
-class ChangeBikeStatusEndpoint
-{
-}
+class ChangeBikeStatusEndpoint {}
 
 // GET /api/fleet/bikes/{id}/status-history
 #[OA\Get(
@@ -1055,9 +991,7 @@ class ChangeBikeStatusEndpoint
         new OA\Response(response: 404, description: 'Bike not found'),
     ]
 )]
-class GetBikeStatusHistoryEndpoint
-{
-}
+class GetBikeStatusHistoryEndpoint {}
 
 // GET /api/fleet/size-mapping
 #[OA\Get(
@@ -1092,9 +1026,7 @@ class GetBikeStatusHistoryEndpoint
         new OA\Response(response: 404, description: 'No active configuration found'),
     ]
 )]
-class GetActiveSizeMappingConfigurationEndpoint
-{
-}
+class GetActiveSizeMappingConfigurationEndpoint {}
 
 // PUT /api/fleet/size-mapping
 #[OA\Put(
@@ -1169,9 +1101,7 @@ class GetActiveSizeMappingConfigurationEndpoint
         new OA\Response(response: 403, description: 'Forbidden - requires manage_bikes permission'),
     ]
 )]
-class UpdateSizeMappingConfigurationEndpoint
-{
-}
+class UpdateSizeMappingConfigurationEndpoint {}
 
 // POST /api/fleet/size-mapping/reset
 #[OA\Post(
@@ -1186,9 +1116,7 @@ class UpdateSizeMappingConfigurationEndpoint
         new OA\Response(response: 403, description: 'Forbidden - requires manage_bikes permission'),
     ]
 )]
-class ResetSizeMappingConfigurationEndpoint
-{
-}
+class ResetSizeMappingConfigurationEndpoint {}
 
 // ------------------------------ FLEET - CATEGORIES ------------------------------
 
@@ -1221,9 +1149,7 @@ class ResetSizeMappingConfigurationEndpoint
         new OA\Response(response: 403, description: 'Forbidden - requires manage_fleet permission'),
     ]
 )]
-class CreateCategoryEndpoint
-{
-}
+class CreateCategoryEndpoint {}
 
 // GET /api/fleet/categories
 #[OA\Get(
@@ -1237,9 +1163,7 @@ class CreateCategoryEndpoint
         new OA\Response(response: 403, description: 'Forbidden - requires view_fleet permission'),
     ]
 )]
-class ListCategoriesEndpoint
-{
-}
+class ListCategoriesEndpoint {}
 
 // PUT /api/fleet/categories/{id}
 #[OA\Put(
@@ -1272,9 +1196,7 @@ class ListCategoriesEndpoint
         new OA\Response(response: 404, description: 'Category not found'),
     ]
 )]
-class UpdateCategoryEndpoint
-{
-}
+class UpdateCategoryEndpoint {}
 
 // DELETE /api/fleet/categories/{id}
 #[OA\Delete(
@@ -1293,9 +1215,7 @@ class UpdateCategoryEndpoint
         new OA\Response(response: 404, description: 'Category not found'),
     ]
 )]
-class DeleteCategoryEndpoint
-{
-}
+class DeleteCategoryEndpoint {}
 
 // ------------------------------ FLEET - RATES ------------------------------
 
@@ -1330,9 +1250,7 @@ class DeleteCategoryEndpoint
         new OA\Response(response: 404, description: 'Category not found'),
     ]
 )]
-class SetCategoryRateEndpoint
-{
-}
+class SetCategoryRateEndpoint {}
 
 // GET /api/fleet/rates
 #[OA\Get(
@@ -1362,9 +1280,7 @@ class SetCategoryRateEndpoint
         new OA\Response(response: 403, description: 'Forbidden - requires view_fleet permission'),
     ]
 )]
-class ListRatesEndpoint
-{
-}
+class ListRatesEndpoint {}
 
 // PUT /api/fleet/rates/{id}
 #[OA\Put(
@@ -1396,9 +1312,7 @@ class ListRatesEndpoint
         new OA\Response(response: 404, description: 'Rate not found'),
     ]
 )]
-class UpdateRateEndpoint
-{
-}
+class UpdateRateEndpoint {}
 
 // DELETE /api/fleet/rates/{id}
 #[OA\Delete(
@@ -1416,9 +1330,7 @@ class UpdateRateEndpoint
         new OA\Response(response: 404, description: 'Rate not found'),
     ]
 )]
-class DeleteRateEndpoint
-{
-}
+class DeleteRateEndpoint {}
 
 // ------------------------------ RENTALS ------------------------------
 
@@ -1478,9 +1390,7 @@ class DeleteRateEndpoint
         new OA\Response(response: 404, description: 'Customer or bike not found'),
     ]
 )]
-class CreateRentalEndpoint
-{
-}
+class CreateRentalEndpoint {}
 
 // POST /api/rentals/{id}/checkin
 #[OA\Post(
@@ -1529,9 +1439,7 @@ class CreateRentalEndpoint
         new OA\Response(response: 404, description: 'Rental not found'),
     ]
 )]
-class CheckInRentalEndpoint
-{
-}
+class CheckInRentalEndpoint {}
 
 // POST /api/rentals/{id}/checkout
 #[OA\Post(
@@ -1583,9 +1491,7 @@ class CheckInRentalEndpoint
         new OA\Response(response: 404, description: 'Rental not found'),
     ]
 )]
-class CheckOutRentalEndpoint
-{
-}
+class CheckOutRentalEndpoint {}
 
 // POST /api/rentals/{id}/cancel
 #[OA\Post(
@@ -1634,9 +1540,7 @@ class CheckOutRentalEndpoint
         new OA\Response(response: 422, description: 'Validation error - cancellation reason required'),
     ]
 )]
-class CancelRentalEndpoint
-{
-}
+class CancelRentalEndpoint {}
 
 // GET /api/rentals
 #[OA\Get(
@@ -1738,9 +1642,7 @@ class CancelRentalEndpoint
         new OA\Response(response: 403, description: 'Forbidden - requires view_rentals permission'),
     ]
 )]
-class ListRentalsEndpoint
-{
-}
+class ListRentalsEndpoint {}
 
 // GET /api/rentals/{id}
 #[OA\Get(
@@ -1838,9 +1740,7 @@ class ListRentalsEndpoint
         new OA\Response(response: 404, description: 'Rental not found'),
     ]
 )]
-class GetRentalDetailEndpoint
-{
-}
+class GetRentalDetailEndpoint {}
 
 // GET /api/rentals/active
 #[OA\Get(
@@ -1877,9 +1777,7 @@ class GetRentalDetailEndpoint
         new OA\Response(response: 403, description: 'Forbidden - requires view_rentals permission'),
     ]
 )]
-class ListActiveRentalsEndpoint
-{
-}
+class ListActiveRentalsEndpoint {}
 
 // ------------------------------ MAINTENANCE ------------------------------
 
@@ -1928,9 +1826,7 @@ class ListActiveRentalsEndpoint
         new OA\Response(response: 403, description: 'Forbidden - requires view_maintenance permission'),
     ]
 )]
-class ListMaintenanceReasonsEndpoint
-{
-}
+class ListMaintenanceReasonsEndpoint {}
 
 // POST /api/maintenance/maintenances
 #[OA\Post(
@@ -1964,9 +1860,7 @@ class ListMaintenanceReasonsEndpoint
         new OA\Response(response: 404, description: 'Bike not found'),
     ]
 )]
-class DeclareMaintenanceEndpoint
-{
-}
+class DeclareMaintenanceEndpoint {}
 
 // GET /api/maintenance/maintenances
 #[OA\Get(
@@ -2017,9 +1911,7 @@ class DeclareMaintenanceEndpoint
         new OA\Response(response: 403, description: 'Forbidden - requires view_maintenance permission'),
     ]
 )]
-class ListMaintenancesEndpoint
-{
-}
+class ListMaintenancesEndpoint {}
 
 // PUT /api/maintenance/maintenances/{id}/start
 #[OA\Put(
@@ -2050,9 +1942,7 @@ class ListMaintenancesEndpoint
         new OA\Response(response: 404, description: 'Maintenance not found'),
     ]
 )]
-class StartMaintenanceEndpoint
-{
-}
+class StartMaintenanceEndpoint {}
 
 // PUT /api/maintenance/maintenances/{id}/complete
 #[OA\Put(
@@ -2085,9 +1975,7 @@ class StartMaintenanceEndpoint
         new OA\Response(response: 404, description: 'Maintenance not found'),
     ]
 )]
-class CompleteMaintenanceEndpoint
-{
-}
+class CompleteMaintenanceEndpoint {}
 
 // GET /api/maintenance/bikes/{bikeId}/maintenances
 #[OA\Get(
@@ -2105,9 +1993,7 @@ class CompleteMaintenanceEndpoint
         new OA\Response(response: 404, description: 'Bike not found'),
     ]
 )]
-class GetBikeMaintenanceHistoryEndpoint
-{
-}
+class GetBikeMaintenanceHistoryEndpoint {}
 
 // ------------------------------ DASHBOARD ------------------------------
 
@@ -2147,9 +2033,7 @@ class GetBikeMaintenanceHistoryEndpoint
         new OA\Response(response: 403, description: 'Forbidden - requires view_dashboard permission'),
     ]
 )]
-class GetFleetOverviewEndpoint
-{
-}
+class GetFleetOverviewEndpoint {}
 
 // GET /api/dashboard/today
 #[OA\Get(
@@ -2211,9 +2095,7 @@ class GetFleetOverviewEndpoint
         new OA\Response(response: 403, description: 'Forbidden - requires view_dashboard permission'),
     ]
 )]
-class GetTodayActivityEndpoint
-{
-}
+class GetTodayActivityEndpoint {}
 
 // GET /api/dashboard/kpis/utilization
 #[OA\Get(
@@ -2251,9 +2133,7 @@ class GetTodayActivityEndpoint
         new OA\Response(response: 403, description: 'Forbidden - requires view_dashboard permission'),
     ]
 )]
-class GetUtilizationKpiEndpoint
-{
-}
+class GetUtilizationKpiEndpoint {}
 
 // GET /api/dashboard/kpis/revenue
 #[OA\Get(
@@ -2291,9 +2171,7 @@ class GetUtilizationKpiEndpoint
         new OA\Response(response: 403, description: 'Forbidden - requires view_dashboard permission'),
     ]
 )]
-class GetRevenueKpiEndpoint
-{
-}
+class GetRevenueKpiEndpoint {}
 
 // GET /api/dashboard/kpis/maintenance
 #[OA\Get(
@@ -2339,9 +2217,7 @@ class GetRevenueKpiEndpoint
         new OA\Response(response: 403, description: 'Forbidden - requires view_dashboard permission'),
     ]
 )]
-class GetMaintenanceKpiEndpoint
-{
-}
+class GetMaintenanceKpiEndpoint {}
 
 // GET /api/dashboard/kpis/top-bikes
 #[OA\Get(
@@ -2390,9 +2266,7 @@ class GetMaintenanceKpiEndpoint
         new OA\Response(response: 403, description: 'Forbidden - requires view_dashboard permission'),
     ]
 )]
-class GetTopBikesKpiEndpoint
-{
-}
+class GetTopBikesKpiEndpoint {}
 
 // GET /api/dashboard/alerts
 #[OA\Get(
@@ -2444,9 +2318,7 @@ class GetTopBikesKpiEndpoint
         new OA\Response(response: 403, description: 'Forbidden - requires view_dashboard permission'),
     ]
 )]
-class GetCentralizedAlertsEndpoint
-{
-}
+class GetCentralizedAlertsEndpoint {}
 
 // GET /api/rentals/bikes/{bikeId}
 #[OA\Get(
@@ -2514,6 +2386,4 @@ class GetCentralizedAlertsEndpoint
         new OA\Response(response: 403, description: 'Forbidden - requires view_rentals permission'),
     ]
 )]
-class GetBikeRentalsEndpoint
-{
-}
+class GetBikeRentalsEndpoint {}

@@ -11,8 +11,7 @@ final class ListActiveRentalsHandler
 {
     public function __construct(
         private readonly RentalRepositoryInterface $rentals,
-    ) {
-    }
+    ) {}
 
     public function handle(ListActiveRentalsQuery $query): ListActiveRentalsResponse
     {

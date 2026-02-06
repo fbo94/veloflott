@@ -12,8 +12,7 @@ final readonly class RetireBikeHandler
 {
     public function __construct(
         private BikeRepositoryInterface $bikeRepository,
-    ) {
-    }
+    ) {}
 
     public function handle(RetireBikeCommand $command): RetireBikeResponse
     {

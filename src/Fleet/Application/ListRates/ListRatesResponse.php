@@ -7,12 +7,11 @@ namespace Fleet\Application\ListRates;
 final readonly class ListRatesResponse
 {
     /**
-     * @param RateDto[] $rates
+     * @param  RateDto[]  $rates
      */
     public function __construct(
         public array $rates,
-    ) {
-    }
+    ) {}
 
     public function toArray(): array
     {

@@ -45,7 +45,7 @@ final class EloquentMaintenanceRepository implements MaintenanceRepositoryInterf
     {
         $model = MaintenanceEloquentModel::find($id);
 
-        if (!$model) {
+        if (! $model) {
             throw MaintenanceException::notFound($id);
         }
 

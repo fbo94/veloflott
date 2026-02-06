@@ -44,8 +44,8 @@ final class Rate
             throw new \DomainException('A bike-specific rate must not have a pricing tier');
         }
 
-        $this->createdAt = $createdAt ?? new \DateTimeImmutable();
-        $this->updatedAt = $updatedAt ?? new \DateTimeImmutable();
+        $this->createdAt = $createdAt ?? new \DateTimeImmutable;
+        $this->updatedAt = $updatedAt ?? new \DateTimeImmutable;
     }
 
     // ===== Getters =====
@@ -112,7 +112,7 @@ final class Rate
         $this->dayPrice = $dayPrice;
         $this->weekendPrice = $weekendPrice;
         $this->weekPrice = $weekPrice;
-        $this->updatedAt = new \DateTimeImmutable();
+        $this->updatedAt = new \DateTimeImmutable;
 
         return $this;
     }

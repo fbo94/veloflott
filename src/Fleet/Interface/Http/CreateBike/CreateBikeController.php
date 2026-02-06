@@ -20,8 +20,7 @@ final class CreateBikeController
 {
     public function __construct(
         private readonly CreateBikeHandler $handler,
-    ) {
-    }
+    ) {}
 
     /**
      * @throws BikeInternalNumberAlreadyExistsException

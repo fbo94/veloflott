@@ -13,8 +13,7 @@ final readonly class GetBikeStatusHistoryHandler
     public function __construct(
         private BikeRepositoryInterface $bikeRepository,
         private BikeStatusHistoryRepositoryInterface $historyRepository,
-    ) {
-    }
+    ) {}
 
     public function handle(GetBikeStatusHistoryQuery $query): GetBikeStatusHistoryResponse
     {

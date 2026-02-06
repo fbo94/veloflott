@@ -13,8 +13,7 @@ final readonly class CheckInRentalController
 {
     public function __construct(
         private CheckInRentalHandler $handler,
-    ) {
-    }
+    ) {}
 
     public function __invoke(string $id, CheckInRentalRequest $request): JsonResponse
     {

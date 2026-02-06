@@ -28,6 +28,7 @@ final class BikeEloquentModel extends Model
         'frame_size_letter_equivalent',
         'status',
         'pricing_tier',
+        'pricing_class_id',
         'year',
         'serial_number',
         'color',

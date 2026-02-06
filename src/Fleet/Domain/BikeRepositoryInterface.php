@@ -30,9 +30,9 @@ interface BikeRepositoryInterface
     public function search(string $query): array;
 
     /**
-     * @param string[]|null $statuses
-     * @param string[]|null $categoryIds
-     * @param string[]|null $frameSizes
+     * @param  string[]|null  $statuses
+     * @param  string[]|null  $categoryIds
+     * @param  string[]|null  $frameSizes
      * @return array{bikes: Bike[], total: int}
      */
     public function findFiltered(
@@ -51,6 +51,7 @@ interface BikeRepositoryInterface
 
     /**
      * Compte le nombre de vélos par statut
+     *
      * @return array<string, int> ex: ['available' => 95, 'rented' => 40, ...]
      */
     public function countByStatus(): array;
@@ -67,6 +68,7 @@ interface BikeRepositoryInterface
 
     /**
      * Trouve les vélos UNAVAILABLE depuis plus de X jours
+     *
      * @return array<int, array{bike_id: string, internal_number: string, days_unavailable: int}>
      */
     public function findLongUnavailable(int $minDays = 5): array;

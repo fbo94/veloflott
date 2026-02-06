@@ -10,8 +10,7 @@ final readonly class ResetSizeMappingConfigurationResponse
 {
     public function __construct(
         private SizeMappingConfiguration $configuration,
-    ) {
-    }
+    ) {}
 
     /**
      * @return array<string, mixed>

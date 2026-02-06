@@ -126,8 +126,8 @@ test('throws exception when email already exists', function () {
         notes: null,
         photos: [],
         isRisky: false,
-        createdAt: new DateTimeImmutable(),
-        updatedAt: new DateTimeImmutable(),
+        createdAt: new DateTimeImmutable,
+        updatedAt: new DateTimeImmutable,
     );
 
     // Mock expectations

@@ -7,9 +7,9 @@ namespace Fleet\Application\ListBikes;
 final readonly class ListBikesQuery
 {
     /**
-     * @param string[] $statuses
-     * @param string[] $categoryIds
-     * @param string[] $frameSizes
+     * @param  string[]  $statuses
+     * @param  string[]  $categoryIds
+     * @param  string[]  $frameSizes
      */
     public function __construct(
         public ?array $statuses = null,
@@ -21,6 +21,5 @@ final readonly class ListBikesQuery
         public string $sortDirection = 'asc',
         public int $page = 1,
         public int $perPage = 50,
-    ) {
-    }
+    ) {}
 }

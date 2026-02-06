@@ -12,7 +12,7 @@ use Fleet\Domain\WheelSize;
 final readonly class CreateBikeCommand
 {
     /**
-     * @param string[] $photos
+     * @param  string[]  $photos
      */
     public function __construct(
         // Obligatoires
@@ -34,6 +34,5 @@ final readonly class CreateBikeCommand
         public ?\DateTimeImmutable $purchaseDate,
         public ?string $notes,
         public array $photos,
-    ) {
-    }
+    ) {}
 }

@@ -19,8 +19,7 @@ final class KeycloakOAuthService
         private readonly string $clientId,
         private readonly string $clientSecret,
         private readonly string $redirectUri,
-    ) {
-    }
+    ) {}
 
     /**
      * Génère l'URL d'autorisation Keycloak pour démarrer le flow OAuth2.
@@ -42,6 +41,7 @@ final class KeycloakOAuthService
      * Échange le code d'autorisation contre un access token.
      *
      * @return array{access_token: string, refresh_token: string, expires_in: int, token_type: string}
+     *
      * @throws Exception
      */
     public function exchangeCodeForToken(string $code): array
@@ -64,7 +64,7 @@ final class KeycloakOAuthService
 
         $response = Http::asForm()->post($url, $payload);
 
-        if (!$response->successful()) {
+        if (! $response->successful()) {
             \Log::error('Failed to exchange code for token', [
                 'status' => $response->status(),
                 'body' => $response->body(),
@@ -88,6 +88,7 @@ final class KeycloakOAuthService
      * Rafraîchit un access token à partir d'un refresh token.
      *
      * @return array{access_token: string, refresh_token: string, expires_in: int, token_type: string}
+     *
      * @throws Exception
      */
     public function refreshToken(string $refreshToken): array
@@ -101,7 +102,7 @@ final class KeycloakOAuthService
             'refresh_token' => $refreshToken,
         ]);
 
-        if (!$response->successful()) {
+        if (! $response->successful()) {
             throw new Exception("Failed to refresh token: {$response->body()}");
         }
 

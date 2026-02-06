@@ -13,8 +13,7 @@ final readonly class UpdateSizeMappingConfigurationController
 {
     public function __construct(
         private UpdateSizeMappingConfigurationHandler $handler,
-    ) {
-    }
+    ) {}
 
     public function __invoke(UpdateSizeMappingConfigurationRequest $request): JsonResponse
     {

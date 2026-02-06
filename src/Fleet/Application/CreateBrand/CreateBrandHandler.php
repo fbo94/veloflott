@@ -12,8 +12,7 @@ final readonly class CreateBrandHandler
 {
     public function __construct(
         private BrandRepositoryInterface $brandRepository,
-    ) {
-    }
+    ) {}
 
     public function handle(CreateBrandCommand $command): CreateBrandResponse
     {
@@ -21,8 +20,8 @@ final readonly class CreateBrandHandler
             id: Str::uuid()->toString(),
             name: $command->name,
             logoUrl: $command->logoUrl,
-            createdAt: new \DateTimeImmutable(),
-            updatedAt: new \DateTimeImmutable(),
+            createdAt: new \DateTimeImmutable,
+            updatedAt: new \DateTimeImmutable,
         );
 
         $this->brandRepository->save($brand);

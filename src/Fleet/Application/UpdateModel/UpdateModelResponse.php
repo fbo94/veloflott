@@ -10,8 +10,7 @@ final readonly class UpdateModelResponse
         public string $id,
         public string $name,
         public string $brandId,
-    ) {
-    }
+    ) {}
 
     public function toArray(): array
     {

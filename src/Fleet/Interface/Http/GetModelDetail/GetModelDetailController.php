@@ -13,8 +13,7 @@ final readonly class GetModelDetailController
 {
     public function __construct(
         private GetModelDetailHandler $handler,
-    ) {
-    }
+    ) {}
 
     public function __invoke(string $id): JsonResponse
     {

@@ -10,8 +10,7 @@ final class ListUsersHandler
 {
     public function __construct(
         private readonly UserRepositoryInterface $users,
-    ) {
-    }
+    ) {}
 
     public function handle(ListUsersQuery $query): ListUsersResponse
     {

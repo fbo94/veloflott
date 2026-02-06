@@ -17,18 +17,23 @@ use Maintenance\Application\GetMaintenanceDetail\MaintenanceNotFoundException;
  *     operationId="getMaintenanceDetail",
  *     tags={"Maintenances"},
  *     security={{"bearerAuth": {}}},
+ *
  *     @OA\Parameter(
  *         name="id",
  *         in="path",
  *         description="Maintenance ID",
  *         required=true,
+ *
  *         @OA\Schema(type="string", format="uuid")
  *     ),
+ *
  *     @OA\Response(
  *         response=200,
  *         description="Maintenance details retrieved successfully",
+ *
  *         @OA\JsonContent(
  *             type="object",
+ *
  *             @OA\Property(property="id", type="string", format="uuid", example="123e4567-e89b-12d3-a456-426614174000"),
  *             @OA\Property(property="bike_id", type="string", format="uuid", example="123e4567-e89b-12d3-a456-426614174001"),
  *             @OA\Property(property="type", type="string", enum={"preventive", "corrective", "inspection"}, example="preventive"),
@@ -65,14 +70,18 @@ use Maintenance\Application\GetMaintenanceDetail\MaintenanceNotFoundException;
  *             )
  *         )
  *     ),
+ *
  *     @OA\Response(
  *         response=404,
  *         description="Maintenance not found",
+ *
  *         @OA\JsonContent(
  *             type="object",
+ *
  *             @OA\Property(property="message", type="string", example="Maintenance with ID 123e4567-e89b-12d3-a456-426614174000 not found")
  *         )
  *     ),
+ *
  *     @OA\Response(
  *         response=401,
  *         description="Unauthorized - Invalid or missing authentication token"
@@ -87,8 +96,7 @@ final readonly class GetMaintenanceDetailController
 {
     public function __construct(
         private GetMaintenanceDetailHandler $handler,
-    ) {
-    }
+    ) {}
 
     public function __invoke(string $id): JsonResponse
     {

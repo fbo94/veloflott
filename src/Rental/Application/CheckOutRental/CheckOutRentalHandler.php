@@ -13,8 +13,7 @@ final class CheckOutRentalHandler
     public function __construct(
         private readonly RentalRepositoryInterface $rentals,
         private readonly BikeRepositoryInterface $bikes,
-    ) {
-    }
+    ) {}
 
     public function handle(CheckOutRentalCommand $command): CheckOutRentalResponse
     {
@@ -25,7 +24,7 @@ final class CheckOutRentalHandler
         }
 
         // Vérifier que la location peut être clôturée
-        if (!$rental->status()->canCheckOut()) {
+        if (! $rental->status()->canCheckOut()) {
             throw new RentalCannotBeCheckedOutException($command->rentalId, $rental->status());
         }
 

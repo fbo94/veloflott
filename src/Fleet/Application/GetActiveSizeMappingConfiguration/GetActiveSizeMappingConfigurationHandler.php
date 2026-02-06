@@ -10,8 +10,7 @@ final readonly class GetActiveSizeMappingConfigurationHandler
 {
     public function __construct(
         private SizeMappingConfigurationRepositoryInterface $repository,
-    ) {
-    }
+    ) {}
 
     public function handle(GetActiveSizeMappingConfigurationQuery $query): GetActiveSizeMappingConfigurationResponse
     {

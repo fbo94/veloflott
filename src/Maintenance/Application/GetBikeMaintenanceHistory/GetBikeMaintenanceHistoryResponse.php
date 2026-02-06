@@ -9,15 +9,14 @@ use Maintenance\Domain\Maintenance;
 final readonly class GetBikeMaintenanceHistoryResponse
 {
     /**
-     * @param Maintenance[] $maintenances
+     * @param  Maintenance[]  $maintenances
      */
     public function __construct(
         public string $bikeId,
         public string $bikeInternalNumber,
         public array $maintenances,
         public int $total,
-    ) {
-    }
+    ) {}
 
     /**
      * @return array<string, mixed>

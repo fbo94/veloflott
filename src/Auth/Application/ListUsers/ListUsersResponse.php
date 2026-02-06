@@ -9,16 +9,15 @@ use Auth\Domain\User;
 final readonly class ListUsersResponse
 {
     /**
-     * @param array<int, array<string, mixed>> $users
+     * @param  array<int, array<string, mixed>>  $users
      */
     public function __construct(
         public array $users,
         public int $total,
-    ) {
-    }
+    ) {}
 
     /**
-     * @param User[] $users
+     * @param  User[]  $users
      */
     public static function fromUsers(array $users): self
     {

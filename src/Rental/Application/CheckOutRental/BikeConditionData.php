@@ -9,13 +9,12 @@ use Rental\Domain\BikeCondition;
 final readonly class BikeConditionData
 {
     /**
-     * @param string[] $damagePhotos
+     * @param  string[]  $damagePhotos
      */
     public function __construct(
         public string $bikeId,
         public BikeCondition $condition,
         public ?string $damageDescription = null,
         public ?array $damagePhotos = null,
-    ) {
-    }
+    ) {}
 }

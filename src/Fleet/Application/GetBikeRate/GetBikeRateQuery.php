@@ -8,6 +8,5 @@ final readonly class GetBikeRateQuery
 {
     public function __construct(
         public string $bikeId,
-    ) {
-    }
+    ) {}
 }

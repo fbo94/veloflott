@@ -16,8 +16,7 @@ final class GetAuthorizationUrlController
 {
     public function __construct(
         private readonly GetAuthorizationUrlHandler $handler,
-    ) {
-    }
+    ) {}
 
     public function __invoke(Request $request): JsonResponse
     {

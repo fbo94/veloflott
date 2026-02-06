@@ -10,8 +10,7 @@ final readonly class CalculatePriceHandler
 {
     public function __construct(
         private PricingCalculator $pricingCalculator,
-    ) {
-    }
+    ) {}
 
     public function handle(CalculatePriceCommand $command): PriceCalculationDto
     {

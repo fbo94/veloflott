@@ -12,8 +12,7 @@ final class UpdateCategoryController
 {
     public function __construct(
         private readonly UpdateCategoryHandler $handler,
-    ) {
-    }
+    ) {}
 
     public function __invoke(string $id, UpdateCategoryRequest $request): JsonResponse
     {

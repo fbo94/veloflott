@@ -12,6 +12,5 @@ final readonly class CheckInRentalResponse
     public function __construct(
         public string $rentalId,
         public string $message,
-    ) {
-    }
+    ) {}
 }

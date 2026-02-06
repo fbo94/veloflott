@@ -10,7 +10,7 @@ use Maintenance\Domain\Maintenance;
 final readonly class GetMaintenanceDetailResponse
 {
     /**
-     * @param array<int, string> $photos
+     * @param  array<int, string>  $photos
      */
     public function __construct(
         private string $id,
@@ -30,8 +30,7 @@ final readonly class GetMaintenanceDetailResponse
         private string $createdAt,
         private string $updatedAt,
         private ?array $bike,
-    ) {
-    }
+    ) {}
 
     public static function fromMaintenance(Maintenance $maintenance, ?BikeEloquentModel $bikeModel): self
     {

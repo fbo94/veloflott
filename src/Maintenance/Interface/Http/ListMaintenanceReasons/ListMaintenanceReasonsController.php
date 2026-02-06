@@ -12,8 +12,7 @@ final class ListMaintenanceReasonsController
 {
     public function __construct(
         private readonly ListMaintenanceReasonsHandler $handler,
-    ) {
-    }
+    ) {}
 
     public function __invoke(): JsonResponse
     {

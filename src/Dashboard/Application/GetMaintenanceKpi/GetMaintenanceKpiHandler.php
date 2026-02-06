@@ -10,13 +10,12 @@ final readonly class GetMaintenanceKpiHandler
 {
     public function __construct(
         private MaintenanceRepositoryInterface $maintenanceRepository,
-    ) {
-    }
+    ) {}
 
     public function handle(GetMaintenanceKpiQuery $query): GetMaintenanceKpiResponse
     {
         // Par défaut : 30 derniers jours
-        $dateTo = $query->dateTo ?? new \DateTimeImmutable();
+        $dateTo = $query->dateTo ?? new \DateTimeImmutable;
         $dateFrom = $query->dateFrom ?? $dateTo->modify('-30 days');
 
         // Compteurs maintenances

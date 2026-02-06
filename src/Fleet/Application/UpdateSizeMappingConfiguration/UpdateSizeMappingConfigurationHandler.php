@@ -10,8 +10,7 @@ final readonly class UpdateSizeMappingConfigurationHandler
 {
     public function __construct(
         private SizeMappingConfigurationRepositoryInterface $repository,
-    ) {
-    }
+    ) {}
 
     public function handle(UpdateSizeMappingConfigurationCommand $command): UpdateSizeMappingConfigurationResponse
     {

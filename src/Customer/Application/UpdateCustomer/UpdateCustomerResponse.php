@@ -9,8 +9,7 @@ final readonly class UpdateCustomerResponse
     public function __construct(
         public string $customerId,
         public string $message,
-    ) {
-    }
+    ) {}
 
     public function toArray(): array
     {

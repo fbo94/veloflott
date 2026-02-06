@@ -264,6 +264,7 @@ enum MaintenanceReason: string
 
     /**
      * Obtenir toutes les raisons d'une catégorie donnée
+     *
      * @return MaintenanceReason[]
      */
     public static function byCategory(MaintenanceCategory $category): array

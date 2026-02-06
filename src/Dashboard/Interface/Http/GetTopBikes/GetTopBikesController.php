@@ -13,8 +13,7 @@ final class GetTopBikesController
 {
     public function __construct(
         private readonly GetTopBikesHandler $handler,
-    ) {
-    }
+    ) {}
 
     public function __invoke(GetTopBikesRequest $request): JsonResponse
     {

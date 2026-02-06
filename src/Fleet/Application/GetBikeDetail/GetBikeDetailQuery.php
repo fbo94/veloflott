@@ -8,6 +8,5 @@ final readonly class GetBikeDetailQuery
 {
     public function __construct(
         public string $id,
-    ) {
-    }
+    ) {}
 }

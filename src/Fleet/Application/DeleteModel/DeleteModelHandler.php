@@ -10,8 +10,7 @@ final readonly class DeleteModelHandler
 {
     public function __construct(
         private ModelRepositoryInterface $modelRepository,
-    ) {
-    }
+    ) {}
 
     public function handle(DeleteModelCommand $command): void
     {

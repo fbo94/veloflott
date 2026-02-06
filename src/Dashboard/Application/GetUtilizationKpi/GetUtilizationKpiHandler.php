@@ -12,13 +12,12 @@ final readonly class GetUtilizationKpiHandler
     public function __construct(
         private BikeRepositoryInterface $bikeRepository,
         private RentalRepositoryInterface $rentalRepository,
-    ) {
-    }
+    ) {}
 
     public function handle(GetUtilizationKpiQuery $query): GetUtilizationKpiResponse
     {
         // Par défaut : 30 derniers jours
-        $dateTo = $query->dateTo ?? new \DateTimeImmutable();
+        $dateTo = $query->dateTo ?? new \DateTimeImmutable;
         $dateFrom = $query->dateFrom ?? $dateTo->modify('-30 days');
 
         // Compteurs de base

@@ -30,7 +30,7 @@ return new class extends Migration
     {
         // Drop CHECK constraint for PostgreSQL only
         if (DB::getDriverName() === 'pgsql') {
-            DB::statement("ALTER TABLE bikes DROP CONSTRAINT IF EXISTS bikes_unavailability_reason_check");
+            DB::statement('ALTER TABLE bikes DROP CONSTRAINT IF EXISTS bikes_unavailability_reason_check');
         }
 
         Schema::table('bikes', function (Blueprint $table) {

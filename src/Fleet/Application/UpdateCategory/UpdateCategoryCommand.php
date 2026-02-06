@@ -11,6 +11,5 @@ final readonly class UpdateCategoryCommand
         public string $name,
         public ?string $slug,
         public ?string $description,
-    ) {
-    }
+    ) {}
 }

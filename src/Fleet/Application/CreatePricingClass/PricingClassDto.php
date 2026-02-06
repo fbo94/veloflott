@@ -16,8 +16,7 @@ final readonly class PricingClassDto
         public ?string $color,
         public int $sortOrder,
         public bool $isActive,
-    ) {
-    }
+    ) {}
 
     public static function fromDomain(PricingClass $pricingClass): self
     {

@@ -11,8 +11,7 @@ final readonly class AnnotateCustomerResponse
         public ?string $annotation,
         public bool $isRiskyCustomer,
         public string $message,
-    ) {
-    }
+    ) {}
 
     /**
      * @return array{customer_id: string, annotation: string|null, is_risky_customer: bool, message: string}

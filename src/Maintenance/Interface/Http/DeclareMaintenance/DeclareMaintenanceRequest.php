@@ -37,7 +37,7 @@ final class DeclareMaintenanceRequest extends FormRequest
     protected function prepareForValidation(): void
     {
         // S'assurer que photos est un tableau vide si non fourni
-        if (!$this->has('photos')) {
+        if (! $this->has('photos')) {
             $this->merge(['photos' => []]);
         }
     }

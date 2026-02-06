@@ -11,8 +11,7 @@ final class ListCategoriesHandler
 {
     public function __construct(
         private readonly CategoryRepositoryInterface $categories,
-    ) {
-    }
+    ) {}
 
     public function handle(ListCategoriesQuery $query): ListCategoriesResponse
     {
@@ -25,7 +24,7 @@ final class ListCategoriesHandler
     }
 
     /**
-     * @param array<Category> $categories
+     * @param  array<Category>  $categories
      * @return array<CategoryDto>
      */
     private function buildHierarchy(array $categories): array
@@ -47,7 +46,7 @@ final class ListCategoriesHandler
             } else {
                 // Catégorie enfant
                 $parentId = $category->parentId();
-                if (!isset($childrenByParentId[$parentId])) {
+                if (! isset($childrenByParentId[$parentId])) {
                     $childrenByParentId[$parentId] = [];
                 }
                 $childrenByParentId[$parentId][] = $category;

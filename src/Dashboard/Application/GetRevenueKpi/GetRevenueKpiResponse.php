@@ -7,7 +7,7 @@ namespace Dashboard\Application\GetRevenueKpi;
 final readonly class GetRevenueKpiResponse
 {
     /**
-     * @param array{from: string, to: string, days: int} $period
+     * @param  array{from: string, to: string, days: int}  $period
      */
     public function __construct(
         public array $period,
@@ -17,8 +17,7 @@ final readonly class GetRevenueKpiResponse
         public int $avgRevenuePerRentalCents,
         public int $rentalCount,
         public int $activeBikes,
-    ) {
-    }
+    ) {}
 
     /**
      * @return array<string, mixed>

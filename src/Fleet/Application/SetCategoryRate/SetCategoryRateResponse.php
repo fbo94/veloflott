@@ -11,8 +11,7 @@ final readonly class SetCategoryRateResponse
         public string $categoryId,
         public string $pricingTier,
         public string $message,
-    ) {
-    }
+    ) {}
 
     public function toArray(): array
     {

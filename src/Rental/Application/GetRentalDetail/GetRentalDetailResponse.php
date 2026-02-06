@@ -9,8 +9,8 @@ use Rental\Domain\Rental;
 final readonly class GetRentalDetailResponse
 {
     /**
-     * @param RentalItemDto[] $items
-     * @param RentalEquipmentDto[] $equipments
+     * @param  RentalItemDto[]  $items
+     * @param  RentalEquipmentDto[]  $equipments
      */
     public function __construct(
         public string $id,
@@ -40,8 +40,7 @@ final readonly class GetRentalDetailResponse
         public array $equipments,
         public string $createdAt,
         public string $updatedAt,
-    ) {
-    }
+    ) {}
 
     public static function fromRental(Rental $rental, array $customerData, array $items, array $equipments, float $numberOfDays): self
     {
@@ -88,7 +87,7 @@ final readonly class GetRentalDetailResponse
                 'id' => $this->customerId,
                 'first_name' => $this->customerFirstName,
                 'last_name' => $this->customerLastName,
-                'full_name' => $this->customerFirstName . ' ' . $this->customerLastName,
+                'full_name' => $this->customerFirstName.' '.$this->customerLastName,
                 'email' => $this->customerEmail,
                 'phone' => $this->customerPhone,
             ],

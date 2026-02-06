@@ -18,6 +18,5 @@ final readonly class BikeCheckInData
         public ?int $rearSuspensionPressure,
         public ?string $pedalType,
         public ?string $notes,
-    ) {
-    }
+    ) {}
 }

@@ -691,6 +691,6 @@ class RepresentativeCustomersSeeder extends Seeder
         }
 
         $this->command->info("✓ Successfully seeded {$count} representative customers!");
-        $this->command->info("Height range: 135cm - 207cm | Weight range: 42kg - 115kg");
+        $this->command->info('Height range: 135cm - 207cm | Weight range: 42kg - 115kg');
     }
 }

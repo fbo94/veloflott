@@ -17,14 +17,14 @@ use Illuminate\Support\Facades\Http;
 final class KeycloakTokenValidator
 {
     private const string JWKS_CACHE_KEY = 'keycloak_jwks';
+
     private const int JWKS_CACHE_TTL = 3600; // 1 heure
 
     public function __construct(
         private readonly string $keycloakUrl,
         private readonly string $keycloakUrlInternal,
         private readonly string $realm,
-    ) {
-    }
+    ) {}
 
     /**
      * Valide le token et retourne le payload décodé.
@@ -85,7 +85,7 @@ final class KeycloakTokenValidator
                     throw new Exception("Failed to fetch Keycloak JWKS: {$e->getMessage()}", 0, $e);
                 }
 
-                if (!$response->successful()) {
+                if (! $response->successful()) {
                     \Log::error('Failed to fetch Keycloak JWKS - HTTP error', [
                         'url' => $url,
                         'status' => $response->status(),
@@ -133,17 +133,17 @@ final class KeycloakTokenValidator
         }
 
         // Variantes sans port (Keycloak peut omettre le port standard 443)
-        $baseUrl = parse_url($this->keycloakUrl, PHP_URL_SCHEME) . '://' . parse_url($this->keycloakUrl, PHP_URL_HOST);
+        $baseUrl = parse_url($this->keycloakUrl, PHP_URL_SCHEME).'://'.parse_url($this->keycloakUrl, PHP_URL_HOST);
         $validIssuers[] = "{$baseUrl}/realms/{$this->realm}";
 
         // Dédupliquer les issuers
         $validIssuers = array_unique($validIssuers);
 
-        if (!isset($payload->iss)) {
+        if (! isset($payload->iss)) {
             throw new Exception('Missing issuer claim');
         }
 
-        if (!in_array($payload->iss, $validIssuers, true)) {
+        if (! in_array($payload->iss, $validIssuers, true)) {
             \Log::error('Invalid JWT issuer', [
                 'received' => $payload->iss,
                 'expected' => $validIssuers,

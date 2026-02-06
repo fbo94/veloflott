@@ -13,8 +13,7 @@ final class GetRentalDetailController
 {
     public function __construct(
         private readonly GetRentalDetailHandler $handler,
-    ) {
-    }
+    ) {}
 
     public function __invoke(string $id): JsonResponse
     {

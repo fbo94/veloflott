@@ -12,8 +12,7 @@ final class Brand
         private ?string $logoUrl,
         private readonly \DateTimeImmutable $createdAt,
         private \DateTimeImmutable $updatedAt,
-    ) {
-    }
+    ) {}
 
     public function id(): string
     {
@@ -33,13 +32,13 @@ final class Brand
     public function rename(string $newName): void
     {
         $this->name = $newName;
-        $this->updatedAt = new \DateTimeImmutable();
+        $this->updatedAt = new \DateTimeImmutable;
     }
 
     public function updateLogo(?string $logoUrl): void
     {
         $this->logoUrl = $logoUrl;
-        $this->updatedAt = new \DateTimeImmutable();
+        $this->updatedAt = new \DateTimeImmutable;
     }
 
     public function createdAt(): \DateTimeImmutable

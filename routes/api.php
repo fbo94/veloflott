@@ -8,7 +8,7 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::get('/login', function (Request $request) {
-    return response()->json(['message' => 'Login endpoint' ]);
+    return response()->json(['message' => 'Login endpoint']);
 })->name('login');
 
 // Health check endpoint pour Cloud Run / Load Balancers

@@ -9,8 +9,7 @@ final readonly class ChangeBikeStatusResponse
     public function __construct(
         public string $id,
         public string $message = 'Bike status changed successfully',
-    ) {
-    }
+    ) {}
 
     /**
      * @return array{id: string, message: string}

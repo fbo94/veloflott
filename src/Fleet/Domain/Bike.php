@@ -14,7 +14,7 @@ final class Bike
     private \DateTimeImmutable $updatedAt;
 
     /**
-     * @param string[] $photos
+     * @param  string[]  $photos
      */
     public function __construct(
         private readonly string $id,
@@ -25,6 +25,7 @@ final class Bike
         private FrameSize $frameSize,
         private BikeStatus $status,
         private PricingTier $pricingTier,
+        private ?string $pricingClassId,
         private ?int $year,
         private ?string $serialNumber,
         private ?string $color,
@@ -44,8 +45,8 @@ final class Bike
         ?\DateTimeImmutable $createdAt = null,
         ?\DateTimeImmutable $updatedAt = null,
     ) {
-        $this->createdAt = $createdAt ?? new \DateTimeImmutable();
-        $this->updatedAt = $updatedAt ?? new \DateTimeImmutable();
+        $this->createdAt = $createdAt ?? new \DateTimeImmutable;
+        $this->updatedAt = $updatedAt ?? new \DateTimeImmutable;
     }
 
     // ===== Getters =====
@@ -88,6 +89,11 @@ final class Bike
     public function pricingTier(): PricingTier
     {
         return $this->pricingTier;
+    }
+
+    public function pricingClassId(): ?string
+    {
+        return $this->pricingClassId;
     }
 
     public function year(): ?int
@@ -187,7 +193,7 @@ final class Bike
 
     public function isRentable(): bool
     {
-        return $this->status->isRentable() && !$this->isRetired();
+        return $this->status->isRentable() && ! $this->isRetired();
     }
 
     public function isRetired(): bool
@@ -197,7 +203,7 @@ final class Bike
 
     public function canBeModified(): bool
     {
-        return $this->status->canBeModified() && !$this->isRetired();
+        return $this->status->canBeModified() && ! $this->isRetired();
     }
 
     public function canBeRetired(): bool
@@ -222,7 +228,7 @@ final class Bike
         ?\DateTimeImmutable $purchaseDate,
         ?string $notes,
     ): self {
-        if (!$this->canBeModified()) {
+        if (! $this->canBeModified()) {
             throw new \DomainException('Cannot modify this bike in its current status');
         }
 
@@ -239,7 +245,7 @@ final class Bike
         $this->purchasePrice = $purchasePrice;
         $this->purchaseDate = $purchaseDate;
         $this->notes = $notes;
-        $this->updatedAt = new \DateTimeImmutable();
+        $this->updatedAt = new \DateTimeImmutable;
 
         return $this;
     }
@@ -247,7 +253,7 @@ final class Bike
     public function addPhoto(string $photoPath): self
     {
         $this->photos[] = $photoPath;
-        $this->updatedAt = new \DateTimeImmutable();
+        $this->updatedAt = new \DateTimeImmutable;
 
         return $this;
     }
@@ -258,18 +264,18 @@ final class Bike
             $this->photos,
             fn ($photo) => $photo !== $photoPath
         ));
-        $this->updatedAt = new \DateTimeImmutable();
+        $this->updatedAt = new \DateTimeImmutable;
 
         return $this;
     }
 
     /**
-     * @param string[] $photos
+     * @param  string[]  $photos
      */
     public function updatePhotos(array $photos): self
     {
         $this->photos = $photos;
-        $this->updatedAt = new \DateTimeImmutable();
+        $this->updatedAt = new \DateTimeImmutable;
 
         return $this;
     }
@@ -281,7 +287,7 @@ final class Bike
         }
 
         $this->status = $newStatus;
-        $this->updatedAt = new \DateTimeImmutable();
+        $this->updatedAt = new \DateTimeImmutable;
 
         return $this;
     }
@@ -289,19 +295,19 @@ final class Bike
     public function changePricingTier(PricingTier $newTier): self
     {
         $this->pricingTier = $newTier;
-        $this->updatedAt = new \DateTimeImmutable();
+        $this->updatedAt = new \DateTimeImmutable;
 
         return $this;
     }
 
     public function markAsRented(): self
     {
-        if (!$this->isRentable()) {
+        if (! $this->isRentable()) {
             throw new \DomainException('Bike is not rentable');
         }
 
         $this->status = BikeStatus::RENTED;
-        $this->updatedAt = new \DateTimeImmutable();
+        $this->updatedAt = new \DateTimeImmutable;
 
         return $this;
     }
@@ -313,7 +319,7 @@ final class Bike
         }
 
         $this->status = BikeStatus::AVAILABLE;
-        $this->updatedAt = new \DateTimeImmutable();
+        $this->updatedAt = new \DateTimeImmutable;
 
         return $this;
     }
@@ -325,7 +331,7 @@ final class Bike
         }
 
         $this->status = BikeStatus::AVAILABLE;
-        $this->updatedAt = new \DateTimeImmutable();
+        $this->updatedAt = new \DateTimeImmutable;
 
         return $this;
     }
@@ -368,22 +374,22 @@ final class Bike
             $this->unavailabilityComment = null;
         }
 
-        $this->updatedAt = new \DateTimeImmutable();
+        $this->updatedAt = new \DateTimeImmutable;
 
         return $this;
     }
 
     public function retire(RetirementReason $reason, ?string $comment = null): self
     {
-        if (!$this->canBeRetired()) {
+        if (! $this->canBeRetired()) {
             throw new \DomainException('Cannot retire a bike that is currently rented');
         }
 
         $this->status = BikeStatus::RETIRED;
         $this->retirementReason = $reason;
         $this->retirementComment = $comment;
-        $this->retiredAt = new \DateTimeImmutable();
-        $this->updatedAt = new \DateTimeImmutable();
+        $this->retiredAt = new \DateTimeImmutable;
+        $this->updatedAt = new \DateTimeImmutable;
 
         return $this;
     }

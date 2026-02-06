@@ -8,13 +8,9 @@ use Fleet\Domain\BikeRepositoryInterface;
 use Fleet\Domain\BikeStatusHistoryRepositoryInterface;
 use Fleet\Domain\BrandRepositoryInterface;
 use Fleet\Domain\CategoryRepositoryInterface;
-use Fleet\Domain\DiscountRuleRepositoryInterface;
-use Fleet\Domain\DurationDefinitionRepositoryInterface;
 use Fleet\Domain\ModelRepositoryInterface;
 use Fleet\Domain\PricingClassRepositoryInterface;
-use Fleet\Domain\PricingRateRepositoryInterface;
 use Fleet\Domain\RateRepositoryInterface;
-use Fleet\Domain\RentalPricingSnapshotRepositoryInterface;
 use Fleet\Domain\Services\PricingCalculator;
 use Fleet\Domain\Services\PricingValidator;
 use Fleet\Domain\SizeMappingConfigurationRepositoryInterface;
@@ -85,9 +81,9 @@ final class FleetServiceProvider extends ServiceProvider
     public function boot(): void
     {
         // Charger les routes
-        $this->loadRoutesFrom(__DIR__ . '/../Interface/Http/routes.php');
+        $this->loadRoutesFrom(__DIR__.'/../Interface/Http/routes.php');
 
         // Charger les migrations
-        $this->loadMigrationsFrom(__DIR__ . '/migrations');
+        $this->loadMigrationsFrom(__DIR__.'/migrations');
     }
 }

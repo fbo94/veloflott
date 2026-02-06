@@ -13,8 +13,7 @@ final class GetBikeDetailController
 {
     public function __construct(
         private readonly GetBikeDetailHandler $handler,
-    ) {
-    }
+    ) {}
 
     /**
      * @throws BikeNotFoundException

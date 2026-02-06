@@ -19,8 +19,7 @@ final readonly class GetBikeRateResponse
         public float $dayPrice,
         public ?float $weekendPrice,
         public ?float $weekPrice,
-    ) {
-    }
+    ) {}
 
     public static function fromRate(Rate $rate, Bike $bike): self
     {

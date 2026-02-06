@@ -28,15 +28,14 @@ final class SizeMappingConfiguration
         private readonly SizeRange $xxlInch,
         private readonly \DateTimeImmutable $createdAt,
         private \DateTimeImmutable $updatedAt,
-    ) {
-    }
+    ) {}
 
     /**
      * Crée une configuration avec les valeurs par défaut.
      */
     public static function createDefault(string $id, int $version = 1): self
     {
-        $now = new \DateTimeImmutable();
+        $now = new \DateTimeImmutable;
 
         return new self(
             id: $id,
@@ -219,15 +218,15 @@ final class SizeMappingConfiguration
             xlInch: $xlInch,
             xxlCm: $xxlCm,
             xxlInch: $xxlInch,
-            createdAt: new \DateTimeImmutable(),
-            updatedAt: new \DateTimeImmutable(),
+            createdAt: new \DateTimeImmutable,
+            updatedAt: new \DateTimeImmutable,
         );
     }
 
     public function deactivate(): void
     {
         $this->isActive = false;
-        $this->updatedAt = new \DateTimeImmutable();
+        $this->updatedAt = new \DateTimeImmutable;
     }
 
     /**

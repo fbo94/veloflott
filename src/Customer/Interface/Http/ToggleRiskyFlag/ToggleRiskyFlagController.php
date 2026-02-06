@@ -12,8 +12,7 @@ final readonly class ToggleRiskyFlagController
 {
     public function __construct(
         private ToggleRiskyFlagHandler $handler,
-    ) {
-    }
+    ) {}
 
     public function __invoke(string $id): JsonResponse
     {

@@ -19,13 +19,12 @@ final class UserSyncService
 {
     public function __construct(
         private readonly UserRepositoryInterface $users,
-    ) {
-    }
+    ) {}
 
     /**
      * Synchronise un utilisateur depuis le payload JWT.
      *
-     * @param object $tokenPayload Payload décodé du JWT Keycloak
+     * @param  object  $tokenPayload  Payload décodé du JWT Keycloak
      */
     public function sync(object $tokenPayload): User
     {

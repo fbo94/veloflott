@@ -27,8 +27,7 @@ final class RentalItem
         private ?BikeCondition $returnCondition = null,
         private ?string $damageDescription = null,
         private ?array $damagePhotos = null,
-    ) {
-    }
+    ) {}
 
     public function id(): string
     {

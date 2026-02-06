@@ -14,8 +14,7 @@ final class CheckOutRentalController
 {
     public function __construct(
         private readonly CheckOutRentalHandler $handler,
-    ) {
-    }
+    ) {}
 
     public function __invoke(string $id, CheckOutRentalRequest $request): JsonResponse
     {

@@ -13,8 +13,7 @@ final readonly class ListMaintenancesHandler
 {
     public function __construct(
         private MaintenanceRepositoryInterface $maintenanceRepository,
-    ) {
-    }
+    ) {}
 
     public function handle(ListMaintenancesQuery $query): ListMaintenancesResponse
     {

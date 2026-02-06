@@ -10,8 +10,7 @@ final readonly class CompleteMaintenanceResponse
         public string $maintenanceId,
         public string $bikeId,
         public string $message,
-    ) {
-    }
+    ) {}
 
     public function toArray(): array
     {

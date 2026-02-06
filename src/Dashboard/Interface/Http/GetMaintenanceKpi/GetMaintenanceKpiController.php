@@ -14,8 +14,7 @@ final class GetMaintenanceKpiController
 {
     public function __construct(
         private readonly GetMaintenanceKpiHandler $handler,
-    ) {
-    }
+    ) {}
 
     public function __invoke(GetPerformanceIndicatorsRequest $request): JsonResponse
     {

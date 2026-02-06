@@ -39,7 +39,7 @@ class MigrateBikePhotosUrls extends Command
         foreach ($bikes as $bike) {
             $photos = json_decode($bike->photos, true);
 
-            if (!is_array($photos) || empty($photos)) {
+            if (! is_array($photos) || empty($photos)) {
                 continue;
             }
 

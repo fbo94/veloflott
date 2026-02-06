@@ -16,8 +16,7 @@ final class ToggleUserStatusController
 {
     public function __construct(
         private readonly ToggleUserStatusHandler $handler,
-    ) {
-    }
+    ) {}
 
     public function __invoke(Request $request, string $id): JsonResponse
     {

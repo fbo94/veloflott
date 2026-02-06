@@ -12,8 +12,7 @@ final class CreateCategoryHandler
 {
     public function __construct(
         private readonly CategoryRepositoryInterface $categories,
-    ) {
-    }
+    ) {}
 
     public function handle(CreateCategoryCommand $command): string
     {

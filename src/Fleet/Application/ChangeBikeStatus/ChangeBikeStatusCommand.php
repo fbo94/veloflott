@@ -11,6 +11,5 @@ final readonly class ChangeBikeStatusCommand
         public string $status,
         public ?string $unavailabilityReason = null,
         public ?string $unavailabilityComment = null,
-    ) {
-    }
+    ) {}
 }

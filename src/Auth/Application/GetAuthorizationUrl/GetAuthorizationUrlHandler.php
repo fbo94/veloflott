@@ -11,8 +11,7 @@ final class GetAuthorizationUrlHandler
 {
     public function __construct(
         private readonly KeycloakOAuthService $oauthService,
-    ) {
-    }
+    ) {}
 
     public function handle(GetAuthorizationUrlQuery $query): GetAuthorizationUrlResponse
     {

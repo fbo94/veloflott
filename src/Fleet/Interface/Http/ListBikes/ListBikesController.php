@@ -12,8 +12,7 @@ final class ListBikesController
 {
     public function __construct(
         private readonly ListBikesHandler $handler,
-    ) {
-    }
+    ) {}
 
     public function __invoke(ListBikesRequest $request): JsonResponse
     {

@@ -9,6 +9,5 @@ final readonly class CancelRentalCommand
     public function __construct(
         public string $rentalId,
         public string $cancellationReason,
-    ) {
-    }
+    ) {}
 }

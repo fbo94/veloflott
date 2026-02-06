@@ -7,12 +7,11 @@ namespace Rental\Application\ListActiveRentals;
 final readonly class ListActiveRentalsResponse
 {
     /**
-     * @param ActiveRentalDto[] $rentals
+     * @param  ActiveRentalDto[]  $rentals
      */
     public function __construct(
         public array $rentals,
-    ) {
-    }
+    ) {}
 
     public function toArray(): array
     {

@@ -9,7 +9,7 @@ use Fleet\Domain\Category;
 final readonly class CategoryDto
 {
     /**
-     * @param array<CategoryDto> $children
+     * @param  array<CategoryDto>  $children
      */
     public function __construct(
         public string $id,
@@ -18,8 +18,7 @@ final readonly class CategoryDto
         public ?string $description,
         public ?string $parentId,
         public array $children = [],
-    ) {
-    }
+    ) {}
 
     public static function fromCategory(Category $category, array $children = []): self
     {

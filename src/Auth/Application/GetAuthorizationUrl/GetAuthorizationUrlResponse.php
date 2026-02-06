@@ -9,8 +9,7 @@ final readonly class GetAuthorizationUrlResponse
     public function __construct(
         public string $authorizationUrl,
         public string $state,
-    ) {
-    }
+    ) {}
 
     public function toArray(): array
     {

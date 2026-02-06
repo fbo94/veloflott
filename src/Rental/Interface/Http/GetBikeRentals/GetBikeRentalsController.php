@@ -12,8 +12,7 @@ final readonly class GetBikeRentalsController
 {
     public function __construct(
         private GetBikeRentalsHandler $handler,
-    ) {
-    }
+    ) {}
 
     public function __invoke(GetBikeRentalsRequest $request, string $bikeId): JsonResponse
     {

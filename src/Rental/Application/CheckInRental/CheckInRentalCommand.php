@@ -10,12 +10,11 @@ namespace Rental\Application\CheckInRental;
 final readonly class CheckInRentalCommand
 {
     /**
-     * @param BikeCheckInData[] $bikesCheckIn
+     * @param  BikeCheckInData[]  $bikesCheckIn
      */
     public function __construct(
         public string $rentalId,
         public array $bikesCheckIn,
         public ?string $customerSignature = null,
-    ) {
-    }
+    ) {}
 }

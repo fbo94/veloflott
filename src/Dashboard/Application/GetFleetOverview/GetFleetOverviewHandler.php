@@ -16,8 +16,7 @@ final readonly class GetFleetOverviewHandler
         private RentalRepositoryInterface $rentalRepository,
         private MaintenanceRepositoryInterface $maintenanceRepository,
         private CustomerRepositoryInterface $customerRepository,
-    ) {
-    }
+    ) {}
 
     public function handle(): GetFleetOverviewResponse
     {

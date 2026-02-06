@@ -12,6 +12,5 @@ final readonly class ListMaintenancesQuery
         public ?string $priority = null,
         public ?string $dateFrom = null,
         public ?string $dateTo = null,
-    ) {
-    }
+    ) {}
 }

@@ -10,6 +10,5 @@ final readonly class BikeItemData
         public string $bikeId,
         public float $dailyRate,
         public int $quantity = 1,
-    ) {
-    }
+    ) {}
 }

@@ -24,8 +24,8 @@ final class PricingRate
         ?\DateTimeImmutable $createdAt = null,
         ?\DateTimeImmutable $updatedAt = null,
     ) {
-        $this->createdAt = $createdAt ?? new \DateTimeImmutable();
-        $this->updatedAt = $updatedAt ?? new \DateTimeImmutable();
+        $this->createdAt = $createdAt ?? new \DateTimeImmutable;
+        $this->updatedAt = $updatedAt ?? new \DateTimeImmutable;
         $this->validatePrice($price);
     }
 
@@ -119,7 +119,7 @@ final class PricingRate
         $this->validatePrice($price);
 
         $this->price = $price;
-        $this->updatedAt = new \DateTimeImmutable();
+        $this->updatedAt = new \DateTimeImmutable;
 
         return $this;
     }
@@ -131,19 +131,19 @@ final class PricingRate
         }
 
         $this->isActive = true;
-        $this->updatedAt = new \DateTimeImmutable();
+        $this->updatedAt = new \DateTimeImmutable;
 
         return $this;
     }
 
     public function deactivate(): self
     {
-        if (!$this->isActive) {
+        if (! $this->isActive) {
             throw new \DomainException('Pricing rate is already inactive');
         }
 
         $this->isActive = false;
-        $this->updatedAt = new \DateTimeImmutable();
+        $this->updatedAt = new \DateTimeImmutable;
 
         return $this;
     }

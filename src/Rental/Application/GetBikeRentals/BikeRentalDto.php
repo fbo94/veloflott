@@ -20,8 +20,7 @@ final readonly class BikeRentalDto
         public string $depositStatus,
         public ?float $depositRetained,
         public ?string $cancellationReason,
-    ) {
-    }
+    ) {}
 
     public static function fromDomain(Rental $rental): self
     {

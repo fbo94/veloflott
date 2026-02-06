@@ -14,8 +14,7 @@ final class GetBikeMaintenanceHistoryController
 {
     public function __construct(
         private readonly GetBikeMaintenanceHistoryHandler $handler,
-    ) {
-    }
+    ) {}
 
     /**
      * @throws BikeException

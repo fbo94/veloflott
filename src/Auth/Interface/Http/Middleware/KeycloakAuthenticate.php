@@ -24,8 +24,7 @@ final class KeycloakAuthenticate
     public function __construct(
         private readonly KeycloakTokenValidator $tokenValidator,
         private readonly UserSyncService $userSyncService,
-    ) {
-    }
+    ) {}
 
     public function handle(Request $request, Closure $next): Response
     {
@@ -47,7 +46,7 @@ final class KeycloakAuthenticate
         $user = $this->userSyncService->sync($payload);
 
         // 4. Vérifier que l'utilisateur est actif
-        if (!$user->isActive()) {
+        if (! $user->isActive()) {
             return $this->forbiddenResponse('User deactivated');
         }
 
@@ -61,7 +60,7 @@ final class KeycloakAuthenticate
     {
         $header = $request->header('Authorization', '');
 
-        if (!str_starts_with($header, 'Bearer ')) {
+        if (! str_starts_with($header, 'Bearer ')) {
             return null;
         }
 

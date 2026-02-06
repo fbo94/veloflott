@@ -7,7 +7,7 @@ namespace Fleet\Application\UpdateBike;
 final readonly class UpdateBikeCommand
 {
     /**
-     * @param string[] $photos
+     * @param  string[]  $photos
      */
     public function __construct(
         public string $bikeId,
@@ -27,6 +27,5 @@ final readonly class UpdateBikeCommand
         public ?string $purchaseDate,
         public ?string $notes,
         public array $photos,
-    ) {
-    }
+    ) {}
 }

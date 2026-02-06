@@ -12,12 +12,11 @@ final class ListBrandsController
 {
     public function __construct(
         private readonly ListBrandsHandler $handler,
-    ) {
-    }
+    ) {}
 
     public function __invoke(): JsonResponse
     {
-        $query = new ListBrandsQuery();
+        $query = new ListBrandsQuery;
 
         $response = $this->handler->handle($query);
 

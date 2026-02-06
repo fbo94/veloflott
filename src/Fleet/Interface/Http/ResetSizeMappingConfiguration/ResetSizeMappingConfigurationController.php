@@ -12,13 +12,12 @@ final readonly class ResetSizeMappingConfigurationController
 {
     public function __construct(
         private ResetSizeMappingConfigurationHandler $handler,
-    ) {
-    }
+    ) {}
 
     public function __invoke(): JsonResponse
     {
         try {
-            $command = new ResetSizeMappingConfigurationCommand();
+            $command = new ResetSizeMappingConfigurationCommand;
             $response = $this->handler->handle($command);
 
             return response()->json($response->toArray(), 200);

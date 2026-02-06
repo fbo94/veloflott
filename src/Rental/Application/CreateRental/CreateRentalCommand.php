@@ -9,8 +9,8 @@ use Rental\Domain\RentalDuration;
 final readonly class CreateRentalCommand
 {
     /**
-     * @param BikeItemData[] $bikeItems
-     * @param EquipmentItemData[] $equipmentItems
+     * @param  BikeItemData[]  $bikeItems
+     * @param  EquipmentItemData[]  $equipmentItems
      */
     public function __construct(
         public string $customerId,
@@ -20,6 +20,5 @@ final readonly class CreateRentalCommand
         public float $depositAmount,
         public array $bikeItems,
         public array $equipmentItems,
-    ) {
-    }
+    ) {}
 }

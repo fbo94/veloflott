@@ -17,8 +17,7 @@ final readonly class DurationDefinitionDto
         public bool $isCustom,
         public int $sortOrder,
         public bool $isActive,
-    ) {
-    }
+    ) {}
 
     public static function fromDomain(DurationDefinition $duration): self
     {

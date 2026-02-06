@@ -36,8 +36,7 @@ final readonly class GetBikeDetailResponse
         public ?string $retiredAt,
         public string $createdAt,
         public string $updatedAt,
-    ) {
-    }
+    ) {}
 
     public static function fromEloquentModel(BikeEloquentModel $bikeModel): self
     {
@@ -85,7 +84,7 @@ final readonly class GetBikeDetailResponse
             'internal_number' => $this->internalNumber,
             'model_id' => $this->modelId,
             'brand' => [
-               'id' => $this->brandId,
+                'id' => $this->brandId,
                 'name' => $this->brand,
             ],
             'model' => [

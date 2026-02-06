@@ -17,7 +17,7 @@ final class RentalPricingSnapshot
     private \DateTimeImmutable $updatedAt;
 
     /**
-     * @param array<string, mixed> $discountsApplied
+     * @param  array<string, mixed>  $discountsApplied
      */
     public function __construct(
         private readonly string $id,
@@ -34,14 +34,14 @@ final class RentalPricingSnapshot
         ?\DateTimeImmutable $createdAt = null,
         ?\DateTimeImmutable $updatedAt = null,
     ) {
-        $this->createdAt = $createdAt ?? new \DateTimeImmutable();
-        $this->updatedAt = $updatedAt ?? new \DateTimeImmutable();
+        $this->createdAt = $createdAt ?? new \DateTimeImmutable;
+        $this->updatedAt = $updatedAt ?? new \DateTimeImmutable;
         $this->validatePrices($basePrice, $finalPrice);
         $this->validateDays($days);
     }
 
     /**
-     * @param array<string, mixed> $discountsApplied
+     * @param  array<string, mixed>  $discountsApplied
      */
     public static function create(
         string $id,
@@ -66,7 +66,7 @@ final class RentalPricingSnapshot
             durationId: $durationId,
             days: $days,
             pricePerDay: $pricePerDay,
-            calculatedAt: new \DateTimeImmutable(),
+            calculatedAt: new \DateTimeImmutable,
         );
     }
 
@@ -167,7 +167,7 @@ final class RentalPricingSnapshot
      */
     public function hasDiscounts(): bool
     {
-        return !empty($this->discountsApplied);
+        return ! empty($this->discountsApplied);
     }
 
     /**

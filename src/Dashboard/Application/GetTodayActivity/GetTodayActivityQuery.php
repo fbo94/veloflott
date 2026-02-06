@@ -8,6 +8,5 @@ final readonly class GetTodayActivityQuery
 {
     public function __construct(
         public ?\DateTimeImmutable $date = null,
-    ) {
-    }
+    ) {}
 }

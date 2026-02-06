@@ -13,8 +13,7 @@ final readonly class UpdateModelController
 {
     public function __construct(
         private UpdateModelHandler $handler,
-    ) {
-    }
+    ) {}
 
     public function __invoke(string $id, UpdateModelRequest $request): JsonResponse
     {

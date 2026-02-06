@@ -13,8 +13,7 @@ final class ListRentalsHandler
     public function __construct(
         private readonly CustomerRepositoryInterface $customers,
         private readonly BikeRepositoryInterface $bikes,
-    ) {
-    }
+    ) {}
 
     public function handle(ListRentalsQuery $query): ListRentalsResponse
     {

@@ -7,7 +7,7 @@ namespace Maintenance\Application\CompleteMaintenance;
 final readonly class CompleteMaintenanceCommand
 {
     /**
-     * @param array<int, string> $photos
+     * @param  array<int, string>  $photos
      */
     public function __construct(
         public string $maintenanceId,
@@ -15,6 +15,5 @@ final readonly class CompleteMaintenanceCommand
         public ?string $partsReplaced = null,
         public ?int $cost = null,
         public array $photos = [],
-    ) {
-    }
+    ) {}
 }

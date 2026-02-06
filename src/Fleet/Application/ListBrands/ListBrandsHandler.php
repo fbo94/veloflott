@@ -10,8 +10,7 @@ final class ListBrandsHandler
 {
     public function __construct(
         private readonly BrandRepositoryInterface $brands,
-    ) {
-    }
+    ) {}
 
     public function handle(ListBrandsQuery $query): ListBrandsResponse
     {

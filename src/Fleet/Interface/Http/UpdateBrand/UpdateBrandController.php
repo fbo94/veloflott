@@ -13,8 +13,7 @@ final readonly class UpdateBrandController
 {
     public function __construct(
         private UpdateBrandHandler $handler,
-    ) {
-    }
+    ) {}
 
     public function __invoke(string $id, UpdateBrandRequest $request): JsonResponse
     {

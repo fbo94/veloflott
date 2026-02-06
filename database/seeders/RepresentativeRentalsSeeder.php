@@ -4,12 +4,12 @@ namespace Database\Seeders;
 
 use Customer\Infrastructure\Persistence\Models\CustomerEloquentModel;
 use Fleet\Infrastructure\Persistence\Models\BikeEloquentModel;
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 use Rental\Domain\BikeCondition;
 use Rental\Domain\DepositStatus;
 use Rental\Infrastructure\Persistence\Models\RentalEloquentModel;
 use Rental\Infrastructure\Persistence\Models\RentalItemEloquentModel;
-use Illuminate\Database\Seeder;
-use Illuminate\Support\Str;
 
 class RepresentativeRentalsSeeder extends Seeder
 {
@@ -30,6 +30,7 @@ class RepresentativeRentalsSeeder extends Seeder
 
         if ($customers->isEmpty() || $bikes->isEmpty()) {
             $this->command->error('Please seed customers and bikes first!');
+
             return;
         }
 
@@ -46,7 +47,7 @@ class RepresentativeRentalsSeeder extends Seeder
 
             // Dates dans le passé (terminées il y a 1 à 60 jours)
             $completedDaysAgo = rand(1, 60);
-            $rentalDurationDays = match($duration) {
+            $rentalDurationDays = match ($duration) {
                 'half_day' => 0.5,
                 'full_day' => 1,
                 'two_days' => 2,
@@ -94,7 +95,7 @@ class RepresentativeRentalsSeeder extends Seeder
 
             // Dates prévues dans le futur ou récent passé
             $startDate = $now->copy()->addDays(rand(-5, 15));
-            $rentalDurationDays = match($duration) {
+            $rentalDurationDays = match ($duration) {
                 'half_day' => 0.5,
                 'full_day' => 1,
                 'two_days' => 2,
@@ -148,7 +149,7 @@ class RepresentativeRentalsSeeder extends Seeder
             // Commencé il y a quelques jours, retour prévu dans le futur
             $startedDaysAgo = rand(1, 5);
             $startDate = $now->copy()->subDays($startedDaysAgo);
-            $rentalDurationDays = match($duration) {
+            $rentalDurationDays = match ($duration) {
                 'half_day' => 0.5,
                 'full_day' => 1,
                 'two_days' => 2,
@@ -193,7 +194,7 @@ class RepresentativeRentalsSeeder extends Seeder
 
             // Retour prévu dans le passé (retard de 1 à 7 jours)
             $overdueDays = rand(1, 7);
-            $rentalDurationDays = match($duration) {
+            $rentalDurationDays = match ($duration) {
                 'half_day' => 0.5,
                 'full_day' => 1,
                 'two_days' => 2,
@@ -241,7 +242,7 @@ class RepresentativeRentalsSeeder extends Seeder
 
             // Retour prévu dans exactement 3 jours
             $expectedReturnDate = $now->copy()->addDays(3);
-            $rentalDurationDays = match($duration) {
+            $rentalDurationDays = match ($duration) {
                 'half_day' => 0.5,
                 'full_day' => 1,
                 'two_days' => 2,

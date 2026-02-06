@@ -12,6 +12,5 @@ final readonly class ToggleUserStatusCommand
     public function __construct(
         public string $userId,
         public string $currentUserId,
-    ) {
-    }
+    ) {}
 }

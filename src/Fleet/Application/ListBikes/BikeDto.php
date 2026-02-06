@@ -9,7 +9,7 @@ use Fleet\Infrastructure\Persistence\Models\BikeEloquentModel;
 final readonly class BikeDto
 {
     /**
-     * @param string[] $photos
+     * @param  string[]  $photos
      */
     public function __construct(
         public string $id,
@@ -27,8 +27,7 @@ final readonly class BikeDto
         public ?int $year,
         public ?string $color,
         public array $photos,
-    ) {
-    }
+    ) {}
 
     public static function fromEloquentModel(BikeEloquentModel $bikeModel): self
     {

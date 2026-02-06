@@ -12,8 +12,7 @@ final readonly class DeleteBrandController
 {
     public function __construct(
         private DeleteBrandHandler $handler,
-    ) {
-    }
+    ) {}
 
     public function __invoke(string $id): JsonResponse
     {

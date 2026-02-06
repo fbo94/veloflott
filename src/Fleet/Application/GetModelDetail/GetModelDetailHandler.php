@@ -12,8 +12,7 @@ final readonly class GetModelDetailHandler
     public function __construct(
         private ModelRepositoryInterface $modelRepository,
         private BrandRepositoryInterface $brandRepository,
-    ) {
-    }
+    ) {}
 
     public function handle(GetModelDetailQuery $query): GetModelDetailResponse
     {

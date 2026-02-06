@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class BikeBrandsSeeder extends Seeder
@@ -14,8 +13,9 @@ class BikeBrandsSeeder extends Seeder
     {
         $csvFile = database_path('seeders/data/bike_brands.csv');
 
-        if (!file_exists($csvFile)) {
+        if (! file_exists($csvFile)) {
             $this->command->error("CSV file not found: {$csvFile}");
+
             return;
         }
 

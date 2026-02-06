@@ -15,8 +15,7 @@ final class AuthorizeController
 {
     public function __construct(
         private readonly AuthorizeHandler $handler,
-    ) {
-    }
+    ) {}
 
     public function __invoke(AuthorizeRequest $request): JsonResponse
     {

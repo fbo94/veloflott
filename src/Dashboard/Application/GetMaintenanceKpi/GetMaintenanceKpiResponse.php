@@ -7,8 +7,8 @@ namespace Dashboard\Application\GetMaintenanceKpi;
 final readonly class GetMaintenanceKpiResponse
 {
     /**
-     * @param array{from: string, to: string, days: int} $period
-     * @param array<string, int> $byStatus
+     * @param  array{from: string, to: string, days: int}  $period
+     * @param  array<string, int>  $byStatus
      */
     public function __construct(
         public array $period,
@@ -17,8 +17,7 @@ final readonly class GetMaintenanceKpiResponse
         public int $totalTodo,
         public int $total,
         public array $byStatus,
-    ) {
-    }
+    ) {}
 
     /**
      * @return array<string, mixed>

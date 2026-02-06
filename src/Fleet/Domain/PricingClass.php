@@ -25,8 +25,8 @@ final class PricingClass
         ?\DateTimeImmutable $createdAt = null,
         ?\DateTimeImmutable $updatedAt = null,
     ) {
-        $this->createdAt = $createdAt ?? new \DateTimeImmutable();
-        $this->updatedAt = $updatedAt ?? new \DateTimeImmutable();
+        $this->createdAt = $createdAt ?? new \DateTimeImmutable;
+        $this->updatedAt = $updatedAt ?? new \DateTimeImmutable;
         $this->validateCode($code);
         $this->validateLabel($label);
         if ($color !== null) {
@@ -129,7 +129,7 @@ final class PricingClass
         $this->description = $description;
         $this->color = $color;
         $this->sortOrder = $sortOrder;
-        $this->updatedAt = new \DateTimeImmutable();
+        $this->updatedAt = new \DateTimeImmutable;
 
         return $this;
     }
@@ -141,19 +141,19 @@ final class PricingClass
         }
 
         $this->isActive = true;
-        $this->updatedAt = new \DateTimeImmutable();
+        $this->updatedAt = new \DateTimeImmutable;
 
         return $this;
     }
 
     public function deactivate(): self
     {
-        if (!$this->isActive) {
+        if (! $this->isActive) {
             throw new \DomainException('Pricing class is already inactive');
         }
 
         $this->isActive = false;
-        $this->updatedAt = new \DateTimeImmutable();
+        $this->updatedAt = new \DateTimeImmutable;
 
         return $this;
     }
@@ -166,7 +166,7 @@ final class PricingClass
             throw new \DomainException('Pricing class code cannot be empty');
         }
 
-        if (!preg_match('/^[a-z0-9_]+$/', $code)) {
+        if (! preg_match('/^[a-z0-9_]+$/', $code)) {
             throw new \DomainException('Pricing class code must contain only lowercase letters, numbers and underscores');
         }
 
@@ -188,7 +188,7 @@ final class PricingClass
 
     private function validateColor(?string $color): void
     {
-        if ($color !== null && !preg_match('/^#[0-9A-F]{6}$/i', $color)) {
+        if ($color !== null && ! preg_match('/^#[0-9A-F]{6}$/i', $color)) {
             throw new \DomainException('Pricing class color must be a valid hex color code (e.g., #3B82F6)');
         }
     }

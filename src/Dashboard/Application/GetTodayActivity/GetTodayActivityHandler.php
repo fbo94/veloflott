@@ -12,13 +12,12 @@ final readonly class GetTodayActivityHandler
     public function __construct(
         private RentalRepositoryInterface $rentalRepository,
         private MaintenanceRepositoryInterface $maintenanceRepository,
-    ) {
-    }
+    ) {}
 
     public function handle(GetTodayActivityQuery $query): GetTodayActivityResponse
     {
         // Par défaut : aujourd'hui
-        $date = $query->date ?? new \DateTimeImmutable();
+        $date = $query->date ?? new \DateTimeImmutable;
 
         // Locations démarrées aujourd'hui
         $rentalsStartedToday = $this->rentalRepository->findStartedOnDate($date);

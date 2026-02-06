@@ -14,8 +14,7 @@ final readonly class UpdateRateResponse
         public ?string $bikeId,
         public string $duration,
         public float $price,
-    ) {
-    }
+    ) {}
 
     public static function fromRate(Rate $rate): self
     {

@@ -16,8 +16,7 @@ final class GetCurrentUserController
 {
     public function __construct(
         private readonly GetCurrentUserHandler $handler,
-    ) {
-    }
+    ) {}
 
     public function __invoke(Request $request): JsonResponse
     {

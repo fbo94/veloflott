@@ -8,6 +8,5 @@ final readonly class GetRentalDetailQuery
 {
     public function __construct(
         public string $rentalId,
-    ) {
-    }
+    ) {}
 }

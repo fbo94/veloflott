@@ -35,8 +35,8 @@ test('marks customer as risky when not already risky', function () {
         notes: null,
         photos: [],
         isRisky: false,
-        createdAt: new \DateTimeImmutable(),
-        updatedAt: new \DateTimeImmutable(),
+        createdAt: new \DateTimeImmutable,
+        updatedAt: new \DateTimeImmutable,
     );
 
     $this->repository->shouldReceive('findById')
@@ -79,8 +79,8 @@ test('unmarks customer as risky when already risky', function () {
         notes: null,
         photos: [],
         isRisky: true,
-        createdAt: new \DateTimeImmutable(),
-        updatedAt: new \DateTimeImmutable(),
+        createdAt: new \DateTimeImmutable,
+        updatedAt: new \DateTimeImmutable,
     );
 
     $this->repository->shouldReceive('findById')
@@ -141,8 +141,8 @@ test('saves customer after toggling flag', function () {
         notes: null,
         photos: [],
         isRisky: false,
-        createdAt: new \DateTimeImmutable(),
-        updatedAt: new \DateTimeImmutable(),
+        createdAt: new \DateTimeImmutable,
+        updatedAt: new \DateTimeImmutable,
     );
 
     $this->repository->shouldReceive('findById')
@@ -181,8 +181,8 @@ test('toggles flag multiple times correctly', function () {
         notes: null,
         photos: [],
         isRisky: false,
-        createdAt: new \DateTimeImmutable(),
-        updatedAt: new \DateTimeImmutable(),
+        createdAt: new \DateTimeImmutable,
+        updatedAt: new \DateTimeImmutable,
     );
 
     // First toggle: false -> true

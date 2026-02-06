@@ -12,8 +12,7 @@ final readonly class BrandDto
         public string $id,
         public string $name,
         public ?string $logoUrl,
-    ) {
-    }
+    ) {}
 
     public static function fromBrand(Brand $brand): self
     {

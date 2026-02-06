@@ -13,7 +13,7 @@ namespace Fleet\Domain;
 final readonly class PriceCalculation
 {
     /**
-     * @param AppliedDiscount[] $appliedDiscounts
+     * @param  AppliedDiscount[]  $appliedDiscounts
      */
     public function __construct(
         public float $basePrice,
@@ -71,7 +71,7 @@ final readonly class PriceCalculation
      */
     public function hasDiscounts(): bool
     {
-        return !empty($this->appliedDiscounts);
+        return ! empty($this->appliedDiscounts);
     }
 
     /**

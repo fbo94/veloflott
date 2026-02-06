@@ -12,8 +12,7 @@ final readonly class UpdateCategoryResponse
         public string $id,
         public string $name,
         public string $description,
-    ) {
-    }
+    ) {}
 
     public static function fromCategory(Category $category): self
     {

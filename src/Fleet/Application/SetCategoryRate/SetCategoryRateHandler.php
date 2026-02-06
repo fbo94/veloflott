@@ -15,8 +15,7 @@ final class SetCategoryRateHandler
     public function __construct(
         private readonly RateRepositoryInterface $rates,
         private readonly CategoryRepositoryInterface $categories,
-    ) {
-    }
+    ) {}
 
     public function handle(SetCategoryRateCommand $command): SetCategoryRateResponse
     {

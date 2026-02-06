@@ -13,8 +13,7 @@ final readonly class DeleteBikePhotoController
 {
     public function __construct(
         private DeleteBikePhotoHandler $handler,
-    ) {
-    }
+    ) {}
 
     public function __invoke(string $id, DeleteBikePhotoRequest $request): JsonResponse
     {

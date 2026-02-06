@@ -4,10 +4,10 @@ namespace Database\Seeders;
 
 use Customer\Infrastructure\Persistence\Models\CustomerEloquentModel;
 use Fleet\Infrastructure\Persistence\Models\BikeEloquentModel;
-use Rental\Infrastructure\Persistence\Models\RentalEloquentModel;
-use Rental\Infrastructure\Persistence\Models\RentalItemEloquentModel;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
+use Rental\Infrastructure\Persistence\Models\RentalEloquentModel;
+use Rental\Infrastructure\Persistence\Models\RentalItemEloquentModel;
 
 class DamagedRentalsSeeder extends Seeder
 {
@@ -24,6 +24,7 @@ class DamagedRentalsSeeder extends Seeder
 
         if ($customers->isEmpty() || $bikes->isEmpty()) {
             $this->command->error('Please seed customers and bikes first!');
+
             return;
         }
 
@@ -31,53 +32,52 @@ class DamagedRentalsSeeder extends Seeder
         $rentals = [];
 
         // 1. LOCATION AVEC DÉGÂT MAJEUR (1 location)
-        {
-            $customer = $customers->random();
-            $bike = $bikes->random();
-            $duration = 'week';
-            $rentalDurationDays = 7;
 
-            // Terminée il y a 5 jours
-            $completedDaysAgo = 5;
-            $startDate = $now->copy()->subDays($completedDaysAgo + $rentalDurationDays);
-            $expectedReturnDate = $startDate->copy()->addDays($rentalDurationDays);
-            $actualReturnDate = $expectedReturnDate->copy()->addHours(3);
+        $customer = $customers->random();
+        $bike = $bikes->random();
+        $duration = 'week';
+        $rentalDurationDays = 7;
 
-            $dailyRate = 75.00;
-            $totalAmount = $dailyRate * $rentalDurationDays;
-            $depositAmount = 500.00;
-            $depositRetained = 450.00; // Presque toute la caution retenue
+        // Terminée il y a 5 jours
+        $completedDaysAgo = 5;
+        $startDate = $now->copy()->subDays($completedDaysAgo + $rentalDurationDays);
+        $expectedReturnDate = $startDate->copy()->addDays($rentalDurationDays);
+        $actualReturnDate = $expectedReturnDate->copy()->addHours(3);
 
-            $rentals[] = [
-                'rental' => [
-                    'id' => Str::uuid()->toString(),
-                    'customer_id' => $customer->id,
-                    'start_date' => $startDate,
-                    'expected_return_date' => $expectedReturnDate,
-                    'actual_return_date' => $actualReturnDate,
-                    'duration' => $duration,
-                    'deposit_amount' => $depositAmount,
-                    'total_amount' => $totalAmount,
-                    'discount_amount' => 0,
-                    'tax_rate' => 20.00,
-                    'tax_amount' => $totalAmount * 0.20,
-                    'total_with_tax' => $totalAmount * 1.20,
-                    'status' => 'completed',
-                    'deposit_status' => 'partial', // Partiellement retenue
-                    'deposit_retained' => $depositRetained,
-                    'cancellation_reason' => null,
-                    'created_at' => $startDate->copy()->subHours(12),
-                    'updated_at' => $actualReturnDate,
-                ],
-                'item' => [
-                    'bike_id' => $bike->id,
-                    'daily_rate' => $dailyRate,
-                    'return_condition' => 'major_damage',
-                    'damage_description' => 'DÉGÂTS MAJEURS : Cadre fissuré au niveau du tube diagonal (impact violent), patte de dérailleur arrière arrachée, roue arrière voilée (rayons cassés), manette de frein avant cassée. Vélo non roulable en l\'état. Nécessite réparations importantes ou remplacement du cadre. Client a reconnu avoir chuté lourdement dans une descente technique.',
-                ],
-                'type' => 'MAJOR',
-            ];
-        }
+        $dailyRate = 75.00;
+        $totalAmount = $dailyRate * $rentalDurationDays;
+        $depositAmount = 500.00;
+        $depositRetained = 450.00; // Presque toute la caution retenue
+
+        $rentals[] = [
+            'rental' => [
+                'id' => Str::uuid()->toString(),
+                'customer_id' => $customer->id,
+                'start_date' => $startDate,
+                'expected_return_date' => $expectedReturnDate,
+                'actual_return_date' => $actualReturnDate,
+                'duration' => $duration,
+                'deposit_amount' => $depositAmount,
+                'total_amount' => $totalAmount,
+                'discount_amount' => 0,
+                'tax_rate' => 20.00,
+                'tax_amount' => $totalAmount * 0.20,
+                'total_with_tax' => $totalAmount * 1.20,
+                'status' => 'completed',
+                'deposit_status' => 'partial', // Partiellement retenue
+                'deposit_retained' => $depositRetained,
+                'cancellation_reason' => null,
+                'created_at' => $startDate->copy()->subHours(12),
+                'updated_at' => $actualReturnDate,
+            ],
+            'item' => [
+                'bike_id' => $bike->id,
+                'daily_rate' => $dailyRate,
+                'return_condition' => 'major_damage',
+                'damage_description' => 'DÉGÂTS MAJEURS : Cadre fissuré au niveau du tube diagonal (impact violent), patte de dérailleur arrière arrachée, roue arrière voilée (rayons cassés), manette de frein avant cassée. Vélo non roulable en l\'état. Nécessite réparations importantes ou remplacement du cadre. Client a reconnu avoir chuté lourdement dans une descente technique.',
+            ],
+            'type' => 'MAJOR',
+        ];
 
         // 2. 5 LOCATIONS AVEC DÉGÂTS MINEURS
         $minorDamages = [
@@ -107,7 +107,7 @@ class DamagedRentalsSeeder extends Seeder
             $customer = $customers->random();
             $bike = $bikes->random();
             $duration = ['two_days', 'three_days', 'week'][array_rand(['two_days', 'three_days', 'week'])];
-            $rentalDurationDays = match($duration) {
+            $rentalDurationDays = match ($duration) {
                 'two_days' => 2,
                 'three_days' => 3,
                 'week' => 7,

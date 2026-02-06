@@ -10,8 +10,7 @@ final class ListBikesHandler
 {
     public function __construct(
         private readonly BikeRepositoryInterface $bikes,
-    ) {
-    }
+    ) {}
 
     public function handle(ListBikesQuery $query): ListBikesResponse
     {

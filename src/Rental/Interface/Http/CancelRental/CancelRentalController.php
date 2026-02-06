@@ -14,8 +14,7 @@ final class CancelRentalController
 {
     public function __construct(
         private readonly CancelRentalHandler $handler,
-    ) {
-    }
+    ) {}
 
     public function __invoke(string $id, CancelRentalRequest $request): JsonResponse
     {

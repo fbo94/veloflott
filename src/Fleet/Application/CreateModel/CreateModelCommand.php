@@ -9,6 +9,5 @@ final readonly class CreateModelCommand
     public function __construct(
         public string $name,
         public string $brandId,
-    ) {
-    }
+    ) {}
 }

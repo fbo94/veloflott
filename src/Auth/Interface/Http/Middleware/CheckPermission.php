@@ -44,7 +44,7 @@ final class CheckPermission
         }
 
         // Vérifier la permission
-        if (!$user->hasPermission($permissionEnum)) {
+        if (! $user->hasPermission($permissionEnum)) {
             return response()->json([
                 'error' => [
                     'code' => 'FORBIDDEN',

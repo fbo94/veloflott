@@ -7,7 +7,7 @@ namespace Rental\Application\ListRentals;
 final readonly class ListRentalsResponse
 {
     /**
-     * @param RentalDto[] $rentals
+     * @param  RentalDto[]  $rentals
      */
     public function __construct(
         public array $rentals,
@@ -15,8 +15,7 @@ final readonly class ListRentalsResponse
         public int $currentPage,
         public int $perPage,
         public int $lastPage,
-    ) {
-    }
+    ) {}
 
     public function toArray(): array
     {

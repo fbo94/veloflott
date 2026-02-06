@@ -10,8 +10,7 @@ final readonly class DeleteBrandHandler
 {
     public function __construct(
         private BrandRepositoryInterface $brandRepository,
-    ) {
-    }
+    ) {}
 
     public function handle(DeleteBrandCommand $command): void
     {

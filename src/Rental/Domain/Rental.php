@@ -10,8 +10,8 @@ namespace Rental\Domain;
 final class Rental
 {
     /**
-     * @param RentalItem[] $items
-     * @param RentalEquipment[] $equipments
+     * @param  RentalItem[]  $items
+     * @param  RentalEquipment[]  $equipments
      */
     public function __construct(
         private readonly string $id,
@@ -22,16 +22,16 @@ final class Rental
         private readonly RentalDuration $duration,
         private float $depositAmount,
         private float $totalAmount,
-        private float $discountAmount = 0.0,
-        private float $taxRate = 20.0,
-        private float $taxAmount = 0.0,
-        private float $totalWithTax = 0.0,
+        private float $discountAmount,
+        private float $taxRate,
+        private float $taxAmount,
+        private float $totalWithTax,
         private RentalStatus $status,
         private array $items,
         private array $equipments,
-        private ?DepositStatus $depositStatus = null,
-        private ?float $depositRetained = null,
-        private ?string $cancellationReason = null,
+        private ?DepositStatus $depositStatus,
+        private ?float $depositRetained,
+        private ?string $cancellationReason,
         private readonly \DateTimeImmutable $createdAt,
         private \DateTimeImmutable $updatedAt,
     ) {
@@ -153,20 +153,20 @@ final class Rental
 
     public function isLate(): bool
     {
-        if (!$this->isActive()) {
+        if (! $this->isActive()) {
             return false;
         }
 
-        return new \DateTimeImmutable() > $this->expectedReturnDate;
+        return new \DateTimeImmutable > $this->expectedReturnDate;
     }
 
     public function getDelayInHours(): int
     {
-        if (!$this->isLate()) {
+        if (! $this->isLate()) {
             return 0;
         }
 
-        $now = new \DateTimeImmutable();
+        $now = new \DateTimeImmutable;
 
         return (int) (($now->getTimestamp() - $this->expectedReturnDate->getTimestamp()) / 3600);
     }
@@ -201,7 +201,7 @@ final class Rental
         // Recalculer la TVA et le total TTC
         $this->recalculateTax();
 
-        $this->updatedAt = new \DateTimeImmutable();
+        $this->updatedAt = new \DateTimeImmutable;
     }
 
     public function recalculateTax(): void
@@ -215,19 +215,19 @@ final class Rental
     {
         $this->discountAmount = $discountAmount;
         $this->recalculateTax();
-        $this->updatedAt = new \DateTimeImmutable();
+        $this->updatedAt = new \DateTimeImmutable;
     }
 
     // ===== Actions =====
 
     public function start(): void
     {
-        if (!$this->status->canStart()) {
+        if (! $this->status->canStart()) {
             throw new \DomainException('Cannot start a rental that is not pending');
         }
 
         $this->status = RentalStatus::ACTIVE;
-        $this->updatedAt = new \DateTimeImmutable();
+        $this->updatedAt = new \DateTimeImmutable;
     }
 
     public function checkOut(
@@ -235,7 +235,7 @@ final class Rental
         float $lateFee = 0.0,
         ?float $depositRetained = null,
     ): void {
-        if (!$this->status->canCheckOut()) {
+        if (! $this->status->canCheckOut()) {
             throw new \DomainException('Cannot check-out a rental that is not active');
         }
 
@@ -259,19 +259,19 @@ final class Rental
             $this->depositRetained = $depositRetained;
         }
 
-        $this->updatedAt = new \DateTimeImmutable();
+        $this->updatedAt = new \DateTimeImmutable;
     }
 
     public function cancel(string $reason): void
     {
-        if (!$this->status->canCancel()) {
+        if (! $this->status->canCancel()) {
             throw new \DomainException('Cannot cancel a rental that is not pending');
         }
 
         $this->status = RentalStatus::CANCELLED;
         $this->cancellationReason = $reason;
         $this->depositStatus = DepositStatus::RELEASED;
-        $this->updatedAt = new \DateTimeImmutable();
+        $this->updatedAt = new \DateTimeImmutable;
     }
 
     public function addItem(RentalItem $item): void

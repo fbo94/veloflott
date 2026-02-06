@@ -15,9 +15,9 @@ return new class extends Migration
             $table->uuid('pricing_class_id')->nullable()->after('category_id');
 
             $table->foreign('pricing_class_id')
-                  ->references('id')
-                  ->on('pricing_classes')
-                  ->onDelete('restrict');
+                ->references('id')
+                ->on('pricing_classes')
+                ->onDelete('restrict');
 
             $table->index('pricing_class_id');
         });

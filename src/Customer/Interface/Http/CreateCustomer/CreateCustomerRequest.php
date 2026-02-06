@@ -36,7 +36,7 @@ final class CreateCustomerRequest extends FormRequest
 
     protected function prepareForValidation(): void
     {
-        if (!$this->has('photos')) {
+        if (! $this->has('photos')) {
             $this->merge(['photos' => []]);
         }
     }

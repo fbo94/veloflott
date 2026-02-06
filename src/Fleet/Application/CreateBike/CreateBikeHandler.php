@@ -22,8 +22,7 @@ final class CreateBikeHandler
         private readonly ModelRepositoryInterface $models,
         private readonly BrandRepositoryInterface $brands,
         private readonly CategoryRepositoryInterface $categories,
-    ) {
-    }
+    ) {}
 
     public function handle(CreateBikeCommand $command): CreateBikeResponse
     {
@@ -66,6 +65,7 @@ final class CreateBikeHandler
             frameSize: $frameSize,
             status: BikeStatus::AVAILABLE,
             pricingTier: PricingTier::STANDARD, // Par défaut, tous les vélos sont en tier standard
+            pricingClassId: null, // Sera assignée plus tard lors de la configuration des tarifs
             year: $command->year,
             serialNumber: $command->serialNumber,
             color: $command->color,

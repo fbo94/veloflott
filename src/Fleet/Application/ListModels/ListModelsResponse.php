@@ -7,12 +7,11 @@ namespace Fleet\Application\ListModels;
 final readonly class ListModelsResponse
 {
     /**
-     * @param array<ModelDto> $models
+     * @param  array<ModelDto>  $models
      */
     public function __construct(
         public array $models,
-    ) {
-    }
+    ) {}
 
     public function toArray(): array
     {

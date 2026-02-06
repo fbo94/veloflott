@@ -39,8 +39,8 @@ test('can annotate customer with annotation and mark as risky', function () {
         notes: null,
         photos: [],
         isRisky: false,
-        createdAt: new \DateTimeImmutable(),
-        updatedAt: new \DateTimeImmutable(),
+        createdAt: new \DateTimeImmutable,
+        updatedAt: new \DateTimeImmutable,
     );
 
     $this->repository->shouldReceive('findById')
@@ -89,8 +89,8 @@ test('can annotate customer without marking as risky', function () {
         notes: null,
         photos: [],
         isRisky: true,
-        createdAt: new \DateTimeImmutable(),
-        updatedAt: new \DateTimeImmutable(),
+        createdAt: new \DateTimeImmutable,
+        updatedAt: new \DateTimeImmutable,
     );
 
     $this->repository->shouldReceive('findById')
@@ -138,8 +138,8 @@ test('can clear annotation', function () {
         notes: 'Old annotation',
         photos: [],
         isRisky: true,
-        createdAt: new \DateTimeImmutable(),
-        updatedAt: new \DateTimeImmutable(),
+        createdAt: new \DateTimeImmutable,
+        updatedAt: new \DateTimeImmutable,
     );
 
     $this->repository->shouldReceive('findById')
@@ -209,8 +209,8 @@ test('saves customer after annotation', function () {
         notes: null,
         photos: [],
         isRisky: false,
-        createdAt: new \DateTimeImmutable(),
-        updatedAt: new \DateTimeImmutable(),
+        createdAt: new \DateTimeImmutable,
+        updatedAt: new \DateTimeImmutable,
     );
 
     $this->repository->shouldReceive('findById')

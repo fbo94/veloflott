@@ -16,8 +16,7 @@ final readonly class BikeStatusHistoryDto
         public ?string $unavailabilityReasonLabel,
         public ?string $unavailabilityComment,
         public string $changedAt,
-    ) {
-    }
+    ) {}
 
     /**
      * @return array{id: string, old_status: string, old_status_label: string, new_status: string, new_status_label: string, unavailability_reason: string|null, unavailability_reason_label: string|null, unavailability_comment: string|null, changed_at: string}

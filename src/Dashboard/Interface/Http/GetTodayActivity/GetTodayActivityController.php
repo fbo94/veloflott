@@ -13,8 +13,7 @@ final class GetTodayActivityController
 {
     public function __construct(
         private readonly GetTodayActivityHandler $handler,
-    ) {
-    }
+    ) {}
 
     public function __invoke(GetTodayActivityRequest $request): JsonResponse
     {

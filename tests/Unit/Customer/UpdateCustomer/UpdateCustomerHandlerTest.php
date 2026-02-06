@@ -127,8 +127,8 @@ test('throws exception when email is already used by another customer', function
         notes: null,
         photos: [],
         isRisky: false,
-        createdAt: new DateTimeImmutable(),
-        updatedAt: new DateTimeImmutable(),
+        createdAt: new DateTimeImmutable,
+        updatedAt: new DateTimeImmutable,
     );
 
     $anotherCustomer = new Customer(
@@ -145,8 +145,8 @@ test('throws exception when email is already used by another customer', function
         notes: null,
         photos: [],
         isRisky: false,
-        createdAt: new DateTimeImmutable(),
-        updatedAt: new DateTimeImmutable(),
+        createdAt: new DateTimeImmutable,
+        updatedAt: new DateTimeImmutable,
     );
 
     $command = new UpdateCustomerCommand(
@@ -196,8 +196,8 @@ test('allows keeping the same email', function () {
         notes: null,
         photos: [],
         isRisky: false,
-        createdAt: new DateTimeImmutable(),
-        updatedAt: new DateTimeImmutable(),
+        createdAt: new DateTimeImmutable,
+        updatedAt: new DateTimeImmutable,
     );
 
     $command = new UpdateCustomerCommand(
@@ -249,8 +249,8 @@ test('can update customer photos', function () {
         notes: null,
         photos: ['https://example.com/old1.jpg', 'https://example.com/old2.jpg'],
         isRisky: false,
-        createdAt: new DateTimeImmutable(),
-        updatedAt: new DateTimeImmutable(),
+        createdAt: new DateTimeImmutable,
+        updatedAt: new DateTimeImmutable,
     );
 
     $newPhotos = [
@@ -308,8 +308,8 @@ test('can clear customer photos', function () {
         notes: null,
         photos: ['https://example.com/photo1.jpg'],
         isRisky: false,
-        createdAt: new DateTimeImmutable(),
-        updatedAt: new DateTimeImmutable(),
+        createdAt: new DateTimeImmutable,
+        updatedAt: new DateTimeImmutable,
     );
 
     $command = new UpdateCustomerCommand(

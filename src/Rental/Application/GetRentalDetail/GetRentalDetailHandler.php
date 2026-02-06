@@ -17,8 +17,7 @@ final class GetRentalDetailHandler
         private readonly RentalRepositoryInterface $rentals,
         private readonly CustomerRepositoryInterface $customers,
         private readonly BikeRepositoryInterface $bikes,
-    ) {
-    }
+    ) {}
 
     public function handle(GetRentalDetailQuery $query): GetRentalDetailResponse
     {

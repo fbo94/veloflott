@@ -8,6 +8,5 @@ final readonly class GetTopBikesQuery
 {
     public function __construct(
         public int $limit = 10,
-    ) {
-    }
+    ) {}
 }

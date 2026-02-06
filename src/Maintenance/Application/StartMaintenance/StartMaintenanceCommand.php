@@ -8,6 +8,5 @@ final readonly class StartMaintenanceCommand
 {
     public function __construct(
         public string $maintenanceId,
-    ) {
-    }
+    ) {}
 }

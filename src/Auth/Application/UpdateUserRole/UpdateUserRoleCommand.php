@@ -15,6 +15,5 @@ final readonly class UpdateUserRoleCommand
         public string $userId,
         public Role $newRole,
         public string $currentUserId,
-    ) {
-    }
+    ) {}
 }

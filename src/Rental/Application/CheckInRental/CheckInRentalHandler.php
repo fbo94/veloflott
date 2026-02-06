@@ -14,8 +14,7 @@ final readonly class CheckInRentalHandler
 {
     public function __construct(
         private RentalRepositoryInterface $rentalRepository,
-    ) {
-    }
+    ) {}
 
     public function handle(CheckInRentalCommand $command): CheckInRentalResponse
     {
@@ -26,7 +25,7 @@ final readonly class CheckInRentalHandler
         }
 
         // 2. Vérifier que la location est en statut PENDING (check-in avant le départ)
-        if (!$rental->status()->canStart()) {
+        if (! $rental->status()->canStart()) {
             throw RentalException::cannotCheckIn(
                 $command->rentalId,
                 "Rental status is {$rental->status()->value}, cannot perform check-in"

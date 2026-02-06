@@ -7,12 +7,11 @@ namespace Customer\Application\SearchCustomers;
 final readonly class SearchCustomersResponse
 {
     /**
-     * @param CustomerDto[] $customers
+     * @param  CustomerDto[]  $customers
      */
     public function __construct(
         public array $customers,
-    ) {
-    }
+    ) {}
 
     public function toArray(): array
     {

@@ -11,8 +11,7 @@ final readonly class GetCustomerDetailHandler
 {
     public function __construct(
         private CustomerRepositoryInterface $customers,
-    ) {
-    }
+    ) {}
 
     public function handle(GetCustomerDetailQuery $query): CustomerDetailDto
     {

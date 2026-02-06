@@ -15,8 +15,7 @@ final readonly class CustomerDto
         public string $fullName,
         public ?string $email,
         public ?string $phone,
-    ) {
-    }
+    ) {}
 
     public static function fromCustomer(Customer $customer): self
     {

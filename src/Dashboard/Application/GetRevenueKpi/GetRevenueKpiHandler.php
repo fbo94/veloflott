@@ -12,13 +12,12 @@ final readonly class GetRevenueKpiHandler
     public function __construct(
         private BikeRepositoryInterface $bikeRepository,
         private RentalRepositoryInterface $rentalRepository,
-    ) {
-    }
+    ) {}
 
     public function handle(GetRevenueKpiQuery $query): GetRevenueKpiResponse
     {
         // Par défaut : 30 derniers jours
-        $dateTo = $query->dateTo ?? new \DateTimeImmutable();
+        $dateTo = $query->dateTo ?? new \DateTimeImmutable;
         $dateFrom = $query->dateFrom ?? $dateTo->modify('-30 days');
 
         // Nombre de vélos actifs
@@ -45,7 +44,7 @@ final readonly class GetRevenueKpiHandler
                 'days' => $dateFrom->diff($dateTo)->days + 1,
             ],
             totalRevenueCents: $totalRevenue,
-            totalRevenueFormatted: number_format($totalRevenue / 100, 2, '.', ' ') . ' EUR',
+            totalRevenueFormatted: number_format($totalRevenue / 100, 2, '.', ' ').' EUR',
             revpavCents: $revpav,
             avgRevenuePerRentalCents: $avgRevenuePerRental,
             rentalCount: $rentalCount,

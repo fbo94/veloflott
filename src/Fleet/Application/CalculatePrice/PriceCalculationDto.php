@@ -9,7 +9,7 @@ use Fleet\Domain\PriceCalculation;
 final readonly class PriceCalculationDto
 {
     /**
-     * @param array<string, mixed> $appliedDiscounts
+     * @param  array<string, mixed>  $appliedDiscounts
      */
     public function __construct(
         public float $basePrice,
@@ -22,8 +22,7 @@ final readonly class PriceCalculationDto
         public string $categoryId,
         public string $pricingClassId,
         public string $durationId,
-    ) {
-    }
+    ) {}
 
     public static function fromDomain(PriceCalculation $calculation): self
     {

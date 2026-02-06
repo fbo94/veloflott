@@ -7,12 +7,11 @@ namespace Fleet\Application\ListBrands;
 final readonly class ListBrandsResponse
 {
     /**
-     * @param array<BrandDto> $brands
+     * @param  array<BrandDto>  $brands
      */
     public function __construct(
         public array $brands,
-    ) {
-    }
+    ) {}
 
     public function toArray(): array
     {

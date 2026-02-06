@@ -10,8 +10,7 @@ final readonly class UpdateBrandHandler
 {
     public function __construct(
         private BrandRepositoryInterface $brandRepository,
-    ) {
-    }
+    ) {}
 
     /**
      * @throws BrandNotFoundException

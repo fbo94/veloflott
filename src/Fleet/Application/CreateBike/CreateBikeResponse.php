@@ -19,8 +19,7 @@ final readonly class CreateBikeResponse
         public string $modelName,
         public string $status,
         public array $frameSize,
-    ) {
-    }
+    ) {}
 
     public static function fromBike(Bike $bike, Model $model, Brand $brand): self
     {

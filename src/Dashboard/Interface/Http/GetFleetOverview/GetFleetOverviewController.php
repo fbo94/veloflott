@@ -12,8 +12,7 @@ final class GetFleetOverviewController
 {
     public function __construct(
         private readonly GetFleetOverviewHandler $handler,
-    ) {
-    }
+    ) {}
 
     public function __invoke(): JsonResponse
     {

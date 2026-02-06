@@ -9,8 +9,7 @@ final readonly class UploadBikePhotoResponse
     public function __construct(
         public string $bikeId,
         public string $photoUrl,
-    ) {
-    }
+    ) {}
 
     public function toArray(): array
     {

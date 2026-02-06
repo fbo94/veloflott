@@ -10,8 +10,7 @@ final readonly class AnnotateCustomerHandler
 {
     public function __construct(
         private CustomerRepositoryInterface $customerRepository,
-    ) {
-    }
+    ) {}
 
     public function handle(AnnotateCustomerCommand $command): AnnotateCustomerResponse
     {

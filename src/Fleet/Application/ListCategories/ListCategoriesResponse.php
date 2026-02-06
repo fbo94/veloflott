@@ -7,12 +7,11 @@ namespace Fleet\Application\ListCategories;
 final readonly class ListCategoriesResponse
 {
     /**
-     * @param CategoryDto[] $categories
+     * @param  CategoryDto[]  $categories
      */
     public function __construct(
         public array $categories,
-    ) {
-    }
+    ) {}
 
     public function toArray(): array
     {

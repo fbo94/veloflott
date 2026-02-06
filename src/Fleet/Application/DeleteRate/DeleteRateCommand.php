@@ -8,6 +8,5 @@ final readonly class DeleteRateCommand
 {
     public function __construct(
         public string $id,
-    ) {
-    }
+    ) {}
 }

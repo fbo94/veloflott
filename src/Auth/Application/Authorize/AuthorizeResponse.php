@@ -7,7 +7,7 @@ namespace Auth\Application\Authorize;
 final readonly class AuthorizeResponse
 {
     /**
-     * @param array<string, mixed> $user
+     * @param  array<string, mixed>  $user
      */
     public function __construct(
         public string $accessToken,
@@ -15,8 +15,7 @@ final readonly class AuthorizeResponse
         public int $expiresIn,
         public string $tokenType,
         public array $user,
-    ) {
-    }
+    ) {}
 
     public function toArray(): array
     {

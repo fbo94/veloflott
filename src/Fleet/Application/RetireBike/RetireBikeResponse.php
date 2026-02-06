@@ -9,8 +9,7 @@ final readonly class RetireBikeResponse
     public function __construct(
         public string $id,
         public string $message = 'Bike retired successfully',
-    ) {
-    }
+    ) {}
 
     public function toArray(): array
     {

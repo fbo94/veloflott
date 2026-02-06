@@ -51,7 +51,7 @@ final class EloquentBikeRepository implements BikeRepositoryInterface
     ): array {
         $query = BikeEloquentModel::query();
 
-        if (!$includeRetired) {
+        if (! $includeRetired) {
             $query->where('status', '!=', 'retired');
         }
 
@@ -94,9 +94,9 @@ final class EloquentBikeRepository implements BikeRepositoryInterface
     }
 
     /**
-     * @param string[]|null $statuses
-     * @param string[]|null $categoryIds
-     * @param string[]|null $frameSizes
+     * @param  string[]|null  $statuses
+     * @param  string[]|null  $categoryIds
+     * @param  string[]|null  $frameSizes
      * @return array{bikes: Bike[], total: int}
      */
     public function findFiltered(
@@ -113,7 +113,7 @@ final class EloquentBikeRepository implements BikeRepositoryInterface
         $query = BikeEloquentModel::query();
 
         // Exclure les vélos retirés par défaut
-        if (!$includeRetired) {
+        if (! $includeRetired) {
             $query->where('status', '!=', 'retired');
         }
 
@@ -274,6 +274,7 @@ final class EloquentBikeRepository implements BikeRepositoryInterface
             frameSize: $this->mapFrameSize($model),
             status: BikeStatus::from($model->status),
             pricingTier: $model->pricing_tier ?? PricingTier::STANDARD,
+            pricingClassId: $model->pricing_class_id,
             year: $model->year,
             serialNumber: $model->serial_number,
             color: $model->color,

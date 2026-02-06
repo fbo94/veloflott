@@ -7,15 +7,14 @@ namespace Fleet\Application\ListBikes;
 final readonly class ListBikesResponse
 {
     /**
-     * @param BikeDto[] $bikes
+     * @param  BikeDto[]  $bikes
      */
     public function __construct(
         public array $bikes,
         public int $total,
         public int $page,
         public int $perPage,
-    ) {
-    }
+    ) {}
 
     public function toArray(): array
     {

@@ -8,6 +8,5 @@ final readonly class DeleteModelCommand
 {
     public function __construct(
         public string $id,
-    ) {
-    }
+    ) {}
 }

@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class BikeModelsSeeder extends Seeder
@@ -14,8 +13,9 @@ class BikeModelsSeeder extends Seeder
     {
         $csvFile = database_path('seeders/data/bike_models.csv');
 
-        if (!file_exists($csvFile)) {
+        if (! file_exists($csvFile)) {
             $this->command->error("CSV file not found: {$csvFile}");
+
             return;
         }
 
@@ -48,11 +48,12 @@ class BikeModelsSeeder extends Seeder
             $modelName = trim($data[1]);
 
             // Chercher la marque
-            if (!isset($brandsByName[$brandName])) {
-                if (!in_array($brandName, $missingBrands)) {
+            if (! isset($brandsByName[$brandName])) {
+                if (! in_array($brandName, $missingBrands)) {
                     $missingBrands[] = $brandName;
                 }
                 $skipped++;
+
                 continue;
             }
 
@@ -75,8 +76,8 @@ class BikeModelsSeeder extends Seeder
 
         if ($skipped > 0) {
             $this->command->warn("⚠ Skipped {$skipped} models (brand not found)");
-            if (!empty($missingBrands)) {
-                $this->command->warn('Missing brands: ' . implode(', ', $missingBrands));
+            if (! empty($missingBrands)) {
+                $this->command->warn('Missing brands: '.implode(', ', $missingBrands));
             }
         }
     }

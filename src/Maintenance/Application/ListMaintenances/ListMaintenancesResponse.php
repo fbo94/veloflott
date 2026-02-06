@@ -9,17 +9,15 @@ use Maintenance\Domain\Maintenance;
 final readonly class ListMaintenancesResponse
 {
     /**
-     * @param Maintenance[] $maintenances
-     * @param \Illuminate\Support\Collection $bikes
-     * @param array<string, int> $countsByStatus
+     * @param  Maintenance[]  $maintenances
+     * @param  array<string, int>  $countsByStatus
      */
     public function __construct(
         public array $maintenances,
         public \Illuminate\Support\Collection $bikes,
         public array $countsByStatus,
         public int $total,
-    ) {
-    }
+    ) {}
 
     /**
      * @return array<string, mixed>

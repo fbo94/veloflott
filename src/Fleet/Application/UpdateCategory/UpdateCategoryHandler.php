@@ -10,8 +10,7 @@ final class UpdateCategoryHandler
 {
     public function __construct(
         private readonly CategoryRepositoryInterface $categories,
-    ) {
-    }
+    ) {}
 
     public function handle(UpdateCategoryCommand $command): UpdateCategoryResponse
     {

@@ -7,12 +7,10 @@ namespace Rental\Application\GetBikeRentals;
 final readonly class GetBikeRentalsQuery
 {
     /**
-     * @param string $bikeId
-     * @param string|null $filter Filtre: 'all', 'past', 'current', 'upcoming' (null = all)
+     * @param  string|null  $filter  Filtre: 'all', 'past', 'current', 'upcoming' (null = all)
      */
     public function __construct(
         public string $bikeId,
         public ?string $filter = null,
-    ) {
-    }
+    ) {}
 }

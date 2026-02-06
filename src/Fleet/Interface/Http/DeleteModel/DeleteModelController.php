@@ -12,8 +12,7 @@ final readonly class DeleteModelController
 {
     public function __construct(
         private DeleteModelHandler $handler,
-    ) {
-    }
+    ) {}
 
     public function __invoke(string $id): JsonResponse
     {

@@ -59,7 +59,7 @@ test('can create a bike successfully', function () {
         photos: []
     );
 
-    $now = new DateTimeImmutable();
+    $now = new DateTimeImmutable;
 
     $model = new Model(
         id: 'model-123',
@@ -184,7 +184,7 @@ test('throws exception when category does not exist', function () {
         photos: []
     );
 
-    $now = new DateTimeImmutable();
+    $now = new DateTimeImmutable;
     $model = new Model('model-123', 'Model X', 'brand-789', $now, $now);
     $brand = new Brand('brand-789', 'Brand X', null, $now, $now);
 
@@ -223,7 +223,7 @@ test('handles all optional fields correctly', function () {
         photos: ['photo1.jpg', 'photo2.jpg']
     );
 
-    $now = new DateTimeImmutable();
+    $now = new DateTimeImmutable;
     $model = new Model('model-123', 'Model X', 'brand-789', $now, $now);
     $brand = new Brand('brand-789', 'Brand X', null, $now, $now);
     $category = new Category('category-456', 'Category', 'category', null, false, 0);

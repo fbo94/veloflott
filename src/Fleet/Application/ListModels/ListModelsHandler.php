@@ -12,8 +12,7 @@ final class ListModelsHandler
     public function __construct(
         private readonly ModelRepositoryInterface $models,
         private readonly BrandRepositoryInterface $brands,
-    ) {
-    }
+    ) {}
 
     public function handle(ListModelsQuery $query): ListModelsResponse
     {

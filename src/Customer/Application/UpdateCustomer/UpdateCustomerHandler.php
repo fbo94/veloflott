@@ -11,8 +11,7 @@ final readonly class UpdateCustomerHandler
 {
     public function __construct(
         private CustomerRepositoryInterface $customers,
-    ) {
-    }
+    ) {}
 
     public function handle(UpdateCustomerCommand $command): UpdateCustomerResponse
     {

@@ -12,6 +12,5 @@ final readonly class CreatePricingClassCommand
         public ?string $description,
         public ?string $color,
         public int $sortOrder,
-    ) {
-    }
+    ) {}
 }

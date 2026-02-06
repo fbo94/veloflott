@@ -10,8 +10,7 @@ final readonly class ToggleRiskyFlagResponse
         public string $customerId,
         public bool $isRisky,
         public string $message,
-    ) {
-    }
+    ) {}
 
     public function toArray(): array
     {

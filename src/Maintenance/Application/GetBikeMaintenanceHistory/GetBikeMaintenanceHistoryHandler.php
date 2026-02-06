@@ -12,8 +12,7 @@ final readonly class GetBikeMaintenanceHistoryHandler
     public function __construct(
         private MaintenanceRepositoryInterface $maintenanceRepository,
         private BikeRepositoryInterface $bikeRepository,
-    ) {
-    }
+    ) {}
 
     public function handle(GetBikeMaintenanceHistoryQuery $query): GetBikeMaintenanceHistoryResponse
     {

@@ -19,8 +19,7 @@ final readonly class GetCurrentUserResponse
         public bool $isActive,
         public array $permissions,
         public ?string $lastLoginAt,
-    ) {
-    }
+    ) {}
 
     public static function fromUser(User $user): self
     {

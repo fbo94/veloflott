@@ -112,6 +112,7 @@ function createTestBike(BikeStatus $status = BikeStatus::AVAILABLE): Bike
         frameSize: FrameSize::fromCentimeters(54),
         status: $status,
         pricingTier: PricingTier::STANDARD,
+        pricingClassId: null,
         year: 2024,
         serialNumber: null,
         color: null,

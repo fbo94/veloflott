@@ -15,8 +15,7 @@ final class AuthorizeHandler
         private readonly KeycloakOAuthService $oauthService,
         private readonly KeycloakTokenValidator $tokenValidator,
         private readonly UserSyncService $userSyncService,
-    ) {
-    }
+    ) {}
 
     public function handle(AuthorizeCommand $command): AuthorizeResponse
     {
@@ -35,8 +34,8 @@ final class AuthorizeHandler
             $user = $this->userSyncService->sync($payload);
 
             // 4. Vérifier que l'utilisateur est actif
-            if (!$user->isActive()) {
-                throw new UserDeactivatedException();
+            if (! $user->isActive()) {
+                throw new UserDeactivatedException;
             }
 
             return new AuthorizeResponse(

@@ -43,12 +43,14 @@ interface MaintenanceRepositoryInterface
 
     /**
      * Trouve les maintenances planifiées à une date donnée
+     *
      * @return Maintenance[]
      */
     public function findScheduledOnDate(\DateTimeImmutable $date): array;
 
     /**
      * Trouve les maintenances complétées à une date donnée
+     *
      * @return Maintenance[]
      */
     public function findCompletedOnDate(\DateTimeImmutable $date): array;
@@ -60,6 +62,7 @@ interface MaintenanceRepositoryInterface
 
     /**
      * Trouve les maintenances en cours depuis plus de X jours
+     *
      * @return array<int, array{maintenance_id: string, bike_id: string, days_in_progress: int, priority: string}>
      */
     public function findLongRunning(int $minDays = 7): array;

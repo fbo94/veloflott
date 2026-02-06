@@ -33,7 +33,7 @@ class RepresentativeBikesSeeder extends Seeder
                 'color' => 'Red',
                 'year' => 2024,
                 'purchase_price' => 6500.00,
-                'serial_number' => 'SPEC-TARMAC-' . Str::random(8),
+                'serial_number' => 'SPEC-TARMAC-'.Str::random(8),
             ],
             [
                 'brand' => 'Trek',
@@ -45,7 +45,7 @@ class RepresentativeBikesSeeder extends Seeder
                 'color' => 'Black',
                 'year' => 2024,
                 'purchase_price' => 7200.00,
-                'serial_number' => 'TREK-EMONDA-' . Str::random(8),
+                'serial_number' => 'TREK-EMONDA-'.Str::random(8),
             ],
             [
                 'brand' => 'Cannondale',
@@ -57,7 +57,7 @@ class RepresentativeBikesSeeder extends Seeder
                 'color' => 'Green',
                 'year' => 2024,
                 'purchase_price' => 5800.00,
-                'serial_number' => 'CANN-SSEVO-' . Str::random(8),
+                'serial_number' => 'CANN-SSEVO-'.Str::random(8),
             ],
 
             // TRIATHLON (1 vélo)
@@ -71,7 +71,7 @@ class RepresentativeBikesSeeder extends Seeder
                 'color' => 'White',
                 'year' => 2024,
                 'purchase_price' => 8000.00,
-                'serial_number' => 'CERV-PSERIES-' . Str::random(8),
+                'serial_number' => 'CERV-PSERIES-'.Str::random(8),
             ],
 
             // VTT (4 vélos)
@@ -89,7 +89,7 @@ class RepresentativeBikesSeeder extends Seeder
                 'rear_suspension' => 140,
                 'wheel_size' => '29',
                 'brake_type' => 'hydraulic_disc',
-                'serial_number' => 'GIANT-TRANCE-' . Str::random(8),
+                'serial_number' => 'GIANT-TRANCE-'.Str::random(8),
             ],
             [
                 'brand' => 'Santa Cruz',
@@ -105,7 +105,7 @@ class RepresentativeBikesSeeder extends Seeder
                 'rear_suspension' => 145,
                 'wheel_size' => '29',
                 'brake_type' => 'hydraulic_disc',
-                'serial_number' => 'SC-HIGHT-' . Str::random(8),
+                'serial_number' => 'SC-HIGHT-'.Str::random(8),
             ],
             [
                 'brand' => 'Trek',
@@ -121,7 +121,7 @@ class RepresentativeBikesSeeder extends Seeder
                 'rear_suspension' => 140,
                 'wheel_size' => '29',
                 'brake_type' => 'hydraulic_disc',
-                'serial_number' => 'TREK-FUELEX-' . Str::random(8),
+                'serial_number' => 'TREK-FUELEX-'.Str::random(8),
             ],
             [
                 'brand' => 'Specialized',
@@ -137,7 +137,7 @@ class RepresentativeBikesSeeder extends Seeder
                 'rear_suspension' => 150,
                 'wheel_size' => '29',
                 'brake_type' => 'hydraulic_disc',
-                'serial_number' => 'SPEC-STUMP-' . Str::random(8),
+                'serial_number' => 'SPEC-STUMP-'.Str::random(8),
             ],
 
             // GRAVEL (3 vélos)
@@ -154,7 +154,7 @@ class RepresentativeBikesSeeder extends Seeder
                 'front_suspension' => 30,
                 'wheel_size' => '700c',
                 'brake_type' => 'hydraulic_disc',
-                'serial_number' => 'CANN-TOPSTONE-' . Str::random(8),
+                'serial_number' => 'CANN-TOPSTONE-'.Str::random(8),
             ],
             [
                 'brand' => 'Specialized',
@@ -168,7 +168,7 @@ class RepresentativeBikesSeeder extends Seeder
                 'purchase_price' => 4800.00,
                 'wheel_size' => '700c',
                 'brake_type' => 'hydraulic_disc',
-                'serial_number' => 'SPEC-DIVERGE-' . Str::random(8),
+                'serial_number' => 'SPEC-DIVERGE-'.Str::random(8),
             ],
             [
                 'brand' => 'Giant',
@@ -182,7 +182,7 @@ class RepresentativeBikesSeeder extends Seeder
                 'purchase_price' => 3200.00,
                 'wheel_size' => '700c',
                 'brake_type' => 'hydraulic_disc',
-                'serial_number' => 'GIANT-REVOLT-' . Str::random(8),
+                'serial_number' => 'GIANT-REVOLT-'.Str::random(8),
             ],
         ];
 
@@ -206,8 +206,9 @@ class RepresentativeBikesSeeder extends Seeder
             // 3. Récupérer la catégorie
             $category = CategoryEloquentModel::where('slug', $bikeData['category_slug'])->first();
 
-            if (!$category) {
+            if (! $category) {
                 $this->command->error("Category '{$bikeData['category_slug']}' not found for {$bikeData['brand']} {$bikeData['model']}");
+
                 continue;
             }
 

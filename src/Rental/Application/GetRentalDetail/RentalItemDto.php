@@ -32,8 +32,7 @@ final readonly class RentalItemDto
         public ?string $returnCondition,
         public ?string $damageDescription,
         public array $damagePhotos,
-    ) {
-    }
+    ) {}
 
     public static function fromRentalItem(RentalItem $item, array $bikeDetails, float $numberOfDays): self
     {

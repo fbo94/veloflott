@@ -7,7 +7,7 @@ namespace Dashboard\Application\GetUtilizationKpi;
 final readonly class GetUtilizationKpiResponse
 {
     /**
-     * @param array{from: string, to: string, days: int} $period
+     * @param  array{from: string, to: string, days: int}  $period
      */
     public function __construct(
         public array $period,
@@ -17,8 +17,7 @@ final readonly class GetUtilizationKpiResponse
         public int $totalRentableBikes,
         public float $avgRentalDurationHours,
         public int $rentalCountInPeriod,
-    ) {
-    }
+    ) {}
 
     /**
      * @return array<string, mixed>

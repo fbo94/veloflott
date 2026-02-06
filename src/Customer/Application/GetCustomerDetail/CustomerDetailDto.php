@@ -7,7 +7,7 @@ namespace Customer\Application\GetCustomerDetail;
 final readonly class CustomerDetailDto
 {
     /**
-     * @param array<int, array<string, mixed>> $rentalHistory
+     * @param  array<int, array<string, mixed>>  $rentalHistory
      */
     public function __construct(
         public string $id,
@@ -27,8 +27,7 @@ final readonly class CustomerDetailDto
         public array $rentalHistory,
         public int $totalRentals,
         public float $totalSpent,
-    ) {
-    }
+    ) {}
 
     public function toArray(): array
     {
