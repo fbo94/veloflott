@@ -12,6 +12,9 @@ final readonly class ChangeBikeStatusResponse
     ) {
     }
 
+    /**
+     * @return array{id: string, message: string}
+     */
     public function toArray(): array
     {
         return [
