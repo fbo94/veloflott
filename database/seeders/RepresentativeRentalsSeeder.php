@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Customer\Infrastructure\Persistence\Models\CustomerEloquentModel;
 use Fleet\Infrastructure\Persistence\Models\BikeEloquentModel;
+use Rental\Domain\BikeCondition;
 use Rental\Infrastructure\Persistence\Models\RentalEloquentModel;
 use Rental\Infrastructure\Persistence\Models\RentalItemEloquentModel;
 use Illuminate\Database\Seeder;
@@ -307,7 +308,7 @@ class RepresentativeRentalsSeeder extends Seeder
                 'rear_suspension_pressure' => $bike->rear_suspension ? rand(60, 120) : null,
                 'pedal_type' => ['flat', 'clipless', 'mixed'][array_rand(['flat', 'clipless', 'mixed'])],
                 'check_in_notes' => null,
-                'return_condition' => $rentalData['status'] === 'completed' ? ['excellent', 'good', 'fair'][array_rand(['excellent', 'good', 'fair'])] : null,
+                'return_condition' => $rentalData['status'] === 'completed' ? [BikeCondition::OK->value, BikeCondition::MINOR_DAMAGE->value, BikeCondition::MAJOR_DAMAGE->value][array_rand([0, 1, 2])] : null,
                 'damage_description' => null,
                 'damage_photos' => null,
                 'created_at' => $rentalData['created_at'],
