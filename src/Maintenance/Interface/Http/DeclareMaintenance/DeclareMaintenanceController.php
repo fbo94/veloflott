@@ -31,7 +31,7 @@ final class DeclareMaintenanceController
             scheduledAt: $request->input('scheduled_at') !== null
                 ? new \DateTimeImmutable($request->input('scheduled_at'))
                 : null,
-            photos: $request->input('photos', []),
+            photos: $request->input('photos', []) ?? [],
         );
 
         $response = $this->handler->handle($command);

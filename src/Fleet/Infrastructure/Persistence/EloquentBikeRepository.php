@@ -270,7 +270,7 @@ final class EloquentBikeRepository implements BikeRepositoryInterface
             categoryId: $model->category_id,
             frameSize: $this->mapFrameSize($model),
             status: BikeStatus::from($model->status),
-            pricingTier: PricingTier::from($model->pricing_tier ?? 'standard'),
+            pricingTier: $model->pricing_tier ?? PricingTier::STANDARD,
             year: $model->year,
             serialNumber: $model->serial_number,
             color: $model->color,

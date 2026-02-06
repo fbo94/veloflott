@@ -15,12 +15,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // Note: User model no longer uses factories
-        // Users are managed via Keycloak authentication
-
         $this->call([
             RepresentativeCustomersSeeder::class,
+            BikeBrandsSeeder::class,
+            BikeCategoriesSeeder::class,
+            BikeModelsSeeder::class,
+            RepresentativeBikesSeeder::class,
             RepresentativeRentalsSeeder::class,
+            DamagedRentalsSeeder::class,
         ]);
     }
 }
