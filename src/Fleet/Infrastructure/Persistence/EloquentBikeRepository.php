@@ -13,6 +13,7 @@ use Fleet\Domain\FrameSizeLetter;
 use Fleet\Domain\FrameSizeUnit;
 use Fleet\Domain\PricingTier;
 use Fleet\Domain\RetirementReason;
+use Fleet\Domain\UnavailabilityReason;
 use Fleet\Domain\WheelSize;
 use Fleet\Infrastructure\Persistence\Models\BikeEloquentModel;
 
@@ -256,6 +257,8 @@ final class EloquentBikeRepository implements BikeRepositoryInterface
                 'retirement_reason' => $bike->retirementReason()?->value,
                 'retirement_comment' => $bike->retirementComment(),
                 'retired_at' => $bike->retiredAt(),
+                'unavailability_reason' => $bike->unavailabilityReason()?->value,
+                'unavailability_comment' => $bike->unavailabilityComment(),
             ]
         );
     }
@@ -285,6 +288,8 @@ final class EloquentBikeRepository implements BikeRepositoryInterface
             retirementReason: $model->retirement_reason !== null ? RetirementReason::from($model->retirement_reason) : null,
             retirementComment: $model->retirement_comment,
             retiredAt: $model->retired_at !== null ? \DateTimeImmutable::createFromInterface($model->retired_at) : null,
+            unavailabilityReason: $model->unavailability_reason !== null ? UnavailabilityReason::from($model->unavailability_reason) : null,
+            unavailabilityComment: $model->unavailability_comment,
             createdAt: \DateTimeImmutable::createFromInterface($model->created_at),
             updatedAt: \DateTimeImmutable::createFromInterface($model->updated_at),
         );

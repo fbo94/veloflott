@@ -900,6 +900,130 @@ class DeleteBikePhotoEndpoint
 {
 }
 
+// POST /api/fleet/bikes/{id}/retire
+#[OA\Post(
+    path: '/api/fleet/bikes/{id}/retire',
+    summary: 'Retire a bike from the fleet',
+    security: [['bearerAuth' => []]],
+    tags: ['Fleet - Bikes'],
+    parameters: [
+        new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'string', format: 'uuid')),
+    ],
+    requestBody: new OA\RequestBody(
+        required: true,
+        content: new OA\MediaType(
+            mediaType: 'application/json',
+            schema: new OA\Schema(
+                required: ['reason'],
+                properties: [
+                    new OA\Property(property: 'reason', type: 'string', enum: ['sold', 'stolen', 'permanently_out_of_service', 'other'], example: 'sold'),
+                    new OA\Property(property: 'comment', type: 'string', maxLength: 1000, example: 'Sold to customer'),
+                ],
+                type: 'object'
+            )
+        )
+    ),
+    responses: [
+        new OA\Response(response: 200, description: 'Bike retired successfully'),
+        new OA\Response(response: 400, description: 'Cannot retire a bike that is currently rented'),
+        new OA\Response(response: 401, description: 'Unauthorized'),
+        new OA\Response(response: 403, description: 'Forbidden - requires manage_bikes permission'),
+        new OA\Response(response: 404, description: 'Bike not found'),
+        new OA\Response(response: 422, description: 'Validation error'),
+    ]
+)]
+class RetireBikeEndpoint
+{
+}
+
+// PUT /api/fleet/bikes/{id}/status
+#[OA\Put(
+    path: '/api/fleet/bikes/{id}/status',
+    summary: 'Change bike status',
+    description: 'Change the status of a bike (available, maintenance, unavailable). Rented bikes cannot be changed manually.',
+    security: [['bearerAuth' => []]],
+    tags: ['Fleet - Bikes'],
+    parameters: [
+        new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'string', format: 'uuid')),
+    ],
+    requestBody: new OA\RequestBody(
+        required: true,
+        content: new OA\MediaType(
+            mediaType: 'application/json',
+            schema: new OA\Schema(
+                required: ['status'],
+                properties: [
+                    new OA\Property(property: 'status', type: 'string', enum: ['available', 'maintenance', 'unavailable'], example: 'unavailable', description: 'New bike status'),
+                    new OA\Property(property: 'unavailability_reason', type: 'string', enum: ['reserved', 'loaned', 'other'], example: 'reserved', description: 'Required when status is unavailable'),
+                    new OA\Property(property: 'unavailability_comment', type: 'string', maxLength: 1000, example: 'Reserved for VIP client', description: 'Optional comment'),
+                ],
+                type: 'object'
+            )
+        )
+    ),
+    responses: [
+        new OA\Response(response: 200, description: 'Bike status changed successfully'),
+        new OA\Response(response: 400, description: 'Domain rule violation (e.g., cannot change status of rented bike)'),
+        new OA\Response(response: 401, description: 'Unauthorized'),
+        new OA\Response(response: 403, description: 'Forbidden - requires manage_bikes permission'),
+        new OA\Response(response: 404, description: 'Bike not found'),
+        new OA\Response(response: 422, description: 'Validation error'),
+    ]
+)]
+class ChangeBikeStatusEndpoint
+{
+}
+
+// GET /api/fleet/bikes/{id}/status-history
+#[OA\Get(
+    path: '/api/fleet/bikes/{id}/status-history',
+    summary: 'Get bike status change history',
+    description: 'Retrieve the complete history of status changes for a specific bike',
+    security: [['bearerAuth' => []]],
+    tags: ['Fleet - Bikes'],
+    parameters: [
+        new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'string', format: 'uuid')),
+    ],
+    responses: [
+        new OA\Response(
+            response: 200,
+            description: 'Status history retrieved successfully',
+            content: new OA\MediaType(
+                mediaType: 'application/json',
+                schema: new OA\Schema(
+                    properties: [
+                        new OA\Property(
+                            property: 'data',
+                            type: 'array',
+                            items: new OA\Items(
+                                properties: [
+                                    new OA\Property(property: 'id', type: 'string', format: 'uuid'),
+                                    new OA\Property(property: 'old_status', type: 'string', example: 'available'),
+                                    new OA\Property(property: 'old_status_label', type: 'string', example: 'Disponible'),
+                                    new OA\Property(property: 'new_status', type: 'string', example: 'unavailable'),
+                                    new OA\Property(property: 'new_status_label', type: 'string', example: 'Indisponible'),
+                                    new OA\Property(property: 'unavailability_reason', type: 'string', nullable: true, example: 'reserved'),
+                                    new OA\Property(property: 'unavailability_reason_label', type: 'string', nullable: true, example: 'Réservé'),
+                                    new OA\Property(property: 'unavailability_comment', type: 'string', nullable: true, example: 'Reserved for VIP'),
+                                    new OA\Property(property: 'changed_at', type: 'string', format: 'date-time', example: '2026-02-06 10:30:00'),
+                                ],
+                                type: 'object'
+                            )
+                        ),
+                    ],
+                    type: 'object'
+                )
+            )
+        ),
+        new OA\Response(response: 401, description: 'Unauthorized'),
+        new OA\Response(response: 403, description: 'Forbidden - requires view_bikes permission'),
+        new OA\Response(response: 404, description: 'Bike not found'),
+    ]
+)]
+class GetBikeStatusHistoryEndpoint
+{
+}
+
 // ------------------------------ FLEET - CATEGORIES ------------------------------
 
 // POST /api/fleet/categories

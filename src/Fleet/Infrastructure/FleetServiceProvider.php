@@ -5,11 +5,13 @@ declare(strict_types=1);
 namespace Fleet\Infrastructure;
 
 use Fleet\Domain\BikeRepositoryInterface;
+use Fleet\Domain\BikeStatusHistoryRepositoryInterface;
 use Fleet\Domain\BrandRepositoryInterface;
 use Fleet\Domain\CategoryRepositoryInterface;
 use Fleet\Domain\ModelRepositoryInterface;
 use Fleet\Domain\RateRepositoryInterface;
 use Fleet\Infrastructure\Persistence\EloquentBikeRepository;
+use Fleet\Infrastructure\Persistence\EloquentBikeStatusHistoryRepository;
 use Fleet\Infrastructure\Persistence\EloquentBrandRepository;
 use Fleet\Infrastructure\Persistence\EloquentCategoryRepository;
 use Fleet\Infrastructure\Persistence\EloquentModelRepository;
@@ -44,6 +46,11 @@ final class FleetServiceProvider extends ServiceProvider
         $this->app->bind(
             BikeRepositoryInterface::class,
             EloquentBikeRepository::class
+        );
+
+        $this->app->bind(
+            BikeStatusHistoryRepositoryInterface::class,
+            EloquentBikeStatusHistoryRepository::class
         );
     }
 

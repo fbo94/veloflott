@@ -39,6 +39,8 @@ final class Bike
         private ?RetirementReason $retirementReason = null,
         private ?string $retirementComment = null,
         private ?\DateTimeImmutable $retiredAt = null,
+        private ?UnavailabilityReason $unavailabilityReason = null,
+        private ?string $unavailabilityComment = null,
         ?\DateTimeImmutable $createdAt = null,
         ?\DateTimeImmutable $updatedAt = null,
     ) {
@@ -159,6 +161,16 @@ final class Bike
     public function retiredAt(): ?\DateTimeImmutable
     {
         return $this->retiredAt;
+    }
+
+    public function unavailabilityReason(): ?UnavailabilityReason
+    {
+        return $this->unavailabilityReason;
+    }
+
+    public function unavailabilityComment(): ?string
+    {
+        return $this->unavailabilityComment;
     }
 
     public function createdAt(): \DateTimeImmutable
@@ -313,6 +325,49 @@ final class Bike
         }
 
         $this->status = BikeStatus::AVAILABLE;
+        $this->updatedAt = new \DateTimeImmutable();
+
+        return $this;
+    }
+
+    public function changeStatusWithReason(
+        BikeStatus $newStatus,
+        ?UnavailabilityReason $unavailabilityReason = null,
+        ?string $unavailabilityComment = null
+    ): self {
+        // Cannot manually change status of rented bike
+        if ($this->status === BikeStatus::RENTED) {
+            throw new \DomainException('Cannot manually change status of a rented bike');
+        }
+
+        // Cannot manually set status to rented
+        if ($newStatus === BikeStatus::RENTED) {
+            throw new \DomainException('Cannot manually set bike status to rented');
+        }
+
+        // Cannot manually set status to retired (use retire() method)
+        if ($newStatus === BikeStatus::RETIRED) {
+            throw new \DomainException('Use retire() method to retire a bike');
+        }
+
+        // Unavailability reason is required when marking bike as unavailable
+        if ($newStatus === BikeStatus::UNAVAILABLE && $unavailabilityReason === null) {
+            throw new \DomainException('Unavailability reason is required when marking bike as unavailable');
+        }
+
+        // Set new status
+        $this->status = $newStatus;
+
+        // Handle unavailability reason
+        if ($newStatus === BikeStatus::UNAVAILABLE) {
+            $this->unavailabilityReason = $unavailabilityReason;
+            $this->unavailabilityComment = $unavailabilityComment;
+        } else {
+            // Clear unavailability reason when changing to other status
+            $this->unavailabilityReason = null;
+            $this->unavailabilityComment = null;
+        }
+
         $this->updatedAt = new \DateTimeImmutable();
 
         return $this;

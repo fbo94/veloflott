@@ -42,6 +42,8 @@ final class BikeEloquentModel extends Model
         'retirement_reason',
         'retirement_comment',
         'retired_at',
+        'unavailability_reason',
+        'unavailability_comment',
     ];
 
     public function model(): BelongsTo

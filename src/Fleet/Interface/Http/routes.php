@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Fleet\Interface\Http\ChangeBikeStatus\ChangeBikeStatusController;
 use Fleet\Interface\Http\CreateBike\CreateBikeController;
 use Fleet\Interface\Http\CreateBrand\CreateBrandController;
 use Fleet\Interface\Http\CreateCategory\CreateCategoryController;
@@ -13,6 +14,7 @@ use Fleet\Interface\Http\DeleteModel\DeleteModelController;
 use Fleet\Interface\Http\DeleteRate\DeleteRateController;
 use Fleet\Interface\Http\GetBikeDetail\GetBikeDetailController;
 use Fleet\Interface\Http\GetBikeRate\GetBikeRateController;
+use Fleet\Interface\Http\GetBikeStatusHistory\GetBikeStatusHistoryController;
 use Fleet\Interface\Http\GetModelDetail\GetModelDetailController;
 use Fleet\Interface\Http\ListBikes\ListBikesController;
 use Fleet\Interface\Http\ListBrands\ListBrandsController;
@@ -75,6 +77,12 @@ Route::middleware(['keycloak'])->prefix('api/fleet')->group(function () {
 
     Route::post('/bikes/{id}/retire', RetireBikeController::class)
         ->middleware('permission:manage_bikes');
+
+    Route::put('/bikes/{id}/status', ChangeBikeStatusController::class)
+        ->middleware('permission:manage_bikes');
+
+    Route::get('/bikes/{id}/status-history', GetBikeStatusHistoryController::class)
+        ->middleware('permission:view_bikes');
 
     Route::post('/bikes/{id}/photos', UploadBikePhotoController::class)
         ->middleware('permission:manage_bikes');
