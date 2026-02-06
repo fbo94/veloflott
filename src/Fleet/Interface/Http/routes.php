@@ -12,6 +12,7 @@ use Fleet\Interface\Http\DeleteBrand\DeleteBrandController;
 use Fleet\Interface\Http\DeleteCategory\DeleteCategoryController;
 use Fleet\Interface\Http\DeleteModel\DeleteModelController;
 use Fleet\Interface\Http\DeleteRate\DeleteRateController;
+use Fleet\Interface\Http\GetActiveSizeMappingConfiguration\GetActiveSizeMappingConfigurationController;
 use Fleet\Interface\Http\GetBikeDetail\GetBikeDetailController;
 use Fleet\Interface\Http\GetBikeRate\GetBikeRateController;
 use Fleet\Interface\Http\GetBikeStatusHistory\GetBikeStatusHistoryController;
@@ -21,6 +22,7 @@ use Fleet\Interface\Http\ListBrands\ListBrandsController;
 use Fleet\Interface\Http\ListCategories\ListCategoriesController;
 use Fleet\Interface\Http\ListModels\ListModelsController;
 use Fleet\Interface\Http\ListRates\ListRatesController;
+use Fleet\Interface\Http\ResetSizeMappingConfiguration\ResetSizeMappingConfigurationController;
 use Fleet\Interface\Http\RetireBike\RetireBikeController;
 use Fleet\Interface\Http\SetBikeRate\SetBikeRateController;
 use Fleet\Interface\Http\SetCategoryRate\SetCategoryRateController;
@@ -29,6 +31,7 @@ use Fleet\Interface\Http\UpdateBrand\UpdateBrandController;
 use Fleet\Interface\Http\UpdateCategory\UpdateCategoryController;
 use Fleet\Interface\Http\UpdateModel\UpdateModelController;
 use Fleet\Interface\Http\UpdateRate\UpdateRateController;
+use Fleet\Interface\Http\UpdateSizeMappingConfiguration\UpdateSizeMappingConfigurationController;
 use Fleet\Interface\Http\UploadBikePhoto\UploadBikePhotoController;
 use Illuminate\Support\Facades\Route;
 
@@ -121,4 +124,14 @@ Route::middleware(['keycloak'])->prefix('api/fleet')->group(function () {
 
     Route::delete('/rates/{id}', DeleteRateController::class)
         ->middleware('permission:manage_rates');
+
+    // Gestion des correspondances de tailles
+    Route::get('/size-mapping', GetActiveSizeMappingConfigurationController::class)
+        ->middleware('permission:view_bikes');
+
+    Route::put('/size-mapping', UpdateSizeMappingConfigurationController::class)
+        ->middleware('permission:manage_bikes');
+
+    Route::post('/size-mapping/reset', ResetSizeMappingConfigurationController::class)
+        ->middleware('permission:manage_bikes');
 });

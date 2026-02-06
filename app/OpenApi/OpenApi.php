@@ -1059,6 +1059,137 @@ class GetBikeStatusHistoryEndpoint
 {
 }
 
+// GET /api/fleet/size-mapping
+#[OA\Get(
+    path: '/api/fleet/size-mapping',
+    summary: 'Get active size mapping configuration',
+    security: [['bearerAuth' => []]],
+    tags: ['Fleet - Size Mapping'],
+    responses: [
+        new OA\Response(
+            response: 200,
+            description: 'Active size mapping configuration with size labels',
+            content: new OA\JsonContent(
+                example: [
+                    'id' => 'uuid',
+                    'version' => 1,
+                    'is_active' => true,
+                    'sizes' => [
+                        ['letter' => 'xs', 'label' => 'XS', 'cm' => ['min' => 48, 'max' => 50], 'inch' => ['min' => 13, 'max' => 14]],
+                        ['letter' => 's', 'label' => 'S', 'cm' => ['min' => 51, 'max' => 53], 'inch' => ['min' => 15, 'max' => 16]],
+                        ['letter' => 'm', 'label' => 'M', 'cm' => ['min' => 54, 'max' => 56], 'inch' => ['min' => 17, 'max' => 18]],
+                        ['letter' => 'l', 'label' => 'L', 'cm' => ['min' => 57, 'max' => 59], 'inch' => ['min' => 19, 'max' => 20]],
+                        ['letter' => 'xl', 'label' => 'XL', 'cm' => ['min' => 60, 'max' => 62], 'inch' => ['min' => 21, 'max' => 22]],
+                        ['letter' => 'xxl', 'label' => 'XXL', 'cm' => ['min' => 63, 'max' => 999], 'inch' => ['min' => 23, 'max' => 999]],
+                    ],
+                    'created_at' => '2026-02-06 12:00:00',
+                    'updated_at' => '2026-02-06 12:00:00',
+                ]
+            )
+        ),
+        new OA\Response(response: 401, description: 'Unauthorized'),
+        new OA\Response(response: 403, description: 'Forbidden - requires view_bikes permission'),
+        new OA\Response(response: 404, description: 'No active configuration found'),
+    ]
+)]
+class GetActiveSizeMappingConfigurationEndpoint
+{
+}
+
+// PUT /api/fleet/size-mapping
+#[OA\Put(
+    path: '/api/fleet/size-mapping',
+    summary: 'Update size mapping configuration',
+    security: [['bearerAuth' => []]],
+    tags: ['Fleet - Size Mapping'],
+    requestBody: new OA\RequestBody(
+        required: true,
+        content: new OA\MediaType(
+            mediaType: 'application/json',
+            schema: new OA\Schema(
+                required: ['xs_cm', 'xs_inch', 's_cm', 's_inch', 'm_cm', 'm_inch', 'l_cm', 'l_inch', 'xl_cm', 'xl_inch', 'xxl_cm', 'xxl_inch'],
+                properties: [
+                    new OA\Property(property: 'xs_cm', type: 'object', properties: [
+                        new OA\Property(property: 'min', type: 'integer', example: 48),
+                        new OA\Property(property: 'max', type: 'integer', example: 50),
+                    ]),
+                    new OA\Property(property: 'xs_inch', type: 'object', properties: [
+                        new OA\Property(property: 'min', type: 'integer', example: 13),
+                        new OA\Property(property: 'max', type: 'integer', example: 14),
+                    ]),
+                    new OA\Property(property: 's_cm', type: 'object', properties: [
+                        new OA\Property(property: 'min', type: 'integer', example: 51),
+                        new OA\Property(property: 'max', type: 'integer', example: 53),
+                    ]),
+                    new OA\Property(property: 's_inch', type: 'object', properties: [
+                        new OA\Property(property: 'min', type: 'integer', example: 15),
+                        new OA\Property(property: 'max', type: 'integer', example: 16),
+                    ]),
+                    new OA\Property(property: 'm_cm', type: 'object', properties: [
+                        new OA\Property(property: 'min', type: 'integer', example: 54),
+                        new OA\Property(property: 'max', type: 'integer', example: 56),
+                    ]),
+                    new OA\Property(property: 'm_inch', type: 'object', properties: [
+                        new OA\Property(property: 'min', type: 'integer', example: 17),
+                        new OA\Property(property: 'max', type: 'integer', example: 18),
+                    ]),
+                    new OA\Property(property: 'l_cm', type: 'object', properties: [
+                        new OA\Property(property: 'min', type: 'integer', example: 57),
+                        new OA\Property(property: 'max', type: 'integer', example: 59),
+                    ]),
+                    new OA\Property(property: 'l_inch', type: 'object', properties: [
+                        new OA\Property(property: 'min', type: 'integer', example: 19),
+                        new OA\Property(property: 'max', type: 'integer', example: 20),
+                    ]),
+                    new OA\Property(property: 'xl_cm', type: 'object', properties: [
+                        new OA\Property(property: 'min', type: 'integer', example: 60),
+                        new OA\Property(property: 'max', type: 'integer', example: 62),
+                    ]),
+                    new OA\Property(property: 'xl_inch', type: 'object', properties: [
+                        new OA\Property(property: 'min', type: 'integer', example: 21),
+                        new OA\Property(property: 'max', type: 'integer', example: 22),
+                    ]),
+                    new OA\Property(property: 'xxl_cm', type: 'object', properties: [
+                        new OA\Property(property: 'min', type: 'integer', example: 63),
+                        new OA\Property(property: 'max', type: 'integer', example: 999),
+                    ]),
+                    new OA\Property(property: 'xxl_inch', type: 'object', properties: [
+                        new OA\Property(property: 'min', type: 'integer', example: 23),
+                        new OA\Property(property: 'max', type: 'integer', example: 999),
+                    ]),
+                ],
+                type: 'object'
+            )
+        )
+    ),
+    responses: [
+        new OA\Response(response: 200, description: 'Size mapping configuration updated successfully'),
+        new OA\Response(response: 400, description: 'Validation error or domain exception'),
+        new OA\Response(response: 401, description: 'Unauthorized'),
+        new OA\Response(response: 403, description: 'Forbidden - requires manage_bikes permission'),
+    ]
+)]
+class UpdateSizeMappingConfigurationEndpoint
+{
+}
+
+// POST /api/fleet/size-mapping/reset
+#[OA\Post(
+    path: '/api/fleet/size-mapping/reset',
+    summary: 'Reset size mapping configuration to default values',
+    security: [['bearerAuth' => []]],
+    tags: ['Fleet - Size Mapping'],
+    responses: [
+        new OA\Response(response: 200, description: 'Size mapping configuration reset to default successfully'),
+        new OA\Response(response: 400, description: 'Domain exception'),
+        new OA\Response(response: 401, description: 'Unauthorized'),
+        new OA\Response(response: 403, description: 'Forbidden - requires manage_bikes permission'),
+    ]
+)]
+class ResetSizeMappingConfigurationEndpoint
+{
+}
+
 // ------------------------------ FLEET - CATEGORIES ------------------------------
 
 // POST /api/fleet/categories
