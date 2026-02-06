@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             BikeBrandsSeeder::class,
             BikeCategoriesSeeder::class,
             BikeModelsSeeder::class,
+            PricingSystemSeeder::class,  // Must run after categories
             RepresentativeBikesSeeder::class,
             RepresentativeRentalsSeeder::class,
             DamagedRentalsSeeder::class,

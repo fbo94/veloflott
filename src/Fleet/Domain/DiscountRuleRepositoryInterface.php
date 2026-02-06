@@ -11,17 +11,6 @@ interface DiscountRuleRepositoryInterface
     public function findById(string $id): ?DiscountRule;
 
     /**
-     * Trouve toutes les règles de réduction applicables pour une catégorie, classe et nombre de jours donnés.
-     *
-     * @return DiscountRule[]
-     */
-    public function findApplicableRules(
-        ?string $categoryId,
-        ?string $pricingClassId,
-        int $days
-    ): array;
-
-    /**
      * @return DiscountRule[]
      */
     public function findAllActive(): array;
@@ -29,7 +18,11 @@ interface DiscountRuleRepositoryInterface
     /**
      * @return DiscountRule[]
      */
-    public function findAll(): array;
+    public function findApplicableRules(
+        string $categoryId,
+        string $pricingClassId,
+        int $days
+    ): array;
 
     public function delete(string $id): void;
 }

@@ -11,6 +11,9 @@ final readonly class RetireBikeResponse
         public string $message = 'Bike retired successfully',
     ) {}
 
+    /**
+     * @return array<string, mixed>
+     */
     public function toArray(): array
     {
         return [

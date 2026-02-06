@@ -2,11 +2,15 @@
 
 declare(strict_types=1);
 
+use Fleet\Interface\Http\CalculatePrice\CalculatePriceController;
 use Fleet\Interface\Http\ChangeBikeStatus\ChangeBikeStatusController;
 use Fleet\Interface\Http\CreateBike\CreateBikeController;
 use Fleet\Interface\Http\CreateBrand\CreateBrandController;
 use Fleet\Interface\Http\CreateCategory\CreateCategoryController;
+use Fleet\Interface\Http\CreateDiscountRule\CreateDiscountRuleController;
+use Fleet\Interface\Http\CreateDuration\CreateDurationController;
 use Fleet\Interface\Http\CreateModel\CreateModelController;
+use Fleet\Interface\Http\CreatePricingClass\CreatePricingClassController;
 use Fleet\Interface\Http\DeleteBikePhoto\DeleteBikePhotoController;
 use Fleet\Interface\Http\DeleteBrand\DeleteBrandController;
 use Fleet\Interface\Http\DeleteCategory\DeleteCategoryController;
@@ -20,16 +24,22 @@ use Fleet\Interface\Http\GetModelDetail\GetModelDetailController;
 use Fleet\Interface\Http\ListBikes\ListBikesController;
 use Fleet\Interface\Http\ListBrands\ListBrandsController;
 use Fleet\Interface\Http\ListCategories\ListCategoriesController;
+use Fleet\Interface\Http\ListDiscountRules\ListDiscountRulesController;
+use Fleet\Interface\Http\ListDurations\ListDurationsController;
 use Fleet\Interface\Http\ListModels\ListModelsController;
+use Fleet\Interface\Http\ListPricingClasses\ListPricingClassesController;
+use Fleet\Interface\Http\ListPricingRates\ListPricingRatesController;
 use Fleet\Interface\Http\ListRates\ListRatesController;
 use Fleet\Interface\Http\ResetSizeMappingConfiguration\ResetSizeMappingConfigurationController;
 use Fleet\Interface\Http\RetireBike\RetireBikeController;
 use Fleet\Interface\Http\SetBikeRate\SetBikeRateController;
 use Fleet\Interface\Http\SetCategoryRate\SetCategoryRateController;
+use Fleet\Interface\Http\SetPricingRate\SetPricingRateController;
 use Fleet\Interface\Http\UpdateBike\UpdateBikeController;
 use Fleet\Interface\Http\UpdateBrand\UpdateBrandController;
 use Fleet\Interface\Http\UpdateCategory\UpdateCategoryController;
 use Fleet\Interface\Http\UpdateModel\UpdateModelController;
+use Fleet\Interface\Http\UpdatePricingClass\UpdatePricingClassController;
 use Fleet\Interface\Http\UpdateRate\UpdateRateController;
 use Fleet\Interface\Http\UpdateSizeMappingConfiguration\UpdateSizeMappingConfigurationController;
 use Fleet\Interface\Http\UploadBikePhoto\UploadBikePhotoController;
@@ -134,4 +144,40 @@ Route::middleware(['keycloak'])->prefix('api/fleet')->group(function () {
 
     Route::post('/size-mapping/reset', ResetSizeMappingConfigurationController::class)
         ->middleware('permission:manage_bikes');
+
+    // Gestion du système de tarification 3D
+    // Classes tarifaires
+    Route::get('/pricing-classes', ListPricingClassesController::class)
+        ->middleware('permission:view_bikes');
+
+    Route::post('/pricing-classes', CreatePricingClassController::class)
+        ->middleware('permission:manage_rates');
+
+    Route::put('/pricing-classes/{pricingClassId}', UpdatePricingClassController::class)
+        ->middleware('permission:manage_rates');
+
+    // Durées
+    Route::get('/durations', ListDurationsController::class)
+        ->middleware('permission:view_bikes');
+
+    Route::post('/durations', CreateDurationController::class)
+        ->middleware('permission:manage_rates');
+
+    // Grille tarifaire 3D (Catégorie × Classe × Durée)
+    Route::get('/pricing-rates', ListPricingRatesController::class)
+        ->middleware('permission:view_bikes');
+
+    Route::post('/pricing-rates', SetPricingRateController::class)
+        ->middleware('permission:manage_rates');
+
+    // Règles de réduction
+    Route::get('/discount-rules', ListDiscountRulesController::class)
+        ->middleware('permission:view_bikes');
+
+    Route::post('/discount-rules', CreateDiscountRuleController::class)
+        ->middleware('permission:manage_rates');
+
+    // Calcul de tarif
+    Route::post('/pricing/calculate', CalculatePriceController::class)
+        ->middleware('permission:view_bikes');
 });

@@ -13,10 +13,13 @@ final class DurationDefinitionEloquentModel extends Model
 
     protected $table = 'duration_definitions';
 
-    protected $keyType = 'string';
-
     public $incrementing = false;
 
+    protected $keyType = 'string';
+
+    /**
+     * @var list<string>
+     */
     protected $fillable = [
         'id',
         'code',
@@ -28,14 +31,14 @@ final class DurationDefinitionEloquentModel extends Model
         'is_active',
     ];
 
+    /**
+     * @var array<string, string>
+     */
     protected $casts = [
         'duration_hours' => 'integer',
         'duration_days' => 'integer',
         'is_custom' => 'boolean',
         'sort_order' => 'integer',
         'is_active' => 'boolean',
-        'created_at' => 'immutable_datetime',
-        'updated_at' => 'immutable_datetime',
-        'deleted_at' => 'immutable_datetime',
     ];
 }

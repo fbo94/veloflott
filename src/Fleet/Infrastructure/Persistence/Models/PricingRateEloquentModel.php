@@ -13,10 +13,13 @@ final class PricingRateEloquentModel extends Model
 
     protected $table = 'pricing_rates';
 
-    protected $keyType = 'string';
-
     public $incrementing = false;
 
+    protected $keyType = 'string';
+
+    /**
+     * @var list<string>
+     */
     protected $fillable = [
         'id',
         'category_id',
@@ -26,11 +29,11 @@ final class PricingRateEloquentModel extends Model
         'is_active',
     ];
 
+    /**
+     * @var array<string, string>
+     */
     protected $casts = [
         'price' => 'float',
         'is_active' => 'boolean',
-        'created_at' => 'immutable_datetime',
-        'updated_at' => 'immutable_datetime',
-        'deleted_at' => 'immutable_datetime',
     ];
 }

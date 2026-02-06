@@ -19,24 +19,25 @@ interface PricingRateRepositoryInterface
     /**
      * @return PricingRate[]
      */
-    public function findByCategoryAndClass(string $categoryId, string $pricingClassId): array;
+    public function findByCategoryAndClass(
+        ?string $categoryId = null,
+        ?string $pricingClassId = null
+    ): array;
 
     /**
      * @return PricingRate[]
      */
-    public function findByCategory(string $categoryId): array;
+    public function findAllActive(): array;
 
     /**
      * @return PricingRate[]
      */
     public function findAll(): array;
 
-    public function delete(string $id): void;
+    /**
+     * @return PricingRate[]
+     */
+    public function findByCategory(string $categoryId): array;
 
-    public function existsForDimensions(
-        string $categoryId,
-        string $pricingClassId,
-        string $durationId,
-        ?string $excludeId = null
-    ): bool;
+    public function delete(string $id): void;
 }
