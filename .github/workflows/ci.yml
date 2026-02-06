@@ -57,8 +57,8 @@ jobs:
       - name: Install npm dependencies
         run: npm ci
 
-  php-cs-fixer:
-    name: PHP-CS-Fixer
+  phpcs:
+    name: PHP CodeSniffer
     needs: setup
     runs-on: ubuntu-latest
     steps:
@@ -85,8 +85,8 @@ jobs:
         if: steps.vendor-cache.outputs.cache-hit != 'true'
         run: composer install --prefer-dist --no-progress --no-interaction
 
-      - name: Run PHP-CS-Fixer
-        run: php ./vendor/bin/phpcs fix --dry-run --stop-on-violation --using-cache=no
+      - name: Run PHP CodeSniffer
+        run: ./vendor/bin/phpcs
 
   pest:
     name: Pest Tests
