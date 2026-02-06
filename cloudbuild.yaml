@@ -32,7 +32,12 @@ steps:
   # Exécute les migrations avant le déploiement pour s'assurer que la base de données est à jour
   - name: 'gcr.io/google-appengine/exec-wrapper'
     env:
+      - 'DB_CONNECTION=pgsql'
+      - 'DB_HOST=localhost'
+      - 'DB_PORT=5432'
       - 'DB_DATABASE=veloflott_db'
+      - 'DB_USERNAME=veloflott_user'
+      - 'DB_PASSWORD=${_DB_PASSWORD}'
     args:
       - '-i'
       - 'gcr.io/$PROJECT_ID/veloflott-api:$BUILD_ID'
@@ -82,6 +87,7 @@ steps:
 substitutions:
   _REGION: europe-west9
   _CLOUD_SQL_CONNECTION_NAME: project-08eb5a0c-d370-4877-a5a:europe-west9:veloflott-db
+  _DB_PASSWORD: password
 
 # Images à stocker dans Container Registry
 images:
