@@ -22,5 +22,4 @@
 Homestead.json
 Homestead.yaml
 Thumbs.db
-!/nginx/ssl/localhost.pem
-!/nginx/ssl/localhost-key.pem
+/docker/nginx/ssl/
