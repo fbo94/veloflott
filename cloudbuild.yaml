@@ -19,29 +19,38 @@ steps:
     args:
       - 'push'
       - 'gcr.io/$PROJECT_ID/veloflott-api:$BUILD_ID'
+    id: 'push-build-id'
 
   - name: 'gcr.io/cloud-builders/docker'
     args:
       - 'push'
       - 'gcr.io/$PROJECT_ID/veloflott-api:latest'
+    id: 'push-latest'
+    waitFor: ['push-build-id']
 
-  # Step 3: Run database migrations (optionnel, commenté par défaut)
-  # Décommenter seulement si vous voulez exécuter les migrations automatiquement
-  # - name: 'gcr.io/google-appengine/exec-wrapper'
-  #   args:
-  #     - '-i'
-  #     - 'gcr.io/$PROJECT_ID/veloflott-api:$COMMIT_SHA'
-  #     - '-s'
-  #     - '$_CLOUD_SQL_CONNECTION_NAME'
-  #     - '--'
-  #     - 'php'
-  #     - 'artisan'
-  #     - 'migrate'
-  #     - '--force'
+  # Step 3: Run database migrations
+  # Exécute les migrations avant le déploiement pour s'assurer que la base de données est à jour
+  - name: 'gcr.io/google-appengine/exec-wrapper'
+    args:
+      - '-i'
+      - 'gcr.io/$PROJECT_ID/veloflott-api:$BUILD_ID'
+      - '-s'
+      - '$_CLOUD_SQL_CONNECTION_NAME'
+      - '--'
+      - 'php'
+      - 'artisan'
+      - 'migrate'
+      - '--force'
+      - '--no-interaction'
+    id: 'run-migrations'
+    waitFor: ['push-latest']
 
   # Step 4: Deploy to Cloud Run
+  # N'exécute le déploiement qu'après le succès des migrations
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: gcloud
+    id: 'deploy-to-cloud-run'
+    waitFor: ['run-migrations']
     args:
       - 'run'
       - 'deploy'
