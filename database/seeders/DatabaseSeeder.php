@@ -15,11 +15,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        // Note: User model no longer uses factories
+        // Users are managed via Keycloak authentication
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        $this->call([
+            RepresentativeCustomersSeeder::class,
+            RepresentativeRentalsSeeder::class,
         ]);
     }
 }
