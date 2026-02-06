@@ -169,6 +169,18 @@ parameters:
 			path: src/Customer/Domain/Customer.php
 
 		-
+			message: '#^Method Customer\\Domain\\Customer\:\:__construct\(\) has parameter \$photos with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Customer/Domain/Customer.php
+
+		-
+			message: '#^Method Customer\\Domain\\Customer\:\:update\(\) has parameter \$photos with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Customer/Domain/Customer.php
+
+		-
 			message: '#^Parameter \$id of class Customer\\Domain\\Customer constructor expects string, int given\.$#'
 			identifier: argument.type
 			count: 1
@@ -313,6 +325,18 @@ parameters:
 			path: src/Fleet/Application/GetBikeDetail/GetBikeDetailResponse.php
 
 		-
+			message: '#^Call to an undefined method Fleet\\Domain\\Rate\:\:isBikeRate\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Fleet/Application/GetBikeRate/GetBikeRateResponse.php
+
+		-
+			message: '#^Method Fleet\\Application\\GetBikeRate\\GetBikeRateResponse\:\:toArray\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Fleet/Application/GetBikeRate/GetBikeRateResponse.php
+
+		-
 			message: '#^Method Fleet\\Application\\GetModelDetail\\GetModelDetailResponse\:\:toArray\(\) return type has no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
@@ -415,10 +439,34 @@ parameters:
 			path: src/Fleet/Application/ListRates/RateDto.php
 
 		-
+			message: '#^Call to an undefined static method Fleet\\Domain\\Rate\:\:forBike\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: src/Fleet/Application/SetBikeRate/SetBikeRateHandler.php
+
+		-
+			message: '#^Method Fleet\\Application\\SetBikeRate\\SetBikeRateResponse\:\:toArray\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Fleet/Application/SetBikeRate/SetBikeRateResponse.php
+
+		-
 			message: '#^Method Fleet\\Application\\SetCategoryRate\\CategoryNotFoundException\:\:context\(\) return type has no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
 			path: src/Fleet/Application/SetCategoryRate/CategoryNotFoundException.php
+
+		-
+			message: '#^Call to an undefined static method Fleet\\Domain\\Rate\:\:forCategory\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: src/Fleet/Application/SetCategoryRate/SetCategoryRateHandler.php
+
+		-
+			message: '#^Method Fleet\\Application\\SetCategoryRate\\SetCategoryRateResponse\:\:toArray\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Fleet/Application/SetCategoryRate/SetCategoryRateResponse.php
 
 		-
 			message: '#^Method Fleet\\Application\\UpdateBike\\UpdateBikeResponse\:\:toArray\(\) return type has no value type specified in iterable type array\.$#'
@@ -607,12 +655,6 @@ parameters:
 			path: src/Fleet/Interface/Http/DeleteBikePhoto/DeleteBikePhotoRequest.php
 
 		-
-			message: '#^Property Fleet\\Interface\\Http\\SetCategoryRate\\SetCategoryRateController\:\:\$handler is never read, only written\.$#'
-			identifier: property.onlyWritten
-			count: 1
-			path: src/Fleet/Interface/Http/SetCategoryRate/SetCategoryRateController.php
-
-		-
 			message: '#^Method Fleet\\Interface\\Http\\UpdateBrand\\UpdateBrandRequest\:\:rules\(\) return type has no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
@@ -629,6 +671,24 @@ parameters:
 			identifier: missingType.iterableValue
 			count: 1
 			path: src/Fleet/Interface/Http/UploadBikePhoto/UploadBikePhotoRequest.php
+
+		-
+			message: '#^Method Maintenance\\Application\\CompleteMaintenance\\CompleteMaintenanceResponse\:\:toArray\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Maintenance/Application/CompleteMaintenance/CompleteMaintenanceResponse.php
+
+		-
+			message: '#^Method Maintenance\\Application\\DeclareMaintenance\\DeclareMaintenanceResponse\:\:toArray\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Maintenance/Application/DeclareMaintenance/DeclareMaintenanceResponse.php
+
+		-
+			message: '#^Method Maintenance\\Application\\DeleteMaintenancePhoto\\MaintenanceNotFoundException\:\:context\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Maintenance/Application/DeleteMaintenancePhoto/MaintenanceNotFoundException.php
 
 		-
 			message: '#^Strict comparison using \=\=\= between Maintenance\\Domain\\Maintenance and null will always evaluate to false\.$#'
@@ -667,6 +727,18 @@ parameters:
 			path: src/Maintenance/Application/ListMaintenances/ListMaintenancesResponse.php
 
 		-
+			message: '#^Method Maintenance\\Application\\UploadMaintenancePhoto\\MaintenanceNotFoundException\:\:context\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Maintenance/Application/UploadMaintenancePhoto/MaintenanceNotFoundException.php
+
+		-
+			message: '#^Method Maintenance\\Application\\UploadMaintenancePhoto\\UploadMaintenancePhotoResponse\:\:toArray\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Maintenance/Application/UploadMaintenancePhoto/UploadMaintenancePhotoResponse.php
+
+		-
 			message: '#^Method Maintenance\\Infrastructure\\Persistence\\EloquentMaintenanceRepository\:\:findLongRunning\(\) should return array\<int, array\{maintenance_id\: string, bike_id\: string, days_in_progress\: int, priority\: string\}\> but returns array\<int, array\{maintenance_id\: string, bike_id\: mixed, days_in_progress\: float, priority\: mixed\}\>\.$#'
 			identifier: return.type
 			count: 1
@@ -703,6 +775,12 @@ parameters:
 			path: src/Maintenance/Interface/Http/DeclareMaintenance/DeclareMaintenanceController.php
 
 		-
+			message: '#^Method Maintenance\\Interface\\Http\\DeleteMaintenancePhoto\\DeleteMaintenancePhotoRequest\:\:rules\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Maintenance/Interface/Http/DeleteMaintenancePhoto/DeleteMaintenancePhotoRequest.php
+
+		-
 			message: '#^PHPDoc tag @throws with type Fleet\\Domain\\BikeException is not subtype of Throwable$#'
 			identifier: throws.notThrowable
 			count: 1
@@ -713,6 +791,12 @@ parameters:
 			identifier: throws.notThrowable
 			count: 1
 			path: src/Maintenance/Interface/Http/StartMaintenance/StartMaintenanceController.php
+
+		-
+			message: '#^Method Maintenance\\Interface\\Http\\UploadMaintenancePhoto\\UploadMaintenancePhotoRequest\:\:rules\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Maintenance/Interface/Http/UploadMaintenancePhoto/UploadMaintenancePhotoRequest.php
 
 		-
 			message: '#^Method Rental\\Application\\CancelRental\\CancelRentalResponse\:\:toArray\(\) return type has no value type specified in iterable type array\.$#'
@@ -1033,10 +1117,58 @@ parameters:
 			path: src/Shared/Domain/DomainException.php
 
 		-
-			message: '#^Call to an undefined method PHPUnit\\Framework\\TestCase\:\:get\(\)\.$#'
+			message: '#^Access to an undefined property Customer\\Infrastructure\\Persistence\\Models\\CustomerEloquentModel\|Illuminate\\Database\\Eloquent\\Collection\<int, Customer\\Infrastructure\\Persistence\\Models\\CustomerEloquentModel\>\:\:\$photos\.$#'
+			identifier: property.notFound
+			count: 4
+			path: tests/Feature/Customer/CustomerTest.php
+
+		-
+			message: '#^Call to an undefined method PHPUnit\\Framework\\TestCase\:\:assertDatabaseHas\(\)\.$#'
 			identifier: method.notFound
-			count: 2
-			path: tests/Feature/ExampleTest.php
+			count: 5
+			path: tests/Feature/Customer/CustomerTest.php
+
+		-
+			message: '#^Call to an undefined method PHPUnit\\Framework\\TestCase\:\:postJson\(\)\.$#'
+			identifier: method.notFound
+			count: 19
+			path: tests/Feature/Customer/CustomerTest.php
+
+		-
+			message: '#^Call to an undefined method PHPUnit\\Framework\\TestCase\:\:putJson\(\)\.$#'
+			identifier: method.notFound
+			count: 6
+			path: tests/Feature/Customer/CustomerTest.php
+
+		-
+			message: '#^Call to an undefined method PHPUnit\\Framework\\TestCase\:\:withoutMiddleware\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: tests/Feature/Customer/CustomerTest.php
+
+		-
+			message: '#^Unable to resolve the template type TValue in call to function expect$#'
+			identifier: argument.templateType
+			count: 7
+			path: tests/Feature/Customer/CustomerTest.php
+
+		-
+			message: '#^Call to an undefined method PHPUnit\\Framework\\TestCase\:\:assertDatabaseHas\(\)\.$#'
+			identifier: method.notFound
+			count: 3
+			path: tests/Feature/Fleet/CreateBikeTest.php
+
+		-
+			message: '#^Call to an undefined method PHPUnit\\Framework\\TestCase\:\:postJson\(\)\.$#'
+			identifier: method.notFound
+			count: 12
+			path: tests/Feature/Fleet/CreateBikeTest.php
+
+		-
+			message: '#^Call to an undefined method PHPUnit\\Framework\\TestCase\:\:withoutMiddleware\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: tests/Feature/Fleet/CreateBikeTest.php
 
 		-
 			message: '#^Function something\(\) has no return type specified\.$#'
@@ -1049,3 +1181,69 @@ parameters:
 			identifier: variable.undefined
 			count: 1
 			path: tests/Pest.php
+
+		-
+			message: '#^Parameter \#1 \$customers of class Customer\\Application\\CreateCustomer\\CreateCustomerHandler constructor expects Customer\\Domain\\CustomerRepositoryInterface, Mockery\\MockInterface given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Unit/Customer/CreateCustomer/CreateCustomerHandlerTest.php
+
+		-
+			message: '#^Parameter \#1 \$customers of class Customer\\Application\\GetCustomerDetail\\GetCustomerDetailHandler constructor expects Customer\\Domain\\CustomerRepositoryInterface, Mockery\\MockInterface given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Unit/Customer/GetCustomerDetail/GetCustomerDetailHandlerTest.php
+
+		-
+			message: '#^Unreachable statement \- code above always terminates\.$#'
+			identifier: deadCode.unreachable
+			count: 1
+			path: tests/Unit/Customer/GetCustomerDetail/GetCustomerDetailHandlerTest.php
+
+		-
+			message: '#^Parameter \#1 \$customers of class Customer\\Application\\SearchCustomers\\SearchCustomersHandler constructor expects Customer\\Domain\\CustomerRepositoryInterface, Mockery\\MockInterface given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Unit/Customer/SearchCustomers/SearchCustomersHandlerTest.php
+
+		-
+			message: '#^Parameter \#1 \$customers of class Customer\\Application\\ToggleRiskyFlag\\ToggleRiskyFlagHandler constructor expects Customer\\Domain\\CustomerRepositoryInterface, Mockery\\MockInterface given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Unit/Customer/ToggleRiskyFlag/ToggleRiskyFlagHandlerTest.php
+
+		-
+			message: '#^Parameter \#1 \$customers of class Customer\\Application\\UpdateCustomer\\UpdateCustomerHandler constructor expects Customer\\Domain\\CustomerRepositoryInterface, Mockery\\MockInterface given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Unit/Customer/UpdateCustomer/UpdateCustomerHandlerTest.php
+
+		-
+			message: '#^Call to an undefined method Pest\\PendingCalls\\TestCall\|Pest\\Support\\HigherOrderTapProxy\:\:skip\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: tests/Unit/Fleet/CreateBike/CreateBikeHandlerTest.php
+
+		-
+			message: '#^Parameter \#1 \$bikes of class Fleet\\Application\\CreateBike\\CreateBikeHandler constructor expects Fleet\\Domain\\BikeRepositoryInterface, Mockery\\MockInterface given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Unit/Fleet/CreateBike/CreateBikeHandlerTest.php
+
+		-
+			message: '#^Parameter \#2 \$models of class Fleet\\Application\\CreateBike\\CreateBikeHandler constructor expects Fleet\\Domain\\ModelRepositoryInterface, Mockery\\MockInterface given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Unit/Fleet/CreateBike/CreateBikeHandlerTest.php
+
+		-
+			message: '#^Parameter \#3 \$brands of class Fleet\\Application\\CreateBike\\CreateBikeHandler constructor expects Fleet\\Domain\\BrandRepositoryInterface, Mockery\\MockInterface given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Unit/Fleet/CreateBike/CreateBikeHandlerTest.php
+
+		-
+			message: '#^Parameter \#4 \$categories of class Fleet\\Application\\CreateBike\\CreateBikeHandler constructor expects Fleet\\Domain\\CategoryRepositoryInterface, Mockery\\MockInterface given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Unit/Fleet/CreateBike/CreateBikeHandlerTest.php
