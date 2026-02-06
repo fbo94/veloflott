@@ -27,6 +27,7 @@ cloudbuild.yaml
 .env
 .env.*
 !.env.example
+!.env.production
 
 # Storage
 /storage/*.key
