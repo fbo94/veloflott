@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Customer\Infrastructure\Persistence\Models\CustomerEloquentModel;
 use Fleet\Infrastructure\Persistence\Models\BikeEloquentModel;
 use Rental\Domain\BikeCondition;
+use Rental\Domain\DepositStatus;
 use Rental\Infrastructure\Persistence\Models\RentalEloquentModel;
 use Rental\Infrastructure\Persistence\Models\RentalItemEloquentModel;
 use Illuminate\Database\Seeder;
@@ -75,7 +76,7 @@ class RepresentativeRentalsSeeder extends Seeder
                 'tax_amount' => $totalAmount * 0.20,
                 'total_with_tax' => $totalAmount * 1.20,
                 'status' => 'completed',
-                'deposit_status' => 'returned',
+                'deposit_status' => DepositStatus::RELEASED->value,
                 'deposit_retained' => null,
                 'cancellation_reason' => null,
                 'created_at' => $startDate->copy()->subHours(rand(1, 48)),
@@ -128,7 +129,7 @@ class RepresentativeRentalsSeeder extends Seeder
                 'tax_amount' => $totalAmount * 0.20,
                 'total_with_tax' => $totalAmount * 1.20,
                 'status' => 'cancelled',
-                'deposit_status' => 'returned',
+                'deposit_status' => DepositStatus::RELEASED->value,
                 'deposit_retained' => null,
                 'cancellation_reason' => $cancellationReasons[array_rand($cancellationReasons)],
                 'created_at' => $startDate->copy()->subDays(rand(1, 10)),

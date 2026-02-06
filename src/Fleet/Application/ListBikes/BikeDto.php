@@ -15,7 +15,7 @@ final readonly class BikeDto
         public string $id,
         public string $qrCodeUuid,
         public string $internalNumber,
-        public string $serialNumber,
+        public ?string $serialNumber,
         public string $modelId,
         public string $brand,
         public string $brandId,
