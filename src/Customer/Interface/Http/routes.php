@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Customer\Interface\Http\AnnotateCustomer\AnnotateCustomerController;
 use Customer\Interface\Http\CreateCustomer\CreateCustomerController;
 use Customer\Interface\Http\GetCustomerDetail\GetCustomerDetailController;
 use Customer\Interface\Http\SearchCustomers\SearchCustomersController;
@@ -23,5 +24,8 @@ Route::middleware(['keycloak'])->prefix('api/customers')->group(function () {
         ->middleware('permission:manage_customers');
 
     Route::post('/{id}/toggle-risky', ToggleRiskyFlagController::class)
+        ->middleware('permission:manage_customers');
+
+    Route::post('/{id}/annotation', AnnotateCustomerController::class)
         ->middleware('permission:manage_customers');
 });

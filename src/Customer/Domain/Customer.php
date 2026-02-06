@@ -169,4 +169,13 @@ final class Customer
         $this->isRisky = false;
         $this->updatedAt = new \DateTimeImmutable();
     }
+
+    public function annotate(?string $annotation, bool $isRiskyCustomer): self
+    {
+        $this->notes = $annotation;
+        $this->isRisky = $isRiskyCustomer;
+        $this->updatedAt = new \DateTimeImmutable();
+
+        return $this;
+    }
 }

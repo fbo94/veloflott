@@ -371,3 +371,167 @@ test('returns 404 when updating non-existent customer', function () {
 
     expect($response->status())->toBeIn([404, 500]);
 });
+
+test('can toggle risky flag from false to true', function () {
+    // Create a customer
+    $createResponse = $this->postJson('/api/customers', [
+        'first_name' => 'Risky',
+        'last_name' => 'Customer',
+    ]);
+
+    $customerId = $createResponse->json('id');
+
+    // Verify customer is not risky initially
+    $customer = CustomerEloquentModel::find($customerId);
+    expect($customer->is_risky)->toBeFalse();
+
+    // Toggle risky flag
+    $response = $this->postJson("/api/customers/{$customerId}/toggle-risky");
+
+    $response->assertStatus(200)
+        ->assertJson([
+            'customer_id' => $customerId,
+            'is_risky' => true,
+            'message' => 'Customer marked as risky',
+        ]);
+
+    // Verify customer is now risky in database
+    $customer->refresh();
+    expect($customer->is_risky)->toBeTrue();
+});
+
+test('can toggle risky flag from true to false', function () {
+    // Create a customer and mark as risky
+    $createResponse = $this->postJson('/api/customers', [
+        'first_name' => 'Safe',
+        'last_name' => 'Customer',
+    ]);
+
+    $customerId = $createResponse->json('id');
+
+    // Mark as risky first
+    $this->postJson("/api/customers/{$customerId}/toggle-risky");
+
+    // Verify customer is risky
+    $customer = CustomerEloquentModel::find($customerId);
+    expect($customer->is_risky)->toBeTrue();
+
+    // Toggle risky flag again
+    $response = $this->postJson("/api/customers/{$customerId}/toggle-risky");
+
+    $response->assertStatus(200)
+        ->assertJson([
+            'customer_id' => $customerId,
+            'is_risky' => false,
+            'message' => 'Customer unmarked as risky',
+        ]);
+
+    // Verify customer is no longer risky in database
+    $customer->refresh();
+    expect($customer->is_risky)->toBeFalse();
+});
+
+test('can toggle risky flag multiple times', function () {
+    // Create a customer
+    $createResponse = $this->postJson('/api/customers', [
+        'first_name' => 'Toggle',
+        'last_name' => 'Test',
+    ]);
+
+    $customerId = $createResponse->json('id');
+    $customer = CustomerEloquentModel::find($customerId);
+
+    // Initial state: not risky
+    expect($customer->is_risky)->toBeFalse();
+
+    // First toggle: false -> true
+    $this->postJson("/api/customers/{$customerId}/toggle-risky")
+        ->assertJson(['is_risky' => true]);
+    $customer->refresh();
+    expect($customer->is_risky)->toBeTrue();
+
+    // Second toggle: true -> false
+    $this->postJson("/api/customers/{$customerId}/toggle-risky")
+        ->assertJson(['is_risky' => false]);
+    $customer->refresh();
+    expect($customer->is_risky)->toBeFalse();
+
+    // Third toggle: false -> true
+    $this->postJson("/api/customers/{$customerId}/toggle-risky")
+        ->assertJson(['is_risky' => true]);
+    $customer->refresh();
+    expect($customer->is_risky)->toBeTrue();
+});
+
+test('returns 404 when toggling risky flag for non-existent customer', function () {
+    $invalidId = '00000000-0000-0000-0000-000000000000';
+
+    $response = $this->postJson("/api/customers/{$invalidId}/toggle-risky");
+
+    expect($response->status())->toBeIn([404, 500]);
+});
+
+test('notes field is properly saved and retrieved', function () {
+    // Create customer with notes
+    $createResponse = $this->postJson('/api/customers', [
+        'first_name' => 'Noted',
+        'last_name' => 'Customer',
+        'notes' => 'Always late for pickups',
+    ]);
+
+    $customerId = $createResponse->json('id');
+
+    // Verify notes are saved
+    $this->assertDatabaseHas('customers', [
+        'id' => $customerId,
+        'notes' => 'Always late for pickups',
+    ]);
+
+    // Update notes
+    $this->putJson("/api/customers/{$customerId}", [
+        'first_name' => 'Noted',
+        'last_name' => 'Customer',
+        'notes' => 'Updated: Improved punctuality',
+    ]);
+
+    // Verify notes are updated
+    $this->assertDatabaseHas('customers', [
+        'id' => $customerId,
+        'notes' => 'Updated: Improved punctuality',
+    ]);
+});
+
+test('notes field can be cleared', function () {
+    // Create customer with notes
+    $createResponse = $this->postJson('/api/customers', [
+        'first_name' => 'Clear',
+        'last_name' => 'Notes',
+        'notes' => 'Some notes here',
+    ]);
+
+    $customerId = $createResponse->json('id');
+
+    // Clear notes
+    $this->putJson("/api/customers/{$customerId}", [
+        'first_name' => 'Clear',
+        'last_name' => 'Notes',
+        'notes' => null,
+    ]);
+
+    // Verify notes are cleared
+    $this->assertDatabaseHas('customers', [
+        'id' => $customerId,
+        'notes' => null,
+    ]);
+});
+
+test('validates notes field max length', function () {
+    $response = $this->postJson('/api/customers', [
+        'first_name' => 'Long',
+        'last_name' => 'Notes',
+        'notes' => str_repeat('a', 1001), // Exceeds max length of 1000
+    ]);
+
+    $response->assertStatus(422)
+        ->assertJsonValidationErrors(['notes']);
+});

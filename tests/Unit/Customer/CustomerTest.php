@@ -290,3 +290,87 @@ test('fullName returns correct format', function () {
     // Assert
     expect($customer->fullName())->toBe('Mary Johnson');
 });
+
+test('can annotate customer with annotation and risky flag', function () {
+    // Arrange
+    $customer = new Customer(
+        id: 'customer-annotate',
+        firstName: 'Test',
+        lastName: 'Annotate',
+        email: null,
+        phone: null,
+        identityDocumentType: null,
+        identityDocumentNumber: null,
+        height: null,
+        weight: null,
+        address: null,
+        notes: null,
+        photos: [],
+        isRisky: false,
+        createdAt: new DateTimeImmutable(),
+        updatedAt: new DateTimeImmutable(),
+    );
+
+    // Act
+    $customer->annotate(annotation: 'Président !', isRiskyCustomer: true);
+
+    // Assert
+    expect($customer->notes())->toBe('Président !');
+    expect($customer->isRisky())->toBeTrue();
+});
+
+test('can annotate customer without changing risky flag', function () {
+    // Arrange
+    $customer = new Customer(
+        id: 'customer-annotate2',
+        firstName: 'Test',
+        lastName: 'Annotate',
+        email: null,
+        phone: null,
+        identityDocumentType: null,
+        identityDocumentNumber: null,
+        height: null,
+        weight: null,
+        address: null,
+        notes: 'Old note',
+        photos: [],
+        isRisky: true,
+        createdAt: new DateTimeImmutable(),
+        updatedAt: new DateTimeImmutable(),
+    );
+
+    // Act
+    $customer->annotate(annotation: 'New note', isRiskyCustomer: true);
+
+    // Assert
+    expect($customer->notes())->toBe('New note');
+    expect($customer->isRisky())->toBeTrue();
+});
+
+test('can clear annotation and unmark as risky', function () {
+    // Arrange
+    $customer = new Customer(
+        id: 'customer-clear',
+        firstName: 'Test',
+        lastName: 'Clear',
+        email: null,
+        phone: null,
+        identityDocumentType: null,
+        identityDocumentNumber: null,
+        height: null,
+        weight: null,
+        address: null,
+        notes: 'Some annotation',
+        photos: [],
+        isRisky: true,
+        createdAt: new DateTimeImmutable(),
+        updatedAt: new DateTimeImmutable(),
+    );
+
+    // Act
+    $customer->annotate(annotation: null, isRiskyCustomer: false);
+
+    // Assert
+    expect($customer->notes())->toBeNull();
+    expect($customer->isRisky())->toBeFalse();
+});

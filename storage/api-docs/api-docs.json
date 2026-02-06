@@ -590,6 +590,74 @@
                 ]
             }
         },
+        "/api/customers/{id}/annotation": {
+            "post": {
+                "tags": [
+                    "Customers"
+                ],
+                "summary": "Annotate customer with notes and risky flag",
+                "operationId": "6a9aef2417bf25031bfd76fd4b4d189c",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "is_risky_customer"
+                                ],
+                                "properties": {
+                                    "annotation": {
+                                        "description": "Free text annotation (max 1000 characters)",
+                                        "type": "string",
+                                        "example": "Président !",
+                                        "nullable": true
+                                    },
+                                    "is_risky_customer": {
+                                        "description": "Mark customer as risky",
+                                        "type": "boolean",
+                                        "example": false
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Customer annotated successfully"
+                    },
+                    "400": {
+                        "description": "Validation error"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden - requires manage_customers permission"
+                    },
+                    "404": {
+                        "description": "Customer not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/fleet/brands": {
             "get": {
                 "tags": [

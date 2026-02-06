@@ -332,6 +332,41 @@ class ToggleRiskyFlagEndpoint
 {
 }
 
+// POST /api/customers/{id}/annotation
+#[OA\Post(
+    path: '/api/customers/{id}/annotation',
+    summary: 'Annotate customer with notes and risky flag',
+    security: [['bearerAuth' => []]],
+    tags: ['Customers'],
+    parameters: [
+        new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'string', format: 'uuid')),
+    ],
+    requestBody: new OA\RequestBody(
+        required: true,
+        content: new OA\MediaType(
+            mediaType: 'application/json',
+            schema: new OA\Schema(
+                required: ['is_risky_customer'],
+                properties: [
+                    new OA\Property(property: 'annotation', type: 'string', example: 'Président !', description: 'Free text annotation (max 1000 characters)', nullable: true),
+                    new OA\Property(property: 'is_risky_customer', type: 'boolean', example: false, description: 'Mark customer as risky'),
+                ],
+                type: 'object'
+            )
+        )
+    ),
+    responses: [
+        new OA\Response(response: 200, description: 'Customer annotated successfully'),
+        new OA\Response(response: 400, description: 'Validation error'),
+        new OA\Response(response: 401, description: 'Unauthorized'),
+        new OA\Response(response: 403, description: 'Forbidden - requires manage_customers permission'),
+        new OA\Response(response: 404, description: 'Customer not found'),
+    ]
+)]
+class AnnotateCustomerEndpoint
+{
+}
+
 // ------------------------------ FLEET - BRANDS ------------------------------
 
 // GET /api/fleet/brands
