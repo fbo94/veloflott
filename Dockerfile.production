@@ -67,8 +67,9 @@ WORKDIR /var/www/html
 # Copy application from builder stage
 COPY --from=composer-builder /app /var/www/html
 
-# Note: .env is NOT copied - all config comes from environment variables
-# This allows Cloud Run and Cloud Build to inject secrets properly
+# Copy .env.production as .env for default configuration
+# Secrets (DB_PASSWORD, APP_KEY) will be overridden by environment variables
+COPY .env.production /var/www/html/.env
 
 # Set permissions
 RUN chown -R www-data:www-data /var/www/html \
