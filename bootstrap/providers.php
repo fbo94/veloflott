@@ -8,4 +8,5 @@ return [
     Rental\Infrastructure\RentalServiceProvider::class,
     Maintenance\Infrastructure\MaintenanceServiceProvider::class,
     Dashboard\Infrastructure\DashboardServiceProvider::class,
+    Pricing\Infrastructure\PricingServiceProvider::class,
 ];

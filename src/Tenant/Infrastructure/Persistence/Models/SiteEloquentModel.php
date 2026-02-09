@@ -7,6 +7,7 @@ namespace Tenant\Infrastructure\Persistence\Models;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Tenant\Infrastructure\Persistence\Traits\TenantScoped;
 
 /**
  * @property string $id
@@ -30,6 +31,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 final class SiteEloquentModel extends Model
 {
     use HasUuids;
+    use TenantScoped;
 
     protected $table = 'sites';
 
