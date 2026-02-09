@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Database\Seeders;
 
-use Fleet\Infrastructure\Persistence\Models\DiscountRuleEloquentModel;
-use Fleet\Infrastructure\Persistence\Models\DurationDefinitionEloquentModel;
-use Fleet\Infrastructure\Persistence\Models\PricingClassEloquentModel;
-use Fleet\Infrastructure\Persistence\Models\PricingRateEloquentModel;
 use Illuminate\Database\Seeder;
+use Pricing\Infrastructure\Persistence\Models\DiscountRuleEloquentModel;
+use Pricing\Infrastructure\Persistence\Models\DurationDefinitionEloquentModel;
+use Pricing\Infrastructure\Persistence\Models\PricingClassEloquentModel;
+use Pricing\Infrastructure\Persistence\Models\PricingRateEloquentModel;
 use Ramsey\Uuid\Uuid;
 
 final class PricingSystemSeeder extends Seeder

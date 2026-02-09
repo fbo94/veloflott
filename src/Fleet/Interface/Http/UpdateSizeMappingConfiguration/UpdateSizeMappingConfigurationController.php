@@ -18,19 +18,24 @@ final readonly class UpdateSizeMappingConfigurationController
     public function __invoke(UpdateSizeMappingConfigurationRequest $request): JsonResponse
     {
         try {
+            // Transformer le tableau sizes[] en map indexé par letter
+            $sizesMap = collect($request->input('sizes'))
+                ->keyBy('letter')
+                ->toArray();
+
             $command = new UpdateSizeMappingConfigurationCommand(
-                xsCm: new SizeRange($request->input('xs_cm.min'), $request->input('xs_cm.max')),
-                xsInch: new SizeRange($request->input('xs_inch.min'), $request->input('xs_inch.max')),
-                sCm: new SizeRange($request->input('s_cm.min'), $request->input('s_cm.max')),
-                sInch: new SizeRange($request->input('s_inch.min'), $request->input('s_inch.max')),
-                mCm: new SizeRange($request->input('m_cm.min'), $request->input('m_cm.max')),
-                mInch: new SizeRange($request->input('m_inch.min'), $request->input('m_inch.max')),
-                lCm: new SizeRange($request->input('l_cm.min'), $request->input('l_cm.max')),
-                lInch: new SizeRange($request->input('l_inch.min'), $request->input('l_inch.max')),
-                xlCm: new SizeRange($request->input('xl_cm.min'), $request->input('xl_cm.max')),
-                xlInch: new SizeRange($request->input('xl_inch.min'), $request->input('xl_inch.max')),
-                xxlCm: new SizeRange($request->input('xxl_cm.min'), $request->input('xxl_cm.max')),
-                xxlInch: new SizeRange($request->input('xxl_inch.min'), $request->input('xxl_inch.max')),
+                xsCm: new SizeRange($sizesMap['xs']['cm']['min'], $sizesMap['xs']['cm']['max']),
+                xsInch: new SizeRange($sizesMap['xs']['inch']['min'], $sizesMap['xs']['inch']['max']),
+                sCm: new SizeRange($sizesMap['s']['cm']['min'], $sizesMap['s']['cm']['max']),
+                sInch: new SizeRange($sizesMap['s']['inch']['min'], $sizesMap['s']['inch']['max']),
+                mCm: new SizeRange($sizesMap['m']['cm']['min'], $sizesMap['m']['cm']['max']),
+                mInch: new SizeRange($sizesMap['m']['inch']['min'], $sizesMap['m']['inch']['max']),
+                lCm: new SizeRange($sizesMap['l']['cm']['min'], $sizesMap['l']['cm']['max']),
+                lInch: new SizeRange($sizesMap['l']['inch']['min'], $sizesMap['l']['inch']['max']),
+                xlCm: new SizeRange($sizesMap['xl']['cm']['min'], $sizesMap['xl']['cm']['max']),
+                xlInch: new SizeRange($sizesMap['xl']['inch']['min'], $sizesMap['xl']['inch']['max']),
+                xxlCm: new SizeRange($sizesMap['xxl']['cm']['min'], $sizesMap['xxl']['cm']['max']),
+                xxlInch: new SizeRange($sizesMap['xxl']['inch']['min'], $sizesMap['xxl']['inch']['max']),
             );
 
             $response = $this->handler->handle($command);

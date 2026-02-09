@@ -22,6 +22,9 @@ parameters:
         # Allow dynamic properties on Eloquent models
         - '#Access to an undefined property [a-zA-Z0-9\\_]+::\$[a-zA-Z0-9_]+#'
 
+        # Ignore HasFactory generics - Laravel limitation
+        - '#uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types: TFactory#'
+
     # Report unmatched ignored errors
     reportUnmatchedIgnoredErrors: false
 

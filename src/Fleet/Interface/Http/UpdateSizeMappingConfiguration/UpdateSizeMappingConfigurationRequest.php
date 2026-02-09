@@ -14,53 +14,35 @@ final class UpdateSizeMappingConfigurationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'xs_cm' => ['required', 'array:min,max'],
-            'xs_cm.min' => ['required', 'integer', 'min:0', 'lte:xs_cm.max'],
-            'xs_cm.max' => ['required', 'integer', 'min:0'],
+            'sizes' => ['required', 'array', 'size:6'],
+            'sizes.*.letter' => ['required', 'string', 'in:xs,s,m,l,xl,xxl'],
+            'sizes.*.label' => ['required', 'string'],
+            'sizes.*.cm' => ['required', 'array:min,max'],
+            'sizes.*.cm.min' => ['required', 'integer', 'min:0'],
+            'sizes.*.cm.max' => ['required', 'integer', 'min:0', 'gte:sizes.*.cm.min'],
+            'sizes.*.inch' => ['required', 'array:min,max'],
+            'sizes.*.inch.min' => ['required', 'integer', 'min:0'],
+            'sizes.*.inch.max' => ['required', 'integer', 'min:0', 'gte:sizes.*.inch.min'],
+        ];
+    }
 
-            'xs_inch' => ['required', 'array:min,max'],
-            'xs_inch.min' => ['required', 'integer', 'min:0', 'lte:xs_inch.max'],
-            'xs_inch.max' => ['required', 'integer', 'min:0'],
-
-            's_cm' => ['required', 'array:min,max'],
-            's_cm.min' => ['required', 'integer', 'min:0', 'lte:s_cm.max'],
-            's_cm.max' => ['required', 'integer', 'min:0'],
-
-            's_inch' => ['required', 'array:min,max'],
-            's_inch.min' => ['required', 'integer', 'min:0', 'lte:s_inch.max'],
-            's_inch.max' => ['required', 'integer', 'min:0'],
-
-            'm_cm' => ['required', 'array:min,max'],
-            'm_cm.min' => ['required', 'integer', 'min:0', 'lte:m_cm.max'],
-            'm_cm.max' => ['required', 'integer', 'min:0'],
-
-            'm_inch' => ['required', 'array:min,max'],
-            'm_inch.min' => ['required', 'integer', 'min:0', 'lte:m_inch.max'],
-            'm_inch.max' => ['required', 'integer', 'min:0'],
-
-            'l_cm' => ['required', 'array:min,max'],
-            'l_cm.min' => ['required', 'integer', 'min:0', 'lte:l_cm.max'],
-            'l_cm.max' => ['required', 'integer', 'min:0'],
-
-            'l_inch' => ['required', 'array:min,max'],
-            'l_inch.min' => ['required', 'integer', 'min:0', 'lte:l_inch.max'],
-            'l_inch.max' => ['required', 'integer', 'min:0'],
-
-            'xl_cm' => ['required', 'array:min,max'],
-            'xl_cm.min' => ['required', 'integer', 'min:0', 'lte:xl_cm.max'],
-            'xl_cm.max' => ['required', 'integer', 'min:0'],
-
-            'xl_inch' => ['required', 'array:min,max'],
-            'xl_inch.min' => ['required', 'integer', 'min:0', 'lte:xl_inch.max'],
-            'xl_inch.max' => ['required', 'integer', 'min:0'],
-
-            'xxl_cm' => ['required', 'array:min,max'],
-            'xxl_cm.min' => ['required', 'integer', 'min:0', 'lte:xxl_cm.max'],
-            'xxl_cm.max' => ['required', 'integer', 'min:0'],
-
-            'xxl_inch' => ['required', 'array:min,max'],
-            'xxl_inch.min' => ['required', 'integer', 'min:0', 'lte:xxl_inch.max'],
-            'xxl_inch.max' => ['required', 'integer', 'min:0'],
+    /**
+     * Messages d'erreur personnalisés.
+     *
+     * @return array<string, string>
+     */
+    public function messages(): array
+    {
+        return [
+            'sizes.required' => 'Les tailles sont requises',
+            'sizes.size' => 'Vous devez fournir exactement 6 tailles (XS, S, M, L, XL, XXL)',
+            'sizes.*.letter.in' => 'La lettre de la taille doit être : xs, s, m, l, xl ou xxl',
+            'sizes.*.cm.min.required' => 'La valeur minimale en cm est requise',
+            'sizes.*.cm.max.required' => 'La valeur maximale en cm est requise',
+            'sizes.*.cm.max.gte' => 'La valeur maximale doit être supérieure ou égale à la valeur minimale',
+            'sizes.*.inch.min.required' => 'La valeur minimale en pouces est requise',
+            'sizes.*.inch.max.required' => 'La valeur maximale en pouces est requise',
+            'sizes.*.inch.max.gte' => 'La valeur maximale doit être supérieure ou égale à la valeur minimale',
         ];
     }
 }

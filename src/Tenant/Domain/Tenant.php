@@ -1,0 +1,144 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Tenant\Domain;
+
+/**
+ * Entité Tenant (Organisation/Entreprise).
+ * 
+ * Représente une organisation dans le système multi-tenant.
+ * Chaque tenant a ses propres données isolées.
+ */
+final class Tenant
+{
+    private \DateTimeImmutable $createdAt;
+    private \DateTimeImmutable $updatedAt;
+
+    public function __construct(
+        private readonly string $id,
+        private string $name,
+        private string $slug,
+        private ?string $domain,
+        private TenantStatus $status,
+        private ?string $contactEmail,
+        private ?string $contactPhone,
+        private ?array $settings,
+        ?\DateTimeImmutable $createdAt = null,
+        ?\DateTimeImmutable $updatedAt = null,
+    ) {
+        $this->createdAt = $createdAt ?? new \DateTimeImmutable();
+        $this->updatedAt = $updatedAt ?? new \DateTimeImmutable();
+    }
+
+    // ===== Getters =====
+
+    public function id(): string
+    {
+        return $this->id;
+    }
+
+    public function name(): string
+    {
+        return $this->name;
+    }
+
+    public function slug(): string
+    {
+        return $this->slug;
+    }
+
+    public function domain(): ?string
+    {
+        return $this->domain;
+    }
+
+    public function status(): TenantStatus
+    {
+        return $this->status;
+    }
+
+    public function contactEmail(): ?string
+    {
+        return $this->contactEmail;
+    }
+
+    public function contactPhone(): ?string
+    {
+        return $this->contactPhone;
+    }
+
+    public function settings(): ?array
+    {
+        return $this->settings;
+    }
+
+    public function createdAt(): \DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    public function updatedAt(): \DateTimeImmutable
+    {
+        return $this->updatedAt;
+    }
+
+    // ===== Status checks =====
+
+    public function isActive(): bool
+    {
+        return $this->status === TenantStatus::ACTIVE;
+    }
+
+    public function isSuspended(): bool
+    {
+        return $this->status === TenantStatus::SUSPENDED;
+    }
+
+    // ===== Actions =====
+
+    public function updateInformation(
+        string $name,
+        ?string $contactEmail,
+        ?string $contactPhone,
+    ): self {
+        $this->name = $name;
+        $this->contactEmail = $contactEmail;
+        $this->contactPhone = $contactPhone;
+        $this->updatedAt = new \DateTimeImmutable();
+
+        return $this;
+    }
+
+    public function updateSettings(?array $settings): self
+    {
+        $this->settings = $settings;
+        $this->updatedAt = new \DateTimeImmutable();
+
+        return $this;
+    }
+
+    public function activate(): self
+    {
+        $this->status = TenantStatus::ACTIVE;
+        $this->updatedAt = new \DateTimeImmutable();
+
+        return $this;
+    }
+
+    public function suspend(): self
+    {
+        $this->status = TenantStatus::SUSPENDED;
+        $this->updatedAt = new \DateTimeImmutable();
+
+        return $this;
+    }
+
+    public function archive(): self
+    {
+        $this->status = TenantStatus::ARCHIVED;
+        $this->updatedAt = new \DateTimeImmutable();
+
+        return $this;
+    }
+}

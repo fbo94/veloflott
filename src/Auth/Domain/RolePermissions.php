@@ -17,6 +17,30 @@ final class RolePermissions
      * @var array<string, Permission[]>
      */
     private const PERMISSIONS = [
+        'super_admin' => [
+            // Toutes les permissions + multi-tenant
+            Permission::VIEW_BIKES,
+            Permission::MANAGE_BIKES,
+            Permission::DELETE_BIKES,
+            Permission::MANAGE_CATEGORIES,
+            Permission::MANAGE_RATES,
+            Permission::VIEW_RENTALS,
+            Permission::CREATE_RENTALS,
+            Permission::CANCEL_RENTALS,
+            Permission::VIEW_CUSTOMERS,
+            Permission::MANAGE_CUSTOMERS,
+            Permission::DELETE_CUSTOMERS,
+            Permission::VIEW_MAINTENANCES,
+            Permission::CREATE_MAINTENANCES,
+            Permission::MANAGE_MAINTENANCES,
+            Permission::CLOSE_MAINTENANCES,
+            Permission::VIEW_STATS,
+            Permission::MANAGE_USERS,
+            // Permissions spécifiques Super Admin
+            Permission::VIEW_TENANTS,
+            Permission::MANAGE_TENANTS,
+            Permission::DELETE_TENANTS,
+        ],
         'admin' => [
             // Tout
             Permission::VIEW_BIKES,

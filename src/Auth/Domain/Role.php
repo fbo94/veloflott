@@ -6,6 +6,7 @@ namespace Auth\Domain;
 
 enum Role: string
 {
+    case SUPER_ADMIN = 'super_admin';
     case ADMIN = 'admin';
     case MANAGER = 'manager';
     case EMPLOYEE = 'employee';
@@ -16,6 +17,7 @@ enum Role: string
     public function label(): string
     {
         return match ($this) {
+            self::SUPER_ADMIN => 'Super Administrateur',
             self::ADMIN => 'Administrateur',
             self::MANAGER => 'Manager',
             self::EMPLOYEE => 'Employé',
@@ -28,6 +30,7 @@ enum Role: string
     public function isHigherThan(Role $other): bool
     {
         $hierarchy = [
+            self::SUPER_ADMIN->value => 4,
             self::ADMIN->value => 3,
             self::MANAGER->value => 2,
             self::EMPLOYEE->value => 1,

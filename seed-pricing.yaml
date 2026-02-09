@@ -1,0 +1,33 @@
+steps:
+  - name: 'gcr.io/google-appengine/exec-wrapper'
+    env:
+      - 'APP_ENV=local'
+      - 'APP_DEBUG=true'
+      - 'LOG_CHANNEL=stack'
+      - 'DB_CONNECTION=pgsql'
+      - 'DB_HOST=/cloudsql/project-08eb5a0c-d370-4877-a5a:europe-west9:veloflott-db'
+      - 'DB_PORT=5432'
+      - 'DB_DATABASE=veloflott_db'
+      - 'DB_USERNAME=veloflott_user'
+    secretEnv: ['DB_PASSWORD', 'APP_KEY']
+    args:
+      - '-i'
+      - 'gcr.io/$PROJECT_ID/veloflott-api:latest'
+      - '-s'
+      - 'project-08eb5a0c-d370-4877-a5a:europe-west9:veloflott-db'
+      - '--'
+      - 'php'
+      - 'artisan'
+      - 'db:seed'
+      - '--class=Database\\Seeders\\PricingSystemSeeder'
+      - '--force'
+      - '-vvv'
+
+availableSecrets:
+  secretManager:
+    - versionName: projects/$PROJECT_ID/secrets/veloflott-db-password/versions/latest
+      env: 'DB_PASSWORD'
+    - versionName: projects/$PROJECT_ID/secrets/veloflott-app-key/versions/latest
+      env: 'APP_KEY'
+
+timeout: '600s'

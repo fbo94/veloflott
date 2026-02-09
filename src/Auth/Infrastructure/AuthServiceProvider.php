@@ -11,6 +11,7 @@ use Auth\Infrastructure\Keycloak\UserSyncService;
 use Auth\Infrastructure\Persistence\EloquentUserRepository;
 use Auth\Interface\Http\Middleware\CheckPermission;
 use Auth\Interface\Http\Middleware\KeycloakAuthenticate;
+use Auth\Interface\Http\Middleware\RequireSuperAdmin;
 use Illuminate\Support\ServiceProvider;
 
 final class AuthServiceProvider extends ServiceProvider
@@ -50,6 +51,7 @@ final class AuthServiceProvider extends ServiceProvider
         $router = $this->app->make('router');
         $router->aliasMiddleware('keycloak', KeycloakAuthenticate::class);
         $router->aliasMiddleware('permission', CheckPermission::class);
+        $router->aliasMiddleware('super-admin', RequireSuperAdmin::class);
 
         // Charger les routes
         $this->loadRoutesFrom(__DIR__.'/../Interface/Http/routes.php');

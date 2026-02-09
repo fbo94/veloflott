@@ -35,6 +35,11 @@ enum Permission: string
     // ===== Users =====
     case MANAGE_USERS = 'manage_users';
 
+    // ===== Tenants (Multi-tenant) =====
+    case VIEW_TENANTS = 'view_tenants';
+    case MANAGE_TENANTS = 'manage_tenants';
+    case DELETE_TENANTS = 'delete_tenants';
+
     /**
      * Libellé français pour l'affichage.
      */
@@ -58,6 +63,9 @@ enum Permission: string
             self::CLOSE_MAINTENANCES => 'Clôturer des maintenances',
             self::VIEW_STATS => 'Voir les statistiques',
             self::MANAGE_USERS => 'Gérer les utilisateurs',
+            self::VIEW_TENANTS => 'Voir les tenants',
+            self::MANAGE_TENANTS => 'Gérer les tenants',
+            self::DELETE_TENANTS => 'Supprimer les tenants',
         };
     }
 
@@ -82,6 +90,9 @@ enum Permission: string
             self::VIEW_STATS => 'dashboard',
 
             self::MANAGE_USERS => 'auth',
+
+            self::VIEW_TENANTS, self::MANAGE_TENANTS,
+            self::DELETE_TENANTS => 'tenant',
         };
     }
 }

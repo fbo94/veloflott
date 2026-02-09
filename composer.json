@@ -32,6 +32,7 @@
             "App\\": "app/",
             "Auth\\": "src/Auth/",
             "Fleet\\": "src/Fleet/",
+            "Pricing\\": "src/Pricing/",
             "Rental\\": "src/Rental/",
             "Customer\\": "src/Customer/",
             "Maintenance\\": "src/Maintenance/",

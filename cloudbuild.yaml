@@ -30,35 +30,41 @@ steps:
 
   # Step 3: Run database migrations
   # Exécute les migrations avant le déploiement pour s'assurer que la base de données est à jour
-  - name: 'gcr.io/cloud-builders/gcloud'
+  - name: 'gcr.io/google-appengine/exec-wrapper'
     secretEnv: ['DB_PASSWORD', 'APP_KEY']
-    entrypoint: 'bash'
     args:
-      - '-c'
-      - |
-        # Installer cloud_sql_proxy
-        curl -o /cloud_sql_proxy https://storage.googleapis.com/cloud-sql-connectors/cloud-sql-proxy/v2.8.1/cloud-sql-proxy.linux.amd64
-        chmod +x /cloud_sql_proxy
-
-        # Démarrer le proxy en arrière-plan
-        /cloud_sql_proxy --unix-socket /cloudsql $_CLOUD_SQL_CONNECTION_NAME &
-        sleep 3
-
-        # Lancer les migrations via Docker
-        docker run --rm \
-          -v /cloudsql:/cloudsql \
-          -e APP_ENV=production \
-          -e APP_DEBUG=false \
-          -e LOG_CHANNEL=stderr \
-          -e DB_CONNECTION=pgsql \
-          -e DB_HOST=/cloudsql/$_CLOUD_SQL_CONNECTION_NAME \
-          -e DB_PORT=5432 \
-          -e DB_DATABASE=veloflott_db \
-          -e DB_USERNAME=veloflott_user \
-          -e "DB_PASSWORD=$DB_PASSWORD" \
-          -e "APP_KEY=$APP_KEY" \
-          gcr.io/$PROJECT_ID/veloflott-api:$BUILD_ID \
-          php artisan migrate --force --no-interaction -vvv
+      - '-i'
+      - 'gcr.io/$PROJECT_ID/veloflott-api:$BUILD_ID'
+      - '-s'
+      - '$_CLOUD_SQL_CONNECTION_NAME'
+      # Passer les env vars AU CONTAINER via -e
+      - '-e'
+      - 'APP_ENV=production'
+      - '-e'
+      - 'APP_DEBUG=false'
+      - '-e'
+      - 'LOG_CHANNEL=stderr'
+      - '-e'
+      - 'DB_CONNECTION=pgsql'
+      - '-e'
+      - 'DB_HOST=/cloudsql/$_CLOUD_SQL_CONNECTION_NAME'
+      - '-e'
+      - 'DB_PORT=5432'
+      - '-e'
+      - 'DB_DATABASE=veloflott_db'
+      - '-e'
+      - 'DB_USERNAME=veloflott_user'
+      - '-e'
+      - 'DB_PASSWORD=$$DB_PASSWORD'
+      - '-e'
+      - 'APP_KEY=$$APP_KEY'
+      - '--'
+      - 'php'
+      - 'artisan'
+      - 'migrate'
+      - '--force'
+      - '--no-interaction'
+      - '-vvv'
     id: 'run-migrations'
     waitFor: ['push-latest']
 

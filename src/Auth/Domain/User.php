@@ -108,6 +108,11 @@ final class User
         return $this->hasRole(Role::ADMIN);
     }
 
+    public function isSuperAdmin(): bool
+    {
+        return $this->hasRole(Role::SUPER_ADMIN);
+    }
+
     /**
      * Retourne toutes les permissions de l'utilisateur.
      *

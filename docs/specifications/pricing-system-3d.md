@@ -2,7 +2,9 @@
 
 **Destinataire :** Équipe Backend (Laravel DDD)
 **Date :** 2026-02-06
-**Version :** MVP Simplifié (Niveau Tenant uniquement)
+**Dernière mise à jour :** 2026-02-09
+**Version :** MVP Implémenté (Niveau Tenant uniquement)
+**Statut :** ✅ **IMPLÉMENTÉ ET TESTÉ**
 
 ---
 
@@ -37,16 +39,111 @@ Créer un système de tarification flexible et configurable permettant aux loueu
 
 ### Bounded Context
 
-**Pricing** (nouveau contexte) ou intégré dans **Fleet** (existant)
+**✅ Pricing** - **Bounded Context séparé et indépendant**
+
+Le système de tarification a été extrait de Fleet et implémenté comme un bounded context autonome suivant les principes DDD.
+
+### Structure du Code
+
+```
+src/Pricing/
+├── Domain/                              # Couche Domaine
+│   ├── PricingClass.php                # Entité Aggregate Root
+│   ├── DurationDefinition.php          # Entité
+│   ├── PricingRate.php                 # Entité
+│   ├── DiscountRule.php                # Entité
+│   ├── DiscountType.php                # Enum
+│   ├── AppliedDiscount.php             # Value Object
+│   ├── PriceCalculation.php            # Value Object
+│   ├── RentalPricingSnapshot.php       # Entité (historique)
+│   ├── Services/
+│   │   ├── PricingCalculator.php       # Service de domaine
+│   │   ├── PricingValidator.php        # Service de domaine
+│   │   └── NoPricingFoundException.php # Exception métier
+│   └── *RepositoryInterface.php        # Interfaces de repositories
+│
+├── Application/                         # Couche Application (Use Cases)
+│   ├── CreatePricingClass/
+│   │   ├── CreatePricingClassCommand.php
+│   │   ├── CreatePricingClassHandler.php
+│   │   └── PricingClassDto.php
+│   ├── UpdatePricingClass/
+│   ├── CreateDuration/
+│   └── CalculatePrice/
+│
+├── Infrastructure/                      # Couche Infrastructure
+│   ├── PricingServiceProvider.php      # Service Provider Laravel
+│   └── Persistence/
+│       ├── Models/                      # Eloquent Models
+│       │   ├── PricingClassEloquentModel.php
+│       │   ├── DurationDefinitionEloquentModel.php
+│       │   ├── PricingRateEloquentModel.php
+│       │   └── DiscountRuleEloquentModel.php
+│       ├── Repositories/                # Implémentations des repositories
+│       │   ├── EloquentPricingClassRepository.php
+│       │   ├── EloquentDurationDefinitionRepository.php
+│       │   ├── EloquentPricingRateRepository.php
+│       │   └── EloquentDiscountRuleRepository.php
+│       └── Mappers/                     # Mappers Domain ↔ Eloquent
+│           ├── PricingClassMapper.php
+│           ├── DurationDefinitionMapper.php
+│           ├── PricingRateMapper.php
+│           └── DiscountRuleMapper.php
+│
+└── Interface/                           # Couche Interface (API HTTP)
+    └── Http/
+        ├── routes.php                   # Routes /api/pricing/*
+        ├── ListPricingClasses/
+        │   └── ListPricingClassesController.php
+        ├── CreatePricingClass/
+        │   ├── CreatePricingClassController.php
+        │   └── CreatePricingClassRequest.php
+        ├── ListDurations/
+        ├── CalculatePrice/
+        ├── ListPricingRates/
+        └── ListDiscountRules/
+```
 
 ### Aggregates
 
 ```
-PricingConfiguration (Aggregate Root)
-├── PricingClasses (Entities)
-├── DurationDefinitions (Entities)
-├── PricingRates (Value Objects)
-└── DiscountRules (Value Objects)
+PricingClass (Aggregate Root)
+├── code: string (unique par tenant)
+├── label: string
+├── description: string (nullable)
+├── color: string (hex, nullable)
+├── sortOrder: int
+├── isActive: bool
+└── Business Logic: activate(), deactivate(), update()
+
+DurationDefinition (Aggregate Root)
+├── code: string (unique par tenant)
+├── label: string
+├── durationHours: int (nullable)
+├── durationDays: int (nullable)
+├── isCustom: bool
+├── sortOrder: int
+├── isActive: bool
+└── Business Logic: totalHours(), approximateDays()
+
+PricingRate (Aggregate Root)
+├── categoryId: UUID
+├── pricingClassId: UUID
+├── durationId: UUID
+├── price: float
+└── isActive: bool
+
+DiscountRule (Aggregate Root)
+├── categoryId: UUID (nullable)
+├── pricingClassId: UUID (nullable)
+├── minDays: int (nullable)
+├── minDurationId: UUID (nullable)
+├── discountType: DiscountType (enum)
+├── discountValue: float
+├── label: string
+├── isCumulative: bool
+├── priority: int
+└── Business Logic: appliesToCategory(), appliesToPricingClass(), calculateDiscount()
 ```
 
 ---
@@ -452,19 +549,42 @@ class PricingValidator
 
 ## 🔌 Endpoints API
 
-### Classes de tarification
+### Routes Implémentées
+
+**Base URL:** `/api/pricing`
+
+**Middleware:** `keycloak` + `permission` (selon l'endpoint)
 
 ```php
-// Routes
-Route::prefix('pricing')->group(function () {
-    Route::get('/classes', [PricingClassController::class, 'index']);
-    Route::post('/classes', [PricingClassController::class, 'store']);
-    Route::put('/classes/{id}', [PricingClassController::class, 'update']);
-    Route::delete('/classes/{id}', [PricingClassController::class, 'destroy']);
+// src/Pricing/Interface/Http/routes.php
+Route::middleware(['keycloak'])->prefix('api/pricing')->group(function () {
+    // Classes tarifaires
+    Route::get('/classes', ListPricingClassesController::class)
+        ->middleware('permission:view_bikes');
+    Route::post('/classes', CreatePricingClassController::class)
+        ->middleware('permission:manage_rates');
+
+    // Durées
+    Route::get('/durations', ListDurationsController::class)
+        ->middleware('permission:view_bikes');
+
+    // Grille tarifaire 3D (Catégorie × Classe × Durée)
+    Route::get('/rates', ListPricingRatesController::class)
+        ->middleware('permission:view_bikes');
+
+    // Règles de réduction
+    Route::get('/discounts', ListDiscountRulesController::class)
+        ->middleware('permission:view_bikes');
+
+    // Calcul de tarif
+    Route::post('/calculate', CalculatePriceController::class)
+        ->middleware('permission:view_bikes');
 });
 ```
 
-#### GET `/api/fleet/pricing/classes`
+### Classes de tarification
+
+#### GET `/api/pricing/classes`
 
 ```json
 // Response 200
@@ -491,7 +611,7 @@ Route::prefix('pricing')->group(function () {
 }
 ```
 
-#### POST `/api/fleet/pricing/classes`
+#### POST `/api/pricing/classes`
 
 ```json
 // Request
@@ -512,7 +632,9 @@ Route::prefix('pricing')->group(function () {
 }
 ```
 
-#### PUT `/api/fleet/pricing/classes/{id}`
+#### PUT `/api/pricing/classes/{id}`
+
+**⚠️ Non implémenté dans le MVP**
 
 ```json
 // Request
@@ -522,7 +644,9 @@ Route::prefix('pricing')->group(function () {
 }
 ```
 
-#### DELETE `/api/fleet/pricing/classes/{id}`
+#### DELETE `/api/pricing/classes/{id}`
+
+**⚠️ Non implémenté dans le MVP**
 
 ```json
 // Response 400 (si utilisé)
@@ -538,7 +662,7 @@ Route::prefix('pricing')->group(function () {
 
 ### Durées
 
-#### GET `/api/fleet/pricing/durations`
+#### GET `/api/pricing/durations`
 
 ```json
 {
@@ -566,7 +690,9 @@ Route::prefix('pricing')->group(function () {
 }
 ```
 
-#### POST `/api/fleet/pricing/durations`
+#### POST `/api/pricing/durations`
+
+**⚠️ Non implémenté dans le MVP**
 
 ```json
 // Request
@@ -582,7 +708,7 @@ Route::prefix('pricing')->group(function () {
 
 ### Grille de tarification
 
-#### GET `/api/fleet/pricing/rates`
+#### GET `/api/pricing/rates`
 
 ```json
 // Query params: ?category_id=uuid (optionnel)
@@ -604,7 +730,9 @@ Route::prefix('pricing')->group(function () {
 }
 ```
 
-#### PUT `/api/fleet/pricing/rates` (Bulk update)
+#### PUT `/api/pricing/rates` (Bulk update)
+
+**⚠️ Non implémenté dans le MVP**
 
 ```json
 // Request - Mise à jour en masse de la grille
@@ -669,7 +797,7 @@ public function bulkUpdate(BulkUpdateRatesRequest $request)
 
 ### Réductions dégressives
 
-#### GET `/api/fleet/pricing/discounts`
+#### GET `/api/pricing/discounts`
 
 ```json
 {
@@ -690,7 +818,9 @@ public function bulkUpdate(BulkUpdateRatesRequest $request)
 }
 ```
 
-#### POST `/api/fleet/pricing/discounts`
+#### POST `/api/pricing/discounts`
+
+**⚠️ Non implémenté dans le MVP**
 
 ```json
 // Request
@@ -708,12 +838,13 @@ public function bulkUpdate(BulkUpdateRatesRequest $request)
 
 ### Calcul de prix
 
-#### POST `/api/fleet/pricing/calculate`
+#### POST `/api/pricing/calculate`
 
 ```json
 // Request
 {
-  "bike_id": "uuid",
+  "category_id": "uuid",
+  "pricing_class_id": "uuid",
   "duration_id": "uuid",
   "custom_days": 4  // Optionnel
 }
@@ -1126,24 +1257,78 @@ class PricingSeedSeeder extends Seeder
 
 ## 📝 Checklist d'implémentation
 
-### Backend
-- [ ] Créer les migrations (5 tables + alter bikes)
-- [ ] Créer les modèles Eloquent
-- [ ] Créer les DTOs (Data Transfer Objects)
-- [ ] Créer les Value Objects (PriceCalculation, etc.)
-- [ ] Implémenter PricingCalculator (service)
-- [ ] Implémenter PricingValidator (service)
-- [ ] Créer les Use Cases
-- [ ] Créer les Controllers
-- [ ] Créer les Form Requests (validation)
-- [ ] Créer les Policies (permissions)
-- [ ] Créer les Resources (API responses)
-- [ ] Créer les Events
-- [ ] Créer le seeder de migration
-- [ ] Créer le seeder de données de dev
-- [ ] Écrire les tests unitaires
-- [ ] Écrire les tests d'intégration
-- [ ] Documenter l'OpenAPI
+### Backend ✅ **COMPLÉTÉ**
+- [x] Créer les migrations (5 tables + alter bikes)
+- [x] Créer les modèles Eloquent avec HasFactory
+- [x] Créer le bounded context Pricing séparé
+- [x] Créer les Entités du domaine (PricingClass, DurationDefinition, etc.)
+- [x] Créer les Value Objects (PriceCalculation, AppliedDiscount)
+- [x] Implémenter PricingCalculator (service de domaine)
+- [x] Implémenter PricingValidator (service de domaine)
+- [x] Créer les Interfaces de Repositories
+- [x] Créer les Implémentations de Repositories (Eloquent)
+- [x] Créer les Mappers (Domain ↔ Eloquent)
+- [x] Créer les Commands et Handlers (CQRS)
+- [x] Créer les DTOs (Data Transfer Objects)
+- [x] Créer les Controllers (invokable)
+- [x] Créer les Form Requests (validation)
+- [x] Créer le PricingServiceProvider
+- [x] Enregistrer le namespace dans composer.json
+- [x] Créer le seeder de migration
+- [x] Créer le seeder de données de dev (PricingSystemSeeder)
+- [x] Créer les Factories (4 factories pour les tests)
+- [x] Écrire les tests unitaires (83 tests)
+  - [x] Domain Services: PricingCalculator, PricingValidator
+  - [x] Use Cases: CreatePricingClassHandler, UpdatePricingClassHandler, CreateDurationHandler
+  - [x] Domain Entities: PricingClass, DurationDefinition, DiscountRule
+- [x] Écrire les tests de feature (18 tests)
+  - [x] ListPricingClassesTest
+  - [x] CreatePricingClassTest
+  - [x] ListDurationsTest
+  - [x] CalculatePriceTest
+- [ ] Créer les Policies (permissions) - *Utilise les permissions existantes*
+- [ ] Créer les Resources (API responses) - *Utilise les DTOs*
+- [ ] Créer les Events - *Non implémenté dans le MVP*
+- [ ] Documenter l'OpenAPI - **À FAIRE**
+
+### Tests ✅ **101 TESTS - TOUS PASSENT**
+
+#### Tests Unitaires (83 tests, 217 assertions)
+```bash
+tests/Unit/Pricing/
+├── Application/
+│   ├── CreatePricingClassHandlerTest.php    (3 tests)
+│   ├── UpdatePricingClassHandlerTest.php    (4 tests)
+│   └── CreateDurationHandlerTest.php        (4 tests)
+├── Domain/
+│   ├── PricingClassTest.php                 (15 tests)
+│   ├── DurationDefinitionTest.php           (20 tests)
+│   ├── DiscountRuleTest.php                 (19 tests)
+│   └── Services/
+│       ├── PricingCalculatorTest.php        (7 tests)
+│       └── PricingValidatorTest.php         (11 tests)
+```
+
+#### Tests de Feature (18 tests, 82 assertions)
+```bash
+tests/Feature/Pricing/
+├── ListPricingClassesTest.php               (4 tests)
+├── CreatePricingClassTest.php               (5 tests)
+├── ListDurationsTest.php                    (4 tests)
+└── CalculatePriceTest.php                   (5 tests)
+```
+
+**Commandes pour lancer les tests:**
+```bash
+# Tests unitaires uniquement
+vendor/bin/phpunit tests/Unit/Pricing --testdox
+
+# Tests de feature uniquement
+vendor/bin/phpunit tests/Feature/Pricing --testdox
+
+# Tous les tests Pricing
+vendor/bin/phpunit tests/Unit/Pricing tests/Feature/Pricing --testdox
+```
 
 ### Frontend (à faire après)
 - [ ] Créer les types TypeScript
