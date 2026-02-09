@@ -35,7 +35,7 @@ use Fleet\Interface\Http\UpdateSizeMappingConfiguration\UpdateSizeMappingConfigu
 use Fleet\Interface\Http\UploadBikePhoto\UploadBikePhotoController;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware(['keycloak'])->prefix('api/fleet')->group(function () {
+Route::middleware(['keycloak', 'tenant', 'require.tenant'])->prefix('api/fleet')->group(function () {
     // Gestion des marques
     Route::post('/brands', CreateBrandController::class)
         ->middleware('permission:manage_bikes');

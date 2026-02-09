@@ -18,7 +18,7 @@ use Rental\Interface\Http\ListRentals\ListRentalsController;
 use Rental\Interface\Http\RentalSettings\GetRentalSettingsController;
 use Rental\Interface\Http\RentalSettings\UpdateRentalSettingsController;
 
-Route::middleware(['keycloak'])->prefix('api/rentals')->group(function () {
+Route::middleware(['keycloak', 'tenant', 'require.tenant'])->prefix('api/rentals')->group(function () {
     // Create rental (immediate - client present)
     Route::post('/', CreateRentalController::class)
         ->middleware('permission:create_rentals');
@@ -55,7 +55,7 @@ Route::middleware(['keycloak'])->prefix('api/rentals')->group(function () {
 });
 
 // Bike availability endpoints
-Route::middleware(['keycloak'])->prefix('api/bikes')->group(function () {
+Route::middleware(['keycloak', 'tenant', 'require.tenant'])->prefix('api/bikes')->group(function () {
     // Get available bikes for a period
     Route::get('/available', GetAvailableBikesController::class)
         ->middleware('permission:view_bikes');
@@ -66,7 +66,7 @@ Route::middleware(['keycloak'])->prefix('api/bikes')->group(function () {
 });
 
 // Rental settings endpoints
-Route::middleware(['keycloak'])->prefix('api/settings/rental')->group(function () {
+Route::middleware(['keycloak', 'tenant', 'require.tenant'])->prefix('api/settings/rental')->group(function () {
     Route::get('/', GetRentalSettingsController::class)
         ->middleware('permission:view_settings');
 

@@ -13,7 +13,7 @@ use Maintenance\Interface\Http\ListMaintenances\ListMaintenancesController;
 use Maintenance\Interface\Http\StartMaintenance\StartMaintenanceController;
 use Maintenance\Interface\Http\UploadMaintenancePhoto\UploadMaintenancePhotoController;
 
-Route::middleware(['keycloak'])->prefix('api/maintenance')->group(function () {
+Route::middleware(['keycloak', 'tenant', 'require.tenant'])->prefix('api/maintenance')->group(function () {
     // Référentiel : Lister toutes les catégories et raisons de maintenance disponibles
     Route::get('/reasons', ListMaintenanceReasonsController::class)
         ->middleware('permission:view_maintenances');

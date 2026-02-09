@@ -19,7 +19,7 @@ use Pricing\Interface\Http\UpdateDiscountRule\UpdateDiscountRuleController;
 use Pricing\Interface\Http\UpdateDuration\UpdateDurationController;
 use Pricing\Interface\Http\UpdatePricingClass\UpdatePricingClassController;
 
-Route::middleware(['keycloak'])->prefix('api/pricing')->group(function () {
+Route::middleware(['keycloak', 'tenant', 'require.tenant'])->prefix('api/pricing')->group(function () {
     // Classes tarifaires
     Route::get('/classes', ListPricingClassesController::class)
         ->middleware('permission:view_bikes');

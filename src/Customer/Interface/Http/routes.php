@@ -10,7 +10,7 @@ use Customer\Interface\Http\ToggleRiskyFlag\ToggleRiskyFlagController;
 use Customer\Interface\Http\UpdateCustomer\UpdateCustomerController;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware(['keycloak'])->prefix('api/customers')->group(function () {
+Route::middleware(['keycloak', 'tenant', 'require.tenant'])->prefix('api/customers')->group(function () {
     Route::post('/', CreateCustomerController::class)
         ->middleware('permission:manage_customers');
 
