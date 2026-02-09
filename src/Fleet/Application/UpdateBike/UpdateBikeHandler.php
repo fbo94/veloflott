@@ -57,6 +57,7 @@ final readonly class UpdateBikeHandler
                 purchasePrice: $command->purchasePrice,
                 purchaseDate: $purchaseDate,
                 notes: $command->notes,
+                pricingClassId: $command->pricingClassId,
             );
 
             // Process photos (upload base64 images and keep existing URLs)

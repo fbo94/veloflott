@@ -227,6 +227,7 @@ final class Bike
         ?float $purchasePrice,
         ?\DateTimeImmutable $purchaseDate,
         ?string $notes,
+        ?string $pricingClassId = null,
     ): self {
         if (! $this->canBeModified()) {
             throw new \DomainException('Cannot modify this bike in its current status');
@@ -245,6 +246,7 @@ final class Bike
         $this->purchasePrice = $purchasePrice;
         $this->purchaseDate = $purchaseDate;
         $this->notes = $notes;
+        $this->pricingClassId = $pricingClassId;
         $this->updatedAt = new \DateTimeImmutable();
 
         return $this;

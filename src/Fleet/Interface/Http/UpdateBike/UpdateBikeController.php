@@ -37,6 +37,7 @@ final readonly class UpdateBikeController
                 purchaseDate: $request->validated('purchase_date'),
                 notes: $request->validated('notes'),
                 photos: $request->validated('photos'),
+                pricingClassId: $request->validated('pricing_class_id'),
             );
 
             $response = $this->handler->handle($command);

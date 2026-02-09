@@ -42,6 +42,7 @@ final class UpdateBikeRequest extends FormRequest
             'purchase_price' => ['nullable', 'numeric', 'min:0'],
             'purchase_date' => ['nullable', 'date'],
             'notes' => ['nullable', 'string', 'max:1000'],
+            'pricing_class_id' => ['nullable', 'string', 'uuid'],
 
             // Photos (can be URLs to keep or base64 strings to upload)
             'photos' => ['nullable', 'array'],
@@ -73,6 +74,7 @@ final class UpdateBikeRequest extends FormRequest
             'year.integer' => 'L\'année doit être un nombre entier.',
             'year.min' => 'L\'année doit être supérieure à 1900.',
             'purchase_date.date' => 'La date d\'achat doit être une date valide.',
+            'pricing_class_id.uuid' => 'L\'identifiant de la classe tarifaire doit être un UUID valide.',
         ];
     }
 }

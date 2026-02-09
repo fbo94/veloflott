@@ -27,6 +27,7 @@ final readonly class UpdateBikeCommand
         public ?string $purchaseDate,
         public ?string $notes,
         public array $photos,
+        public ?string $pricingClassId = null,
     ) {
     }
 }
