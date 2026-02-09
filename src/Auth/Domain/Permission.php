@@ -40,6 +40,11 @@ enum Permission: string
     case MANAGE_TENANTS = 'manage_tenants';
     case DELETE_TENANTS = 'delete_tenants';
 
+    // ===== Sites (Multi-tenant) =====
+    case VIEW_SITES = 'view_sites';
+    case MANAGE_SITES = 'manage_sites';
+    case DELETE_SITES = 'delete_sites';
+
     /**
      * Libellé français pour l'affichage.
      */
@@ -66,6 +71,9 @@ enum Permission: string
             self::VIEW_TENANTS => 'Voir les tenants',
             self::MANAGE_TENANTS => 'Gérer les tenants',
             self::DELETE_TENANTS => 'Supprimer les tenants',
+            self::VIEW_SITES => 'Voir les sites',
+            self::MANAGE_SITES => 'Gérer les sites',
+            self::DELETE_SITES => 'Supprimer les sites',
         };
     }
 
@@ -93,6 +101,9 @@ enum Permission: string
 
             self::VIEW_TENANTS, self::MANAGE_TENANTS,
             self::DELETE_TENANTS => 'tenant',
+
+            self::VIEW_SITES, self::MANAGE_SITES,
+            self::DELETE_SITES => 'site',
         };
     }
 }

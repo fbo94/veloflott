@@ -40,9 +40,12 @@ final class RolePermissions
             Permission::VIEW_TENANTS,
             Permission::MANAGE_TENANTS,
             Permission::DELETE_TENANTS,
+            Permission::VIEW_SITES,
+            Permission::MANAGE_SITES,
+            Permission::DELETE_SITES,
         ],
         'admin' => [
-            // Tout
+            // Tout au niveau tenant
             Permission::VIEW_BIKES,
             Permission::MANAGE_BIKES,
             Permission::DELETE_BIKES,
@@ -60,6 +63,9 @@ final class RolePermissions
             Permission::CLOSE_MAINTENANCES,
             Permission::VIEW_STATS,
             Permission::MANAGE_USERS,
+            // Gestion des sites du tenant
+            Permission::VIEW_SITES,
+            Permission::MANAGE_SITES,
         ],
         'manager' => [
             Permission::VIEW_BIKES,
@@ -75,6 +81,8 @@ final class RolePermissions
             Permission::MANAGE_MAINTENANCES,
             Permission::CLOSE_MAINTENANCES,
             Permission::VIEW_STATS,
+            // Lecture seule des sites
+            Permission::VIEW_SITES,
         ],
         'employee' => [
             Permission::VIEW_BIKES,

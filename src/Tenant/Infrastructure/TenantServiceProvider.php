@@ -40,6 +40,9 @@ final class TenantServiceProvider extends ServiceProvider
         // Load migrations
         $this->loadMigrationsFrom(__DIR__ . '/migrations');
 
+        // Load routes
+        $this->loadRoutesFrom(__DIR__ . '/../Interface/Http/routes.php');
+
         // Register middleware aliases
         /** @var Router $router */
         $router = $this->app->make(Router::class);
