@@ -8,6 +8,7 @@ use Database\Factories\DiscountRuleFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Tenant\Infrastructure\Persistence\Traits\TenantScoped;
 
 /**
  * @phpstan-use HasFactory<DiscountRuleFactory>
@@ -16,6 +17,7 @@ final class DiscountRuleEloquentModel extends Model
 {
     use HasFactory;
     use SoftDeletes;
+    use TenantScoped;
 
     protected $table = 'discount_rules';
 
@@ -25,6 +27,7 @@ final class DiscountRuleEloquentModel extends Model
 
     protected $fillable = [
         'id',
+        'tenant_id',
         'category_id',
         'pricing_class_id',
         'min_days',

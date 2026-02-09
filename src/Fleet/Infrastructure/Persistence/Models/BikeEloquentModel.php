@@ -7,9 +7,16 @@ namespace Fleet\Infrastructure\Persistence\Models;
 use Fleet\Domain\PricingTier;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Tenant\Infrastructure\Persistence\Models\SiteEloquentModel;
+use Tenant\Infrastructure\Persistence\Models\TenantEloquentModel;
+use Tenant\Infrastructure\Persistence\Traits\SiteScoped;
+use Tenant\Infrastructure\Persistence\Traits\TenantScoped;
 
 final class BikeEloquentModel extends Model
 {
+    use TenantScoped;
+    use SiteScoped;
+
     protected $table = 'bikes';
 
     protected $keyType = 'string';
@@ -18,6 +25,8 @@ final class BikeEloquentModel extends Model
 
     protected $fillable = [
         'id',
+        'tenant_id',
+        'site_id',
         'qr_code_uuid',
         'internal_number',
         'model_id',
@@ -55,6 +64,22 @@ final class BikeEloquentModel extends Model
     public function category(): BelongsTo
     {
         return $this->belongsTo(CategoryEloquentModel::class, 'category_id');
+    }
+
+    /**
+     * @return BelongsTo<TenantEloquentModel, $this>
+     */
+    public function tenant(): BelongsTo
+    {
+        return $this->belongsTo(TenantEloquentModel::class, 'tenant_id');
+    }
+
+    /**
+     * @return BelongsTo<SiteEloquentModel, $this>
+     */
+    public function site(): BelongsTo
+    {
+        return $this->belongsTo(SiteEloquentModel::class, 'site_id');
     }
 
     protected $casts = [

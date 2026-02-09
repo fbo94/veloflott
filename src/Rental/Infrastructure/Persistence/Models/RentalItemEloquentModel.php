@@ -8,15 +8,21 @@ use Fleet\Infrastructure\Persistence\Models\BikeEloquentModel;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Tenant\Infrastructure\Persistence\Traits\SiteScoped;
+use Tenant\Infrastructure\Persistence\Traits\TenantScoped;
 
 final class RentalItemEloquentModel extends Model
 {
     use HasUuids;
+    use TenantScoped;
+    use SiteScoped;
 
     protected $table = 'rental_items';
 
     protected $fillable = [
         'id',
+        'tenant_id',
+        'site_id',
         'rental_id',
         'bike_id',
         'daily_rate',

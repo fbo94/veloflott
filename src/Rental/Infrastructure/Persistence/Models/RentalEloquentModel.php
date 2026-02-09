@@ -9,15 +9,23 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Tenant\Infrastructure\Persistence\Models\SiteEloquentModel;
+use Tenant\Infrastructure\Persistence\Models\TenantEloquentModel;
+use Tenant\Infrastructure\Persistence\Traits\SiteScoped;
+use Tenant\Infrastructure\Persistence\Traits\TenantScoped;
 
 final class RentalEloquentModel extends Model
 {
     use HasUuids;
+    use TenantScoped;
+    use SiteScoped;
 
     protected $table = 'rentals';
 
     protected $fillable = [
         'id',
+        'tenant_id',
+        'site_id',
         'customer_id',
         'start_date',
         'expected_return_date',
@@ -63,5 +71,21 @@ final class RentalEloquentModel extends Model
     public function equipments(): HasMany
     {
         return $this->hasMany(RentalEquipmentEloquentModel::class, 'rental_id');
+    }
+
+    /**
+     * @return BelongsTo<TenantEloquentModel, $this>
+     */
+    public function tenant(): BelongsTo
+    {
+        return $this->belongsTo(TenantEloquentModel::class, 'tenant_id');
+    }
+
+    /**
+     * @return BelongsTo<SiteEloquentModel, $this>
+     */
+    public function site(): BelongsTo
+    {
+        return $this->belongsTo(SiteEloquentModel::class, 'site_id');
     }
 }

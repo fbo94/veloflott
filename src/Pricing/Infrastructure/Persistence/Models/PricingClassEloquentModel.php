@@ -8,6 +8,7 @@ use Database\Factories\PricingClassFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Tenant\Infrastructure\Persistence\Traits\TenantScoped;
 
 /**
  * @phpstan-use HasFactory<PricingClassFactory>
@@ -16,6 +17,7 @@ final class PricingClassEloquentModel extends Model
 {
     use HasFactory;
     use SoftDeletes;
+    use TenantScoped;
 
     protected $table = 'pricing_classes';
 
@@ -25,6 +27,7 @@ final class PricingClassEloquentModel extends Model
 
     protected $fillable = [
         'id',
+        'tenant_id',
         'code',
         'label',
         'description',

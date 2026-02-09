@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace Fleet\Infrastructure\Persistence\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Tenant\Infrastructure\Persistence\Traits\TenantScoped;
 
 /**
  * @property string $id
+ * @property string $tenant_id
  * @property int $version
  * @property bool $is_active
  * @property int $xs_cm_min
@@ -39,6 +41,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 final class SizeMappingConfigurationEloquentModel extends Model
 {
+    use TenantScoped;
+
     protected $table = 'size_mapping_configurations';
 
     public $incrementing = false;
@@ -47,6 +51,7 @@ final class SizeMappingConfigurationEloquentModel extends Model
 
     protected $fillable = [
         'id',
+        'tenant_id',
         'version',
         'is_active',
         'xs_cm_min',

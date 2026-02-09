@@ -6,9 +6,12 @@ namespace Fleet\Infrastructure\Persistence\Models;
 
 use Fleet\Domain\PricingTier;
 use Illuminate\Database\Eloquent\Model;
+use Tenant\Infrastructure\Persistence\Traits\TenantScoped;
 
 final class RateEloquentModel extends Model
 {
+    use TenantScoped;
+
     protected $table = 'rates';
 
     protected $keyType = 'string';
@@ -17,6 +20,7 @@ final class RateEloquentModel extends Model
 
     protected $fillable = [
         'id',
+        'tenant_id',
         'category_id',
         'bike_id',
         'pricing_tier',

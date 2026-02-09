@@ -37,6 +37,7 @@
             "Customer\\": "src/Customer/",
             "Maintenance\\": "src/Maintenance/",
             "Dashboard\\": "src/Dashboard/",
+            "Tenant\\": "src/Tenant/",
             "Shared\\": "src/Shared/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"

@@ -5,9 +5,14 @@ declare(strict_types=1);
 namespace Fleet\Infrastructure\Persistence\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Tenant\Infrastructure\Persistence\Traits\SiteScoped;
+use Tenant\Infrastructure\Persistence\Traits\TenantScoped;
 
 final class RentalPricingSnapshotEloquentModel extends Model
 {
+    use TenantScoped;
+    use SiteScoped;
+
     protected $table = 'rental_pricing_snapshots';
 
     protected $keyType = 'string';
@@ -16,6 +21,8 @@ final class RentalPricingSnapshotEloquentModel extends Model
 
     protected $fillable = [
         'id',
+        'tenant_id',
+        'site_id',
         'rental_id',
         'base_price',
         'final_price',

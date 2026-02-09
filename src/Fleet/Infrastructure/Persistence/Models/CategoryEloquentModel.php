@@ -5,9 +5,12 @@ declare(strict_types=1);
 namespace Fleet\Infrastructure\Persistence\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Tenant\Infrastructure\Persistence\Traits\TenantScoped;
 
 final class CategoryEloquentModel extends Model
 {
+    use TenantScoped;
+
     protected $table = 'categories';
 
     protected $keyType = 'string';
@@ -16,6 +19,7 @@ final class CategoryEloquentModel extends Model
 
     protected $fillable = [
         'id',
+        'tenant_id',
         'name',
         'slug',
         'description',

@@ -6,10 +6,14 @@ namespace Maintenance\Infrastructure\Persistence;
 
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
+use Tenant\Infrastructure\Persistence\Traits\SiteScoped;
+use Tenant\Infrastructure\Persistence\Traits\TenantScoped;
 
 final class MaintenanceEloquentModel extends Model
 {
     use HasUuids;
+    use TenantScoped;
+    use SiteScoped;
 
     protected $table = 'maintenances';
 
@@ -19,6 +23,8 @@ final class MaintenanceEloquentModel extends Model
 
     protected $fillable = [
         'id',
+        'tenant_id',
+        'site_id',
         'bike_id',
         'type',
         'reason',

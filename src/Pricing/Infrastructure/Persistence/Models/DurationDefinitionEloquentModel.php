@@ -8,6 +8,7 @@ use Database\Factories\DurationDefinitionFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Tenant\Infrastructure\Persistence\Traits\TenantScoped;
 
 /**
  * @phpstan-use HasFactory<DurationDefinitionFactory>
@@ -16,6 +17,7 @@ final class DurationDefinitionEloquentModel extends Model
 {
     use HasFactory;
     use SoftDeletes;
+    use TenantScoped;
 
     protected $table = 'duration_definitions';
 
@@ -25,6 +27,7 @@ final class DurationDefinitionEloquentModel extends Model
 
     protected $fillable = [
         'id',
+        'tenant_id',
         'code',
         'label',
         'duration_hours',

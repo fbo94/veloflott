@@ -6,10 +6,12 @@ namespace Rental\Infrastructure\Persistence\Models;
 
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
+use Tenant\Infrastructure\Persistence\Traits\TenantScoped;
 
 final class RentalSettingsEloquentModel extends Model
 {
     use HasUuids;
+    use TenantScoped;
 
     protected $table = 'rental_settings';
 
