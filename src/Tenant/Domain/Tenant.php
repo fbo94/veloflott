@@ -15,6 +15,9 @@ final class Tenant
     private \DateTimeImmutable $createdAt;
     private \DateTimeImmutable $updatedAt;
 
+    /**
+     * @param array<string, mixed>|null $settings
+     */
     public function __construct(
         private readonly string $id,
         private string $name,
@@ -68,6 +71,9 @@ final class Tenant
         return $this->contactPhone;
     }
 
+    /**
+     * @return array<string, mixed>|null
+     */
     public function settings(): ?array
     {
         return $this->settings;
@@ -110,6 +116,9 @@ final class Tenant
         return $this;
     }
 
+    /**
+     * @param array<string, mixed>|null $settings
+     */
     public function updateSettings(?array $settings): self
     {
         $this->settings = $settings;

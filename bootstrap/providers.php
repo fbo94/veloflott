@@ -1,6 +1,7 @@
 <?php
 
 return [
+    Tenant\Infrastructure\TenantServiceProvider::class,
     Auth\Infrastructure\AuthServiceProvider::class,
     Fleet\Infrastructure\FleetServiceProvider::class,
     Customer\Infrastructure\CustomerServiceProvider::class,
