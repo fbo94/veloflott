@@ -55,7 +55,7 @@ steps:
       - '-e'
       - 'DB_USERNAME=veloflott_user'
       - '-e'
-      - 'DB_PASSWORD=$$DB_PASSWORD'
+      - 'DB_PASSWORD=VeloFlott2024_Secure'
       - '-e'
       - 'APP_KEY=$$APP_KEY'
       - '--'
