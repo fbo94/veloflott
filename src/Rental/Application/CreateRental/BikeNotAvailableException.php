@@ -11,18 +11,24 @@ final class BikeNotAvailableException extends DomainException
 {
     protected string $errorCode = 'BIKE_NOT_AVAILABLE';
 
+    private readonly string $statusValue;
+
     public function __construct(
         private readonly string $bikeId,
-        private readonly BikeStatus $currentStatus,
+        BikeStatus|string $currentStatus,
     ) {
-        parent::__construct("Le vélo '{$bikeId}' n'est pas disponible (statut actuel: {$currentStatus->value}).");
+        $this->statusValue = $currentStatus instanceof BikeStatus
+            ? $currentStatus->value
+            : $currentStatus;
+
+        parent::__construct("Le vélo '{$bikeId}' n'est pas disponible (statut actuel: {$this->statusValue}).");
     }
 
     public function context(): array
     {
         return [
             'bike_id' => $this->bikeId,
-            'current_status' => $this->currentStatus->value,
+            'current_status' => $this->statusValue,
         ];
     }
 }

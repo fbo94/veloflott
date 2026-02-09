@@ -2,12 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Rental\Application\CreateRental;
+namespace Rental\Application\CreateReservation;
 
 use Customer\Domain\CustomerRepositoryInterface;
 use DateTimeImmutable;
 use Fleet\Domain\BikeRepositoryInterface;
 use Illuminate\Support\Str;
+use Rental\Application\CreateRental\BikeNotFoundException;
+use Rental\Application\CreateRental\CustomerNotFoundException;
 use Rental\Application\Services\BikeAvailabilityServiceInterface;
 use Rental\Domain\Rental;
 use Rental\Domain\RentalDuration;
@@ -15,39 +17,43 @@ use Rental\Domain\RentalEquipment;
 use Rental\Domain\RentalItem;
 use Rental\Domain\RentalRepositoryInterface;
 use Rental\Domain\RentalStatus;
+use Rental\Domain\Repository\RentalSettingsRepositoryInterface;
 
-/**
- * Handler pour créer une location immédiate (client présent).
- * Les vélos ne sont PAS bloqués physiquement ici.
- * Le blocage physique se fait au CHECK-IN.
- * Les dates sont bloquées dans le calendrier dès la création.
- */
-final class CreateRentalHandler
+final class CreateReservationHandler
 {
     public function __construct(
         private readonly RentalRepositoryInterface $rentals,
         private readonly CustomerRepositoryInterface $customers,
         private readonly BikeRepositoryInterface $bikes,
         private readonly BikeAvailabilityServiceInterface $availabilityService,
+        private readonly RentalSettingsRepositoryInterface $settingsRepository,
     ) {
     }
 
-    public function handle(CreateRentalCommand $command): CreateRentalResponse
+    public function handle(CreateReservationCommand $command): CreateReservationResponse
     {
-        // Vérifier que le client existe
+        // 1. Verify customer exists
         $customer = $this->customers->findById($command->customerId);
         if ($customer === null) {
             throw new CustomerNotFoundException($command->customerId);
         }
 
-        // Calculer la date de retour prévue
+        // 2. Calculate expected return date
         $expectedReturnDate = $this->calculateExpectedReturnDate(
             $command->startDate,
             $command->duration,
             $command->customEndDate,
         );
 
-        // Vérifier la disponibilité des vélos (calendrier + statut physique)
+        // 3. Validate reservation constraints
+        $this->validateReservationConstraints(
+            $command->startDate,
+            $expectedReturnDate,
+            $command->tenantId,
+            $command->siteId,
+        );
+
+        // 4. Verify bike availability for the period (NOT physical availability)
         $rentalItems = [];
         $rentalId = Str::uuid()->toString();
 
@@ -57,7 +63,7 @@ final class CreateRentalHandler
                 throw new BikeNotFoundException($bikeItemData->bikeId);
             }
 
-            // Vérifier la disponibilité calendrier (pas de chevauchement)
+            // Check calendar availability (not physical status)
             $availability = $this->availabilityService->isAvailableForPeriod(
                 $bikeItemData->bikeId,
                 $command->startDate,
@@ -65,15 +71,12 @@ final class CreateRentalHandler
             );
 
             if (!$availability->isAvailable) {
-                throw new BikeNotAvailableException(
+                throw new BikeNotAvailableForPeriodException(
                     $bikeItemData->bikeId,
+                    $command->startDate,
+                    $expectedReturnDate,
                     $availability->reason ?? 'Bike not available for this period',
                 );
-            }
-
-            // Vérifier aussi le statut physique (si location immédiate, le vélo doit être AVAILABLE)
-            if (!$bike->isRentable()) {
-                throw new BikeNotAvailableException($bikeItemData->bikeId, $bike->status());
             }
 
             $rentalItems[] = new RentalItem(
@@ -85,7 +88,7 @@ final class CreateRentalHandler
             );
         }
 
-        // Créer les équipements
+        // 5. Create equipments
         $equipments = [];
         foreach ($command->equipmentItems as $equipmentData) {
             $equipments[] = new RentalEquipment(
@@ -97,8 +100,12 @@ final class CreateRentalHandler
             );
         }
 
-        // Créer la location en statut PENDING (client présent, prêt pour check-in)
-        // Les dates sont bloquées dans le calendrier, mais les vélos restent AVAILABLE
+        // 6. Determine initial status: RESERVED for future, PENDING for today
+        $now = new DateTimeImmutable();
+        $isToday = $command->startDate->format('Y-m-d') === $now->format('Y-m-d');
+        $status = $isToday ? RentalStatus::PENDING : RentalStatus::RESERVED;
+
+        // 7. Create the rental
         $rental = new Rental(
             id: $rentalId,
             customerId: $command->customerId,
@@ -112,24 +119,24 @@ final class CreateRentalHandler
             taxRate: 20.0,
             taxAmount: 0.0,
             totalWithTax: 0.0,
-            status: RentalStatus::PENDING,
+            status: $status,
             items: $rentalItems,
             equipments: $equipments,
-            depositStatus: null,
+            depositStatus: null, // Will be set to HELD by constructor
             depositRetained: null,
             cancellationReason: null,
             createdAt: new DateTimeImmutable(),
             updatedAt: new DateTimeImmutable(),
         );
 
-        // Recalculer le montant total
+        // 8. Recalculate total amount
         $rental->recalculateTotalAmount();
 
-        // Sauvegarder la location avec ses items et équipements
-        // NOTE: Les vélos restent AVAILABLE - ils seront marqués RENTED au check-in
+        // 9. Save the rental (NO bike status change here!)
+        // Bikes remain AVAILABLE, only calendar dates are blocked
         $this->rentals->saveWithItems($rental);
 
-        return CreateRentalResponse::fromRental($rental, $customer);
+        return CreateReservationResponse::fromRental($rental, $customer, $status);
     }
 
     private function calculateExpectedReturnDate(
@@ -148,5 +155,29 @@ final class CreateRentalHandler
         $hours = $duration->hours();
 
         return $startDate->modify("+{$hours} hours");
+    }
+
+    private function validateReservationConstraints(
+        DateTimeImmutable $startDate,
+        DateTimeImmutable $endDate,
+        ?string $tenantId,
+        ?string $siteId,
+    ): void {
+        $settings = $this->settingsRepository->getEffectiveSettings($tenantId, $siteId);
+        $now = new DateTimeImmutable();
+
+        // Check minimum advance time
+        $minStartDate = $now->modify("+{$settings->minReservationHoursAhead()} hours");
+        if ($startDate < $now && $startDate->format('Y-m-d') !== $now->format('Y-m-d')) {
+            throw new \DomainException('Reservation start date cannot be in the past');
+        }
+
+        // Check maximum duration
+        $durationDays = (int) $startDate->diff($endDate)->days;
+        if ($durationDays > $settings->maxRentalDurationDays()) {
+            throw new \DomainException(
+                "Rental duration cannot exceed {$settings->maxRentalDurationDays()} days",
+            );
+        }
     }
 }

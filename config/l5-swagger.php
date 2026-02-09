@@ -45,6 +45,7 @@ return [
                  */
                 'annotations' => [
                     base_path('app/OpenApi'),
+                    base_path('src'),
                 ],
             ],
         ],
@@ -156,7 +157,10 @@ return [
              * @note This option overwrites `paths.excludes`
              * @see \OpenApi\scan
              */
-            'exclude' => [],
+            'exclude' => [
+                base_path('src/Tenant'),
+                base_path('src/Shared'),
+            ],
 
             /*
              * Allows to generate specs either for OpenAPI 3.0.0 or OpenAPI 3.1.0.

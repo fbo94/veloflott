@@ -4,16 +4,23 @@ declare(strict_types=1);
 
 namespace Rental\Application\CheckInRental;
 
+use Fleet\Domain\BikeRepositoryInterface;
+use Rental\Application\Services\BikeAvailabilityServiceInterface;
 use Rental\Domain\Exceptions\RentalException;
 use Rental\Domain\RentalRepositoryInterface;
+use Rental\Domain\RentalStatus;
 
 /**
  * Gestionnaire pour effectuer le check-in d'une location.
+ * Le check-in peut être effectué depuis RESERVED ou PENDING.
+ * C'est à ce moment que les vélos passent physiquement en RENTED.
  */
 final readonly class CheckInRentalHandler
 {
     public function __construct(
         private RentalRepositoryInterface $rentalRepository,
+        private BikeRepositoryInterface $bikeRepository,
+        private BikeAvailabilityServiceInterface $availabilityService,
     ) {
     }
 
@@ -25,15 +32,29 @@ final readonly class CheckInRentalHandler
             throw RentalException::notFound($command->rentalId);
         }
 
-        // 2. Vérifier que la location est en statut PENDING (check-in avant le départ)
-        if (! $rental->status()->canStart()) {
+        // 2. Vérifier que la location peut être démarrée
+        // Accepte RESERVED (réservation future, client arrive) ou PENDING (location immédiate)
+        $canStart = $rental->status()->canStart() || $rental->status()->canConfirm();
+        if (!$canStart) {
             throw RentalException::cannotCheckIn(
                 $command->rentalId,
-                "Rental status is {$rental->status()->value}, cannot perform check-in"
+                "Rental status is {$rental->status()->value}, cannot perform check-in",
             );
         }
 
-        // 3. Enregistrer les données de check-in pour chaque vélo
+        // 3. Vérifier que tous les vélos sont physiquement disponibles
+        foreach ($rental->items() as $item) {
+            if (!$this->availabilityService->isPhysicallyAvailable($item->bikeId())) {
+                $bike = $this->bikeRepository->findById($item->bikeId());
+                $statusValue = $bike?->status()->value ?? 'unknown';
+                throw RentalException::cannotCheckIn(
+                    $command->rentalId,
+                    "Bike {$item->bikeId()} is not physically available (status: {$statusValue})",
+                );
+            }
+        }
+
+        // 4. Enregistrer les données de check-in pour chaque vélo
         foreach ($command->bikesCheckIn as $bikeCheckIn) {
             // Trouver le RentalItem correspondant au vélo
             $item = null;
@@ -60,11 +81,26 @@ final readonly class CheckInRentalHandler
             );
         }
 
-        // 4. Démarrer la location (passe en statut ACTIVE)
+        // 5. Si la location était RESERVED, la passer d'abord en PENDING puis en ACTIVE
+        // Si elle était déjà PENDING, juste la passer en ACTIVE
+        if ($rental->status() === RentalStatus::RESERVED) {
+            $rental->confirm(); // RESERVED → PENDING
+        }
+
+        // 6. Démarrer la location (PENDING → ACTIVE)
         $rental->start();
 
-        // 5. Sauvegarder
+        // 7. Sauvegarder la location
         $this->rentalRepository->saveWithItems($rental);
+
+        // 8. Marquer les vélos comme RENTED (blocage physique)
+        foreach ($rental->items() as $item) {
+            $bike = $this->bikeRepository->findById($item->bikeId());
+            if ($bike !== null) {
+                $bike->markAsRented();
+                $this->bikeRepository->save($bike);
+            }
+        }
 
         return new CheckInRentalResponse(
             rentalId: $rental->id(),

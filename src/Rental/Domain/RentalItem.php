@@ -133,6 +133,19 @@ final class RentalItem
         $this->damagePhotos = $damagePhotos;
     }
 
+    /**
+     * Alias for recordCheckOut - used by Rental aggregate
+     */
+    public function recordReturn(
+        string $condition,
+        ?string $damageDescription = null,
+        array $damagePhotos = [],
+    ): void {
+        $this->returnCondition = BikeCondition::from($condition);
+        $this->damageDescription = $damageDescription;
+        $this->damagePhotos = $damagePhotos;
+    }
+
     public function calculateAmount(float $days): float
     {
         return $this->dailyRate * $days * $this->quantity;

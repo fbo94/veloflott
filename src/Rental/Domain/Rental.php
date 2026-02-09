@@ -220,13 +220,51 @@ final class Rental
 
     // ===== Actions =====
 
+    /**
+     * Confirm a reservation (RESERVED → PENDING)
+     * Called when customer arrives for a future reservation
+     */
+    public function confirm(): void
+    {
+        if (!$this->status->canConfirm()) {
+            throw new \DomainException('Cannot confirm a rental that is not reserved');
+        }
+
+        $this->status = RentalStatus::PENDING;
+        $this->updatedAt = new \DateTimeImmutable();
+    }
+
+    /**
+     * Start a rental (PENDING → ACTIVE)
+     * Called at check-in when bikes are physically handed over
+     */
     public function start(): void
     {
-        if (! $this->status->canStart()) {
+        if (!$this->status->canStart()) {
             throw new \DomainException('Cannot start a rental that is not pending');
         }
 
         $this->status = RentalStatus::ACTIVE;
+        $this->updatedAt = new \DateTimeImmutable();
+    }
+
+    /**
+     * Complete a rental (ACTIVE → COMPLETED)
+     * Used for early returns and regular checkouts
+     */
+    public function complete(
+        \DateTimeImmutable $actualReturnDate,
+        DepositStatus $depositStatus,
+        float $depositRetained = 0.0,
+    ): void {
+        if (!$this->status->canCheckOut()) {
+            throw new \DomainException('Cannot complete a rental that is not active');
+        }
+
+        $this->actualReturnDate = $actualReturnDate;
+        $this->status = RentalStatus::COMPLETED;
+        $this->depositStatus = $depositStatus;
+        $this->depositRetained = $depositRetained;
         $this->updatedAt = new \DateTimeImmutable();
     }
 
@@ -235,7 +273,7 @@ final class Rental
         float $lateFee = 0.0,
         ?float $depositRetained = null,
     ): void {
-        if (! $this->status->canCheckOut()) {
+        if (!$this->status->canCheckOut()) {
             throw new \DomainException('Cannot check-out a rental that is not active');
         }
 
@@ -262,16 +300,42 @@ final class Rental
         $this->updatedAt = new \DateTimeImmutable();
     }
 
+    /**
+     * Cancel a rental (RESERVED/PENDING → CANCELLED)
+     * Cannot cancel ACTIVE rentals - use early return instead
+     */
     public function cancel(string $reason): void
     {
-        if (! $this->status->canCancel()) {
-            throw new \DomainException('Cannot cancel a rental that is not pending');
+        if (!$this->status->canCancel()) {
+            throw new \DomainException(
+                'Cannot cancel a rental that is active or already completed. Use early return for active rentals.',
+            );
         }
 
         $this->status = RentalStatus::CANCELLED;
         $this->cancellationReason = $reason;
         $this->depositStatus = DepositStatus::RELEASED;
         $this->updatedAt = new \DateTimeImmutable();
+    }
+
+    /**
+     * Update return condition for a rental item
+     */
+    public function updateItemReturnCondition(
+        string $bikeId,
+        string $condition,
+        ?string $damageDescription = null,
+        array $damagePhotos = [],
+    ): void {
+        foreach ($this->items as $item) {
+            if ($item->bikeId() === $bikeId) {
+                $item->recordReturn($condition, $damageDescription, $damagePhotos);
+
+                return;
+            }
+        }
+
+        throw new \DomainException("Bike {$bikeId} not found in rental");
     }
 
     public function addItem(RentalItem $item): void

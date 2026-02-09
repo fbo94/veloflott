@@ -2387,3 +2387,402 @@ class GetCentralizedAlertsEndpoint {}
     ]
 )]
 class GetBikeRentalsEndpoint {}
+
+
+// ======================== RENTAL RESERVATIONS & SETTINGS ========================
+
+// POST /api/rentals/reserve
+#[OA\Post(
+    path: "/api/rentals/reserve",
+    summary: "Create a future reservation",
+    description: "Create a reservation for a future date. Bikes remain AVAILABLE but dates are blocked in calendar.",
+    security: [["bearerAuth" => []]],
+    tags: ["Rentals"],
+    requestBody: new OA\RequestBody(
+        required: true,
+        content: new OA\MediaType(
+            mediaType: "application/json",
+            schema: new OA\Schema(
+                required: ["customer_id", "start_date", "duration", "deposit_amount", "bikes"],
+                properties: [
+                    new OA\Property(property: "customer_id", type: "string", format: "uuid"),
+                    new OA\Property(property: "start_date", type: "string", format: "date-time", example: "2024-02-15 10:00:00"),
+                    new OA\Property(property: "duration", type: "string", enum: ["half_day", "full_day", "two_days", "three_days", "week", "custom"]),
+                    new OA\Property(property: "custom_end_date", type: "string", format: "date-time", nullable: true),
+                    new OA\Property(property: "deposit_amount", type: "number", format: "float", example: 200.00),
+                    new OA\Property(
+                        property: "bikes",
+                        type: "array",
+                        items: new OA\Items(
+                            properties: [
+                                new OA\Property(property: "bike_id", type: "string", format: "uuid"),
+                                new OA\Property(property: "daily_rate", type: "number", format: "float", example: 50.00),
+                                new OA\Property(property: "quantity", type: "integer", example: 1),
+                            ],
+                            type: "object"
+                        )
+                    ),
+                    new OA\Property(
+                        property: "equipments",
+                        type: "array",
+                        nullable: true,
+                        items: new OA\Items(
+                            properties: [
+                                new OA\Property(property: "type", type: "string", enum: ["helmet", "lock", "basket", "child_seat"]),
+                                new OA\Property(property: "quantity", type: "integer", example: 1),
+                                new OA\Property(property: "price_per_unit", type: "number", format: "float", example: 5.00),
+                            ],
+                            type: "object"
+                        )
+                    ),
+                ],
+                type: "object"
+            )
+        )
+    ),
+    responses: [
+        new OA\Response(
+            response: 201,
+            description: "Reservation created successfully",
+            content: new OA\MediaType(
+                mediaType: "application/json",
+                schema: new OA\Schema(
+                    properties: [
+                        new OA\Property(property: "rental_id", type: "string", format: "uuid"),
+                        new OA\Property(property: "status", type: "string", example: "reserved"),
+                        new OA\Property(property: "customer_id", type: "string", format: "uuid"),
+                        new OA\Property(property: "start_date", type: "string", format: "date-time"),
+                        new OA\Property(property: "expected_return_date", type: "string", format: "date-time"),
+                        new OA\Property(property: "total_amount", type: "number", format: "float"),
+                        new OA\Property(property: "deposit_amount", type: "number", format: "float"),
+                        new OA\Property(property: "message", type: "string", example: "Reservation created successfully"),
+                    ],
+                    type: "object"
+                )
+            )
+        ),
+        new OA\Response(response: 400, description: "Bad Request - Bike not available for period"),
+        new OA\Response(response: 401, description: "Unauthorized"),
+        new OA\Response(response: 403, description: "Forbidden"),
+    ]
+)]
+class CreateReservationEndpoint {}
+
+// POST /api/rentals/{id}/early-return
+#[OA\Post(
+    path: "/api/rentals/{id}/early-return",
+    summary: "Process early return of a rental",
+    description: "Complete a rental before the expected return date with optional early return fees",
+    security: [["bearerAuth" => []]],
+    tags: ["Rentals"],
+    parameters: [
+        new OA\Parameter(
+            name: "id",
+            in: "path",
+            required: true,
+            schema: new OA\Schema(type: "string", format: "uuid"),
+            description: "Rental ID"
+        ),
+    ],
+    requestBody: new OA\RequestBody(
+        required: true,
+        content: new OA\MediaType(
+            mediaType: "application/json",
+            schema: new OA\Schema(
+                required: ["actual_return_date", "bikes_condition"],
+                properties: [
+                    new OA\Property(property: "actual_return_date", type: "string", format: "date-time", example: "2024-01-18 14:00:00"),
+                    new OA\Property(property: "deposit_retained", type: "number", format: "float", nullable: true, example: 30.00),
+                    new OA\Property(
+                        property: "bikes_condition",
+                        type: "array",
+                        items: new OA\Items(
+                            properties: [
+                                new OA\Property(property: "bike_id", type: "string", format: "uuid"),
+                                new OA\Property(property: "condition", type: "string", enum: ["good", "minor_damage", "major_damage", "total_loss"]),
+                                new OA\Property(property: "damage_description", type: "string", nullable: true, example: "Small scratch on frame"),
+                                new OA\Property(
+                                    property: "damage_photos",
+                                    type: "array",
+                                    nullable: true,
+                                    items: new OA\Items(type: "string", example: "https://example.com/photo.jpg")
+                                ),
+                            ],
+                            type: "object"
+                        )
+                    ),
+                ],
+                type: "object"
+            )
+        )
+    ),
+    responses: [
+        new OA\Response(
+            response: 200,
+            description: "Early return processed successfully",
+            content: new OA\MediaType(
+                mediaType: "application/json",
+                schema: new OA\Schema(
+                    properties: [
+                        new OA\Property(property: "rental_id", type: "string", format: "uuid"),
+                        new OA\Property(property: "status", type: "string", example: "completed"),
+                        new OA\Property(property: "actual_return_date", type: "string", format: "date-time"),
+                        new OA\Property(property: "original_amount", type: "number", format: "float", example: 500.00),
+                        new OA\Property(property: "unused_days", type: "integer", example: 2),
+                        new OA\Property(property: "unused_amount", type: "number", format: "float", example: 200.00),
+                        new OA\Property(property: "early_return_fee", type: "number", format: "float", example: 40.00),
+                        new OA\Property(property: "refund_amount", type: "number", format: "float", example: 160.00),
+                        new OA\Property(property: "deposit_amount", type: "number", format: "float", example: 100.00),
+                        new OA\Property(property: "deposit_retained", type: "number", format: "float", example: 30.00),
+                        new OA\Property(property: "deposit_refunded", type: "number", format: "float", example: 70.00),
+                        new OA\Property(property: "deposit_status", type: "string", enum: ["released", "partial", "retained"]),
+                        new OA\Property(property: "message", type: "string", example: "Early return processed successfully"),
+                    ],
+                    type: "object"
+                )
+            )
+        ),
+        new OA\Response(response: 400, description: "Bad Request - Not an early return or rental cannot be early returned"),
+        new OA\Response(response: 401, description: "Unauthorized"),
+        new OA\Response(response: 403, description: "Forbidden"),
+        new OA\Response(response: 404, description: "Rental not found"),
+    ]
+)]
+class EarlyReturnEndpoint {}
+
+// GET /api/bikes/available
+#[OA\Get(
+    path: "/api/bikes/available",
+    summary: "Get available bikes for a specific period",
+    description: "Returns bikes that are not blocked (AVAILABLE status) and have no conflicting rentals or maintenances for the specified period",
+    security: [["bearerAuth" => []]],
+    tags: ["Fleet"],
+    parameters: [
+        new OA\Parameter(
+            name: "start_date",
+            in: "query",
+            required: true,
+            schema: new OA\Schema(type: "string", format: "date-time"),
+            description: "Start date of the desired period",
+            example: "2024-02-15 10:00:00"
+        ),
+        new OA\Parameter(
+            name: "end_date",
+            in: "query",
+            required: true,
+            schema: new OA\Schema(type: "string", format: "date-time"),
+            description: "End date of the desired period",
+            example: "2024-02-20 18:00:00"
+        ),
+        new OA\Parameter(
+            name: "category_id",
+            in: "query",
+            required: false,
+            schema: new OA\Schema(type: "string", format: "uuid"),
+            description: "Filter by category"
+        ),
+    ],
+    responses: [
+        new OA\Response(
+            response: 200,
+            description: "List of available bikes",
+            content: new OA\MediaType(
+                mediaType: "application/json",
+                schema: new OA\Schema(
+                    properties: [
+                        new OA\Property(
+                            property: "bikes",
+                            type: "array",
+                            items: new OA\Items(
+                                properties: [
+                                    new OA\Property(property: "id", type: "string", format: "uuid"),
+                                    new OA\Property(property: "name", type: "string", example: "VTT Rockrider 540"),
+                                    new OA\Property(property: "status", type: "string", example: "available"),
+                                    new OA\Property(property: "category_id", type: "string", format: "uuid"),
+                                    new OA\Property(property: "daily_rate", type: "number", format: "float", example: 25.00),
+                                ],
+                                type: "object"
+                            )
+                        ),
+                        new OA\Property(property: "count", type: "integer", example: 15),
+                        new OA\Property(property: "period", properties: [
+                            new OA\Property(property: "start_date", type: "string", format: "date-time"),
+                            new OA\Property(property: "end_date", type: "string", format: "date-time"),
+                        ], type: "object"),
+                    ],
+                    type: "object"
+                )
+            )
+        ),
+        new OA\Response(response: 400, description: "Bad Request - Invalid dates"),
+        new OA\Response(response: 401, description: "Unauthorized"),
+    ]
+)]
+class GetAvailableBikesEndpoint {}
+
+// GET /api/bikes/{id}/availability
+#[OA\Get(
+    path: "/api/bikes/{id}/availability",
+    summary: "Get availability calendar for a specific bike",
+    description: "Returns blocked periods (rentals and maintenances) for a bike",
+    security: [["bearerAuth" => []]],
+    tags: ["Fleet"],
+    parameters: [
+        new OA\Parameter(
+            name: "id",
+            in: "path",
+            required: true,
+            schema: new OA\Schema(type: "string", format: "uuid"),
+            description: "Bike ID"
+        ),
+        new OA\Parameter(
+            name: "start_date",
+            in: "query",
+            required: true,
+            schema: new OA\Schema(type: "string", format: "date"),
+            example: "2024-02-01"
+        ),
+        new OA\Parameter(
+            name: "end_date",
+            in: "query",
+            required: true,
+            schema: new OA\Schema(type: "string", format: "date"),
+            example: "2024-02-29"
+        ),
+    ],
+    responses: [
+        new OA\Response(
+            response: 200,
+            description: "Bike availability calendar",
+            content: new OA\MediaType(
+                mediaType: "application/json",
+                schema: new OA\Schema(
+                    properties: [
+                        new OA\Property(property: "bike_id", type: "string", format: "uuid"),
+                        new OA\Property(
+                            property: "blocked_periods",
+                            type: "array",
+                            items: new OA\Items(
+                                properties: [
+                                    new OA\Property(property: "type", type: "string", enum: ["rental", "maintenance"]),
+                                    new OA\Property(property: "start_date", type: "string", format: "date-time"),
+                                    new OA\Property(property: "end_date", type: "string", format: "date-time"),
+                                    new OA\Property(property: "reference_id", type: "string", format: "uuid", description: "Rental or Maintenance ID"),
+                                ],
+                                type: "object"
+                            )
+                        ),
+                    ],
+                    type: "object"
+                )
+            )
+        ),
+        new OA\Response(response: 400, description: "Bad Request"),
+        new OA\Response(response: 401, description: "Unauthorized"),
+        new OA\Response(response: 404, description: "Bike not found"),
+    ]
+)]
+class GetBikeAvailabilityEndpoint {}
+
+// GET /api/settings/rental
+#[OA\Get(
+    path: "/api/settings/rental",
+    summary: "Get rental settings",
+    description: "Get rental settings for a specific tenant/site scope",
+    security: [["bearerAuth" => []]],
+    tags: ["Settings"],
+    parameters: [
+        new OA\Parameter(
+            name: "tenant_id",
+            in: "query",
+            required: false,
+            schema: new OA\Schema(type: "string", format: "uuid")
+        ),
+        new OA\Parameter(
+            name: "site_id",
+            in: "query",
+            required: false,
+            schema: new OA\Schema(type: "string", format: "uuid")
+        ),
+    ],
+    responses: [
+        new OA\Response(
+            response: 200,
+            description: "Rental settings",
+            content: new OA\MediaType(
+                mediaType: "application/json",
+                schema: new OA\Schema(
+                    properties: [
+                        new OA\Property(property: "id", type: "string", format: "uuid"),
+                        new OA\Property(property: "tenant_id", type: "string", format: "uuid", nullable: true),
+                        new OA\Property(property: "site_id", type: "string", format: "uuid", nullable: true),
+                        new OA\Property(property: "late_tolerance_minutes", type: "integer", example: 30),
+                        new OA\Property(property: "hourly_late_rate", type: "number", format: "float", example: 10.00),
+                        new OA\Property(property: "daily_late_rate", type: "number", format: "float", example: 50.00),
+                        new OA\Property(property: "early_return_enabled", type: "boolean", example: true),
+                        new OA\Property(property: "early_return_fee_type", type: "string", enum: ["percentage", "fixed", "none"]),
+                        new OA\Property(property: "early_return_fee_percentage", type: "number", format: "float", nullable: true, example: 20.00),
+                        new OA\Property(property: "early_return_fee_fixed", type: "number", format: "float", nullable: true, example: 50.00),
+                        new OA\Property(property: "max_rental_duration_days", type: "integer", example: 30),
+                        new OA\Property(property: "min_reservation_hours_ahead", type: "integer", example: 24),
+                    ],
+                    type: "object"
+                )
+            )
+        ),
+        new OA\Response(response: 401, description: "Unauthorized"),
+        new OA\Response(response: 403, description: "Forbidden"),
+    ]
+)]
+class GetRentalSettingsEndpoint {}
+
+// PUT /api/settings/rental
+#[OA\Put(
+    path: "/api/settings/rental",
+    summary: "Update rental settings",
+    description: "Create or update rental settings for a specific scope",
+    security: [["bearerAuth" => []]],
+    tags: ["Settings"],
+    requestBody: new OA\RequestBody(
+        required: true,
+        content: new OA\MediaType(
+            mediaType: "application/json",
+            schema: new OA\Schema(
+                properties: [
+                    new OA\Property(property: "tenant_id", type: "string", format: "uuid", nullable: true),
+                    new OA\Property(property: "site_id", type: "string", format: "uuid", nullable: true),
+                    new OA\Property(property: "late_tolerance_minutes", type: "integer", example: 30),
+                    new OA\Property(property: "hourly_late_rate", type: "number", format: "float", example: 10.00),
+                    new OA\Property(property: "daily_late_rate", type: "number", format: "float", example: 50.00),
+                    new OA\Property(property: "early_return_enabled", type: "boolean", example: true),
+                    new OA\Property(property: "early_return_fee_type", type: "string", enum: ["percentage", "fixed", "none"]),
+                    new OA\Property(property: "early_return_fee_percentage", type: "number", format: "float", nullable: true, example: 20.00),
+                    new OA\Property(property: "early_return_fee_fixed", type: "number", format: "float", nullable: true, example: 50.00),
+                    new OA\Property(property: "max_rental_duration_days", type: "integer", example: 30),
+                    new OA\Property(property: "min_reservation_hours_ahead", type: "integer", example: 24),
+                ],
+                type: "object"
+            )
+        )
+    ),
+    responses: [
+        new OA\Response(
+            response: 200,
+            description: "Settings updated successfully",
+            content: new OA\MediaType(
+                mediaType: "application/json",
+                schema: new OA\Schema(
+                    properties: [
+                        new OA\Property(property: "message", type: "string", example: "Settings updated successfully"),
+                        new OA\Property(property: "settings_id", type: "string", format: "uuid"),
+                    ],
+                    type: "object"
+                )
+            )
+        ),
+        new OA\Response(response: 400, description: "Bad Request"),
+        new OA\Response(response: 401, description: "Unauthorized"),
+        new OA\Response(response: 403, description: "Forbidden"),
+    ]
+)]
+class UpdateRentalSettingsEndpoint {}
