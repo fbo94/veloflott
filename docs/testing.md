@@ -300,5 +300,5 @@ PHPStan peut être intégré dans votre IDE pour voir les erreurs en temps réel
 
 **VSCode** :
 1. Installer l'extension "PHPStan"
-2. Configurer le chemin vers phpstan dans les settings de l'ide
+2. Configurer le chemin vers phpstan dans les settings
 
