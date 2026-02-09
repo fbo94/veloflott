@@ -14,7 +14,8 @@ final class CalculatePriceController
 {
     public function __construct(
         private readonly CalculatePriceHandler $handler,
-    ) {}
+    ) {
+    }
 
     public function __invoke(CalculatePriceRequest $request): JsonResponse
     {

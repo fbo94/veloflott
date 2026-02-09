@@ -22,7 +22,8 @@ final class Customer
         private bool $isRisky,
         private readonly \DateTimeImmutable $createdAt,
         private \DateTimeImmutable $updatedAt,
-    ) {}
+    ) {
+    }
 
     public function id(): string
     {
@@ -101,7 +102,7 @@ final class Customer
     {
         if (! in_array($photoUrl, $this->photos, true)) {
             $this->photos[] = $photoUrl;
-            $this->updatedAt = new \DateTimeImmutable;
+            $this->updatedAt = new \DateTimeImmutable();
         }
 
         return $this;
@@ -113,7 +114,7 @@ final class Customer
             $this->photos,
             fn (string $url) => $url !== $photoUrl
         ));
-        $this->updatedAt = new \DateTimeImmutable;
+        $this->updatedAt = new \DateTimeImmutable();
 
         return $this;
     }
@@ -152,7 +153,7 @@ final class Customer
         $this->address = $address;
         $this->notes = $notes;
         $this->photos = $photos;
-        $this->updatedAt = new \DateTimeImmutable;
+        $this->updatedAt = new \DateTimeImmutable();
 
         return $this;
     }
@@ -160,20 +161,20 @@ final class Customer
     public function markAsRisky(): void
     {
         $this->isRisky = true;
-        $this->updatedAt = new \DateTimeImmutable;
+        $this->updatedAt = new \DateTimeImmutable();
     }
 
     public function unmarkAsRisky(): void
     {
         $this->isRisky = false;
-        $this->updatedAt = new \DateTimeImmutable;
+        $this->updatedAt = new \DateTimeImmutable();
     }
 
     public function annotate(?string $annotation, bool $isRiskyCustomer): self
     {
         $this->notes = $annotation;
         $this->isRisky = $isRiskyCustomer;
-        $this->updatedAt = new \DateTimeImmutable;
+        $this->updatedAt = new \DateTimeImmutable();
 
         return $this;
     }

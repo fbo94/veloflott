@@ -8,5 +8,6 @@ final readonly class GetBikeStatusHistoryQuery
 {
     public function __construct(
         public string $bikeId,
-    ) {}
+    ) {
+    }
 }

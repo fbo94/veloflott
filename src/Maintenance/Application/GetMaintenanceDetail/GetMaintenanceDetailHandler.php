@@ -11,7 +11,8 @@ final readonly class GetMaintenanceDetailHandler
 {
     public function __construct(
         private MaintenanceRepositoryInterface $maintenanceRepository,
-    ) {}
+    ) {
+    }
 
     /**
      * @throws MaintenanceNotFoundException

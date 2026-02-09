@@ -14,7 +14,8 @@ final readonly class GetCentralizedAlertsHandler
         private RentalRepositoryInterface $rentalRepository,
         private MaintenanceRepositoryInterface $maintenanceRepository,
         private BikeRepositoryInterface $bikeRepository,
-    ) {}
+    ) {
+    }
 
     public function handle(): GetCentralizedAlertsResponse
     {
@@ -23,7 +24,7 @@ final readonly class GetCentralizedAlertsHandler
         // 1. Retours en retard (HIGH severity)
         $lateRentals = $this->rentalRepository->findLateRentals();
         foreach ($lateRentals as $rental) {
-            $daysLate = $rental->expectedReturnDate()->diff(new \DateTimeImmutable)->days;
+            $daysLate = $rental->expectedReturnDate()->diff(new \DateTimeImmutable())->days;
             $alerts[] = [
                 'type' => 'late_return',
                 'severity' => 'high',

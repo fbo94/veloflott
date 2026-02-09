@@ -12,7 +12,8 @@ final readonly class CreateModelHandler
 {
     public function __construct(
         private ModelRepositoryInterface $modelRepository,
-    ) {}
+    ) {
+    }
 
     public function handle(CreateModelCommand $command): CreateModelResponse
     {
@@ -20,8 +21,8 @@ final readonly class CreateModelHandler
             id: Str::uuid()->toString(),
             name: $command->name,
             brandId: $command->brandId,
-            createdAt: new \DateTimeImmutable,
-            updatedAt: new \DateTimeImmutable,
+            createdAt: new \DateTimeImmutable(),
+            updatedAt: new \DateTimeImmutable(),
         );
 
         $this->modelRepository->save($model);

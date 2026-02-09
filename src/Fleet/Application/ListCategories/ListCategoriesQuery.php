@@ -6,5 +6,7 @@ namespace Fleet\Application\ListCategories;
 
 final readonly class ListCategoriesQuery
 {
-    public function __construct() {}
+    public function __construct()
+    {
+    }
 }

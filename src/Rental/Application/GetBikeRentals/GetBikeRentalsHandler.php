@@ -11,7 +11,8 @@ final readonly class GetBikeRentalsHandler
 {
     public function __construct(
         private RentalRepositoryInterface $rentalRepository,
-    ) {}
+    ) {
+    }
 
     public function handle(GetBikeRentalsQuery $query): GetBikeRentalsResponse
     {

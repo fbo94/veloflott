@@ -13,7 +13,8 @@ final class GetPerformanceIndicatorsController
 {
     public function __construct(
         private readonly GetPerformanceIndicatorsHandler $handler,
-    ) {}
+    ) {
+    }
 
     public function __invoke(GetPerformanceIndicatorsRequest $request): JsonResponse
     {

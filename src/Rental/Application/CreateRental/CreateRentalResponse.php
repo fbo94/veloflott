@@ -21,7 +21,8 @@ final readonly class CreateRentalResponse
         public string $status,
         public int $bikesCount,
         public int $equipmentsCount,
-    ) {}
+    ) {
+    }
 
     public static function fromRental(Rental $rental, Customer $customer): self
     {

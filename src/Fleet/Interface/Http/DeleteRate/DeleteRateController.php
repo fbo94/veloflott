@@ -13,7 +13,8 @@ final class DeleteRateController
 {
     public function __construct(
         private readonly DeleteRateHandler $handler,
-    ) {}
+    ) {
+    }
 
     public function __invoke(string $id): JsonResponse
     {

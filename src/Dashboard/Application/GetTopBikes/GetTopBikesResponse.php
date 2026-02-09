@@ -12,7 +12,8 @@ final readonly class GetTopBikesResponse
     public function __construct(
         public array $topBikes,
         public int $limit,
-    ) {}
+    ) {
+    }
 
     /**
      * @return array<string, mixed>

@@ -22,5 +22,6 @@ final readonly class UpdateCustomerCommand
         public ?string $address,
         public ?string $notes,
         public array $photos = [],
-    ) {}
+    ) {
+    }
 }

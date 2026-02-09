@@ -12,7 +12,8 @@ final readonly class UploadBikePhotoHandler
 {
     public function __construct(
         private BikeRepositoryInterface $bikeRepository,
-    ) {}
+    ) {
+    }
 
     public function handle(UploadBikePhotoCommand $command): UploadBikePhotoResponse
     {
@@ -23,7 +24,7 @@ final readonly class UploadBikePhotoHandler
         }
 
         // Generate unique filename
-        $filename = Str::uuid().'.'.$command->photo->getClientOriginalExtension();
+        $filename = Str::uuid() . '.' . $command->photo->getClientOriginalExtension();
 
         // Store the photo in bike_photos disk (local in dev, GCS in prod)
         $path = Storage::disk('bike_photos')->putFileAs(

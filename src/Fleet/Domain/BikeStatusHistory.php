@@ -17,7 +17,7 @@ final class BikeStatusHistory
         private readonly ?string $unavailabilityComment = null,
         ?\DateTimeImmutable $changedAt = null,
     ) {
-        $this->changedAt = $changedAt ?? new \DateTimeImmutable;
+        $this->changedAt = $changedAt ?? new \DateTimeImmutable();
     }
 
     public function id(): string

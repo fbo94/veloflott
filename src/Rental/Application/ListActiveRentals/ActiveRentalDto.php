@@ -21,11 +21,12 @@ final readonly class ActiveRentalDto
         public string $status,
         public bool $isLate,
         public int $delayHours,
-    ) {}
+    ) {
+    }
 
     public static function fromEloquentModel(RentalEloquentModel $model): self
     {
-        $now = new \DateTimeImmutable;
+        $now = new \DateTimeImmutable();
         $expectedReturn = \DateTimeImmutable::createFromInterface($model->expected_return_date);
         $isLate = $now > $expectedReturn;
         $delayHours = $isLate
@@ -70,7 +71,7 @@ final readonly class ActiveRentalDto
     private function getDelayIndicator(): string
     {
         if (! $this->isLate) {
-            $now = new \DateTimeImmutable;
+            $now = new \DateTimeImmutable();
             $expected = new \DateTimeImmutable($this->expectedReturnDate);
             $hoursRemaining = ($expected->getTimestamp() - $now->getTimestamp()) / 3600;
 

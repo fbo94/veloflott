@@ -157,7 +157,7 @@ final class Rental
             return false;
         }
 
-        return new \DateTimeImmutable > $this->expectedReturnDate;
+        return new \DateTimeImmutable() > $this->expectedReturnDate;
     }
 
     public function getDelayInHours(): int
@@ -166,7 +166,7 @@ final class Rental
             return 0;
         }
 
-        $now = new \DateTimeImmutable;
+        $now = new \DateTimeImmutable();
 
         return (int) (($now->getTimestamp() - $this->expectedReturnDate->getTimestamp()) / 3600);
     }
@@ -201,7 +201,7 @@ final class Rental
         // Recalculer la TVA et le total TTC
         $this->recalculateTax();
 
-        $this->updatedAt = new \DateTimeImmutable;
+        $this->updatedAt = new \DateTimeImmutable();
     }
 
     public function recalculateTax(): void
@@ -215,7 +215,7 @@ final class Rental
     {
         $this->discountAmount = $discountAmount;
         $this->recalculateTax();
-        $this->updatedAt = new \DateTimeImmutable;
+        $this->updatedAt = new \DateTimeImmutable();
     }
 
     // ===== Actions =====
@@ -227,7 +227,7 @@ final class Rental
         }
 
         $this->status = RentalStatus::ACTIVE;
-        $this->updatedAt = new \DateTimeImmutable;
+        $this->updatedAt = new \DateTimeImmutable();
     }
 
     public function checkOut(
@@ -259,7 +259,7 @@ final class Rental
             $this->depositRetained = $depositRetained;
         }
 
-        $this->updatedAt = new \DateTimeImmutable;
+        $this->updatedAt = new \DateTimeImmutable();
     }
 
     public function cancel(string $reason): void
@@ -271,7 +271,7 @@ final class Rental
         $this->status = RentalStatus::CANCELLED;
         $this->cancellationReason = $reason;
         $this->depositStatus = DepositStatus::RELEASED;
-        $this->updatedAt = new \DateTimeImmutable;
+        $this->updatedAt = new \DateTimeImmutable();
     }
 
     public function addItem(RentalItem $item): void

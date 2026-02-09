@@ -28,8 +28,8 @@ final class User
         ?\DateTimeImmutable $updatedAt = null,
     ) {
         $this->lastLoginAt = $lastLoginAt;
-        $this->createdAt = $createdAt ?? new \DateTimeImmutable;
-        $this->updatedAt = $updatedAt ?? new \DateTimeImmutable;
+        $this->createdAt = $createdAt ?? new \DateTimeImmutable();
+        $this->updatedAt = $updatedAt ?? new \DateTimeImmutable();
     }
 
     // ===== Getters =====
@@ -133,7 +133,7 @@ final class User
         $this->email = $email;
         $this->firstName = $firstName;
         $this->lastName = $lastName;
-        $this->updatedAt = new \DateTimeImmutable;
+        $this->updatedAt = new \DateTimeImmutable();
 
         return $this;
     }
@@ -141,7 +141,7 @@ final class User
     public function changeRole(Role $newRole): self
     {
         $this->role = $newRole;
-        $this->updatedAt = new \DateTimeImmutable;
+        $this->updatedAt = new \DateTimeImmutable();
 
         return $this;
     }
@@ -149,7 +149,7 @@ final class User
     public function activate(): self
     {
         $this->isActive = true;
-        $this->updatedAt = new \DateTimeImmutable;
+        $this->updatedAt = new \DateTimeImmutable();
 
         return $this;
     }
@@ -157,15 +157,15 @@ final class User
     public function deactivate(): self
     {
         $this->isActive = false;
-        $this->updatedAt = new \DateTimeImmutable;
+        $this->updatedAt = new \DateTimeImmutable();
 
         return $this;
     }
 
     public function recordLogin(): self
     {
-        $this->lastLoginAt = new \DateTimeImmutable;
-        $this->updatedAt = new \DateTimeImmutable;
+        $this->lastLoginAt = new \DateTimeImmutable();
+        $this->updatedAt = new \DateTimeImmutable();
 
         return $this;
     }

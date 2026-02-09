@@ -15,7 +15,8 @@ final readonly class ListRentalsResponse
         public int $currentPage,
         public int $perPage,
         public int $lastPage,
-    ) {}
+    ) {
+    }
 
     public function toArray(): array
     {

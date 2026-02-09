@@ -11,5 +11,6 @@ final readonly class CalculatePriceCommand
         public string $pricingClassId,
         public string $durationId,
         public ?int $customDays = null,
-    ) {}
+    ) {
+    }
 }

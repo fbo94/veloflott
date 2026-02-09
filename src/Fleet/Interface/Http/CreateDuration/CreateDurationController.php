@@ -13,7 +13,8 @@ final class CreateDurationController
 {
     public function __construct(
         private readonly CreateDurationHandler $handler,
-    ) {}
+    ) {
+    }
 
     public function __invoke(CreateDurationRequest $request): JsonResponse
     {

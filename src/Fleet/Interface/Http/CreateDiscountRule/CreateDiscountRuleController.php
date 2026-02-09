@@ -15,7 +15,8 @@ final class CreateDiscountRuleController
 {
     public function __construct(
         private readonly DiscountRuleRepositoryInterface $repository,
-    ) {}
+    ) {
+    }
 
     public function __invoke(CreateDiscountRuleRequest $request): JsonResponse
     {

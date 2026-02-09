@@ -25,8 +25,8 @@ final class PricingClass
         ?\DateTimeImmutable $createdAt = null,
         ?\DateTimeImmutable $updatedAt = null,
     ) {
-        $this->createdAt = $createdAt ?? new \DateTimeImmutable;
-        $this->updatedAt = $updatedAt ?? new \DateTimeImmutable;
+        $this->createdAt = $createdAt ?? new \DateTimeImmutable();
+        $this->updatedAt = $updatedAt ?? new \DateTimeImmutable();
         $this->validateCode($code);
         $this->validateLabel($label);
         if ($color !== null) {
@@ -129,7 +129,7 @@ final class PricingClass
         $this->description = $description;
         $this->color = $color;
         $this->sortOrder = $sortOrder;
-        $this->updatedAt = new \DateTimeImmutable;
+        $this->updatedAt = new \DateTimeImmutable();
 
         return $this;
     }
@@ -141,7 +141,7 @@ final class PricingClass
         }
 
         $this->isActive = true;
-        $this->updatedAt = new \DateTimeImmutable;
+        $this->updatedAt = new \DateTimeImmutable();
 
         return $this;
     }
@@ -153,7 +153,7 @@ final class PricingClass
         }
 
         $this->isActive = false;
-        $this->updatedAt = new \DateTimeImmutable;
+        $this->updatedAt = new \DateTimeImmutable();
 
         return $this;
     }

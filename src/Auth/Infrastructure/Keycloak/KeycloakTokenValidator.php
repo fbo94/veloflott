@@ -24,7 +24,8 @@ final class KeycloakTokenValidator
         private readonly string $keycloakUrl,
         private readonly string $keycloakUrlInternal,
         private readonly string $realm,
-    ) {}
+    ) {
+    }
 
     /**
      * Valide le token et retourne le payload décodé.
@@ -133,7 +134,7 @@ final class KeycloakTokenValidator
         }
 
         // Variantes sans port (Keycloak peut omettre le port standard 443)
-        $baseUrl = parse_url($this->keycloakUrl, PHP_URL_SCHEME).'://'.parse_url($this->keycloakUrl, PHP_URL_HOST);
+        $baseUrl = parse_url($this->keycloakUrl, PHP_URL_SCHEME) . '://' . parse_url($this->keycloakUrl, PHP_URL_HOST);
         $validIssuers[] = "{$baseUrl}/realms/{$this->realm}";
 
         // Dédupliquer les issuers

@@ -11,7 +11,8 @@ final class ToggleUserStatusHandler
 {
     public function __construct(
         private readonly UserRepositoryInterface $users,
-    ) {}
+    ) {
+    }
 
     /**
      * @throws CannotDeactivateSelfException
@@ -21,7 +22,7 @@ final class ToggleUserStatusHandler
     {
         // Empêcher de se désactiver soi-même
         if ($command->userId === $command->currentUserId) {
-            throw new CannotDeactivateSelfException;
+            throw new CannotDeactivateSelfException();
         }
 
         $user = $this->users->findById($command->userId);

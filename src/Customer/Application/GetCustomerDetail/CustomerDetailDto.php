@@ -27,7 +27,8 @@ final readonly class CustomerDetailDto
         public array $rentalHistory,
         public int $totalRentals,
         public float $totalSpent,
-    ) {}
+    ) {
+    }
 
     public function toArray(): array
     {

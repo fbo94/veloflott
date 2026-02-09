@@ -10,5 +10,6 @@ final readonly class UpdateBrandCommand
         public string $id,
         public string $name,
         public ?string $logoUrl = null,
-    ) {}
+    ) {
+    }
 }

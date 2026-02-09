@@ -14,7 +14,8 @@ final readonly class ListUsersResponse
     public function __construct(
         public array $users,
         public int $total,
-    ) {}
+    ) {
+    }
 
     /**
      * @param  User[]  $users

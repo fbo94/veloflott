@@ -26,7 +26,8 @@ final readonly class RentalDto
         public string $depositStatus,
         public ?float $depositRetained,
         public string $createdAt,
-    ) {}
+    ) {
+    }
 
     public static function fromRental(Rental $rental, string $customerName, array $bikeDetails): self
     {

@@ -12,7 +12,8 @@ final class CreateCustomerHandler
 {
     public function __construct(
         private readonly CustomerRepositoryInterface $customers,
-    ) {}
+    ) {
+    }
 
     public function handle(CreateCustomerCommand $command): CreateCustomerResponse
     {
@@ -38,8 +39,8 @@ final class CreateCustomerHandler
             notes: $command->notes,
             photos: $command->photos,
             isRisky: false,
-            createdAt: new \DateTimeImmutable,
-            updatedAt: new \DateTimeImmutable,
+            createdAt: new \DateTimeImmutable(),
+            updatedAt: new \DateTimeImmutable(),
         );
 
         $this->customers->save($customer);

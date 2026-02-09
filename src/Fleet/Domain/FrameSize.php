@@ -14,7 +14,8 @@ final readonly class FrameSize
         public ?float $numericValue,
         public ?FrameSizeLetter $letterValue,
         public FrameSizeLetter $letterEquivalent,
-    ) {}
+    ) {
+    }
 
     public static function fromLetter(FrameSizeLetter $letter): self
     {
@@ -63,8 +64,8 @@ final readonly class FrameSize
     {
         return match ($this->unit) {
             FrameSizeUnit::LETTER => $this->letterValue->label(),
-            FrameSizeUnit::CM => $this->numericValue.' cm',
-            FrameSizeUnit::INCH => $this->numericValue.'"',
+            FrameSizeUnit::CM => $this->numericValue . ' cm',
+            FrameSizeUnit::INCH => $this->numericValue . '"',
         };
     }
 

@@ -15,7 +15,8 @@ final readonly class UpdateBikeHandler
 {
     public function __construct(
         private BikeRepositoryInterface $bikeRepository,
-    ) {}
+    ) {
+    }
 
     public function handle(UpdateBikeCommand $command): UpdateBikeResponse
     {
@@ -159,8 +160,8 @@ final readonly class UpdateBikeHandler
         }
 
         // Generate unique filename
-        $filename = Str::uuid().'.'.$extension;
-        $path = $bikeId.'/'.$filename;
+        $filename = Str::uuid() . '.' . $extension;
+        $path = $bikeId . '/' . $filename;
 
         // Store the image
         Storage::disk('bike_photos')->put($path, $imageData);

@@ -14,7 +14,8 @@ final readonly class CheckInRentalHandler
 {
     public function __construct(
         private RentalRepositoryInterface $rentalRepository,
-    ) {}
+    ) {
+    }
 
     public function handle(CheckInRentalCommand $command): CheckInRentalResponse
     {

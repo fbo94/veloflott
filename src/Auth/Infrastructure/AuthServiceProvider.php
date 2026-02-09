@@ -54,9 +54,9 @@ final class AuthServiceProvider extends ServiceProvider
         $router->aliasMiddleware('super-admin', RequireSuperAdmin::class);
 
         // Charger les routes
-        $this->loadRoutesFrom(__DIR__.'/../Interface/Http/routes.php');
+        $this->loadRoutesFrom(__DIR__ . '/../Interface/Http/routes.php');
 
         // Charger les migrations
-        $this->loadMigrationsFrom(__DIR__.'/migrations');
+        $this->loadMigrationsFrom(__DIR__ . '/migrations');
     }
 }

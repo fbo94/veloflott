@@ -13,7 +13,8 @@ final readonly class GetBikeRentalsResponse
         public string $bikeId,
         public array $rentals,
         public int $totalCount,
-    ) {}
+    ) {
+    }
 
     public function toArray(): array
     {

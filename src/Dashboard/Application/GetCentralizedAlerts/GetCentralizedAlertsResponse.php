@@ -14,7 +14,8 @@ final readonly class GetCentralizedAlertsResponse
         public array $alerts,
         public array $countsBySeverity,
         public int $total,
-    ) {}
+    ) {
+    }
 
     /**
      * @return array<string, mixed>

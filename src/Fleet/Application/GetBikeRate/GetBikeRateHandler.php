@@ -12,7 +12,8 @@ final class GetBikeRateHandler
     public function __construct(
         private readonly BikeRepositoryInterface $bikes,
         private readonly RateResolver $rateResolver,
-    ) {}
+    ) {
+    }
 
     public function handle(GetBikeRateQuery $query): GetBikeRateResponse
     {

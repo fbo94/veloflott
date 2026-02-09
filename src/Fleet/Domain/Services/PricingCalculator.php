@@ -19,7 +19,8 @@ final readonly class PricingCalculator
         private PricingRateRepositoryInterface $rateRepository,
         private DurationDefinitionRepositoryInterface $durationRepository,
         private DiscountRuleRepositoryInterface $discountRepository,
-    ) {}
+    ) {
+    }
 
     /**
      * Calcule le prix d'une location.

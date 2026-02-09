@@ -12,5 +12,6 @@ final readonly class AuthorizeCommand
     public function __construct(
         public string $code,
         public string $state,
-    ) {}
+    ) {
+    }
 }

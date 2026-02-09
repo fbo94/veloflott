@@ -16,5 +16,6 @@ final readonly class CheckInRentalCommand
         public string $rentalId,
         public array $bikesCheckIn,
         public ?string $customerSignature = null,
-    ) {}
+    ) {
+    }
 }

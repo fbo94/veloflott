@@ -13,7 +13,8 @@ final readonly class UploadMaintenancePhotoHandler
 {
     public function __construct(
         private MaintenanceRepositoryInterface $maintenanceRepository,
-    ) {}
+    ) {
+    }
 
     /**
      * @throws MaintenanceNotFoundException
@@ -28,7 +29,7 @@ final readonly class UploadMaintenancePhotoHandler
         }
 
         // Generate unique filename
-        $filename = Str::uuid().'.'.$command->photo->getClientOriginalExtension();
+        $filename = Str::uuid() . '.' . $command->photo->getClientOriginalExtension();
 
         // Store the photo in maintenance_photos disk (local in dev, GCS in prod)
         $path = Storage::disk('maintenance_photos')->putFileAs(

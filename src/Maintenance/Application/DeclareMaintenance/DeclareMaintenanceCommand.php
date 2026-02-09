@@ -19,5 +19,6 @@ final readonly class DeclareMaintenanceCommand
         public ?string $description = null,
         public ?DateTimeImmutable $scheduledAt = null,
         public array $photos = [],
-    ) {}
+    ) {
+    }
 }

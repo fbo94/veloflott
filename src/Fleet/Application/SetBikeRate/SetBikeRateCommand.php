@@ -12,5 +12,6 @@ final readonly class SetBikeRateCommand
         public ?float $halfDayPrice = null,
         public ?float $weekendPrice = null,
         public ?float $weekPrice = null,
-    ) {}
+    ) {
+    }
 }

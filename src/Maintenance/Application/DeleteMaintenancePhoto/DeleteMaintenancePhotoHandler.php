@@ -12,7 +12,8 @@ final readonly class DeleteMaintenancePhotoHandler
 {
     public function __construct(
         private MaintenanceRepositoryInterface $maintenanceRepository,
-    ) {}
+    ) {
+    }
 
     /**
      * @throws MaintenanceNotFoundException

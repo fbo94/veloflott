@@ -30,7 +30,8 @@ final readonly class GetMaintenanceDetailResponse
         private string $createdAt,
         private string $updatedAt,
         private ?array $bike,
-    ) {}
+    ) {
+    }
 
     public static function fromMaintenance(Maintenance $maintenance, ?BikeEloquentModel $bikeModel): self
     {

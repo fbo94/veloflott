@@ -11,7 +11,8 @@ final class ListDurationsController
 {
     public function __construct(
         private readonly DurationDefinitionRepositoryInterface $repository,
-    ) {}
+    ) {
+    }
 
     public function __invoke(): JsonResponse
     {

@@ -10,7 +10,8 @@ final readonly class StartMaintenanceHandler
 {
     public function __construct(
         private MaintenanceRepositoryInterface $maintenanceRepository,
-    ) {}
+    ) {
+    }
 
     public function handle(StartMaintenanceCommand $command): StartMaintenanceResponse
     {

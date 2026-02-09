@@ -13,7 +13,8 @@ final readonly class UploadMaintenancePhotoController
 {
     public function __construct(
         private UploadMaintenancePhotoHandler $handler,
-    ) {}
+    ) {
+    }
 
     public function __invoke(string $id, UploadMaintenancePhotoRequest $request): JsonResponse
     {

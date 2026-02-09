@@ -28,7 +28,7 @@ final class DurationDefinitionMapper
 
     public static function toEloquent(DurationDefinition $duration): DurationDefinitionEloquentModel
     {
-        $model = new DurationDefinitionEloquentModel;
+        $model = new DurationDefinitionEloquentModel();
         $model->id = $duration->id();
         $model->code = $duration->code();
         $model->label = $duration->label();

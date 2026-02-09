@@ -6,7 +6,7 @@ namespace Tenant\Domain;
 
 /**
  * Entité Tenant (Organisation/Entreprise).
- * 
+ *
  * Représente une organisation dans le système multi-tenant.
  * Chaque tenant a ses propres données isolées.
  */

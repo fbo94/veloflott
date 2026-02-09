@@ -14,7 +14,8 @@ final class SetPricingRateController
 {
     public function __construct(
         private readonly PricingRateRepositoryInterface $repository,
-    ) {}
+    ) {
+    }
 
     public function __invoke(SetPricingRateRequest $request): JsonResponse
     {

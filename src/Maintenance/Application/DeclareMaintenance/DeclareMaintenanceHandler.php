@@ -19,7 +19,8 @@ final readonly class DeclareMaintenanceHandler
     public function __construct(
         private MaintenanceRepositoryInterface $maintenanceRepository,
         private BikeRepositoryInterface $bikeRepository,
-    ) {}
+    ) {
+    }
 
     /**
      * @throws MaintenanceException

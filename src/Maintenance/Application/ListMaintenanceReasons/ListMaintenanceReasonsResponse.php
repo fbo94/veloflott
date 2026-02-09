@@ -11,7 +11,8 @@ final readonly class ListMaintenanceReasonsResponse
      */
     public function __construct(
         public array $categoriesWithReasons,
-    ) {}
+    ) {
+    }
 
     /**
      * @return array<string, mixed>

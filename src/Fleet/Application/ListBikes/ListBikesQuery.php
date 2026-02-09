@@ -21,5 +21,6 @@ final readonly class ListBikesQuery
         public string $sortDirection = 'asc',
         public int $page = 1,
         public int $perPage = 50,
-    ) {}
+    ) {
+    }
 }

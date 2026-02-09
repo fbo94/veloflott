@@ -14,7 +14,8 @@ final class SetBikeRateHandler
     public function __construct(
         private readonly RateRepositoryInterface $rates,
         private readonly BikeRepositoryInterface $bikes,
-    ) {}
+    ) {
+    }
 
     public function handle(SetBikeRateCommand $command): SetBikeRateResponse
     {

@@ -35,8 +35,8 @@ test('returns all customers when no search term provided', function () {
             notes: null,
             photos: [],
             isRisky: false,
-            createdAt: new \DateTimeImmutable,
-            updatedAt: new \DateTimeImmutable,
+            createdAt: new \DateTimeImmutable(),
+            updatedAt: new \DateTimeImmutable(),
         ),
         new Customer(
             id: 'customer-2',
@@ -52,8 +52,8 @@ test('returns all customers when no search term provided', function () {
             notes: null,
             photos: [],
             isRisky: false,
-            createdAt: new \DateTimeImmutable,
-            updatedAt: new \DateTimeImmutable,
+            createdAt: new \DateTimeImmutable(),
+            updatedAt: new \DateTimeImmutable(),
         ),
     ];
 
@@ -94,8 +94,8 @@ test('returns all customers when empty search term provided', function () {
             notes: null,
             photos: [],
             isRisky: false,
-            createdAt: new \DateTimeImmutable,
-            updatedAt: new \DateTimeImmutable,
+            createdAt: new \DateTimeImmutable(),
+            updatedAt: new \DateTimeImmutable(),
         ),
     ];
 
@@ -133,8 +133,8 @@ test('searches customers when search term provided', function () {
             notes: null,
             photos: [],
             isRisky: false,
-            createdAt: new \DateTimeImmutable,
-            updatedAt: new \DateTimeImmutable,
+            createdAt: new \DateTimeImmutable(),
+            updatedAt: new \DateTimeImmutable(),
         ),
     ];
 
@@ -190,8 +190,8 @@ test('converts customers to DTOs in response', function () {
             notes: null,
             photos: [],
             isRisky: false,
-            createdAt: new \DateTimeImmutable,
-            updatedAt: new \DateTimeImmutable,
+            createdAt: new \DateTimeImmutable(),
+            updatedAt: new \DateTimeImmutable(),
         ),
     ];
 

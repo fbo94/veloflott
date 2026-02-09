@@ -20,7 +20,8 @@ final class CreateRentalHandler
         private readonly RentalRepositoryInterface $rentals,
         private readonly CustomerRepositoryInterface $customers,
         private readonly BikeRepositoryInterface $bikes,
-    ) {}
+    ) {
+    }
 
     public function handle(CreateRentalCommand $command): CreateRentalResponse
     {
@@ -92,8 +93,8 @@ final class CreateRentalHandler
             depositStatus: null,
             depositRetained: null,
             cancellationReason: null,
-            createdAt: new \DateTimeImmutable,
-            updatedAt: new \DateTimeImmutable,
+            createdAt: new \DateTimeImmutable(),
+            updatedAt: new \DateTimeImmutable(),
         );
 
         // Recalculer le montant total

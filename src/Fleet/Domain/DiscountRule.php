@@ -30,8 +30,8 @@ final class DiscountRule
         ?\DateTimeImmutable $createdAt = null,
         ?\DateTimeImmutable $updatedAt = null,
     ) {
-        $this->createdAt = $createdAt ?? new \DateTimeImmutable;
-        $this->updatedAt = $updatedAt ?? new \DateTimeImmutable;
+        $this->createdAt = $createdAt ?? new \DateTimeImmutable();
+        $this->updatedAt = $updatedAt ?? new \DateTimeImmutable();
         $this->validateMinCondition($minDays, $minDurationId);
         $this->validateDiscountValue($discountType, $discountValue);
         $this->validateLabel($label);
@@ -217,7 +217,7 @@ final class DiscountRule
         $this->description = $description;
         $this->isCumulative = $isCumulative;
         $this->priority = $priority;
-        $this->updatedAt = new \DateTimeImmutable;
+        $this->updatedAt = new \DateTimeImmutable();
 
         return $this;
     }
@@ -229,7 +229,7 @@ final class DiscountRule
         }
 
         $this->isActive = true;
-        $this->updatedAt = new \DateTimeImmutable;
+        $this->updatedAt = new \DateTimeImmutable();
 
         return $this;
     }
@@ -241,7 +241,7 @@ final class DiscountRule
         }
 
         $this->isActive = false;
-        $this->updatedAt = new \DateTimeImmutable;
+        $this->updatedAt = new \DateTimeImmutable();
 
         return $this;
     }

@@ -12,7 +12,8 @@ final readonly class GetTopBikesHandler
     public function __construct(
         private RentalRepositoryInterface $rentalRepository,
         private BikeRepositoryInterface $bikeRepository,
-    ) {}
+    ) {
+    }
 
     public function handle(GetTopBikesQuery $query): GetTopBikesResponse
     {
@@ -28,7 +29,7 @@ final readonly class GetTopBikesHandler
                 'internal_number' => $bike?->internalNumber() ?? 'N/A',
                 'rental_count' => $stat['rental_count'],
                 'total_revenue_cents' => $stat['total_revenue'],
-                'total_revenue_formatted' => number_format($stat['total_revenue'] / 100, 2, '.', ' ').' EUR',
+                'total_revenue_formatted' => number_format($stat['total_revenue'] / 100, 2, '.', ' ') . ' EUR',
             ];
         }, $stats);
 

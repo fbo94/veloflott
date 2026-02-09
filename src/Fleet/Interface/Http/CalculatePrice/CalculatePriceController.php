@@ -12,7 +12,8 @@ final class CalculatePriceController
 {
     public function __construct(
         private readonly PricingCalculator $calculator,
-    ) {}
+    ) {
+    }
 
     public function __invoke(CalculatePriceRequest $request): JsonResponse
     {

@@ -15,5 +15,6 @@ final readonly class CompleteMaintenanceCommand
         public ?string $partsReplaced = null,
         public ?int $cost = null,
         public array $photos = [],
-    ) {}
+    ) {
+    }
 }

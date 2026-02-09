@@ -22,7 +22,8 @@ final readonly class PriceCalculationDto
         public string $categoryId,
         public string $pricingClassId,
         public string $durationId,
-    ) {}
+    ) {
+    }
 
     public static function fromDomain(PriceCalculation $calculation): self
     {

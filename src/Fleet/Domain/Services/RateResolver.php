@@ -22,7 +22,8 @@ final class RateResolver
     public function __construct(
         private readonly RateRepositoryInterface $rateRepository,
         private readonly CategoryRepositoryInterface $categoryRepository,
-    ) {}
+    ) {
+    }
 
     /**
      * Résout le tarif applicable pour un vélo donné.
@@ -61,7 +62,7 @@ final class RateResolver
         // Aucun tarif trouvé
         throw new RateNotFoundException(
             "Aucun tarif trouvé pour le vélo {$bike->id()} "
-            ."(catégorie: {$bike->categoryId()}, tier: {$bike->pricingTier()->value})"
+            . "(catégorie: {$bike->categoryId()}, tier: {$bike->pricingTier()->value})"
         );
     }
 

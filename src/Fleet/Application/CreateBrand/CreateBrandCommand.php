@@ -9,5 +9,6 @@ final readonly class CreateBrandCommand
     public function __construct(
         public string $name,
         public ?string $logoUrl = null,
-    ) {}
+    ) {
+    }
 }

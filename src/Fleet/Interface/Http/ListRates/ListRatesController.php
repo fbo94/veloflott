@@ -13,7 +13,8 @@ final class ListRatesController
 {
     public function __construct(
         private readonly ListRatesHandler $handler,
-    ) {}
+    ) {
+    }
 
     public function __invoke(Request $request): JsonResponse
     {

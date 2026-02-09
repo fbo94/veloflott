@@ -17,7 +17,8 @@ final class ListUsersController
 {
     public function __construct(
         private readonly ListUsersHandler $handler,
-    ) {}
+    ) {
+    }
 
     public function __invoke(Request $request): JsonResponse
     {

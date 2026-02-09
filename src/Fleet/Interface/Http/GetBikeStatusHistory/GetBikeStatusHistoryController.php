@@ -13,7 +13,8 @@ final readonly class GetBikeStatusHistoryController
 {
     public function __construct(
         private GetBikeStatusHistoryHandler $handler,
-    ) {}
+    ) {
+    }
 
     public function __invoke(string $id): JsonResponse
     {

@@ -13,7 +13,8 @@ final readonly class CompleteMaintenanceHandler
     public function __construct(
         private MaintenanceRepositoryInterface $maintenanceRepository,
         private BikeRepositoryInterface $bikeRepository,
-    ) {}
+    ) {
+    }
 
     public function handle(CompleteMaintenanceCommand $command): CompleteMaintenanceResponse
     {

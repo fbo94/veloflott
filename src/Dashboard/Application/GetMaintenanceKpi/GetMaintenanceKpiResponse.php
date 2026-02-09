@@ -17,7 +17,8 @@ final readonly class GetMaintenanceKpiResponse
         public int $totalTodo,
         public int $total,
         public array $byStatus,
-    ) {}
+    ) {
+    }
 
     /**
      * @return array<string, mixed>

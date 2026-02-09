@@ -45,8 +45,8 @@ final class Bike
         ?\DateTimeImmutable $createdAt = null,
         ?\DateTimeImmutable $updatedAt = null,
     ) {
-        $this->createdAt = $createdAt ?? new \DateTimeImmutable;
-        $this->updatedAt = $updatedAt ?? new \DateTimeImmutable;
+        $this->createdAt = $createdAt ?? new \DateTimeImmutable();
+        $this->updatedAt = $updatedAt ?? new \DateTimeImmutable();
     }
 
     // ===== Getters =====
@@ -245,7 +245,7 @@ final class Bike
         $this->purchasePrice = $purchasePrice;
         $this->purchaseDate = $purchaseDate;
         $this->notes = $notes;
-        $this->updatedAt = new \DateTimeImmutable;
+        $this->updatedAt = new \DateTimeImmutable();
 
         return $this;
     }
@@ -253,7 +253,7 @@ final class Bike
     public function addPhoto(string $photoPath): self
     {
         $this->photos[] = $photoPath;
-        $this->updatedAt = new \DateTimeImmutable;
+        $this->updatedAt = new \DateTimeImmutable();
 
         return $this;
     }
@@ -264,7 +264,7 @@ final class Bike
             $this->photos,
             fn ($photo) => $photo !== $photoPath
         ));
-        $this->updatedAt = new \DateTimeImmutable;
+        $this->updatedAt = new \DateTimeImmutable();
 
         return $this;
     }
@@ -275,7 +275,7 @@ final class Bike
     public function updatePhotos(array $photos): self
     {
         $this->photos = $photos;
-        $this->updatedAt = new \DateTimeImmutable;
+        $this->updatedAt = new \DateTimeImmutable();
 
         return $this;
     }
@@ -287,7 +287,7 @@ final class Bike
         }
 
         $this->status = $newStatus;
-        $this->updatedAt = new \DateTimeImmutable;
+        $this->updatedAt = new \DateTimeImmutable();
 
         return $this;
     }
@@ -295,7 +295,7 @@ final class Bike
     public function changePricingTier(PricingTier $newTier): self
     {
         $this->pricingTier = $newTier;
-        $this->updatedAt = new \DateTimeImmutable;
+        $this->updatedAt = new \DateTimeImmutable();
 
         return $this;
     }
@@ -307,7 +307,7 @@ final class Bike
         }
 
         $this->status = BikeStatus::RENTED;
-        $this->updatedAt = new \DateTimeImmutable;
+        $this->updatedAt = new \DateTimeImmutable();
 
         return $this;
     }
@@ -319,7 +319,7 @@ final class Bike
         }
 
         $this->status = BikeStatus::AVAILABLE;
-        $this->updatedAt = new \DateTimeImmutable;
+        $this->updatedAt = new \DateTimeImmutable();
 
         return $this;
     }
@@ -331,7 +331,7 @@ final class Bike
         }
 
         $this->status = BikeStatus::AVAILABLE;
-        $this->updatedAt = new \DateTimeImmutable;
+        $this->updatedAt = new \DateTimeImmutable();
 
         return $this;
     }
@@ -374,7 +374,7 @@ final class Bike
             $this->unavailabilityComment = null;
         }
 
-        $this->updatedAt = new \DateTimeImmutable;
+        $this->updatedAt = new \DateTimeImmutable();
 
         return $this;
     }
@@ -388,8 +388,8 @@ final class Bike
         $this->status = BikeStatus::RETIRED;
         $this->retirementReason = $reason;
         $this->retirementComment = $comment;
-        $this->retiredAt = new \DateTimeImmutable;
-        $this->updatedAt = new \DateTimeImmutable;
+        $this->retiredAt = new \DateTimeImmutable();
+        $this->updatedAt = new \DateTimeImmutable();
 
         return $this;
     }

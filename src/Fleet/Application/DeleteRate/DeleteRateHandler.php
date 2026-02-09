@@ -10,7 +10,8 @@ final class DeleteRateHandler
 {
     public function __construct(
         private readonly RateRepositoryInterface $rates,
-    ) {}
+    ) {
+    }
 
     public function handle(DeleteRateCommand $command): void
     {

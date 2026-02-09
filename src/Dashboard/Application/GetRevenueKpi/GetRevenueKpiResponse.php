@@ -17,7 +17,8 @@ final readonly class GetRevenueKpiResponse
         public int $avgRevenuePerRentalCents,
         public int $rentalCount,
         public int $activeBikes,
-    ) {}
+    ) {
+    }
 
     /**
      * @return array<string, mixed>

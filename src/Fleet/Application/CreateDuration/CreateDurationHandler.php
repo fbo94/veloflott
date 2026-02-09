@@ -12,7 +12,8 @@ final readonly class CreateDurationHandler
 {
     public function __construct(
         private DurationDefinitionRepositoryInterface $repository,
-    ) {}
+    ) {
+    }
 
     public function handle(CreateDurationCommand $command): CreateDurationResponse
     {

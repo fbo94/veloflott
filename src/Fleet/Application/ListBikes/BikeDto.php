@@ -27,7 +27,8 @@ final readonly class BikeDto
         public ?int $year,
         public ?string $color,
         public array $photos,
-    ) {}
+    ) {
+    }
 
     public static function fromEloquentModel(BikeEloquentModel $bikeModel): self
     {

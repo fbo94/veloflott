@@ -15,7 +15,8 @@ final class RentalEquipment
         private readonly EquipmentType $type,
         private readonly int $quantity,
         private readonly float $pricePerUnit,
-    ) {}
+    ) {
+    }
 
     public function id(): string
     {

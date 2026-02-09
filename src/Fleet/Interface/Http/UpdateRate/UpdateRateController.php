@@ -13,7 +13,8 @@ final class UpdateRateController
 {
     public function __construct(
         private readonly UpdateRateHandler $handler,
-    ) {}
+    ) {
+    }
 
     public function __invoke(string $id, UpdateRateRequest $request): JsonResponse
     {

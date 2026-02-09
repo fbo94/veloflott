@@ -11,5 +11,6 @@ final readonly class UploadBikePhotoCommand
     public function __construct(
         public string $bikeId,
         public UploadedFile $photo,
-    ) {}
+    ) {
+    }
 }

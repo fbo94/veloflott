@@ -11,7 +11,8 @@ final readonly class GetBikeStatusHistoryResponse
      */
     public function __construct(
         public array $history,
-    ) {}
+    ) {
+    }
 
     /**
      * @return array{data: array<int, array{id: string, old_status: string, old_status_label: string, new_status: string, new_status_label: string, unavailability_reason: string|null, unavailability_reason_label: string|null, unavailability_comment: string|null, changed_at: string}>}

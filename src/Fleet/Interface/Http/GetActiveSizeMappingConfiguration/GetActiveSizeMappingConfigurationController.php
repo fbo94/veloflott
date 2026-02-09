@@ -12,12 +12,13 @@ final readonly class GetActiveSizeMappingConfigurationController
 {
     public function __construct(
         private GetActiveSizeMappingConfigurationHandler $handler,
-    ) {}
+    ) {
+    }
 
     public function __invoke(): JsonResponse
     {
         try {
-            $query = new GetActiveSizeMappingConfigurationQuery;
+            $query = new GetActiveSizeMappingConfigurationQuery();
             $response = $this->handler->handle($query);
 
             return response()->json($response->toArray(), 200);

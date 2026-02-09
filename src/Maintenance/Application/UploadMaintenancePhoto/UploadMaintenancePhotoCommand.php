@@ -11,5 +11,6 @@ final readonly class UploadMaintenancePhotoCommand
     public function __construct(
         public string $maintenanceId,
         public UploadedFile $photo,
-    ) {}
+    ) {
+    }
 }

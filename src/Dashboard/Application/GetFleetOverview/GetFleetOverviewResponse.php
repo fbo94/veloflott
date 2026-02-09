@@ -17,7 +17,8 @@ final readonly class GetFleetOverviewResponse
         public array $rentalsSummary,
         public array $maintenanceSummary,
         public array $customersSummary,
-    ) {}
+    ) {
+    }
 
     /**
      * @return array<string, mixed>

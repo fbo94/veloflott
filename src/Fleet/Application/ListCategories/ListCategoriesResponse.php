@@ -11,7 +11,8 @@ final readonly class ListCategoriesResponse
      */
     public function __construct(
         public array $categories,
-    ) {}
+    ) {
+    }
 
     public function toArray(): array
     {

@@ -96,7 +96,8 @@ final readonly class GetMaintenanceDetailController
 {
     public function __construct(
         private GetMaintenanceDetailHandler $handler,
-    ) {}
+    ) {
+    }
 
     public function __invoke(string $id): JsonResponse
     {

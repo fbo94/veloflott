@@ -13,7 +13,8 @@ final class SetCategoryRateController
 {
     public function __construct(
         private readonly SetCategoryRateHandler $handler,
-    ) {}
+    ) {
+    }
 
     public function __invoke(SetCategoryRateRequest $request): JsonResponse
     {

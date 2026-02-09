@@ -14,7 +14,8 @@ final class CompleteMaintenanceController
 {
     public function __construct(
         private readonly CompleteMaintenanceHandler $handler,
-    ) {}
+    ) {
+    }
 
     /**
      * @throws MaintenanceException

@@ -16,7 +16,8 @@ final class UpdateUserRoleController
 {
     public function __construct(
         private readonly UpdateUserRoleHandler $handler,
-    ) {}
+    ) {
+    }
 
     public function __invoke(UpdateUserRoleRequest $request, string $id): JsonResponse
     {

@@ -12,7 +12,8 @@ final readonly class GetModelDetailResponse
         public string $brandId,
         public string $brandName,
         public ?string $brandLogoUrl,
-    ) {}
+    ) {
+    }
 
     public function toArray(): array
     {

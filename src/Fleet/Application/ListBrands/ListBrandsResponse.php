@@ -11,7 +11,8 @@ final readonly class ListBrandsResponse
      */
     public function __construct(
         public array $brands,
-    ) {}
+    ) {
+    }
 
     public function toArray(): array
     {

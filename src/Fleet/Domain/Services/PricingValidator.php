@@ -17,7 +17,8 @@ final readonly class PricingValidator
     public function __construct(
         private PricingRateRepositoryInterface $rateRepository,
         private DurationDefinitionRepositoryInterface $durationRepository,
-    ) {}
+    ) {
+    }
 
     /**
      * Vérifie si un vélo peut être loué (a des tarifs configurés).

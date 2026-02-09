@@ -12,5 +12,6 @@ final readonly class GetBikeRentalsQuery
     public function __construct(
         public string $bikeId,
         public ?string $filter = null,
-    ) {}
+    ) {
+    }
 }

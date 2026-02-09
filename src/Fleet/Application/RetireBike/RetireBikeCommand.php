@@ -10,5 +10,6 @@ final readonly class RetireBikeCommand
         public string $bikeId,
         public string $reason,
         public ?string $comment = null,
-    ) {}
+    ) {
+    }
 }

@@ -10,7 +10,8 @@ final readonly class UpdatePricingClassHandler
 {
     public function __construct(
         private PricingClassRepositoryInterface $repository,
-    ) {}
+    ) {
+    }
 
     public function handle(UpdatePricingClassCommand $command): UpdatePricingClassResponse
     {

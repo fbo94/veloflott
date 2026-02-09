@@ -14,5 +14,6 @@ final readonly class UpdatePricingClassCommand
         public ?string $color = null,
         public int $sortOrder = 0,
         public bool $isActive = true,
-    ) {}
+    ) {
+    }
 }

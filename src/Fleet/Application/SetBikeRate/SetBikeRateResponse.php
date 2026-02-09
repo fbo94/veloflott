@@ -10,7 +10,8 @@ final readonly class SetBikeRateResponse
         public string $rateId,
         public string $bikeId,
         public string $message,
-    ) {}
+    ) {
+    }
 
     public function toArray(): array
     {

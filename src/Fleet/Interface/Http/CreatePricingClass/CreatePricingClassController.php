@@ -13,7 +13,8 @@ final class CreatePricingClassController
 {
     public function __construct(
         private readonly CreatePricingClassHandler $handler,
-    ) {}
+    ) {
+    }
 
     public function __invoke(CreatePricingClassRequest $request): JsonResponse
     {

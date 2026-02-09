@@ -15,7 +15,8 @@ final readonly class AuthorizeResponse
         public int $expiresIn,
         public string $tokenType,
         public array $user,
-    ) {}
+    ) {
+    }
 
     public function toArray(): array
     {

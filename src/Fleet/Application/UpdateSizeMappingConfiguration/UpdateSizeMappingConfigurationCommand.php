@@ -21,5 +21,6 @@ final readonly class UpdateSizeMappingConfigurationCommand
         public SizeRange $xlInch,
         public SizeRange $xxlCm,
         public SizeRange $xxlInch,
-    ) {}
+    ) {
+    }
 }

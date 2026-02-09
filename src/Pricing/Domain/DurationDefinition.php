@@ -26,8 +26,8 @@ final class DurationDefinition
         ?\DateTimeImmutable $createdAt = null,
         ?\DateTimeImmutable $updatedAt = null,
     ) {
-        $this->createdAt = $createdAt ?? new \DateTimeImmutable;
-        $this->updatedAt = $updatedAt ?? new \DateTimeImmutable;
+        $this->createdAt = $createdAt ?? new \DateTimeImmutable();
+        $this->updatedAt = $updatedAt ?? new \DateTimeImmutable();
         $this->validateCode($code);
         $this->validateLabel($label);
         $this->validateDuration($durationHours, $durationDays);
@@ -161,7 +161,7 @@ final class DurationDefinition
         $this->durationHours = $durationHours;
         $this->durationDays = $durationDays;
         $this->sortOrder = $sortOrder;
-        $this->updatedAt = new \DateTimeImmutable;
+        $this->updatedAt = new \DateTimeImmutable();
 
         return $this;
     }
@@ -173,7 +173,7 @@ final class DurationDefinition
         }
 
         $this->isActive = true;
-        $this->updatedAt = new \DateTimeImmutable;
+        $this->updatedAt = new \DateTimeImmutable();
 
         return $this;
     }
@@ -185,7 +185,7 @@ final class DurationDefinition
         }
 
         $this->isActive = false;
-        $this->updatedAt = new \DateTimeImmutable;
+        $this->updatedAt = new \DateTimeImmutable();
 
         return $this;
     }

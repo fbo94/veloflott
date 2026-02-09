@@ -19,7 +19,8 @@ final class KeycloakOAuthService
         private readonly string $clientId,
         private readonly string $clientSecret,
         private readonly string $redirectUri,
-    ) {}
+    ) {
+    }
 
     /**
      * Génère l'URL d'autorisation Keycloak pour démarrer le flow OAuth2.

@@ -17,7 +17,8 @@ final readonly class ListMaintenancesResponse
         public \Illuminate\Support\Collection $bikes,
         public array $countsByStatus,
         public int $total,
-    ) {}
+    ) {
+    }
 
     /**
      * @return array<string, mixed>

@@ -10,7 +10,8 @@ final readonly class UpdateModelHandler
 {
     public function __construct(
         private ModelRepositoryInterface $modelRepository,
-    ) {}
+    ) {
+    }
 
     public function handle(UpdateModelCommand $command): UpdateModelResponse
     {

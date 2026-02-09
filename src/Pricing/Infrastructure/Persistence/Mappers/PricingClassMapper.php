@@ -27,7 +27,7 @@ final class PricingClassMapper
 
     public static function toEloquent(PricingClass $pricingClass): PricingClassEloquentModel
     {
-        $model = new PricingClassEloquentModel;
+        $model = new PricingClassEloquentModel();
         $model->id = $pricingClass->id();
         $model->code = $pricingClass->code();
         $model->label = $pricingClass->label();

@@ -29,7 +29,8 @@ final class Maintenance
         private array $photos,
         private readonly DateTimeImmutable $createdAt,
         private DateTimeImmutable $updatedAt,
-    ) {}
+    ) {
+    }
 
     /**
      * @param  array<int, string>  $photos
@@ -44,7 +45,7 @@ final class Maintenance
         ?DateTimeImmutable $scheduledAt = null,
         array $photos = [],
     ): self {
-        $now = new DateTimeImmutable;
+        $now = new DateTimeImmutable();
 
         return new self(
             id: $id,
@@ -76,8 +77,8 @@ final class Maintenance
         }
 
         $this->status = MaintenanceStatus::IN_PROGRESS;
-        $this->startedAt = new DateTimeImmutable;
-        $this->updatedAt = new DateTimeImmutable;
+        $this->startedAt = new DateTimeImmutable();
+        $this->updatedAt = new DateTimeImmutable();
     }
 
     /**
@@ -93,11 +94,11 @@ final class Maintenance
         }
 
         $this->status = MaintenanceStatus::COMPLETED;
-        $this->completedAt = new DateTimeImmutable;
+        $this->completedAt = new DateTimeImmutable();
         $this->workDescription = $workDescription;
         $this->partsReplaced = $partsReplaced;
         $this->cost = $cost;
-        $this->updatedAt = new DateTimeImmutable;
+        $this->updatedAt = new DateTimeImmutable();
     }
 
     /**
@@ -110,7 +111,7 @@ final class Maintenance
         }
 
         $this->description = $description;
-        $this->updatedAt = new DateTimeImmutable;
+        $this->updatedAt = new DateTimeImmutable();
     }
 
     // Getters
@@ -200,7 +201,7 @@ final class Maintenance
     public function addPhoto(string $photoUrl): self
     {
         $this->photos[] = $photoUrl;
-        $this->updatedAt = new DateTimeImmutable;
+        $this->updatedAt = new DateTimeImmutable();
 
         return $this;
     }
@@ -210,7 +211,7 @@ final class Maintenance
         $this->photos = array_values(
             array_filter($this->photos, fn (string $photo) => $photo !== $photoUrl)
         );
-        $this->updatedAt = new DateTimeImmutable;
+        $this->updatedAt = new DateTimeImmutable();
 
         return $this;
     }

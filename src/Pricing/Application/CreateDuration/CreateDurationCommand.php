@@ -13,5 +13,6 @@ final readonly class CreateDurationCommand
         public ?int $durationDays = null,
         public bool $isCustom = false,
         public int $sortOrder = 0,
-    ) {}
+    ) {
+    }
 }

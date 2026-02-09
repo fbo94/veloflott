@@ -12,7 +12,8 @@ final readonly class CreatePricingClassHandler
 {
     public function __construct(
         private PricingClassRepositoryInterface $pricingClassRepository,
-    ) {}
+    ) {
+    }
 
     public function handle(CreatePricingClassCommand $command): PricingClassDto
     {

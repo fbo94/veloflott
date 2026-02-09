@@ -21,5 +21,6 @@ final readonly class CreateCustomerCommand
         public ?string $address,
         public ?string $notes,
         public array $photos = [],
-    ) {}
+    ) {
+    }
 }

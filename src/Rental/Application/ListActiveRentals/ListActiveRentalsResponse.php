@@ -11,7 +11,8 @@ final readonly class ListActiveRentalsResponse
      */
     public function __construct(
         public array $rentals,
-    ) {}
+    ) {
+    }
 
     public function toArray(): array
     {

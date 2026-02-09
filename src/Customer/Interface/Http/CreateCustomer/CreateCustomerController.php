@@ -13,7 +13,8 @@ final class CreateCustomerController
 {
     public function __construct(
         private readonly CreateCustomerHandler $handler,
-    ) {}
+    ) {
+    }
 
     public function __invoke(CreateCustomerRequest $request): JsonResponse
     {

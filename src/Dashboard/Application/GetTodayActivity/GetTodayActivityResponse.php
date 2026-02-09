@@ -18,7 +18,8 @@ final readonly class GetTodayActivityResponse
         public int $maintenancesScheduledToday,
         public int $maintenancesCompletedToday,
         public int $urgentPendingMaintenances,
-    ) {}
+    ) {
+    }
 
     /**
      * @return array<string, mixed>

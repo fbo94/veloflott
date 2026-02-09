@@ -11,5 +11,6 @@ final readonly class CreateCategoryCommand
         public ?string $slug,
         public ?string $description,
         public ?string $parentId = null,
-    ) {}
+    ) {
+    }
 }

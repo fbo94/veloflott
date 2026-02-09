@@ -10,7 +10,8 @@ final class ListRatesHandler
 {
     public function __construct(
         private readonly RateRepositoryInterface $rates,
-    ) {}
+    ) {
+    }
 
     public function handle(ListRatesQuery $query): ListRatesResponse
     {

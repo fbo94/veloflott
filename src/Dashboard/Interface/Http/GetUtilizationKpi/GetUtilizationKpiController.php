@@ -14,7 +14,8 @@ final class GetUtilizationKpiController
 {
     public function __construct(
         private readonly GetUtilizationKpiHandler $handler,
-    ) {}
+    ) {
+    }
 
     public function __invoke(GetPerformanceIndicatorsRequest $request): JsonResponse
     {

@@ -13,7 +13,8 @@ final class UpdatePricingClassController
 {
     public function __construct(
         private readonly UpdatePricingClassHandler $handler,
-    ) {}
+    ) {
+    }
 
     public function __invoke(string $pricingClassId, UpdatePricingClassRequest $request): JsonResponse
     {

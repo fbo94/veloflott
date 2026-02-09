@@ -11,5 +11,6 @@ final readonly class GetCurrentUserQuery
 {
     public function __construct(
         public string $userId,
-    ) {}
+    ) {
+    }
 }

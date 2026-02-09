@@ -16,7 +16,8 @@ final readonly class GetBikeMaintenanceHistoryResponse
         public string $bikeInternalNumber,
         public array $maintenances,
         public int $total,
-    ) {}
+    ) {
+    }
 
     /**
      * @return array<string, mixed>

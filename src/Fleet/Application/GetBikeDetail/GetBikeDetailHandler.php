@@ -10,7 +10,8 @@ final class GetBikeDetailHandler
 {
     public function __construct(
         private readonly BikeRepositoryInterface $bikes,
-    ) {}
+    ) {
+    }
 
     public function handle(GetBikeDetailQuery $query): GetBikeDetailResponse
     {

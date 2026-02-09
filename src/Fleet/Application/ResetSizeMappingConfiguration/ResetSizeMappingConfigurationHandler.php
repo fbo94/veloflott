@@ -12,7 +12,8 @@ final readonly class ResetSizeMappingConfigurationHandler
 {
     public function __construct(
         private SizeMappingConfigurationRepositoryInterface $repository,
-    ) {}
+    ) {
+    }
 
     public function handle(ResetSizeMappingConfigurationCommand $command): ResetSizeMappingConfigurationResponse
     {

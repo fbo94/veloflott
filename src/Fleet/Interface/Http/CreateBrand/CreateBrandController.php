@@ -12,7 +12,8 @@ final readonly class CreateBrandController
 {
     public function __construct(
         private CreateBrandHandler $handler,
-    ) {}
+    ) {
+    }
 
     public function __invoke(CreateBrandRequest $request): JsonResponse
     {

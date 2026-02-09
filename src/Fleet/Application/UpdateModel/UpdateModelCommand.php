@@ -10,5 +10,6 @@ final readonly class UpdateModelCommand
         public string $id,
         public string $name,
         public string $brandId,
-    ) {}
+    ) {
+    }
 }

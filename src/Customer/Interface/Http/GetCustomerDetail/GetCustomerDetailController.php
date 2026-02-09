@@ -12,7 +12,8 @@ final readonly class GetCustomerDetailController
 {
     public function __construct(
         private GetCustomerDetailHandler $handler,
-    ) {}
+    ) {
+    }
 
     public function __invoke(string $id): JsonResponse
     {

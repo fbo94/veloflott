@@ -14,7 +14,8 @@ final readonly class RentalEquipmentDto
         public int $quantity,
         public float $pricePerUnit,
         public float $totalAmount,
-    ) {}
+    ) {
+    }
 
     public static function fromRentalEquipment(RentalEquipment $equipment): self
     {

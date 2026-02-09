@@ -33,7 +33,7 @@ final class CreateBikeRequest extends FormRequest
             'frame_size_letter' => ['nullable', 'string', Rule::in(array_column(FrameSizeLetter::cases(), 'value'))],
 
             // Champs optionnels
-            'year' => ['nullable', 'integer', 'min:1900', 'max:'.(date('Y') + 1)],
+            'year' => ['nullable', 'integer', 'min:1900', 'max:' . (date('Y') + 1)],
             'serial_number' => ['nullable', 'string', 'max:100'],
             'color' => ['nullable', 'string', 'max:50'],
             'wheel_size' => ['nullable', 'string', Rule::in(array_column(WheelSize::cases(), 'value'))],

@@ -33,7 +33,7 @@ final class DiscountRuleMapper
 
     public static function toEloquent(DiscountRule $rule): DiscountRuleEloquentModel
     {
-        $model = new DiscountRuleEloquentModel;
+        $model = new DiscountRuleEloquentModel();
         $model->id = $rule->id();
         $model->category_id = $rule->categoryId();
         $model->pricing_class_id = $rule->pricingClassId();

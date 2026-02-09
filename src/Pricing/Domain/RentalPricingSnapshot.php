@@ -34,8 +34,8 @@ final class RentalPricingSnapshot
         ?\DateTimeImmutable $createdAt = null,
         ?\DateTimeImmutable $updatedAt = null,
     ) {
-        $this->createdAt = $createdAt ?? new \DateTimeImmutable;
-        $this->updatedAt = $updatedAt ?? new \DateTimeImmutable;
+        $this->createdAt = $createdAt ?? new \DateTimeImmutable();
+        $this->updatedAt = $updatedAt ?? new \DateTimeImmutable();
         $this->validatePrices($basePrice, $finalPrice);
         $this->validateDays($days);
     }
@@ -66,7 +66,7 @@ final class RentalPricingSnapshot
             durationId: $durationId,
             days: $days,
             pricePerDay: $pricePerDay,
-            calculatedAt: new \DateTimeImmutable,
+            calculatedAt: new \DateTimeImmutable(),
         );
     }
 

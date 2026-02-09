@@ -10,5 +10,6 @@ final readonly class AnnotateCustomerCommand
         public string $customerId,
         public ?string $annotation,
         public bool $isRiskyCustomer,
-    ) {}
+    ) {
+    }
 }

@@ -11,7 +11,8 @@ final class UpdateUserRoleHandler
 {
     public function __construct(
         private readonly UserRepositoryInterface $users,
-    ) {}
+    ) {
+    }
 
     /**
      * @throws UserNotFoundException
@@ -21,7 +22,7 @@ final class UpdateUserRoleHandler
     {
         // Empêcher de modifier son propre rôle
         if ($command->userId === $command->currentUserId) {
-            throw new CannotChangeOwnRoleException;
+            throw new CannotChangeOwnRoleException();
         }
 
         $user = $this->users->findById($command->userId);

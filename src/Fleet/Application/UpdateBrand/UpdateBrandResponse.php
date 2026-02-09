@@ -10,7 +10,8 @@ final readonly class UpdateBrandResponse
         public string $id,
         public string $name,
         public ?string $logoUrl,
-    ) {}
+    ) {
+    }
 
     public function toArray(): array
     {

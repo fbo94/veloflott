@@ -11,7 +11,8 @@ final readonly class DeleteBikePhotoHandler
 {
     public function __construct(
         private BikeRepositoryInterface $bikeRepository,
-    ) {}
+    ) {
+    }
 
     public function handle(DeleteBikePhotoCommand $command): void
     {

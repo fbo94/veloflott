@@ -12,7 +12,8 @@ final readonly class CreateModelController
 {
     public function __construct(
         private CreateModelHandler $handler,
-    ) {}
+    ) {
+    }
 
     public function __invoke(CreateModelRequest $request): JsonResponse
     {

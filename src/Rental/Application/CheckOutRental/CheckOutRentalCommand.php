@@ -15,5 +15,6 @@ final readonly class CheckOutRentalCommand
         public array $bikesCondition,
         public float $depositRetained = 0.0,
         public ?float $hourlyLateRate = 10.0,
-    ) {}
+    ) {
+    }
 }

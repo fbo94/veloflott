@@ -11,7 +11,8 @@ final class ListPricingClassesController
 {
     public function __construct(
         private readonly PricingClassRepositoryInterface $repository,
-    ) {}
+    ) {
+    }
 
     public function __invoke(): JsonResponse
     {

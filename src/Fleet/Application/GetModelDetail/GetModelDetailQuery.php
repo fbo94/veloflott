@@ -8,5 +8,6 @@ final readonly class GetModelDetailQuery
 {
     public function __construct(
         public string $modelId,
-    ) {}
+    ) {
+    }
 }

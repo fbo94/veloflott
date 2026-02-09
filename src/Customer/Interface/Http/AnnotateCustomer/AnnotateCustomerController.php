@@ -12,7 +12,8 @@ final readonly class AnnotateCustomerController
 {
     public function __construct(
         private AnnotateCustomerHandler $handler,
-    ) {}
+    ) {
+    }
 
     public function __invoke(string $id, AnnotateCustomerRequest $request): JsonResponse
     {

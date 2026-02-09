@@ -8,5 +8,6 @@ final readonly class GetMaintenanceDetailQuery
 {
     public function __construct(
         public string $maintenanceId,
-    ) {}
+    ) {
+    }
 }

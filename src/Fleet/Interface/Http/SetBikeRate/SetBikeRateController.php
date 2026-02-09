@@ -13,7 +13,8 @@ final class SetBikeRateController
 {
     public function __construct(
         private readonly SetBikeRateHandler $handler,
-    ) {}
+    ) {
+    }
 
     public function __invoke(SetBikeRateRequest $request): JsonResponse
     {

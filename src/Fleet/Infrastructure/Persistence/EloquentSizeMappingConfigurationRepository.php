@@ -23,7 +23,7 @@ final readonly class EloquentSizeMappingConfigurationRepository implements SizeM
         $model = SizeMappingConfigurationEloquentModel::find($configuration->id());
 
         if ($model === null) {
-            $model = new SizeMappingConfigurationEloquentModel;
+            $model = new SizeMappingConfigurationEloquentModel();
             $model->id = $configuration->id();
         }
 

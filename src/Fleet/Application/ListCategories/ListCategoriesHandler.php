@@ -11,7 +11,8 @@ final class ListCategoriesHandler
 {
     public function __construct(
         private readonly CategoryRepositoryInterface $categories,
-    ) {}
+    ) {
+    }
 
     public function handle(ListCategoriesQuery $query): ListCategoriesResponse
     {

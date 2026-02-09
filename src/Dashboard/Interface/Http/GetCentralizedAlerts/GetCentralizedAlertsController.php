@@ -12,7 +12,8 @@ final class GetCentralizedAlertsController
 {
     public function __construct(
         private readonly GetCentralizedAlertsHandler $handler,
-    ) {}
+    ) {
+    }
 
     public function __invoke(): JsonResponse
     {

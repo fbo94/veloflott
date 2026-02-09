@@ -12,7 +12,8 @@ final class Model
         private readonly string $brandId,
         private readonly \DateTimeImmutable $createdAt,
         private \DateTimeImmutable $updatedAt,
-    ) {}
+    ) {
+    }
 
     public function id(): string
     {
@@ -32,7 +33,7 @@ final class Model
     public function rename(string $newName): void
     {
         $this->name = $newName;
-        $this->updatedAt = new \DateTimeImmutable;
+        $this->updatedAt = new \DateTimeImmutable();
     }
 
     public function createdAt(): \DateTimeImmutable

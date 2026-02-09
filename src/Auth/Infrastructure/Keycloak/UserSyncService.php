@@ -19,7 +19,8 @@ final class UserSyncService
 {
     public function __construct(
         private readonly UserRepositoryInterface $users,
-    ) {}
+    ) {
+    }
 
     /**
      * Synchronise un utilisateur depuis le payload JWT.

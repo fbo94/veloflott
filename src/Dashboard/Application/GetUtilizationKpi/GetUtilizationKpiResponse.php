@@ -17,7 +17,8 @@ final readonly class GetUtilizationKpiResponse
         public int $totalRentableBikes,
         public float $avgRentalDurationHours,
         public int $rentalCountInPeriod,
-    ) {}
+    ) {
+    }
 
     /**
      * @return array<string, mixed>

@@ -57,8 +57,8 @@ test('can create a customer with minimal fields', function () {
         notes: null,
         photos: [],
         isRisky: false,
-        createdAt: new DateTimeImmutable,
-        updatedAt: new DateTimeImmutable,
+        createdAt: new DateTimeImmutable(),
+        updatedAt: new DateTimeImmutable(),
     );
 
     // Assert
@@ -137,8 +137,8 @@ test('can add a photo to customer', function () {
         notes: null,
         photos: [],
         isRisky: false,
-        createdAt: new DateTimeImmutable,
-        updatedAt: new DateTimeImmutable,
+        createdAt: new DateTimeImmutable(),
+        updatedAt: new DateTimeImmutable(),
     );
 
     // Act
@@ -167,8 +167,8 @@ test('does not add duplicate photo', function () {
         notes: null,
         photos: ['https://example.com/photo1.jpg'],
         isRisky: false,
-        createdAt: new DateTimeImmutable,
-        updatedAt: new DateTimeImmutable,
+        createdAt: new DateTimeImmutable(),
+        updatedAt: new DateTimeImmutable(),
     );
 
     // Act
@@ -199,8 +199,8 @@ test('can remove a photo from customer', function () {
             'https://example.com/photo3.jpg',
         ],
         isRisky: false,
-        createdAt: new DateTimeImmutable,
-        updatedAt: new DateTimeImmutable,
+        createdAt: new DateTimeImmutable(),
+        updatedAt: new DateTimeImmutable(),
     );
 
     // Act
@@ -229,8 +229,8 @@ test('can mark customer as risky', function () {
         notes: null,
         photos: [],
         isRisky: false,
-        createdAt: new DateTimeImmutable,
-        updatedAt: new DateTimeImmutable,
+        createdAt: new DateTimeImmutable(),
+        updatedAt: new DateTimeImmutable(),
     );
 
     // Act
@@ -256,8 +256,8 @@ test('can unmark customer as risky', function () {
         notes: null,
         photos: [],
         isRisky: true,
-        createdAt: new DateTimeImmutable,
-        updatedAt: new DateTimeImmutable,
+        createdAt: new DateTimeImmutable(),
+        updatedAt: new DateTimeImmutable(),
     );
 
     // Act
@@ -283,8 +283,8 @@ test('fullName returns correct format', function () {
         notes: null,
         photos: [],
         isRisky: false,
-        createdAt: new DateTimeImmutable,
-        updatedAt: new DateTimeImmutable,
+        createdAt: new DateTimeImmutable(),
+        updatedAt: new DateTimeImmutable(),
     );
 
     // Assert
@@ -307,8 +307,8 @@ test('can annotate customer with annotation and risky flag', function () {
         notes: null,
         photos: [],
         isRisky: false,
-        createdAt: new DateTimeImmutable,
-        updatedAt: new DateTimeImmutable,
+        createdAt: new DateTimeImmutable(),
+        updatedAt: new DateTimeImmutable(),
     );
 
     // Act
@@ -335,8 +335,8 @@ test('can annotate customer without changing risky flag', function () {
         notes: 'Old note',
         photos: [],
         isRisky: true,
-        createdAt: new DateTimeImmutable,
-        updatedAt: new DateTimeImmutable,
+        createdAt: new DateTimeImmutable(),
+        updatedAt: new DateTimeImmutable(),
     );
 
     // Act
@@ -363,8 +363,8 @@ test('can clear annotation and unmark as risky', function () {
         notes: 'Some annotation',
         photos: [],
         isRisky: true,
-        createdAt: new DateTimeImmutable,
-        updatedAt: new DateTimeImmutable,
+        createdAt: new DateTimeImmutable(),
+        updatedAt: new DateTimeImmutable(),
     );
 
     // Act

@@ -11,7 +11,8 @@ final readonly class SearchCustomersResponse
      */
     public function __construct(
         public array $customers,
-    ) {}
+    ) {
+    }
 
     public function toArray(): array
     {
