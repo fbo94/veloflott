@@ -17,6 +17,12 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property string|null $contact_email
  * @property string|null $contact_phone
  * @property array<string, mixed>|null $settings
+ * @property string|null $address
+ * @property string|null $logo_url
+ * @property string|null $subscription_plan_id
+ * @property int $max_users
+ * @property int $max_bikes
+ * @property int $max_sites
  * @property \DateTimeImmutable $created_at
  * @property \DateTimeImmutable $updated_at
  */
@@ -39,6 +45,12 @@ final class TenantEloquentModel extends Model
         'contact_email',
         'contact_phone',
         'settings',
+        'address',
+        'logo_url',
+        'subscription_plan_id',
+        'max_users',
+        'max_bikes',
+        'max_sites',
     ];
 
     protected $casts = [

@@ -27,6 +27,12 @@ final class Tenant
         private ?string $contactEmail,
         private ?string $contactPhone,
         private ?array $settings,
+        private ?string $address = null,
+        private ?string $logoUrl = null,
+        private ?string $subscriptionPlanId = null,
+        private int $maxUsers = 5,
+        private int $maxBikes = 50,
+        private int $maxSites = 1,
         ?\DateTimeImmutable $createdAt = null,
         ?\DateTimeImmutable $updatedAt = null,
     ) {
@@ -77,6 +83,36 @@ final class Tenant
     public function settings(): ?array
     {
         return $this->settings;
+    }
+
+    public function address(): ?string
+    {
+        return $this->address;
+    }
+
+    public function logoUrl(): ?string
+    {
+        return $this->logoUrl;
+    }
+
+    public function subscriptionPlanId(): ?string
+    {
+        return $this->subscriptionPlanId;
+    }
+
+    public function maxUsers(): int
+    {
+        return $this->maxUsers;
+    }
+
+    public function maxBikes(): int
+    {
+        return $this->maxBikes;
+    }
+
+    public function maxSites(): int
+    {
+        return $this->maxSites;
     }
 
     public function createdAt(): \DateTimeImmutable

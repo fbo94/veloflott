@@ -6031,6 +6031,167 @@
                     }
                 ]
             }
+        },
+        "/api/tenants": {
+            "post": {
+                "tags": [
+                    "Tenant - Management"
+                ],
+                "summary": "Create a new tenant/organization (Super Admin only)",
+                "description": "Create a new tenant (organization) with subscription plan and limits. This endpoint requires Super Admin role and does NOT require X-Tenant-Id header.",
+                "operationId": "0aa4a6fc54076edcf2381087031355c9",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "slug",
+                                    "address",
+                                    "contact_email",
+                                    "contact_phone",
+                                    "subscription_plan"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "maxLength": 255,
+                                        "example": "VéloFlott Paris"
+                                    },
+                                    "slug": {
+                                        "description": "Unique slug (lowercase, alphanumeric, hyphens only)",
+                                        "type": "string",
+                                        "maxLength": 100,
+                                        "example": "veloflott-paris"
+                                    },
+                                    "address": {
+                                        "type": "string",
+                                        "maxLength": 500,
+                                        "example": "123 Rue de Rivoli, 75001 Paris"
+                                    },
+                                    "contact_email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "maxLength": 255,
+                                        "example": "contact@veloflott.fr"
+                                    },
+                                    "contact_phone": {
+                                        "type": "string",
+                                        "maxLength": 20,
+                                        "example": "+33123456789"
+                                    },
+                                    "logo_url": {
+                                        "type": "string",
+                                        "format": "uri",
+                                        "maxLength": 500,
+                                        "example": "https://example.com/logo.png",
+                                        "nullable": true
+                                    },
+                                    "subscription_plan": {
+                                        "description": "Subscription plan determines the limits (max_users, max_bikes, max_sites)",
+                                        "type": "string",
+                                        "enum": [
+                                            "free",
+                                            "starter",
+                                            "professional",
+                                            "enterprise"
+                                        ],
+                                        "example": "professional"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Tenant created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "string",
+                                            "format": "uuid"
+                                        },
+                                        "name": {
+                                            "type": "string",
+                                            "example": "VéloFlott Paris"
+                                        },
+                                        "slug": {
+                                            "type": "string",
+                                            "example": "veloflott-paris"
+                                        },
+                                        "address": {
+                                            "type": "string",
+                                            "example": "123 Rue de Rivoli, 75001 Paris"
+                                        },
+                                        "contact_email": {
+                                            "type": "string",
+                                            "example": "contact@veloflott.fr"
+                                        },
+                                        "contact_phone": {
+                                            "type": "string",
+                                            "example": "+33123456789"
+                                        },
+                                        "logo_url": {
+                                            "type": "string",
+                                            "example": "https://example.com/logo.png",
+                                            "nullable": true
+                                        },
+                                        "subscription_plan": {
+                                            "type": "string",
+                                            "example": "professional"
+                                        },
+                                        "limits": {
+                                            "properties": {
+                                                "max_users": {
+                                                    "type": "integer",
+                                                    "example": 100
+                                                },
+                                                "max_bikes": {
+                                                    "type": "integer",
+                                                    "example": 1000
+                                                },
+                                                "max_sites": {
+                                                    "type": "integer",
+                                                    "example": 10
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "status": {
+                                            "type": "string",
+                                            "example": "active"
+                                        },
+                                        "created_at": {
+                                            "type": "string",
+                                            "format": "date-time"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Validation error or slug already exists"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden - Requires Super Admin role"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
         }
     },
     "components": {
@@ -6106,6 +6267,10 @@
         {
             "name": "Tenant - Sites",
             "description": "Tenant - Sites"
+        },
+        {
+            "name": "Tenant - Management",
+            "description": "Tenant - Management"
         }
     ]
 }

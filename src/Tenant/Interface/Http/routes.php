@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Illuminate\Support\Facades\Route;
+use Tenant\Interface\Http\CreateTenant\CreateTenantController;
 use Tenant\Interface\Http\SiteController;
 
 /*
@@ -10,11 +11,19 @@ use Tenant\Interface\Http\SiteController;
 | Tenant Module Routes
 |--------------------------------------------------------------------------
 |
-| Routes pour la gestion des sites (multi-tenant).
-| Toutes les routes nécessitent l'authentification Keycloak et le contexte tenant.
+| Routes pour la gestion des tenants et des sites (multi-tenant).
 |
 */
 
+// Routes tenants - Super Admin uniquement
+Route::middleware(['keycloak', 'super-admin'])
+    ->prefix('api/tenants')
+    ->group(function () {
+        Route::post('/', CreateTenantController::class)
+            ->name('tenants.store');
+    });
+
+// Routes sites - Nécessitent authentification et contexte tenant
 Route::middleware(['keycloak', 'tenant', 'require.tenant'])
     ->prefix('api/sites')
     ->group(function () {

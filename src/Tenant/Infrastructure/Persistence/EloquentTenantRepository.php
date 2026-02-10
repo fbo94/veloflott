@@ -67,6 +67,12 @@ final class EloquentTenantRepository implements TenantRepositoryInterface
                 'contact_email' => $tenant->contactEmail(),
                 'contact_phone' => $tenant->contactPhone(),
                 'settings' => $tenant->settings(),
+                'address' => $tenant->address(),
+                'logo_url' => $tenant->logoUrl(),
+                'subscription_plan_id' => $tenant->subscriptionPlanId(),
+                'max_users' => $tenant->maxUsers(),
+                'max_bikes' => $tenant->maxBikes(),
+                'max_sites' => $tenant->maxSites(),
             ]
         );
     }
@@ -109,6 +115,12 @@ final class EloquentTenantRepository implements TenantRepositoryInterface
             contactEmail: $model->contact_email,
             contactPhone: $model->contact_phone,
             settings: $model->settings,
+            address: $model->address,
+            logoUrl: $model->logo_url,
+            subscriptionPlanId: $model->subscription_plan_id,
+            maxUsers: $model->max_users ?? 5,
+            maxBikes: $model->max_bikes ?? 50,
+            maxSites: $model->max_sites ?? 1,
             createdAt: $model->created_at,
             updatedAt: $model->updated_at,
         );

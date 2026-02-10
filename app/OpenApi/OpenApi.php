@@ -3013,3 +3013,125 @@ class ChangeSiteStatusEndpoint {}
     ]
 )]
 class DeleteSiteEndpoint {}
+
+// POST /api/tenants
+#[OA\Post(
+    path: '/api/tenants',
+    summary: 'Create a new tenant/organization (Super Admin only)',
+    description: 'Create a new tenant (organization) with subscription plan and limits. This endpoint requires Super Admin role and does NOT require X-Tenant-Id header.',
+    security: [['bearerAuth' => []]],
+    tags: ['Tenant - Management'],
+    requestBody: new OA\RequestBody(
+        required: true,
+        content: new OA\MediaType(
+            mediaType: 'application/json',
+            schema: new OA\Schema(
+                required: ['name', 'slug', 'address', 'contact_email', 'contact_phone', 'subscription_plan'],
+                properties: [
+                    new OA\Property(property: 'name', type: 'string', example: 'VéloFlott Paris', maxLength: 255),
+                    new OA\Property(property: 'slug', type: 'string', example: 'veloflott-paris', maxLength: 100, description: 'Unique slug (lowercase, alphanumeric, hyphens only)'),
+                    new OA\Property(property: 'address', type: 'string', example: '123 Rue de Rivoli, 75001 Paris', maxLength: 500),
+                    new OA\Property(property: 'contact_email', type: 'string', format: 'email', example: 'contact@veloflott.fr', maxLength: 255),
+                    new OA\Property(property: 'contact_phone', type: 'string', example: '+33123456789', maxLength: 20),
+                    new OA\Property(property: 'logo_url', type: 'string', format: 'uri', nullable: true, example: 'https://example.com/logo.png', maxLength: 500),
+                    new OA\Property(
+                        property: 'subscription_plan',
+                        type: 'string',
+                        enum: ['free', 'starter', 'professional', 'enterprise'],
+                        example: 'professional',
+                        description: 'Subscription plan determines the limits (max_users, max_bikes, max_sites)'
+                    ),
+                ],
+                type: 'object'
+            )
+        )
+    ),
+    responses: [
+        new OA\Response(
+            response: 201,
+            description: 'Tenant created successfully',
+            content: new OA\MediaType(
+                mediaType: 'application/json',
+                schema: new OA\Schema(
+                    properties: [
+                        new OA\Property(property: 'id', type: 'string', format: 'uuid'),
+                        new OA\Property(property: 'name', type: 'string', example: 'VéloFlott Paris'),
+                        new OA\Property(property: 'slug', type: 'string', example: 'veloflott-paris'),
+                        new OA\Property(property: 'address', type: 'string', example: '123 Rue de Rivoli, 75001 Paris'),
+                        new OA\Property(property: 'contact_email', type: 'string', example: 'contact@veloflott.fr'),
+                        new OA\Property(property: 'contact_phone', type: 'string', example: '+33123456789'),
+                        new OA\Property(property: 'logo_url', type: 'string', nullable: true, example: 'https://example.com/logo.png'),
+                        new OA\Property(property: 'subscription_plan', type: 'string', example: 'professional'),
+                        new OA\Property(
+                            property: 'limits',
+                            type: 'object',
+                            properties: [
+                                new OA\Property(property: 'max_users', type: 'integer', example: 100),
+                                new OA\Property(property: 'max_bikes', type: 'integer', example: 1000),
+                                new OA\Property(property: 'max_sites', type: 'integer', example: 10),
+                            ]
+                        ),
+                        new OA\Property(property: 'status', type: 'string', example: 'active'),
+                        new OA\Property(property: 'created_at', type: 'string', format: 'date-time'),
+                    ],
+                    type: 'object'
+                )
+            )
+        ),
+        new OA\Response(response: 400, description: 'Validation error or slug already exists'),
+        new OA\Response(response: 401, description: 'Unauthorized'),
+        new OA\Response(response: 403, description: 'Forbidden - Requires Super Admin role'),
+    ]
+)]
+class CreateTenantEndpoint {}
+
+// GET /api/subscription-plans
+#[OA\Get(
+    path: '/api/subscription-plans',
+    summary: 'List all active subscription plans',
+    description: 'Retrieve all active subscription plans with pricing and limits. Useful for tenant creation forms.',
+    security: [['bearerAuth' => []]],
+    tags: ['Subscription - Plans'],
+    responses: [
+        new OA\Response(
+            response: 200,
+            description: 'List of active subscription plans',
+            content: new OA\MediaType(
+                mediaType: 'application/json',
+                schema: new OA\Schema(
+                    properties: [
+                        new OA\Property(
+                            property: 'subscription_plans',
+                            type: 'array',
+                            items: new OA\Items(
+                                type: 'object',
+                                properties: [
+                                    new OA\Property(property: 'id', type: 'string', format: 'uuid'),
+                                    new OA\Property(property: 'name', type: 'string', example: 'professional'),
+                                    new OA\Property(property: 'display_name', type: 'string', example: 'Plan Professional'),
+                                    new OA\Property(property: 'description', type: 'string', nullable: true),
+                                    new OA\Property(property: 'price_monthly', type: 'number', format: 'float', nullable: true, example: 199.00),
+                                    new OA\Property(property: 'price_yearly', type: 'number', format: 'float', nullable: true, example: 1990.00),
+                                    new OA\Property(
+                                        property: 'limits',
+                                        type: 'object',
+                                        properties: [
+                                            new OA\Property(property: 'max_users', type: 'integer', example: 100),
+                                            new OA\Property(property: 'max_bikes', type: 'integer', example: 1000),
+                                            new OA\Property(property: 'max_sites', type: 'integer', example: 10),
+                                        ]
+                                    ),
+                                    new OA\Property(property: 'features', type: 'object', nullable: true),
+                                    new OA\Property(property: 'sort_order', type: 'integer', example: 3),
+                                ]
+                            )
+                        ),
+                    ],
+                    type: 'object'
+                )
+            )
+        ),
+        new OA\Response(response: 401, description: 'Unauthorized'),
+    ]
+)]
+class ListSubscriptionPlansEndpoint {}

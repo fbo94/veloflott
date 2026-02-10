@@ -2,6 +2,7 @@
 
 return [
     Tenant\Infrastructure\TenantServiceProvider::class,
+    Subscription\Infrastructure\SubscriptionServiceProvider::class,
     Auth\Infrastructure\AuthServiceProvider::class,
     Fleet\Infrastructure\FleetServiceProvider::class,
     Customer\Infrastructure\CustomerServiceProvider::class,
