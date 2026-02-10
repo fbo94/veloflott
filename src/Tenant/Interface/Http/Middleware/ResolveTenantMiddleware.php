@@ -18,6 +18,8 @@ use Tenant\Domain\TenantRepositoryInterface;
  * 2. Fallback: header X-Tenant-Id (pour dev/tests)
  *
  * Ce middleware doit être exécuté après l'authentification.
+ *
+ * Exception : Les Super Admins peuvent passer sans tenant context.
  */
 final class ResolveTenantMiddleware
 {
@@ -30,7 +32,14 @@ final class ResolveTenantMiddleware
     {
         $tenantId = $this->extractTenantId($request);
 
+        // Super Admin bypass : peut passer sans tenant context
         if ($tenantId === null) {
+            $user = $request->user();
+            if ($user !== null && $user->isSuperAdmin()) {
+                // Le super admin continue sans tenant context
+                return $next($request);
+            }
+
             return response()->json([
                 'error' => 'Tenant context required',
                 'message' => 'Unable to determine tenant from request',

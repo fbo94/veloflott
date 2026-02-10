@@ -35,35 +35,37 @@ use Fleet\Interface\Http\UpdateSizeMappingConfiguration\UpdateSizeMappingConfigu
 use Fleet\Interface\Http\UploadBikePhoto\UploadBikePhotoController;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware(['keycloak', 'tenant', 'require.tenant'])->prefix('api/fleet')->group(function () {
-    // Gestion des marques
-    Route::post('/brands', CreateBrandController::class)
-        ->middleware('permission:manage_bikes');
-
+// Routes brands - Catalogue global (pas de tenant requis)
+Route::middleware(['keycloak'])->prefix('api/fleet')->group(function () {
     Route::get('/brands', ListBrandsController::class)
         ->middleware('permission:view_bikes');
+
+    Route::post('/brands', CreateBrandController::class)
+        ->middleware('permission:manage_bikes');
 
     Route::put('/brands/{id}', UpdateBrandController::class)
         ->middleware('permission:manage_bikes');
 
     Route::delete('/brands/{id}', DeleteBrandController::class)
         ->middleware('permission:manage_bikes');
+});
 
-    // Gestion des modèles
-    Route::post('/models', CreateModelController::class)
-        ->middleware('permission:manage_bikes');
+// Routes models - Catalogue global (super admin uniquement)
+Route::middleware(['keycloak', 'super-admin'])->prefix('api/fleet')->group(function () {
+    Route::post('/models', CreateModelController::class);
+    Route::get('/models', ListModelsController::class);
+    Route::get('/models/{id}', GetModelDetailController::class);
+    Route::put('/models/{id}', UpdateModelController::class);
+    Route::delete('/models/{id}', DeleteModelController::class);
 
-    Route::get('/models', ListModelsController::class)
-        ->middleware('permission:view_bikes');
+    // Gestion des correspondances de tailles (configuration globale)
+    Route::get('/size-mapping', GetActiveSizeMappingConfigurationController::class);
+    Route::put('/size-mapping', UpdateSizeMappingConfigurationController::class);
+    Route::post('/size-mapping/reset', ResetSizeMappingConfigurationController::class);
+});
 
-    Route::get('/models/{id}', GetModelDetailController::class)
-        ->middleware('permission:view_bikes');
-
-    Route::put('/models/{id}', UpdateModelController::class)
-        ->middleware('permission:manage_bikes');
-
-    Route::delete('/models/{id}', DeleteModelController::class)
-        ->middleware('permission:manage_bikes');
+// Routes nécessitant un tenant
+Route::middleware(['keycloak', 'tenant', 'require.tenant'])->prefix('api/fleet')->group(function () {
 
     // Gestion des vélos
     Route::post('/bikes', CreateBikeController::class)
@@ -124,16 +126,6 @@ Route::middleware(['keycloak', 'tenant', 'require.tenant'])->prefix('api/fleet')
 
     Route::delete('/rates/{id}', DeleteRateController::class)
         ->middleware('permission:manage_rates');
-
-    // Gestion des correspondances de tailles
-    Route::get('/size-mapping', GetActiveSizeMappingConfigurationController::class)
-        ->middleware('permission:view_bikes');
-
-    Route::put('/size-mapping', UpdateSizeMappingConfigurationController::class)
-        ->middleware('permission:manage_bikes');
-
-    Route::post('/size-mapping/reset', ResetSizeMappingConfigurationController::class)
-        ->middleware('permission:manage_bikes');
 
     // Note: Le système de tarification 3D (pricing-classes, durations, pricing-rates, discount-rules)
     // a été déplacé vers le bounded context Pricing.

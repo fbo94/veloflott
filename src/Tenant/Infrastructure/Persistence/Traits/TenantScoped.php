@@ -50,6 +50,19 @@ trait TenantScoped
 
                 if ($tenantContext->hasTenant()) {
                     $model->tenant_id = $tenantContext->getTenantId();
+                } else {
+                    // Pas de tenant context : lancer une exception claire
+                    $table = $model->getTable();
+                    $user = request()->user();
+
+                    $message = "Cannot create {$table} record without tenant context.";
+                    if ($user !== null && $user->isSuperAdmin()) {
+                        $message .= " Super Admin: Please provide X-Tenant-Id header to specify the target tenant.";
+                    } else {
+                        $message .= " Please provide a valid tenant context.";
+                    }
+
+                    throw new \RuntimeException($message);
                 }
             }
         });

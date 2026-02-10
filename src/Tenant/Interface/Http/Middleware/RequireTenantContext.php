@@ -15,6 +15,8 @@ use Tenant\Application\TenantContext;
  * À utiliser sur les routes qui REQUIÈRENT un tenant.
  * Contrairement à ResolveTenantMiddleware qui résout le tenant,
  * ce middleware vérifie simplement qu'il est présent.
+ *
+ * Exception : Les Super Admins peuvent accéder sans tenant context.
  */
 final class RequireTenantContext
 {
@@ -24,6 +26,13 @@ final class RequireTenantContext
 
     public function handle(Request $request, Closure $next): Response
     {
+        // Super Admin bypass : peut accéder aux endpoints sans tenant context
+        $user = $request->user();
+        if ($user !== null && $user->isSuperAdmin()) {
+            return $next($request);
+        }
+
+        // Pour les autres utilisateurs, le tenant est obligatoire
         if (!$this->tenantContext->hasTenant()) {
             return response()->json([
                 'error' => 'Tenant context required',
