@@ -73,6 +73,8 @@ final class EloquentTenantRepository implements TenantRepositoryInterface
                 'max_users' => $tenant->maxUsers(),
                 'max_bikes' => $tenant->maxBikes(),
                 'max_sites' => $tenant->maxSites(),
+                'trial_ends_at' => $tenant->trialEndsAt(),
+                'onboarding_completed' => $tenant->onboardingCompleted(),
             ]
         );
     }
@@ -121,6 +123,8 @@ final class EloquentTenantRepository implements TenantRepositoryInterface
             maxUsers: $model->max_users ?? 5,
             maxBikes: $model->max_bikes ?? 50,
             maxSites: $model->max_sites ?? 1,
+            trialEndsAt: $model->trial_ends_at,
+            onboardingCompleted: $model->onboarding_completed ?? false,
             createdAt: $model->created_at,
             updatedAt: $model->updated_at,
         );

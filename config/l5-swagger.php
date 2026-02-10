@@ -160,6 +160,7 @@ return [
             'exclude' => [
                 base_path('src/Tenant'),
                 base_path('src/Shared'),
+                base_path('src/Subscription'),
             ],
 
             /*

@@ -33,6 +33,8 @@ final class Tenant
         private int $maxUsers = 5,
         private int $maxBikes = 50,
         private int $maxSites = 1,
+        private ?\DateTimeImmutable $trialEndsAt = null,
+        private bool $onboardingCompleted = false,
         ?\DateTimeImmutable $createdAt = null,
         ?\DateTimeImmutable $updatedAt = null,
     ) {
@@ -113,6 +115,25 @@ final class Tenant
     public function maxSites(): int
     {
         return $this->maxSites;
+    }
+
+    public function trialEndsAt(): ?\DateTimeImmutable
+    {
+        return $this->trialEndsAt;
+    }
+
+    public function onboardingCompleted(): bool
+    {
+        return $this->onboardingCompleted;
+    }
+
+    public function isInTrial(): bool
+    {
+        if ($this->trialEndsAt === null) {
+            return false;
+        }
+
+        return $this->trialEndsAt > new \DateTimeImmutable();
     }
 
     public function createdAt(): \DateTimeImmutable

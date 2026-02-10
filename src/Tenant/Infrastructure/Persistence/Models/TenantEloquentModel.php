@@ -23,6 +23,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property int $max_users
  * @property int $max_bikes
  * @property int $max_sites
+ * @property \DateTimeImmutable|null $trial_ends_at
+ * @property bool $onboarding_completed
  * @property \DateTimeImmutable $created_at
  * @property \DateTimeImmutable $updated_at
  */
@@ -51,10 +53,14 @@ final class TenantEloquentModel extends Model
         'max_users',
         'max_bikes',
         'max_sites',
+        'trial_ends_at',
+        'onboarding_completed',
     ];
 
     protected $casts = [
         'settings' => 'array',
+        'trial_ends_at' => 'immutable_datetime',
+        'onboarding_completed' => 'boolean',
         'created_at' => 'immutable_datetime',
         'updated_at' => 'immutable_datetime',
     ];

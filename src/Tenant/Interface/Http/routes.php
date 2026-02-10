@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Illuminate\Support\Facades\Route;
 use Tenant\Interface\Http\CreateTenant\CreateTenantController;
+use Tenant\Interface\Http\RegisterTenant\RegisterTenantController;
 use Tenant\Interface\Http\SiteController;
 
 /*
@@ -14,6 +15,10 @@ use Tenant\Interface\Http\SiteController;
 | Routes pour la gestion des tenants et des sites (multi-tenant).
 |
 */
+
+// Route d'inscription publique (sans authentification)
+Route::post('/api/register', RegisterTenantController::class)
+    ->name('tenants.register');
 
 // Routes tenants - Super Admin uniquement
 Route::middleware(['keycloak', 'super-admin'])

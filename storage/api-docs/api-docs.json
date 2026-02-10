@@ -6032,6 +6032,167 @@
                 ]
             }
         },
+        "/api/register": {
+            "post": {
+                "tags": [
+                    "Tenant - Registration"
+                ],
+                "summary": "Public self-registration for renters (no authentication required)",
+                "description": "Allows renters to create their own account and organization with automatic 30-day trial period. This endpoint does NOT require authentication and is publicly accessible.",
+                "operationId": "8497d6876c68d43c3a6ef78191bb72ad",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "owner_name",
+                                    "owner_email",
+                                    "organization_name",
+                                    "subscription_plan_id"
+                                ],
+                                "properties": {
+                                    "owner_name": {
+                                        "description": "Name of the organization owner",
+                                        "type": "string",
+                                        "maxLength": 255,
+                                        "example": "Jean Dupont"
+                                    },
+                                    "owner_email": {
+                                        "description": "Email of the organization owner (will receive verification email)",
+                                        "type": "string",
+                                        "format": "email",
+                                        "maxLength": 255,
+                                        "example": "jean.dupont@example.com"
+                                    },
+                                    "organization_name": {
+                                        "description": "Name of the organization/tenant to create",
+                                        "type": "string",
+                                        "maxLength": 255,
+                                        "example": "VéloFlott Lyon"
+                                    },
+                                    "subscription_plan_id": {
+                                        "description": "ID of the selected subscription plan (use GET /api/subscription-plans to list available plans)",
+                                        "type": "string",
+                                        "format": "uuid",
+                                        "example": "9d0e1234-5678-90ab-cdef-1234567890ab"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Organization created successfully with 30-day trial period",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "tenant_id": {
+                                            "type": "string",
+                                            "format": "uuid",
+                                            "example": "9d0e1234-5678-90ab-cdef-1234567890ab"
+                                        },
+                                        "tenant_name": {
+                                            "type": "string",
+                                            "example": "VéloFlott Lyon"
+                                        },
+                                        "tenant_slug": {
+                                            "description": "Auto-generated unique slug",
+                                            "type": "string",
+                                            "example": "veloflott-lyon"
+                                        },
+                                        "owner_email": {
+                                            "type": "string",
+                                            "example": "jean.dupont@example.com"
+                                        },
+                                        "owner_name": {
+                                            "type": "string",
+                                            "example": "Jean Dupont"
+                                        },
+                                        "subscription_plan_name": {
+                                            "type": "string",
+                                            "example": "Plan Professional"
+                                        },
+                                        "trial_ends_at": {
+                                            "description": "30 days from registration",
+                                            "type": "string",
+                                            "format": "date-time",
+                                            "example": "2026-03-12 10:30:00"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Organisation créée avec succès. Période d'essai de 30 jours activée."
+                                        },
+                                        "next_steps": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string"
+                                            },
+                                            "example": [
+                                                "Vérifiez votre email pour activer votre compte",
+                                                "Connectez-vous à votre tableau de bord",
+                                                "Complétez le processus d'onboarding"
+                                            ]
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Validation error or subscription plan not found/inactive",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Registration error"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Subscription plan not found: 9d0e1234-5678-90ab-cdef-1234567890ab"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation failed",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The given data was invalid."
+                                        },
+                                        "errors": {
+                                            "type": "object",
+                                            "example": {
+                                                "owner_email": [
+                                                    "L'email doit être une adresse email valide."
+                                                ],
+                                                "subscription_plan_id": [
+                                                    "Le plan d'abonnement sélectionné n'existe pas."
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/tenants": {
             "post": {
                 "tags": [
@@ -6192,6 +6353,99 @@
                     }
                 ]
             }
+        },
+        "/api/subscription-plans": {
+            "get": {
+                "tags": [
+                    "Subscription - Plans"
+                ],
+                "summary": "List all active subscription plans",
+                "description": "Retrieve all active subscription plans with pricing and limits. Useful for tenant creation forms.",
+                "operationId": "6d001e02641001f38445758ae8e33fac",
+                "responses": {
+                    "200": {
+                        "description": "List of active subscription plans",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "subscription_plans": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "string",
+                                                        "format": "uuid"
+                                                    },
+                                                    "name": {
+                                                        "type": "string",
+                                                        "example": "professional"
+                                                    },
+                                                    "display_name": {
+                                                        "type": "string",
+                                                        "example": "Plan Professional"
+                                                    },
+                                                    "description": {
+                                                        "type": "string",
+                                                        "nullable": true
+                                                    },
+                                                    "price_monthly": {
+                                                        "type": "number",
+                                                        "format": "float",
+                                                        "example": 199,
+                                                        "nullable": true
+                                                    },
+                                                    "price_yearly": {
+                                                        "type": "number",
+                                                        "format": "float",
+                                                        "example": 1990,
+                                                        "nullable": true
+                                                    },
+                                                    "limits": {
+                                                        "properties": {
+                                                            "max_users": {
+                                                                "type": "integer",
+                                                                "example": 100
+                                                            },
+                                                            "max_bikes": {
+                                                                "type": "integer",
+                                                                "example": 1000
+                                                            },
+                                                            "max_sites": {
+                                                                "type": "integer",
+                                                                "example": 10
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    },
+                                                    "features": {
+                                                        "type": "object",
+                                                        "nullable": true
+                                                    },
+                                                    "sort_order": {
+                                                        "type": "integer",
+                                                        "example": 3
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
         }
     },
     "components": {
@@ -6269,8 +6523,16 @@
             "description": "Tenant - Sites"
         },
         {
+            "name": "Tenant - Registration",
+            "description": "Tenant - Registration"
+        },
+        {
             "name": "Tenant - Management",
             "description": "Tenant - Management"
+        },
+        {
+            "name": "Subscription - Plans",
+            "description": "Subscription - Plans"
         }
     ]
 }

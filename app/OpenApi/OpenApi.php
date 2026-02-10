@@ -3014,6 +3014,98 @@ class ChangeSiteStatusEndpoint {}
 )]
 class DeleteSiteEndpoint {}
 
+// POST /api/register
+#[OA\Post(
+    path: '/api/register',
+    summary: 'Public self-registration for renters (no authentication required)',
+    description: 'Allows renters to create their own account and organization with automatic 30-day trial period. This endpoint does NOT require authentication and is publicly accessible.',
+    tags: ['Tenant - Registration'],
+    requestBody: new OA\RequestBody(
+        required: true,
+        content: new OA\MediaType(
+            mediaType: 'application/json',
+            schema: new OA\Schema(
+                required: ['owner_name', 'owner_email', 'organization_name', 'subscription_plan_id'],
+                properties: [
+                    new OA\Property(property: 'owner_name', type: 'string', example: 'Jean Dupont', maxLength: 255, description: 'Name of the organization owner'),
+                    new OA\Property(property: 'owner_email', type: 'string', format: 'email', example: 'jean.dupont@example.com', maxLength: 255, description: 'Email of the organization owner (will receive verification email)'),
+                    new OA\Property(property: 'organization_name', type: 'string', example: 'VéloFlott Lyon', maxLength: 255, description: 'Name of the organization/tenant to create'),
+                    new OA\Property(property: 'subscription_plan_id', type: 'string', format: 'uuid', example: '9d0e1234-5678-90ab-cdef-1234567890ab', description: 'ID of the selected subscription plan (use GET /api/subscription-plans to list available plans)'),
+                ],
+                type: 'object'
+            )
+        )
+    ),
+    responses: [
+        new OA\Response(
+            response: 201,
+            description: 'Organization created successfully with 30-day trial period',
+            content: new OA\MediaType(
+                mediaType: 'application/json',
+                schema: new OA\Schema(
+                    properties: [
+                        new OA\Property(property: 'tenant_id', type: 'string', format: 'uuid', example: '9d0e1234-5678-90ab-cdef-1234567890ab'),
+                        new OA\Property(property: 'tenant_name', type: 'string', example: 'VéloFlott Lyon'),
+                        new OA\Property(property: 'tenant_slug', type: 'string', example: 'veloflott-lyon', description: 'Auto-generated unique slug'),
+                        new OA\Property(property: 'owner_email', type: 'string', example: 'jean.dupont@example.com'),
+                        new OA\Property(property: 'owner_name', type: 'string', example: 'Jean Dupont'),
+                        new OA\Property(property: 'subscription_plan_name', type: 'string', example: 'Plan Professional'),
+                        new OA\Property(property: 'trial_ends_at', type: 'string', format: 'date-time', example: '2026-03-12 10:30:00', description: '30 days from registration'),
+                        new OA\Property(property: 'message', type: 'string', example: "Organisation créée avec succès. Période d'essai de 30 jours activée."),
+                        new OA\Property(
+                            property: 'next_steps',
+                            type: 'array',
+                            items: new OA\Items(type: 'string'),
+                            example: [
+                                'Vérifiez votre email pour activer votre compte',
+                                'Connectez-vous à votre tableau de bord',
+                                'Complétez le processus d\'onboarding',
+                            ]
+                        ),
+                    ],
+                    type: 'object'
+                )
+            )
+        ),
+        new OA\Response(
+            response: 400,
+            description: 'Validation error or subscription plan not found/inactive',
+            content: new OA\MediaType(
+                mediaType: 'application/json',
+                schema: new OA\Schema(
+                    properties: [
+                        new OA\Property(property: 'error', type: 'string', example: 'Registration error'),
+                        new OA\Property(property: 'message', type: 'string', example: 'Subscription plan not found: 9d0e1234-5678-90ab-cdef-1234567890ab'),
+                    ],
+                    type: 'object'
+                )
+            )
+        ),
+        new OA\Response(
+            response: 422,
+            description: 'Validation failed',
+            content: new OA\MediaType(
+                mediaType: 'application/json',
+                schema: new OA\Schema(
+                    properties: [
+                        new OA\Property(property: 'message', type: 'string', example: 'The given data was invalid.'),
+                        new OA\Property(
+                            property: 'errors',
+                            type: 'object',
+                            example: [
+                                'owner_email' => ['L\'email doit être une adresse email valide.'],
+                                'subscription_plan_id' => ['Le plan d\'abonnement sélectionné n\'existe pas.'],
+                            ]
+                        ),
+                    ],
+                    type: 'object'
+                )
+            )
+        ),
+    ]
+)]
+class RegisterTenantEndpoint {}
+
 // POST /api/tenants
 #[OA\Post(
     path: '/api/tenants',
