@@ -27,6 +27,9 @@ final readonly class BikeDto
         public ?int $year,
         public ?string $color,
         public array $photos,
+        public ?string $pricingClassId,
+        public ?string $pricingClassCode,
+        public ?string $pricingClassLabel,
     ) {
     }
 
@@ -53,6 +56,9 @@ final readonly class BikeDto
             year: $bikeModel->year,
             color: $bikeModel->color,
             photos: $bikeModel->photos ?? [],
+            pricingClassId: $bikeModel->pricingClass?->id,
+            pricingClassCode: $bikeModel->pricingClass?->code,
+            pricingClassLabel: $bikeModel->pricingClass?->label,
         );
     }
 
@@ -81,6 +87,11 @@ final readonly class BikeDto
             'year' => $this->year,
             'color' => $this->color,
             'photos' => $this->photos,
+            'pricing_class' => $this->pricingClassId !== null ? [
+                'id' => $this->pricingClassId,
+                'code' => $this->pricingClassCode,
+                'label' => $this->pricingClassLabel,
+            ] : null,
         ];
     }
 }

@@ -36,6 +36,9 @@ final readonly class GetBikeDetailResponse
         public ?string $retiredAt,
         public string $createdAt,
         public string $updatedAt,
+        public ?string $pricingClassId,
+        public ?string $pricingClassCode,
+        public ?string $pricingClassLabel,
     ) {
     }
 
@@ -74,6 +77,9 @@ final readonly class GetBikeDetailResponse
             retiredAt: $bikeModel->retired_at?->format('Y-m-d H:i:s'),
             createdAt: $bikeModel->created_at->format('Y-m-d H:i:s'),
             updatedAt: $bikeModel->updated_at->format('Y-m-d H:i:s'),
+            pricingClassId: $bikeModel->pricingClass?->id,
+            pricingClassCode: $bikeModel->pricingClass?->code,
+            pricingClassLabel: $bikeModel->pricingClass?->label,
         );
     }
 
@@ -114,6 +120,11 @@ final readonly class GetBikeDetailResponse
             'retired_at' => $this->retiredAt,
             'created_at' => $this->createdAt,
             'updated_at' => $this->updatedAt,
+            'pricing_class' => $this->pricingClassId !== null ? [
+                'id' => $this->pricingClassId,
+                'code' => $this->pricingClassCode,
+                'label' => $this->pricingClassLabel,
+            ] : null,
         ];
     }
 }

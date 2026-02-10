@@ -160,7 +160,7 @@ final class EloquentBikeRepository implements BikeRepositoryInterface
         $query->offset($offset)->limit($perPage);
 
         // Récupérer les résultats avec eager loading des relations
-        $bikes = $query->with(['model.brand', 'category'])->get()->all();
+        $bikes = $query->with(['model.brand', 'category', 'pricingClass'])->get()->all();
 
         return [
             'bikes' => $bikes,
@@ -175,7 +175,7 @@ final class EloquentBikeRepository implements BikeRepositoryInterface
 
     public function findByIdWithRelations(string $id): ?BikeEloquentModel
     {
-        return BikeEloquentModel::with(['model.brand', 'category'])->find($id);
+        return BikeEloquentModel::with(['model.brand', 'category', 'pricingClass'])->find($id);
     }
 
     public function countByStatus(): array
