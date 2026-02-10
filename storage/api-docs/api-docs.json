@@ -2,7 +2,7 @@
     "openapi": "3.0.0",
     "info": {
         "title": "Veloflott API",
-        "description": "OpenAPI documentation for all available endpoints.",
+        "description": "OpenAPI documentation for all available endpoints.\n\n## Multi-Tenant Architecture\n\nThis API uses a multi-tenant architecture where most resources are isolated by tenant.\n\n### Headers\n- **Authorization**: Bearer token (JWT from Keycloak) - Required for all authenticated endpoints\n- **X-Tenant-Id**: UUID of the tenant context - Required for most endpoints (except global catalogue endpoints)\n\n### Roles & Permissions\n\n#### Super Admin\nSuper Admins have special privileges:\n- **Read Access**: Can access all tenant-scoped endpoints WITHOUT providing X-Tenant-Id header (sees all tenants data)\n- **Write Access**: Must provide X-Tenant-Id header when creating/updating tenant-scoped resources to specify target tenant\n- **Global Catalogue Management**: Full access to global catalogues (brands, models, size-mapping) without tenant context\n\n#### Regular Users (Admin, Manager, Employee)\n- Must always provide X-Tenant-Id header for tenant-scoped endpoints\n- Can only access data within their assigned tenant\n- Permissions are role-based (view_bikes, manage_bikes, etc.)\n\n### Global Catalogues (No Tenant Required)\n\nThese resources are shared across all tenants:\n- **Brands** (`/api/fleet/brands`) - Bike brands catalogue, accessible with view_bikes permission\n- **Models** (`/api/fleet/models`) - Bike models catalogue, Super Admin only\n- **Size Mapping** (`/api/fleet/size-mapping`) - Size configuration, Super Admin only\n\n### Tenant-Scoped Resources\n\nThese resources require tenant context (X-Tenant-Id header):\n- Bikes, Categories, Rates, Rentals, Customers, Maintenances, Pricing configurations, Sites\n",
         "version": "1.0.0"
     },
     "servers": [
@@ -663,7 +663,8 @@
                 "tags": [
                     "Fleet - Brands"
                 ],
-                "summary": "List all bike brands",
+                "summary": "List all bike brands (Global Catalogue)",
+                "description": "Retrieve all bike brands from the global catalogue. This endpoint does NOT require X-Tenant-Id header as brands are shared across all tenants. Requires view_bikes permission.",
                 "operationId": "b02c2db0cfbe3f580d285d499cdba203",
                 "responses": {
                     "200": {
@@ -686,7 +687,8 @@
                 "tags": [
                     "Fleet - Brands"
                 ],
-                "summary": "Create a new bike brand",
+                "summary": "Create a new bike brand (Global Catalogue)",
+                "description": "Create a new brand in the global catalogue. This endpoint does NOT require X-Tenant-Id header. Requires manage_bikes permission.",
                 "operationId": "77972baab8bb5aae74907d4687092c24",
                 "requestBody": {
                     "required": true,
@@ -847,7 +849,8 @@
                 "tags": [
                     "Fleet - Models"
                 ],
-                "summary": "List all bike models with optional brand filter",
+                "summary": "List all bike models (Super Admin only - Global Catalogue)",
+                "description": "Retrieve all bike models from the global catalogue. This endpoint does NOT require X-Tenant-Id header but REQUIRES Super Admin role.",
                 "operationId": "0faf3abcc09260e7210ca384533bb319",
                 "parameters": [
                     {
@@ -2002,7 +2005,8 @@
                 "tags": [
                     "Fleet - Size Mapping"
                 ],
-                "summary": "Get active size mapping configuration",
+                "summary": "Get active size mapping configuration (Super Admin only - Global)",
+                "description": "Retrieve the currently active size mapping configuration. This endpoint does NOT require X-Tenant-Id header but REQUIRES Super Admin role.",
                 "operationId": "5bc78548c598358690f97f40870865fa",
                 "responses": {
                     "200": {
@@ -2114,7 +2118,8 @@
                 "tags": [
                     "Fleet - Size Mapping"
                 ],
-                "summary": "Update size mapping configuration",
+                "summary": "Update size mapping configuration (Super Admin only - Global)",
+                "description": "Update the size mapping configuration. This endpoint does NOT require X-Tenant-Id header but REQUIRES Super Admin role.",
                 "operationId": "0a7531fb7b83e0796254f5f8902c28e6",
                 "requestBody": {
                     "required": true,
@@ -2324,7 +2329,8 @@
                 "tags": [
                     "Fleet - Size Mapping"
                 ],
-                "summary": "Reset size mapping configuration to default values",
+                "summary": "Reset size mapping configuration to default values (Super Admin only - Global)",
+                "description": "Reset the size mapping configuration to default values. This endpoint does NOT require X-Tenant-Id header but REQUIRES Super Admin role.",
                 "operationId": "3a240a6c140f5aeedaabb6ed2c6e82e5",
                 "responses": {
                     "200": {
@@ -2337,7 +2343,7 @@
                         "description": "Unauthorized"
                     },
                     "403": {
-                        "description": "Forbidden - requires manage_bikes permission"
+                        "description": "Forbidden - requires Super Admin role"
                     }
                 },
                 "security": [
@@ -5604,6 +5610,427 @@
                     }
                 ]
             }
+        },
+        "/api/sites": {
+            "get": {
+                "tags": [
+                    "Tenant - Sites"
+                ],
+                "summary": "List sites of current tenant",
+                "description": "Retrieve all sites belonging to the current tenant. Requires X-Tenant-Id header.",
+                "operationId": "b72a5ce5828f8851781728c0d2739c93",
+                "responses": {
+                    "200": {
+                        "description": "List of sites",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "type": "string",
+                                                "format": "uuid"
+                                            },
+                                            "tenant_id": {
+                                                "type": "string",
+                                                "format": "uuid"
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                                "example": "Site Paris Centre"
+                                            },
+                                            "address": {
+                                                "type": "string",
+                                                "example": "123 Rue de Rivoli"
+                                            },
+                                            "city": {
+                                                "type": "string",
+                                                "example": "Paris"
+                                            },
+                                            "postal_code": {
+                                                "type": "string",
+                                                "example": "75001"
+                                            },
+                                            "country": {
+                                                "type": "string",
+                                                "example": "FR"
+                                            },
+                                            "phone": {
+                                                "type": "string",
+                                                "example": "+33123456789",
+                                                "nullable": true
+                                            },
+                                            "email": {
+                                                "type": "string",
+                                                "format": "email",
+                                                "example": "paris@veloflott.fr",
+                                                "nullable": true
+                                            },
+                                            "status": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "active",
+                                                    "inactive",
+                                                    "archived"
+                                                ],
+                                                "example": "active"
+                                            },
+                                            "created_at": {
+                                                "type": "string",
+                                                "format": "date-time"
+                                            },
+                                            "updated_at": {
+                                                "type": "string",
+                                                "format": "date-time"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden - X-Tenant-Id required"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Tenant - Sites"
+                ],
+                "summary": "Create a new site (manage_sites permission required)",
+                "description": "Create a new site for the current tenant. Requires X-Tenant-Id header and manage_sites permission.",
+                "operationId": "99764a222bf78524b58240c73e9ebc8d",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "address",
+                                    "city",
+                                    "postal_code",
+                                    "country"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "maxLength": 255,
+                                        "example": "Site Paris Centre"
+                                    },
+                                    "address": {
+                                        "type": "string",
+                                        "maxLength": 500,
+                                        "example": "123 Rue de Rivoli"
+                                    },
+                                    "city": {
+                                        "type": "string",
+                                        "maxLength": 100,
+                                        "example": "Paris"
+                                    },
+                                    "postal_code": {
+                                        "type": "string",
+                                        "maxLength": 20,
+                                        "example": "75001"
+                                    },
+                                    "country": {
+                                        "type": "string",
+                                        "maxLength": 2,
+                                        "example": "FR"
+                                    },
+                                    "phone": {
+                                        "type": "string",
+                                        "maxLength": 20,
+                                        "example": "+33123456789",
+                                        "nullable": true
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "maxLength": 255,
+                                        "example": "paris@veloflott.fr",
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Site created successfully"
+                    },
+                    "400": {
+                        "description": "Validation error"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden - requires manage_sites permission"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/sites/{id}": {
+            "get": {
+                "tags": [
+                    "Tenant - Sites"
+                ],
+                "summary": "Get site details",
+                "description": "Retrieve details of a specific site. Requires X-Tenant-Id header.",
+                "operationId": "e15d2110ed46b2cf6b5192f5d32949ec",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Site details"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden - X-Tenant-Id required"
+                    },
+                    "404": {
+                        "description": "Site not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Tenant - Sites"
+                ],
+                "summary": "Update a site (manage_sites permission required)",
+                "description": "Update an existing site. Requires X-Tenant-Id header and manage_sites permission.",
+                "operationId": "b1f4810a9b6efbc7c7d63f3b0b1d3cb8",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "address",
+                                    "city",
+                                    "postal_code",
+                                    "country"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "maxLength": 255,
+                                        "example": "Site Paris Centre"
+                                    },
+                                    "address": {
+                                        "type": "string",
+                                        "maxLength": 500,
+                                        "example": "123 Rue de Rivoli"
+                                    },
+                                    "city": {
+                                        "type": "string",
+                                        "maxLength": 100,
+                                        "example": "Paris"
+                                    },
+                                    "postal_code": {
+                                        "type": "string",
+                                        "maxLength": 20,
+                                        "example": "75001"
+                                    },
+                                    "country": {
+                                        "type": "string",
+                                        "maxLength": 2,
+                                        "example": "FR"
+                                    },
+                                    "phone": {
+                                        "type": "string",
+                                        "maxLength": 20,
+                                        "example": "+33123456789",
+                                        "nullable": true
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "maxLength": 255,
+                                        "example": "paris@veloflott.fr",
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Site updated successfully"
+                    },
+                    "400": {
+                        "description": "Validation error"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden - requires manage_sites permission"
+                    },
+                    "404": {
+                        "description": "Site not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Tenant - Sites"
+                ],
+                "summary": "Delete a site (manage_sites permission required)",
+                "description": "Delete a site. Requires X-Tenant-Id header and manage_sites permission.",
+                "operationId": "cf48c770ab4456e486f7695bd5a94c13",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Site deleted successfully"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden - requires manage_sites permission"
+                    },
+                    "404": {
+                        "description": "Site not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/sites/{id}/status": {
+            "put": {
+                "tags": [
+                    "Tenant - Sites"
+                ],
+                "summary": "Change site status (manage_sites permission required)",
+                "description": "Change the status of a site (active, inactive, archived). Requires X-Tenant-Id header and manage_sites permission.",
+                "operationId": "fb8f10e583590fda5442ff2554484886",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "status"
+                                ],
+                                "properties": {
+                                    "status": {
+                                        "type": "string",
+                                        "enum": [
+                                            "active",
+                                            "inactive",
+                                            "archived"
+                                        ],
+                                        "example": "active"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Site status changed successfully"
+                    },
+                    "400": {
+                        "description": "Validation error"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden - requires manage_sites permission"
+                    },
+                    "404": {
+                        "description": "Site not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
         }
     },
     "components": {
@@ -5675,6 +6102,10 @@
         {
             "name": "Settings",
             "description": "Settings"
+        },
+        {
+            "name": "Tenant - Sites",
+            "description": "Tenant - Sites"
         }
     ]
 }

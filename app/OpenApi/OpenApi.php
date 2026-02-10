@@ -9,7 +9,43 @@ use OpenApi\Attributes as OA;
 #[OA\Info(
     version: '1.0.0',
     title: 'Veloflott API',
-    description: 'OpenAPI documentation for all available endpoints.'
+    description: <<<EOD
+OpenAPI documentation for all available endpoints.
+
+## Multi-Tenant Architecture
+
+This API uses a multi-tenant architecture where most resources are isolated by tenant.
+
+### Headers
+- **Authorization**: Bearer token (JWT from Keycloak) - Required for all authenticated endpoints
+- **X-Tenant-Id**: UUID of the tenant context - Required for most endpoints (except global catalogue endpoints)
+
+### Roles & Permissions
+
+#### Super Admin
+Super Admins have special privileges:
+- **Read Access**: Can access all tenant-scoped endpoints WITHOUT providing X-Tenant-Id header (sees all tenants data)
+- **Write Access**: Must provide X-Tenant-Id header when creating/updating tenant-scoped resources to specify target tenant
+- **Global Catalogue Management**: Full access to global catalogues (brands, models, size-mapping) without tenant context
+
+#### Regular Users (Admin, Manager, Employee)
+- Must always provide X-Tenant-Id header for tenant-scoped endpoints
+- Can only access data within their assigned tenant
+- Permissions are role-based (view_bikes, manage_bikes, etc.)
+
+### Global Catalogues (No Tenant Required)
+
+These resources are shared across all tenants:
+- **Brands** (`/api/fleet/brands`) - Bike brands catalogue, accessible with view_bikes permission
+- **Models** (`/api/fleet/models`) - Bike models catalogue, Super Admin only
+- **Size Mapping** (`/api/fleet/size-mapping`) - Size configuration, Super Admin only
+
+### Tenant-Scoped Resources
+
+These resources require tenant context (X-Tenant-Id header):
+- Bikes, Categories, Rates, Rentals, Customers, Maintenances, Pricing configurations, Sites
+
+EOD
 )]
 #[OA\Server(url: 'http://localhost', description: 'Local server')]
 #[OA\SecurityScheme(
@@ -342,7 +378,8 @@ class AnnotateCustomerEndpoint {}
 // GET /api/fleet/brands
 #[OA\Get(
     path: '/api/fleet/brands',
-    summary: 'List all bike brands',
+    summary: 'List all bike brands (Global Catalogue)',
+    description: 'Retrieve all bike brands from the global catalogue. This endpoint does NOT require X-Tenant-Id header as brands are shared across all tenants. Requires view_bikes permission.',
     security: [['bearerAuth' => []]],
     tags: ['Fleet - Brands'],
     responses: [
@@ -356,7 +393,8 @@ class ListBrandsEndpoint {}
 // POST /api/fleet/brands
 #[OA\Post(
     path: '/api/fleet/brands',
-    summary: 'Create a new bike brand',
+    summary: 'Create a new bike brand (Global Catalogue)',
+    description: 'Create a new brand in the global catalogue. This endpoint does NOT require X-Tenant-Id header. Requires manage_bikes permission.',
     security: [['bearerAuth' => []]],
     tags: ['Fleet - Brands'],
     requestBody: new OA\RequestBody(
@@ -438,7 +476,8 @@ class DeleteBrandEndpoint {}
 // GET /api/fleet/models
 #[OA\Get(
     path: '/api/fleet/models',
-    summary: 'List all bike models with optional brand filter',
+    summary: 'List all bike models (Super Admin only - Global Catalogue)',
+    description: 'Retrieve all bike models from the global catalogue. This endpoint does NOT require X-Tenant-Id header but REQUIRES Super Admin role.',
     security: [['bearerAuth' => []]],
     tags: ['Fleet - Models'],
     parameters: [
@@ -996,7 +1035,8 @@ class GetBikeStatusHistoryEndpoint {}
 // GET /api/fleet/size-mapping
 #[OA\Get(
     path: '/api/fleet/size-mapping',
-    summary: 'Get active size mapping configuration',
+    summary: 'Get active size mapping configuration (Super Admin only - Global)',
+    description: 'Retrieve the currently active size mapping configuration. This endpoint does NOT require X-Tenant-Id header but REQUIRES Super Admin role.',
     security: [['bearerAuth' => []]],
     tags: ['Fleet - Size Mapping'],
     responses: [
@@ -1031,7 +1071,8 @@ class GetActiveSizeMappingConfigurationEndpoint {}
 // PUT /api/fleet/size-mapping
 #[OA\Put(
     path: '/api/fleet/size-mapping',
-    summary: 'Update size mapping configuration',
+    summary: 'Update size mapping configuration (Super Admin only - Global)',
+    description: 'Update the size mapping configuration. This endpoint does NOT require X-Tenant-Id header but REQUIRES Super Admin role.',
     security: [['bearerAuth' => []]],
     tags: ['Fleet - Size Mapping'],
     requestBody: new OA\RequestBody(
@@ -1106,14 +1147,15 @@ class UpdateSizeMappingConfigurationEndpoint {}
 // POST /api/fleet/size-mapping/reset
 #[OA\Post(
     path: '/api/fleet/size-mapping/reset',
-    summary: 'Reset size mapping configuration to default values',
+    summary: 'Reset size mapping configuration to default values (Super Admin only - Global)',
+    description: 'Reset the size mapping configuration to default values. This endpoint does NOT require X-Tenant-Id header but REQUIRES Super Admin role.',
     security: [['bearerAuth' => []]],
     tags: ['Fleet - Size Mapping'],
     responses: [
         new OA\Response(response: 200, description: 'Size mapping configuration reset to default successfully'),
         new OA\Response(response: 400, description: 'Domain exception'),
         new OA\Response(response: 401, description: 'Unauthorized'),
-        new OA\Response(response: 403, description: 'Forbidden - requires manage_bikes permission'),
+        new OA\Response(response: 403, description: 'Forbidden - requires Super Admin role'),
     ]
 )]
 class ResetSizeMappingConfigurationEndpoint {}
@@ -2786,3 +2828,188 @@ class GetRentalSettingsEndpoint {}
     ]
 )]
 class UpdateRentalSettingsEndpoint {}
+
+// ------------------------------ TENANT - SITES ------------------------------
+
+// GET /api/sites
+#[OA\Get(
+    path: '/api/sites',
+    summary: 'List sites of current tenant',
+    description: 'Retrieve all sites belonging to the current tenant. Requires X-Tenant-Id header.',
+    security: [['bearerAuth' => []]],
+    tags: ['Tenant - Sites'],
+    responses: [
+        new OA\Response(
+            response: 200,
+            description: 'List of sites',
+            content: new OA\JsonContent(
+                type: 'array',
+                items: new OA\Items(
+                    type: 'object',
+                    properties: [
+                        new OA\Property(property: 'id', type: 'string', format: 'uuid'),
+                        new OA\Property(property: 'tenant_id', type: 'string', format: 'uuid'),
+                        new OA\Property(property: 'name', type: 'string', example: 'Site Paris Centre'),
+                        new OA\Property(property: 'address', type: 'string', example: '123 Rue de Rivoli'),
+                        new OA\Property(property: 'city', type: 'string', example: 'Paris'),
+                        new OA\Property(property: 'postal_code', type: 'string', example: '75001'),
+                        new OA\Property(property: 'country', type: 'string', example: 'FR'),
+                        new OA\Property(property: 'phone', type: 'string', nullable: true, example: '+33123456789'),
+                        new OA\Property(property: 'email', type: 'string', format: 'email', nullable: true, example: 'paris@veloflott.fr'),
+                        new OA\Property(property: 'status', type: 'string', enum: ['active', 'inactive', 'archived'], example: 'active'),
+                        new OA\Property(property: 'created_at', type: 'string', format: 'date-time'),
+                        new OA\Property(property: 'updated_at', type: 'string', format: 'date-time'),
+                    ]
+                )
+            )
+        ),
+        new OA\Response(response: 401, description: 'Unauthorized'),
+        new OA\Response(response: 403, description: 'Forbidden - X-Tenant-Id required'),
+    ]
+)]
+class ListSitesEndpoint {}
+
+// GET /api/sites/{id}
+#[OA\Get(
+    path: '/api/sites/{id}',
+    summary: 'Get site details',
+    description: 'Retrieve details of a specific site. Requires X-Tenant-Id header.',
+    security: [['bearerAuth' => []]],
+    tags: ['Tenant - Sites'],
+    parameters: [
+        new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'string', format: 'uuid')),
+    ],
+    responses: [
+        new OA\Response(response: 200, description: 'Site details'),
+        new OA\Response(response: 401, description: 'Unauthorized'),
+        new OA\Response(response: 403, description: 'Forbidden - X-Tenant-Id required'),
+        new OA\Response(response: 404, description: 'Site not found'),
+    ]
+)]
+class GetSiteEndpoint {}
+
+// POST /api/sites
+#[OA\Post(
+    path: '/api/sites',
+    summary: 'Create a new site (manage_sites permission required)',
+    description: 'Create a new site for the current tenant. Requires X-Tenant-Id header and manage_sites permission.',
+    security: [['bearerAuth' => []]],
+    tags: ['Tenant - Sites'],
+    requestBody: new OA\RequestBody(
+        required: true,
+        content: new OA\MediaType(
+            mediaType: 'application/json',
+            schema: new OA\Schema(
+                required: ['name', 'address', 'city', 'postal_code', 'country'],
+                properties: [
+                    new OA\Property(property: 'name', type: 'string', example: 'Site Paris Centre', maxLength: 255),
+                    new OA\Property(property: 'address', type: 'string', example: '123 Rue de Rivoli', maxLength: 500),
+                    new OA\Property(property: 'city', type: 'string', example: 'Paris', maxLength: 100),
+                    new OA\Property(property: 'postal_code', type: 'string', example: '75001', maxLength: 20),
+                    new OA\Property(property: 'country', type: 'string', example: 'FR', maxLength: 2),
+                    new OA\Property(property: 'phone', type: 'string', nullable: true, example: '+33123456789', maxLength: 20),
+                    new OA\Property(property: 'email', type: 'string', format: 'email', nullable: true, example: 'paris@veloflott.fr', maxLength: 255),
+                ],
+                type: 'object'
+            )
+        )
+    ),
+    responses: [
+        new OA\Response(response: 201, description: 'Site created successfully'),
+        new OA\Response(response: 400, description: 'Validation error'),
+        new OA\Response(response: 401, description: 'Unauthorized'),
+        new OA\Response(response: 403, description: 'Forbidden - requires manage_sites permission'),
+    ]
+)]
+class CreateSiteEndpoint {}
+
+// PUT /api/sites/{id}
+#[OA\Put(
+    path: '/api/sites/{id}',
+    summary: 'Update a site (manage_sites permission required)',
+    description: 'Update an existing site. Requires X-Tenant-Id header and manage_sites permission.',
+    security: [['bearerAuth' => []]],
+    tags: ['Tenant - Sites'],
+    parameters: [
+        new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'string', format: 'uuid')),
+    ],
+    requestBody: new OA\RequestBody(
+        required: true,
+        content: new OA\MediaType(
+            mediaType: 'application/json',
+            schema: new OA\Schema(
+                required: ['name', 'address', 'city', 'postal_code', 'country'],
+                properties: [
+                    new OA\Property(property: 'name', type: 'string', example: 'Site Paris Centre', maxLength: 255),
+                    new OA\Property(property: 'address', type: 'string', example: '123 Rue de Rivoli', maxLength: 500),
+                    new OA\Property(property: 'city', type: 'string', example: 'Paris', maxLength: 100),
+                    new OA\Property(property: 'postal_code', type: 'string', example: '75001', maxLength: 20),
+                    new OA\Property(property: 'country', type: 'string', example: 'FR', maxLength: 2),
+                    new OA\Property(property: 'phone', type: 'string', nullable: true, example: '+33123456789', maxLength: 20),
+                    new OA\Property(property: 'email', type: 'string', format: 'email', nullable: true, example: 'paris@veloflott.fr', maxLength: 255),
+                ],
+                type: 'object'
+            )
+        )
+    ),
+    responses: [
+        new OA\Response(response: 200, description: 'Site updated successfully'),
+        new OA\Response(response: 400, description: 'Validation error'),
+        new OA\Response(response: 401, description: 'Unauthorized'),
+        new OA\Response(response: 403, description: 'Forbidden - requires manage_sites permission'),
+        new OA\Response(response: 404, description: 'Site not found'),
+    ]
+)]
+class UpdateSiteEndpoint {}
+
+// PUT /api/sites/{id}/status
+#[OA\Put(
+    path: '/api/sites/{id}/status',
+    summary: 'Change site status (manage_sites permission required)',
+    description: 'Change the status of a site (active, inactive, archived). Requires X-Tenant-Id header and manage_sites permission.',
+    security: [['bearerAuth' => []]],
+    tags: ['Tenant - Sites'],
+    parameters: [
+        new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'string', format: 'uuid')),
+    ],
+    requestBody: new OA\RequestBody(
+        required: true,
+        content: new OA\MediaType(
+            mediaType: 'application/json',
+            schema: new OA\Schema(
+                required: ['status'],
+                properties: [
+                    new OA\Property(property: 'status', type: 'string', enum: ['active', 'inactive', 'archived'], example: 'active'),
+                ],
+                type: 'object'
+            )
+        )
+    ),
+    responses: [
+        new OA\Response(response: 200, description: 'Site status changed successfully'),
+        new OA\Response(response: 400, description: 'Validation error'),
+        new OA\Response(response: 401, description: 'Unauthorized'),
+        new OA\Response(response: 403, description: 'Forbidden - requires manage_sites permission'),
+        new OA\Response(response: 404, description: 'Site not found'),
+    ]
+)]
+class ChangeSiteStatusEndpoint {}
+
+// DELETE /api/sites/{id}
+#[OA\Delete(
+    path: '/api/sites/{id}',
+    summary: 'Delete a site (manage_sites permission required)',
+    description: 'Delete a site. Requires X-Tenant-Id header and manage_sites permission.',
+    security: [['bearerAuth' => []]],
+    tags: ['Tenant - Sites'],
+    parameters: [
+        new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'string', format: 'uuid')),
+    ],
+    responses: [
+        new OA\Response(response: 204, description: 'Site deleted successfully'),
+        new OA\Response(response: 401, description: 'Unauthorized'),
+        new OA\Response(response: 403, description: 'Forbidden - requires manage_sites permission'),
+        new OA\Response(response: 404, description: 'Site not found'),
+    ]
+)]
+class DeleteSiteEndpoint {}
