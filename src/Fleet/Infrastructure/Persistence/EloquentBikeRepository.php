@@ -242,7 +242,7 @@ final class EloquentBikeRepository implements BikeRepositoryInterface
                 'frame_size_letter' => $bike->frameSize()->letterValue?->value,
                 'frame_size_letter_equivalent' => $bike->frameSize()->letterEquivalent->value,
                 'status' => $bike->status()->value,
-                'pricing_tier' => $bike->pricingTier()->value,
+                'pricing_class_id' => $bike->pricingClass()?->id(),
                 'year' => $bike->year(),
                 'serial_number' => $bike->serialNumber(),
                 'color' => $bike->color(),
@@ -274,7 +274,7 @@ final class EloquentBikeRepository implements BikeRepositoryInterface
             frameSize: $this->mapFrameSize($model),
             status: BikeStatus::from($model->status),
             pricingTier: $model->pricing_tier ?? PricingTier::STANDARD,
-            pricingClassId: $model->pricing_class_id,
+            pricingClass: $this->mapPricingClass($model),
             year: $model->year,
             serialNumber: $model->serial_number,
             color: $model->color,
@@ -307,5 +307,27 @@ final class EloquentBikeRepository implements BikeRepositoryInterface
             FrameSizeUnit::CM => FrameSize::fromCentimeters($model->frame_size_numeric),
             FrameSizeUnit::INCH => FrameSize::fromInches($model->frame_size_numeric),
         };
+    }
+
+    private function mapPricingClass(BikeEloquentModel $model): ?PricingClass
+    {
+        $pricingClassModel = $model->pricingClass;
+
+        if ($pricingClassModel === null) {
+            return null;
+        }
+
+        return new PricingClass(
+            id: $pricingClassModel->id,
+            code: $pricingClassModel->code,
+            label: $pricingClassModel->label,
+            description: $pricingClassModel->description,
+            color: $pricingClassModel->color,
+            sortOrder: $pricingClassModel->sort_order,
+            isActive: $pricingClassModel->is_active,
+            deletedAt: $pricingClassModel->deleted_at !== null ? \DateTimeImmutable::createFromInterface($pricingClassModel->deleted_at) : null,
+            createdAt: \DateTimeImmutable::createFromInterface($pricingClassModel->created_at),
+            updatedAt: \DateTimeImmutable::createFromInterface($pricingClassModel->updated_at),
+        );
     }
 }

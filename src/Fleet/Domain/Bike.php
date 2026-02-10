@@ -25,7 +25,7 @@ final class Bike
         private FrameSize $frameSize,
         private BikeStatus $status,
         private PricingTier $pricingTier,
-        private ?string $pricingClassId,
+        private ?PricingClass $pricingClass,
         private ?int $year,
         private ?string $serialNumber,
         private ?string $color,
@@ -91,9 +91,9 @@ final class Bike
         return $this->pricingTier;
     }
 
-    public function pricingClassId(): ?string
+    public function pricingClass(): ?PricingClass
     {
-        return $this->pricingClassId;
+        return $this->pricingClass;
     }
 
     public function year(): ?int
@@ -227,7 +227,7 @@ final class Bike
         ?float $purchasePrice,
         ?\DateTimeImmutable $purchaseDate,
         ?string $notes,
-        ?string $pricingClassId = null,
+        ?PricingClass $pricingClass,
     ): self {
         if (! $this->canBeModified()) {
             throw new \DomainException('Cannot modify this bike in its current status');
@@ -246,7 +246,7 @@ final class Bike
         $this->purchasePrice = $purchasePrice;
         $this->purchaseDate = $purchaseDate;
         $this->notes = $notes;
-        $this->pricingClassId = $pricingClassId;
+        $this->pricingClass = $pricingClass;
         $this->updatedAt = new \DateTimeImmutable();
 
         return $this;

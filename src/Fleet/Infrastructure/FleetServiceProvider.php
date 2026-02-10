@@ -9,6 +9,7 @@ use Fleet\Domain\BikeStatusHistoryRepositoryInterface;
 use Fleet\Domain\BrandRepositoryInterface;
 use Fleet\Domain\CategoryRepositoryInterface;
 use Fleet\Domain\ModelRepositoryInterface;
+use Fleet\Domain\PricingClassRepositoryInterface;
 use Fleet\Domain\RateRepositoryInterface;
 use Fleet\Domain\SizeMappingConfigurationRepositoryInterface;
 use Fleet\Infrastructure\Persistence\EloquentBikeRepository;
@@ -16,6 +17,7 @@ use Fleet\Infrastructure\Persistence\EloquentBikeStatusHistoryRepository;
 use Fleet\Infrastructure\Persistence\EloquentBrandRepository;
 use Fleet\Infrastructure\Persistence\EloquentCategoryRepository;
 use Fleet\Infrastructure\Persistence\EloquentModelRepository;
+use Fleet\Infrastructure\Persistence\EloquentPricingClassRepository;
 use Fleet\Infrastructure\Persistence\EloquentRateRepository;
 use Fleet\Infrastructure\Persistence\EloquentSizeMappingConfigurationRepository;
 use Illuminate\Support\ServiceProvider;
@@ -38,6 +40,11 @@ final class FleetServiceProvider extends ServiceProvider
         $this->app->bind(
             CategoryRepositoryInterface::class,
             EloquentCategoryRepository::class
+        );
+
+        $this->app->bind(
+            PricingClassRepositoryInterface::class,
+            EloquentPricingClassRepository::class
         );
 
         $this->app->bind(

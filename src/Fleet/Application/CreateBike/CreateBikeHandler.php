@@ -12,6 +12,7 @@ use Fleet\Domain\CategoryRepositoryInterface;
 use Fleet\Domain\FrameSize;
 use Fleet\Domain\FrameSizeUnit;
 use Fleet\Domain\ModelRepositoryInterface;
+use Fleet\Domain\PricingClassRepositoryInterface;
 use Fleet\Domain\PricingTier;
 use Illuminate\Support\Str;
 
@@ -22,6 +23,7 @@ final class CreateBikeHandler
         private readonly ModelRepositoryInterface $models,
         private readonly BrandRepositoryInterface $brands,
         private readonly CategoryRepositoryInterface $categories,
+        private readonly PricingClassRepositoryInterface $pricingClasses,
     ) {
     }
 
@@ -56,6 +58,18 @@ final class CreateBikeHandler
             FrameSizeUnit::INCH => FrameSize::fromInches($command->frameSizeNumeric),
         };
 
+        // Déterminer la pricing class (fournie ou par défaut)
+        $pricingClass = null;
+        if ($command->pricingClassId !== null) {
+            $pricingClass = $this->pricingClasses->findById($command->pricingClassId);
+            if ($pricingClass === null) {
+                throw new \InvalidArgumentException("Pricing class not found: {$command->pricingClassId}");
+            }
+        } else {
+            // Par défaut, utiliser 'standard' si elle existe
+            $pricingClass = $this->pricingClasses->findByCode('standard');
+        }
+
         // Créer le vélo
         $bike = new Bike(
             id: Str::uuid()->toString(),
@@ -66,7 +80,7 @@ final class CreateBikeHandler
             frameSize: $frameSize,
             status: BikeStatus::AVAILABLE,
             pricingTier: PricingTier::STANDARD, // Par défaut, tous les vélos sont en tier standard
-            pricingClassId: null, // Sera assignée plus tard lors de la configuration des tarifs
+            pricingClass: $pricingClass,
             year: $command->year,
             serialNumber: $command->serialNumber,
             color: $command->color,

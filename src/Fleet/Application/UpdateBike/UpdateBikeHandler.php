@@ -7,6 +7,7 @@ namespace Fleet\Application\UpdateBike;
 use Fleet\Domain\BikeRepositoryInterface;
 use Fleet\Domain\BrakeType;
 use Fleet\Domain\FrameSize;
+use Fleet\Domain\PricingClassRepositoryInterface;
 use Fleet\Domain\WheelSize;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -15,6 +16,7 @@ final readonly class UpdateBikeHandler
 {
     public function __construct(
         private BikeRepositoryInterface $bikeRepository,
+        private PricingClassRepositoryInterface $pricingClassRepository,
     ) {
     }
 
@@ -42,6 +44,15 @@ final readonly class UpdateBikeHandler
             }
         }
 
+        // Récupérer l'objet PricingClass depuis l'ID
+        $pricingClass = null;
+        if ($command->pricingClassId !== null) {
+            $pricingClass = $this->pricingClassRepository->findById($command->pricingClassId);
+            if ($pricingClass === null) {
+                throw new \InvalidArgumentException("Pricing class not found: {$command->pricingClassId}");
+            }
+        }
+
         try {
             $bike->update(
                 modelId: $command->modelId,
@@ -57,7 +68,7 @@ final readonly class UpdateBikeHandler
                 purchasePrice: $command->purchasePrice,
                 purchaseDate: $purchaseDate,
                 notes: $command->notes,
-                pricingClassId: $command->pricingClassId,
+                pricingClass: $pricingClass,
             );
 
             // Process photos (upload base64 images and keep existing URLs)
