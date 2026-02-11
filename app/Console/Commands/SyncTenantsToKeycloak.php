@@ -53,6 +53,7 @@ final class SyncTenantsToKeycloak extends Command
         // Récupérer les organizations existantes dans Keycloak
         $keycloakOrgs = [];
         $keycloakOrgsByName = [];
+
         try {
             $orgs = $this->keycloakAdmin->listOrganizations();
             foreach ($orgs as $org) {
@@ -69,6 +70,7 @@ final class SyncTenantsToKeycloak extends Command
             $this->newLine();
         } catch (\Exception $e) {
             $this->error("❌ Erreur lors de la récupération des organizations Keycloak: {$e->getMessage()}");
+
             return Command::FAILURE;
         }
 
@@ -89,7 +91,7 @@ final class SyncTenantsToKeycloak extends Command
             $existsInKeycloak = isset($keycloakOrgs[$tenantId]) || isset($keycloakOrgsByName[strtolower($name)]);
 
             if ($existsInKeycloak && !$isForce) {
-                $this->line("  ⏭️  Organization existe déjà dans Keycloak");
+                $this->line('  ⏭️  Organization existe déjà dans Keycloak');
                 $skipped++;
                 continue;
             }
@@ -98,7 +100,7 @@ final class SyncTenantsToKeycloak extends Command
                 if ($existsInKeycloak) {
                     $this->line("  🔄 Mettrait à jour l'organization dans Keycloak");
                 } else {
-                    $this->line("  ✨ Créerait une nouvelle organization dans Keycloak");
+                    $this->line('  ✨ Créerait une nouvelle organization dans Keycloak');
                 }
                 continue;
             }
@@ -125,10 +127,10 @@ final class SyncTenantsToKeycloak extends Command
                     );
 
                     if ($success) {
-                        $this->line("  ✅ Organization mise à jour");
+                        $this->line('  ✅ Organization mise à jour');
                         $updated++;
                     } else {
-                        $this->error("  ❌ Échec de la mise à jour");
+                        $this->error('  ❌ Échec de la mise à jour');
                         $errors++;
                     }
                 } else {
@@ -143,7 +145,7 @@ final class SyncTenantsToKeycloak extends Command
                         $this->line("  ✅ Organization créée (ID: {$orgId})");
                         $created++;
                     } else {
-                        $this->error("  ❌ Échec de la création");
+                        $this->error('  ❌ Échec de la création');
                         $errors++;
                     }
                 }

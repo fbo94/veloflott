@@ -28,9 +28,9 @@ final readonly class UpdatePricingClassHandler
             sortOrder: $command->sortOrder,
         );
 
-        if ($command->isActive && ! $pricingClass->isActive()) {
+        if ($command->isActive && !$pricingClass->isActive()) {
             $pricingClass->activate();
-        } elseif (! $command->isActive && $pricingClass->isActive()) {
+        } elseif (!$command->isActive && $pricingClass->isActive()) {
             $pricingClass->deactivate();
         }
 

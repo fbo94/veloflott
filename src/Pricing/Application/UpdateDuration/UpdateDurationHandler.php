@@ -28,9 +28,9 @@ final readonly class UpdateDurationHandler
             sortOrder: $command->sortOrder,
         );
 
-        if ($command->isActive && ! $duration->isActive()) {
+        if ($command->isActive && !$duration->isActive()) {
             $duration->activate();
-        } elseif (! $command->isActive && $duration->isActive()) {
+        } elseif (!$command->isActive && $duration->isActive()) {
             $duration->deactivate();
         }
 

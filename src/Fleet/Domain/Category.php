@@ -111,6 +111,6 @@ final class Category
 
     public function canBeDeleted(): bool
     {
-        return ! $this->isDefault;
+        return !$this->isDefault;
     }
 }

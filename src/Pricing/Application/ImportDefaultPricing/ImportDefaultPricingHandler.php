@@ -169,7 +169,7 @@ final class ImportDefaultPricingHandler
 
                 foreach ($sourceRates as $sourceRate) {
                     // Vérifier que la catégorie existe dans le tenant cible
-                    if (! in_array($sourceRate->category_id, $targetCategories, true)) {
+                    if (!in_array($sourceRate->category_id, $targetCategories, true)) {
                         continue;
                     }
 

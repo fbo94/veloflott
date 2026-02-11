@@ -100,7 +100,7 @@ final class Customer
 
     public function addPhoto(string $photoUrl): self
     {
-        if (! in_array($photoUrl, $this->photos, true)) {
+        if (!in_array($photoUrl, $this->photos, true)) {
             $this->photos[] = $photoUrl;
             $this->updatedAt = new \DateTimeImmutable();
         }

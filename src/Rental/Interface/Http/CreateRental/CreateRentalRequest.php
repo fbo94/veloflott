@@ -44,7 +44,7 @@ final class CreateRentalRequest extends FormRequest
 
     protected function prepareForValidation(): void
     {
-        if (! $this->has('equipments')) {
+        if (!$this->has('equipments')) {
             $this->merge(['equipments' => []]);
         }
     }

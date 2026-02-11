@@ -148,7 +148,7 @@ final class PricingClass
 
     public function deactivate(): self
     {
-        if (! $this->isActive) {
+        if (!$this->isActive) {
             throw new \DomainException('Pricing class is already inactive');
         }
 
@@ -166,7 +166,7 @@ final class PricingClass
             throw new \DomainException('Pricing class code cannot be empty');
         }
 
-        if (! preg_match('/^[a-z0-9_]+$/', $code)) {
+        if (!preg_match('/^[a-z0-9_]+$/', $code)) {
             throw new \DomainException('Pricing class code must contain only lowercase letters, numbers and underscores');
         }
 
@@ -188,7 +188,7 @@ final class PricingClass
 
     private function validateColor(?string $color): void
     {
-        if ($color !== null && ! preg_match('/^#[0-9A-F]{6}$/i', $color)) {
+        if ($color !== null && !preg_match('/^#[0-9A-F]{6}$/i', $color)) {
             throw new \DomainException('Pricing class color must be a valid hex color code (e.g., #3B82F6)');
         }
     }

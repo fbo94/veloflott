@@ -14,8 +14,7 @@ use Illuminate\Support\Facades\Schema;
  * et mis à jour les données existantes.
  */
 
-return new class extends Migration
-{
+return new class () extends Migration {
     /**
      * @var array<string>
      */

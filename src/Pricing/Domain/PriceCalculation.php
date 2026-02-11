@@ -71,7 +71,7 @@ final readonly class PriceCalculation
      */
     public function hasDiscounts(): bool
     {
-        return ! empty($this->appliedDiscounts);
+        return !empty($this->appliedDiscounts);
     }
 
     /**

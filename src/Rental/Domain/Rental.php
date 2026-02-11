@@ -153,7 +153,7 @@ final class Rental
 
     public function isLate(): bool
     {
-        if (! $this->isActive()) {
+        if (!$this->isActive()) {
             return false;
         }
 
@@ -162,7 +162,7 @@ final class Rental
 
     public function getDelayInHours(): int
     {
-        if (! $this->isLate()) {
+        if (!$this->isLate()) {
             return 0;
         }
 

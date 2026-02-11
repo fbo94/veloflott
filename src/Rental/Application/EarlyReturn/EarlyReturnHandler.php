@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Rental\Application\EarlyReturn;
 
-use DateTimeImmutable;
 use Fleet\Domain\BikeRepositoryInterface;
 use Rental\Application\CheckOutRental\RentalNotFoundException;
 use Rental\Application\Services\EarlyReturnCalculator;

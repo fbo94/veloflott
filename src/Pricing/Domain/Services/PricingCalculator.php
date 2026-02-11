@@ -52,7 +52,7 @@ final readonly class PricingCalculator
             $durationId
         );
 
-        if ($rate === null || ! $rate->isActive()) {
+        if ($rate === null || !$rate->isActive()) {
             throw new NoPricingFoundException(
                 "No active pricing rate found for category={$categoryId}, class={$pricingClassId}, duration={$durationId}"
             );
@@ -73,19 +73,19 @@ final readonly class PricingCalculator
 
         foreach ($discountRules as $rule) {
             // Vérifier si la règle s'applique
-            if (! $rule->isActive()) {
+            if (!$rule->isActive()) {
                 continue;
             }
 
-            if (! $rule->appliesToCategory($categoryId)) {
+            if (!$rule->appliesToCategory($categoryId)) {
                 continue;
             }
 
-            if (! $rule->appliesToPricingClass($pricingClassId)) {
+            if (!$rule->appliesToPricingClass($pricingClassId)) {
                 continue;
             }
 
-            if (! $rule->appliesToDays($days)) {
+            if (!$rule->appliesToDays($days)) {
                 continue;
             }
 
@@ -105,7 +105,7 @@ final readonly class PricingCalculator
             );
 
             // Si la règle n'est pas cumulative, on arrête
-            if (! $rule->isCumulative()) {
+            if (!$rule->isCumulative()) {
                 break;
             }
         }
@@ -141,7 +141,7 @@ final readonly class PricingCalculator
             $durationId
         );
 
-        if ($rate === null || ! $rate->isActive()) {
+        if ($rate === null || !$rate->isActive()) {
             throw new NoPricingFoundException(
                 'No active pricing rate found'
             );

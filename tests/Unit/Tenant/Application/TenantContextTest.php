@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 use Tenant\Application\TenantContext;
 use Tenant\Domain\Site;
-use Tenant\Domain\SiteStatus;
 use Tenant\Domain\Tenant;
 use Tenant\Domain\TenantStatus;
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
@@ -70,8 +72,9 @@ class ReassignDataToTenant extends Command
 
         $this->info("Tenant trouvé : {$tenant->name} (ID: {$tenant->id})");
 
-        if (!$this->confirm("Êtes-vous sûr de vouloir réaffecter TOUTES les données à ce tenant ?")) {
+        if (!$this->confirm('Êtes-vous sûr de vouloir réaffecter TOUTES les données à ce tenant ?')) {
             $this->info('Opération annulée.');
+
             return 0;
         }
 
@@ -90,6 +93,7 @@ class ReassignDataToTenant extends Command
         } catch (\Exception $e) {
             DB::rollBack();
             $this->error("Erreur lors de la réaffectation : {$e->getMessage()}");
+
             return 1;
         }
     }
@@ -125,12 +129,14 @@ class ReassignDataToTenant extends Command
         // Vérifier si la table existe
         if (!DB::getSchemaBuilder()->hasTable($table)) {
             $this->warn("  ⊘ Table '{$table}' n'existe pas, ignorée.");
+
             return;
         }
 
         // Vérifier si la table a une colonne tenant_id
         if (!DB::getSchemaBuilder()->hasColumn($table, 'tenant_id')) {
             $this->warn("  ⊘ Table '{$table}' n'a pas de colonne tenant_id, ignorée.");
+
             return;
         }
 
@@ -138,6 +144,7 @@ class ReassignDataToTenant extends Command
 
         if ($count === 0) {
             $this->line("  - Table '{$table}' : Aucune donnée à réaffecter");
+
             return;
         }
 

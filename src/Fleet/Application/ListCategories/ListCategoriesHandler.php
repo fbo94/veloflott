@@ -47,7 +47,7 @@ final class ListCategoriesHandler
             } else {
                 // Catégorie enfant
                 $parentId = $category->parentId();
-                if (! isset($childrenByParentId[$parentId])) {
+                if (!isset($childrenByParentId[$parentId])) {
                     $childrenByParentId[$parentId] = [];
                 }
                 $childrenByParentId[$parentId][] = $category;

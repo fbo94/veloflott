@@ -167,7 +167,7 @@ final class RentalPricingSnapshot
      */
     public function hasDiscounts(): bool
     {
-        return ! empty($this->discountsApplied);
+        return !empty($this->discountsApplied);
     }
 
     /**

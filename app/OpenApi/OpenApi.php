@@ -9,7 +9,7 @@ use OpenApi\Attributes as OA;
 #[OA\Info(
     version: '1.0.0',
     title: 'Veloflott API',
-    description: <<<EOD
+    description: <<<'EOD'
 OpenAPI documentation for all available endpoints.
 
 ## Multi-Tenant Architecture
@@ -54,7 +54,9 @@ EOD
     scheme: 'bearer',
     bearerFormat: 'JWT'
 )]
-class OpenApi {}
+class OpenApi
+{
+}
 
 // ------------------------------ PATHS ------------------------------
 
@@ -69,7 +71,9 @@ class OpenApi {}
         new OA\Response(response: 401, description: 'Unauthorized'),
     ]
 )]
-class MeEndpoint {}
+class MeEndpoint
+{
+}
 
 // GET /api/users
 #[OA\Get(
@@ -87,7 +91,9 @@ class MeEndpoint {}
         new OA\Response(response: 403, description: 'Forbidden'),
     ]
 )]
-class ListUsersEndpoint {}
+class ListUsersEndpoint
+{
+}
 
 // PUT /api/users/{id}/role
 #[OA\Put(
@@ -112,7 +118,9 @@ class ListUsersEndpoint {}
         new OA\Response(response: 403, description: 'Forbidden'),
     ]
 )]
-class UpdateUserRoleEndpoint {}
+class UpdateUserRoleEndpoint
+{
+}
 
 // POST /api/users/{id}/toggle-status
 #[OA\Post(
@@ -129,7 +137,9 @@ class UpdateUserRoleEndpoint {}
         new OA\Response(response: 403, description: 'Forbidden'),
     ]
 )]
-class ToggleUserStatusEndpoint {}
+class ToggleUserStatusEndpoint
+{
+}
 
 // GET /api/user (Sanctum protected default route)
 #[OA\Get(
@@ -142,7 +152,9 @@ class ToggleUserStatusEndpoint {}
         new OA\Response(response: 401, description: 'Unauthorized'),
     ]
 )]
-class LaravelUserEndpoint {}
+class LaravelUserEndpoint
+{
+}
 
 // GET /api/login (public example route)
 #[OA\Get(
@@ -153,7 +165,9 @@ class LaravelUserEndpoint {}
         new OA\Response(response: 200, description: 'Message returned'),
     ]
 )]
-class LoginEndpoint {}
+class LoginEndpoint
+{
+}
 
 // GET /api/auth/authorization-url (public)
 #[OA\Get(
@@ -173,7 +187,9 @@ class LoginEndpoint {}
         new OA\Response(response: 200, description: 'Authorization URL payload returned'),
     ]
 )]
-class GetAuthorizationUrlEndpoint {}
+class GetAuthorizationUrlEndpoint
+{
+}
 
 // POST /api/auth/authorize (public)
 #[OA\Post(
@@ -199,7 +215,9 @@ class GetAuthorizationUrlEndpoint {}
         new OA\Response(response: 400, description: 'Invalid payload or state mismatch'),
     ]
 )]
-class AuthorizeEndpoint {}
+class AuthorizeEndpoint
+{
+}
 
 // ------------------------------ CUSTOMERS ------------------------------
 
@@ -238,7 +256,9 @@ class AuthorizeEndpoint {}
         new OA\Response(response: 403, description: 'Forbidden - requires manage_customers permission'),
     ]
 )]
-class CreateCustomerEndpoint {}
+class CreateCustomerEndpoint
+{
+}
 
 // GET /api/customers/search
 #[OA\Get(
@@ -261,7 +281,9 @@ class CreateCustomerEndpoint {}
         new OA\Response(response: 403, description: 'Forbidden - requires view_customers permission'),
     ]
 )]
-class SearchCustomersEndpoint {}
+class SearchCustomersEndpoint
+{
+}
 
 // GET /api/customers/{id}
 #[OA\Get(
@@ -279,7 +301,9 @@ class SearchCustomersEndpoint {}
         new OA\Response(response: 404, description: 'Customer not found'),
     ]
 )]
-class GetCustomerDetailEndpoint {}
+class GetCustomerDetailEndpoint
+{
+}
 
 // PUT /api/customers/{id}
 #[OA\Put(
@@ -320,7 +344,9 @@ class GetCustomerDetailEndpoint {}
         new OA\Response(response: 404, description: 'Customer not found'),
     ]
 )]
-class UpdateCustomerEndpoint {}
+class UpdateCustomerEndpoint
+{
+}
 
 // POST /api/customers/{id}/toggle-risky
 #[OA\Post(
@@ -338,7 +364,9 @@ class UpdateCustomerEndpoint {}
         new OA\Response(response: 404, description: 'Customer not found'),
     ]
 )]
-class ToggleRiskyFlagEndpoint {}
+class ToggleRiskyFlagEndpoint
+{
+}
 
 // POST /api/customers/{id}/annotation
 #[OA\Post(
@@ -371,7 +399,9 @@ class ToggleRiskyFlagEndpoint {}
         new OA\Response(response: 404, description: 'Customer not found'),
     ]
 )]
-class AnnotateCustomerEndpoint {}
+class AnnotateCustomerEndpoint
+{
+}
 
 // ------------------------------ FLEET - BRANDS ------------------------------
 
@@ -388,7 +418,9 @@ class AnnotateCustomerEndpoint {}
         new OA\Response(response: 403, description: 'Forbidden - requires view_bikes permission'),
     ]
 )]
-class ListBrandsEndpoint {}
+class ListBrandsEndpoint
+{
+}
 
 // POST /api/fleet/brands
 #[OA\Post(
@@ -418,7 +450,9 @@ class ListBrandsEndpoint {}
         new OA\Response(response: 403, description: 'Forbidden - requires manage_bikes permission'),
     ]
 )]
-class CreateBrandEndpoint {}
+class CreateBrandEndpoint
+{
+}
 
 // PUT /api/fleet/brands/{id}
 #[OA\Put(
@@ -451,7 +485,9 @@ class CreateBrandEndpoint {}
         new OA\Response(response: 404, description: 'Brand not found'),
     ]
 )]
-class UpdateBrandEndpoint {}
+class UpdateBrandEndpoint
+{
+}
 
 // DELETE /api/fleet/brands/{id}
 #[OA\Delete(
@@ -469,7 +505,9 @@ class UpdateBrandEndpoint {}
         new OA\Response(response: 404, description: 'Brand not found'),
     ]
 )]
-class DeleteBrandEndpoint {}
+class DeleteBrandEndpoint
+{
+}
 
 // ------------------------------ FLEET - MODELS ------------------------------
 
@@ -496,7 +534,9 @@ class DeleteBrandEndpoint {}
         new OA\Response(response: 403, description: 'Forbidden - requires view_bikes permission'),
     ]
 )]
-class ListModelsEndpoint {}
+class ListModelsEndpoint
+{
+}
 
 // GET /api/fleet/models/{id}
 #[OA\Get(
@@ -530,7 +570,9 @@ class ListModelsEndpoint {}
         new OA\Response(response: 404, description: 'Model not found'),
     ]
 )]
-class GetModelDetailEndpoint {}
+class GetModelDetailEndpoint
+{
+}
 
 // POST /api/fleet/models
 #[OA\Post(
@@ -559,7 +601,9 @@ class GetModelDetailEndpoint {}
         new OA\Response(response: 403, description: 'Forbidden - requires manage_bikes permission'),
     ]
 )]
-class CreateModelEndpoint {}
+class CreateModelEndpoint
+{
+}
 
 // PUT /api/fleet/models/{id}
 #[OA\Put(
@@ -592,7 +636,9 @@ class CreateModelEndpoint {}
         new OA\Response(response: 404, description: 'Model not found'),
     ]
 )]
-class UpdateModelEndpoint {}
+class UpdateModelEndpoint
+{
+}
 
 // DELETE /api/fleet/models/{id}
 #[OA\Delete(
@@ -610,7 +656,9 @@ class UpdateModelEndpoint {}
         new OA\Response(response: 404, description: 'Model not found'),
     ]
 )]
-class DeleteModelEndpoint {}
+class DeleteModelEndpoint
+{
+}
 
 // ------------------------------ FLEET - BIKES ------------------------------
 
@@ -647,7 +695,9 @@ class DeleteModelEndpoint {}
         new OA\Response(response: 403, description: 'Forbidden - requires manage_bikes permission'),
     ]
 )]
-class CreateBikeEndpoint {}
+class CreateBikeEndpoint
+{
+}
 
 // GET /api/fleet/bikes
 #[OA\Get(
@@ -720,7 +770,9 @@ class CreateBikeEndpoint {}
         new OA\Response(response: 403, description: 'Forbidden - requires view_bikes permission'),
     ]
 )]
-class ListBikesEndpoint {}
+class ListBikesEndpoint
+{
+}
 
 // GET /api/fleet/bikes/{id}
 #[OA\Get(
@@ -769,7 +821,9 @@ class ListBikesEndpoint {}
         new OA\Response(response: 404, description: 'Bike not found'),
     ]
 )]
-class GetBikeDetailEndpoint {}
+class GetBikeDetailEndpoint
+{
+}
 
 // PUT /api/fleet/bikes/{id}
 #[OA\Put(
@@ -835,7 +889,9 @@ class GetBikeDetailEndpoint {}
         new OA\Response(response: 404, description: 'Bike not found'),
     ]
 )]
-class UpdateBikeEndpoint {}
+class UpdateBikeEndpoint
+{
+}
 
 // POST /api/fleet/bikes/{id}/photos
 #[OA\Post(
@@ -880,7 +936,9 @@ class UpdateBikeEndpoint {}
         new OA\Response(response: 404, description: 'Bike not found'),
     ]
 )]
-class UploadBikePhotoEndpoint {}
+class UploadBikePhotoEndpoint
+{
+}
 
 // DELETE /api/fleet/bikes/{id}/photos
 #[OA\Delete(
@@ -912,7 +970,9 @@ class UploadBikePhotoEndpoint {}
         new OA\Response(response: 404, description: 'Bike not found'),
     ]
 )]
-class DeleteBikePhotoEndpoint {}
+class DeleteBikePhotoEndpoint
+{
+}
 
 // POST /api/fleet/bikes/{id}/retire
 #[OA\Post(
@@ -946,7 +1006,9 @@ class DeleteBikePhotoEndpoint {}
         new OA\Response(response: 422, description: 'Validation error'),
     ]
 )]
-class RetireBikeEndpoint {}
+class RetireBikeEndpoint
+{
+}
 
 // PUT /api/fleet/bikes/{id}/status
 #[OA\Put(
@@ -982,7 +1044,9 @@ class RetireBikeEndpoint {}
         new OA\Response(response: 422, description: 'Validation error'),
     ]
 )]
-class ChangeBikeStatusEndpoint {}
+class ChangeBikeStatusEndpoint
+{
+}
 
 // GET /api/fleet/bikes/{id}/status-history
 #[OA\Get(
@@ -1030,7 +1094,9 @@ class ChangeBikeStatusEndpoint {}
         new OA\Response(response: 404, description: 'Bike not found'),
     ]
 )]
-class GetBikeStatusHistoryEndpoint {}
+class GetBikeStatusHistoryEndpoint
+{
+}
 
 // GET /api/fleet/size-mapping
 #[OA\Get(
@@ -1066,7 +1132,9 @@ class GetBikeStatusHistoryEndpoint {}
         new OA\Response(response: 404, description: 'No active configuration found'),
     ]
 )]
-class GetActiveSizeMappingConfigurationEndpoint {}
+class GetActiveSizeMappingConfigurationEndpoint
+{
+}
 
 // PUT /api/fleet/size-mapping
 #[OA\Put(
@@ -1142,7 +1210,9 @@ class GetActiveSizeMappingConfigurationEndpoint {}
         new OA\Response(response: 403, description: 'Forbidden - requires manage_bikes permission'),
     ]
 )]
-class UpdateSizeMappingConfigurationEndpoint {}
+class UpdateSizeMappingConfigurationEndpoint
+{
+}
 
 // POST /api/fleet/size-mapping/reset
 #[OA\Post(
@@ -1158,7 +1228,9 @@ class UpdateSizeMappingConfigurationEndpoint {}
         new OA\Response(response: 403, description: 'Forbidden - requires Super Admin role'),
     ]
 )]
-class ResetSizeMappingConfigurationEndpoint {}
+class ResetSizeMappingConfigurationEndpoint
+{
+}
 
 // ------------------------------ FLEET - CATEGORIES ------------------------------
 
@@ -1191,7 +1263,9 @@ class ResetSizeMappingConfigurationEndpoint {}
         new OA\Response(response: 403, description: 'Forbidden - requires manage_fleet permission'),
     ]
 )]
-class CreateCategoryEndpoint {}
+class CreateCategoryEndpoint
+{
+}
 
 // GET /api/fleet/categories
 #[OA\Get(
@@ -1205,7 +1279,9 @@ class CreateCategoryEndpoint {}
         new OA\Response(response: 403, description: 'Forbidden - requires view_fleet permission'),
     ]
 )]
-class ListCategoriesEndpoint {}
+class ListCategoriesEndpoint
+{
+}
 
 // PUT /api/fleet/categories/{id}
 #[OA\Put(
@@ -1238,7 +1314,9 @@ class ListCategoriesEndpoint {}
         new OA\Response(response: 404, description: 'Category not found'),
     ]
 )]
-class UpdateCategoryEndpoint {}
+class UpdateCategoryEndpoint
+{
+}
 
 // DELETE /api/fleet/categories/{id}
 #[OA\Delete(
@@ -1257,7 +1335,9 @@ class UpdateCategoryEndpoint {}
         new OA\Response(response: 404, description: 'Category not found'),
     ]
 )]
-class DeleteCategoryEndpoint {}
+class DeleteCategoryEndpoint
+{
+}
 
 // ------------------------------ FLEET - RATES ------------------------------
 
@@ -1292,7 +1372,9 @@ class DeleteCategoryEndpoint {}
         new OA\Response(response: 404, description: 'Category not found'),
     ]
 )]
-class SetCategoryRateEndpoint {}
+class SetCategoryRateEndpoint
+{
+}
 
 // GET /api/fleet/rates
 #[OA\Get(
@@ -1322,7 +1404,9 @@ class SetCategoryRateEndpoint {}
         new OA\Response(response: 403, description: 'Forbidden - requires view_fleet permission'),
     ]
 )]
-class ListRatesEndpoint {}
+class ListRatesEndpoint
+{
+}
 
 // PUT /api/fleet/rates/{id}
 #[OA\Put(
@@ -1354,7 +1438,9 @@ class ListRatesEndpoint {}
         new OA\Response(response: 404, description: 'Rate not found'),
     ]
 )]
-class UpdateRateEndpoint {}
+class UpdateRateEndpoint
+{
+}
 
 // DELETE /api/fleet/rates/{id}
 #[OA\Delete(
@@ -1372,7 +1458,9 @@ class UpdateRateEndpoint {}
         new OA\Response(response: 404, description: 'Rate not found'),
     ]
 )]
-class DeleteRateEndpoint {}
+class DeleteRateEndpoint
+{
+}
 
 // ------------------------------ RENTALS ------------------------------
 
@@ -1432,7 +1520,9 @@ class DeleteRateEndpoint {}
         new OA\Response(response: 404, description: 'Customer or bike not found'),
     ]
 )]
-class CreateRentalEndpoint {}
+class CreateRentalEndpoint
+{
+}
 
 // POST /api/rentals/{id}/checkin
 #[OA\Post(
@@ -1481,7 +1571,9 @@ class CreateRentalEndpoint {}
         new OA\Response(response: 404, description: 'Rental not found'),
     ]
 )]
-class CheckInRentalEndpoint {}
+class CheckInRentalEndpoint
+{
+}
 
 // POST /api/rentals/{id}/checkout
 #[OA\Post(
@@ -1533,7 +1625,9 @@ class CheckInRentalEndpoint {}
         new OA\Response(response: 404, description: 'Rental not found'),
     ]
 )]
-class CheckOutRentalEndpoint {}
+class CheckOutRentalEndpoint
+{
+}
 
 // POST /api/rentals/{id}/cancel
 #[OA\Post(
@@ -1582,7 +1676,9 @@ class CheckOutRentalEndpoint {}
         new OA\Response(response: 422, description: 'Validation error - cancellation reason required'),
     ]
 )]
-class CancelRentalEndpoint {}
+class CancelRentalEndpoint
+{
+}
 
 // GET /api/rentals
 #[OA\Get(
@@ -1684,7 +1780,9 @@ class CancelRentalEndpoint {}
         new OA\Response(response: 403, description: 'Forbidden - requires view_rentals permission'),
     ]
 )]
-class ListRentalsEndpoint {}
+class ListRentalsEndpoint
+{
+}
 
 // GET /api/rentals/{id}
 #[OA\Get(
@@ -1782,7 +1880,9 @@ class ListRentalsEndpoint {}
         new OA\Response(response: 404, description: 'Rental not found'),
     ]
 )]
-class GetRentalDetailEndpoint {}
+class GetRentalDetailEndpoint
+{
+}
 
 // GET /api/rentals/active
 #[OA\Get(
@@ -1819,7 +1919,9 @@ class GetRentalDetailEndpoint {}
         new OA\Response(response: 403, description: 'Forbidden - requires view_rentals permission'),
     ]
 )]
-class ListActiveRentalsEndpoint {}
+class ListActiveRentalsEndpoint
+{
+}
 
 // ------------------------------ MAINTENANCE ------------------------------
 
@@ -1868,7 +1970,9 @@ class ListActiveRentalsEndpoint {}
         new OA\Response(response: 403, description: 'Forbidden - requires view_maintenance permission'),
     ]
 )]
-class ListMaintenanceReasonsEndpoint {}
+class ListMaintenanceReasonsEndpoint
+{
+}
 
 // POST /api/maintenance/maintenances
 #[OA\Post(
@@ -1902,7 +2006,9 @@ class ListMaintenanceReasonsEndpoint {}
         new OA\Response(response: 404, description: 'Bike not found'),
     ]
 )]
-class DeclareMaintenanceEndpoint {}
+class DeclareMaintenanceEndpoint
+{
+}
 
 // GET /api/maintenance/maintenances
 #[OA\Get(
@@ -1953,7 +2059,9 @@ class DeclareMaintenanceEndpoint {}
         new OA\Response(response: 403, description: 'Forbidden - requires view_maintenance permission'),
     ]
 )]
-class ListMaintenancesEndpoint {}
+class ListMaintenancesEndpoint
+{
+}
 
 // PUT /api/maintenance/maintenances/{id}/start
 #[OA\Put(
@@ -1984,7 +2092,9 @@ class ListMaintenancesEndpoint {}
         new OA\Response(response: 404, description: 'Maintenance not found'),
     ]
 )]
-class StartMaintenanceEndpoint {}
+class StartMaintenanceEndpoint
+{
+}
 
 // PUT /api/maintenance/maintenances/{id}/complete
 #[OA\Put(
@@ -2017,7 +2127,9 @@ class StartMaintenanceEndpoint {}
         new OA\Response(response: 404, description: 'Maintenance not found'),
     ]
 )]
-class CompleteMaintenanceEndpoint {}
+class CompleteMaintenanceEndpoint
+{
+}
 
 // GET /api/maintenance/bikes/{bikeId}/maintenances
 #[OA\Get(
@@ -2035,7 +2147,9 @@ class CompleteMaintenanceEndpoint {}
         new OA\Response(response: 404, description: 'Bike not found'),
     ]
 )]
-class GetBikeMaintenanceHistoryEndpoint {}
+class GetBikeMaintenanceHistoryEndpoint
+{
+}
 
 // ------------------------------ DASHBOARD ------------------------------
 
@@ -2075,7 +2189,9 @@ class GetBikeMaintenanceHistoryEndpoint {}
         new OA\Response(response: 403, description: 'Forbidden - requires view_dashboard permission'),
     ]
 )]
-class GetFleetOverviewEndpoint {}
+class GetFleetOverviewEndpoint
+{
+}
 
 // GET /api/dashboard/today
 #[OA\Get(
@@ -2137,7 +2253,9 @@ class GetFleetOverviewEndpoint {}
         new OA\Response(response: 403, description: 'Forbidden - requires view_dashboard permission'),
     ]
 )]
-class GetTodayActivityEndpoint {}
+class GetTodayActivityEndpoint
+{
+}
 
 // GET /api/dashboard/kpis/utilization
 #[OA\Get(
@@ -2175,7 +2293,9 @@ class GetTodayActivityEndpoint {}
         new OA\Response(response: 403, description: 'Forbidden - requires view_dashboard permission'),
     ]
 )]
-class GetUtilizationKpiEndpoint {}
+class GetUtilizationKpiEndpoint
+{
+}
 
 // GET /api/dashboard/kpis/revenue
 #[OA\Get(
@@ -2213,7 +2333,9 @@ class GetUtilizationKpiEndpoint {}
         new OA\Response(response: 403, description: 'Forbidden - requires view_dashboard permission'),
     ]
 )]
-class GetRevenueKpiEndpoint {}
+class GetRevenueKpiEndpoint
+{
+}
 
 // GET /api/dashboard/kpis/maintenance
 #[OA\Get(
@@ -2259,7 +2381,9 @@ class GetRevenueKpiEndpoint {}
         new OA\Response(response: 403, description: 'Forbidden - requires view_dashboard permission'),
     ]
 )]
-class GetMaintenanceKpiEndpoint {}
+class GetMaintenanceKpiEndpoint
+{
+}
 
 // GET /api/dashboard/kpis/top-bikes
 #[OA\Get(
@@ -2308,7 +2432,9 @@ class GetMaintenanceKpiEndpoint {}
         new OA\Response(response: 403, description: 'Forbidden - requires view_dashboard permission'),
     ]
 )]
-class GetTopBikesKpiEndpoint {}
+class GetTopBikesKpiEndpoint
+{
+}
 
 // GET /api/dashboard/alerts
 #[OA\Get(
@@ -2360,7 +2486,9 @@ class GetTopBikesKpiEndpoint {}
         new OA\Response(response: 403, description: 'Forbidden - requires view_dashboard permission'),
     ]
 )]
-class GetCentralizedAlertsEndpoint {}
+class GetCentralizedAlertsEndpoint
+{
+}
 
 // GET /api/rentals/bikes/{bikeId}
 #[OA\Get(
@@ -2428,406 +2556,419 @@ class GetCentralizedAlertsEndpoint {}
         new OA\Response(response: 403, description: 'Forbidden - requires view_rentals permission'),
     ]
 )]
-class GetBikeRentalsEndpoint {}
-
+class GetBikeRentalsEndpoint
+{
+}
 
 // ======================== RENTAL RESERVATIONS & SETTINGS ========================
 
 // POST /api/rentals/reserve
 #[OA\Post(
-    path: "/api/rentals/reserve",
-    summary: "Create a future reservation",
-    description: "Create a reservation for a future date. Bikes remain AVAILABLE but dates are blocked in calendar.",
-    security: [["bearerAuth" => []]],
-    tags: ["Rentals"],
+    path: '/api/rentals/reserve',
+    summary: 'Create a future reservation',
+    description: 'Create a reservation for a future date. Bikes remain AVAILABLE but dates are blocked in calendar.',
+    security: [['bearerAuth' => []]],
+    tags: ['Rentals'],
     requestBody: new OA\RequestBody(
         required: true,
         content: new OA\MediaType(
-            mediaType: "application/json",
+            mediaType: 'application/json',
             schema: new OA\Schema(
-                required: ["customer_id", "start_date", "duration", "deposit_amount", "bikes"],
+                required: ['customer_id', 'start_date', 'duration', 'deposit_amount', 'bikes'],
                 properties: [
-                    new OA\Property(property: "customer_id", type: "string", format: "uuid"),
-                    new OA\Property(property: "start_date", type: "string", format: "date-time", example: "2024-02-15 10:00:00"),
-                    new OA\Property(property: "duration", type: "string", enum: ["half_day", "full_day", "two_days", "three_days", "week", "custom"]),
-                    new OA\Property(property: "custom_end_date", type: "string", format: "date-time", nullable: true),
-                    new OA\Property(property: "deposit_amount", type: "number", format: "float", example: 200.00),
+                    new OA\Property(property: 'customer_id', type: 'string', format: 'uuid'),
+                    new OA\Property(property: 'start_date', type: 'string', format: 'date-time', example: '2024-02-15 10:00:00'),
+                    new OA\Property(property: 'duration', type: 'string', enum: ['half_day', 'full_day', 'two_days', 'three_days', 'week', 'custom']),
+                    new OA\Property(property: 'custom_end_date', type: 'string', format: 'date-time', nullable: true),
+                    new OA\Property(property: 'deposit_amount', type: 'number', format: 'float', example: 200.00),
                     new OA\Property(
-                        property: "bikes",
-                        type: "array",
+                        property: 'bikes',
+                        type: 'array',
                         items: new OA\Items(
                             properties: [
-                                new OA\Property(property: "bike_id", type: "string", format: "uuid"),
-                                new OA\Property(property: "daily_rate", type: "number", format: "float", example: 50.00),
-                                new OA\Property(property: "quantity", type: "integer", example: 1),
+                                new OA\Property(property: 'bike_id', type: 'string', format: 'uuid'),
+                                new OA\Property(property: 'daily_rate', type: 'number', format: 'float', example: 50.00),
+                                new OA\Property(property: 'quantity', type: 'integer', example: 1),
                             ],
-                            type: "object"
+                            type: 'object'
                         )
                     ),
                     new OA\Property(
-                        property: "equipments",
-                        type: "array",
+                        property: 'equipments',
+                        type: 'array',
                         nullable: true,
                         items: new OA\Items(
                             properties: [
-                                new OA\Property(property: "type", type: "string", enum: ["helmet", "lock", "basket", "child_seat"]),
-                                new OA\Property(property: "quantity", type: "integer", example: 1),
-                                new OA\Property(property: "price_per_unit", type: "number", format: "float", example: 5.00),
+                                new OA\Property(property: 'type', type: 'string', enum: ['helmet', 'lock', 'basket', 'child_seat']),
+                                new OA\Property(property: 'quantity', type: 'integer', example: 1),
+                                new OA\Property(property: 'price_per_unit', type: 'number', format: 'float', example: 5.00),
                             ],
-                            type: "object"
+                            type: 'object'
                         )
                     ),
                 ],
-                type: "object"
+                type: 'object'
             )
         )
     ),
     responses: [
         new OA\Response(
             response: 201,
-            description: "Reservation created successfully",
+            description: 'Reservation created successfully',
             content: new OA\MediaType(
-                mediaType: "application/json",
+                mediaType: 'application/json',
                 schema: new OA\Schema(
                     properties: [
-                        new OA\Property(property: "rental_id", type: "string", format: "uuid"),
-                        new OA\Property(property: "status", type: "string", example: "reserved"),
-                        new OA\Property(property: "customer_id", type: "string", format: "uuid"),
-                        new OA\Property(property: "start_date", type: "string", format: "date-time"),
-                        new OA\Property(property: "expected_return_date", type: "string", format: "date-time"),
-                        new OA\Property(property: "total_amount", type: "number", format: "float"),
-                        new OA\Property(property: "deposit_amount", type: "number", format: "float"),
-                        new OA\Property(property: "message", type: "string", example: "Reservation created successfully"),
+                        new OA\Property(property: 'rental_id', type: 'string', format: 'uuid'),
+                        new OA\Property(property: 'status', type: 'string', example: 'reserved'),
+                        new OA\Property(property: 'customer_id', type: 'string', format: 'uuid'),
+                        new OA\Property(property: 'start_date', type: 'string', format: 'date-time'),
+                        new OA\Property(property: 'expected_return_date', type: 'string', format: 'date-time'),
+                        new OA\Property(property: 'total_amount', type: 'number', format: 'float'),
+                        new OA\Property(property: 'deposit_amount', type: 'number', format: 'float'),
+                        new OA\Property(property: 'message', type: 'string', example: 'Reservation created successfully'),
                     ],
-                    type: "object"
+                    type: 'object'
                 )
             )
         ),
-        new OA\Response(response: 400, description: "Bad Request - Bike not available for period"),
-        new OA\Response(response: 401, description: "Unauthorized"),
-        new OA\Response(response: 403, description: "Forbidden"),
+        new OA\Response(response: 400, description: 'Bad Request - Bike not available for period'),
+        new OA\Response(response: 401, description: 'Unauthorized'),
+        new OA\Response(response: 403, description: 'Forbidden'),
     ]
 )]
-class CreateReservationEndpoint {}
+class CreateReservationEndpoint
+{
+}
 
 // POST /api/rentals/{id}/early-return
 #[OA\Post(
-    path: "/api/rentals/{id}/early-return",
-    summary: "Process early return of a rental",
-    description: "Complete a rental before the expected return date with optional early return fees",
-    security: [["bearerAuth" => []]],
-    tags: ["Rentals"],
+    path: '/api/rentals/{id}/early-return',
+    summary: 'Process early return of a rental',
+    description: 'Complete a rental before the expected return date with optional early return fees',
+    security: [['bearerAuth' => []]],
+    tags: ['Rentals'],
     parameters: [
         new OA\Parameter(
-            name: "id",
-            in: "path",
+            name: 'id',
+            in: 'path',
             required: true,
-            schema: new OA\Schema(type: "string", format: "uuid"),
-            description: "Rental ID"
+            schema: new OA\Schema(type: 'string', format: 'uuid'),
+            description: 'Rental ID'
         ),
     ],
     requestBody: new OA\RequestBody(
         required: true,
         content: new OA\MediaType(
-            mediaType: "application/json",
+            mediaType: 'application/json',
             schema: new OA\Schema(
-                required: ["actual_return_date", "bikes_condition"],
+                required: ['actual_return_date', 'bikes_condition'],
                 properties: [
-                    new OA\Property(property: "actual_return_date", type: "string", format: "date-time", example: "2024-01-18 14:00:00"),
-                    new OA\Property(property: "deposit_retained", type: "number", format: "float", nullable: true, example: 30.00),
+                    new OA\Property(property: 'actual_return_date', type: 'string', format: 'date-time', example: '2024-01-18 14:00:00'),
+                    new OA\Property(property: 'deposit_retained', type: 'number', format: 'float', nullable: true, example: 30.00),
                     new OA\Property(
-                        property: "bikes_condition",
-                        type: "array",
+                        property: 'bikes_condition',
+                        type: 'array',
                         items: new OA\Items(
                             properties: [
-                                new OA\Property(property: "bike_id", type: "string", format: "uuid"),
-                                new OA\Property(property: "condition", type: "string", enum: ["good", "minor_damage", "major_damage", "total_loss"]),
-                                new OA\Property(property: "damage_description", type: "string", nullable: true, example: "Small scratch on frame"),
+                                new OA\Property(property: 'bike_id', type: 'string', format: 'uuid'),
+                                new OA\Property(property: 'condition', type: 'string', enum: ['good', 'minor_damage', 'major_damage', 'total_loss']),
+                                new OA\Property(property: 'damage_description', type: 'string', nullable: true, example: 'Small scratch on frame'),
                                 new OA\Property(
-                                    property: "damage_photos",
-                                    type: "array",
+                                    property: 'damage_photos',
+                                    type: 'array',
                                     nullable: true,
-                                    items: new OA\Items(type: "string", example: "https://example.com/photo.jpg")
+                                    items: new OA\Items(type: 'string', example: 'https://example.com/photo.jpg')
                                 ),
                             ],
-                            type: "object"
+                            type: 'object'
                         )
                     ),
                 ],
-                type: "object"
+                type: 'object'
             )
         )
     ),
     responses: [
         new OA\Response(
             response: 200,
-            description: "Early return processed successfully",
+            description: 'Early return processed successfully',
             content: new OA\MediaType(
-                mediaType: "application/json",
+                mediaType: 'application/json',
                 schema: new OA\Schema(
                     properties: [
-                        new OA\Property(property: "rental_id", type: "string", format: "uuid"),
-                        new OA\Property(property: "status", type: "string", example: "completed"),
-                        new OA\Property(property: "actual_return_date", type: "string", format: "date-time"),
-                        new OA\Property(property: "original_amount", type: "number", format: "float", example: 500.00),
-                        new OA\Property(property: "unused_days", type: "integer", example: 2),
-                        new OA\Property(property: "unused_amount", type: "number", format: "float", example: 200.00),
-                        new OA\Property(property: "early_return_fee", type: "number", format: "float", example: 40.00),
-                        new OA\Property(property: "refund_amount", type: "number", format: "float", example: 160.00),
-                        new OA\Property(property: "deposit_amount", type: "number", format: "float", example: 100.00),
-                        new OA\Property(property: "deposit_retained", type: "number", format: "float", example: 30.00),
-                        new OA\Property(property: "deposit_refunded", type: "number", format: "float", example: 70.00),
-                        new OA\Property(property: "deposit_status", type: "string", enum: ["released", "partial", "retained"]),
-                        new OA\Property(property: "message", type: "string", example: "Early return processed successfully"),
+                        new OA\Property(property: 'rental_id', type: 'string', format: 'uuid'),
+                        new OA\Property(property: 'status', type: 'string', example: 'completed'),
+                        new OA\Property(property: 'actual_return_date', type: 'string', format: 'date-time'),
+                        new OA\Property(property: 'original_amount', type: 'number', format: 'float', example: 500.00),
+                        new OA\Property(property: 'unused_days', type: 'integer', example: 2),
+                        new OA\Property(property: 'unused_amount', type: 'number', format: 'float', example: 200.00),
+                        new OA\Property(property: 'early_return_fee', type: 'number', format: 'float', example: 40.00),
+                        new OA\Property(property: 'refund_amount', type: 'number', format: 'float', example: 160.00),
+                        new OA\Property(property: 'deposit_amount', type: 'number', format: 'float', example: 100.00),
+                        new OA\Property(property: 'deposit_retained', type: 'number', format: 'float', example: 30.00),
+                        new OA\Property(property: 'deposit_refunded', type: 'number', format: 'float', example: 70.00),
+                        new OA\Property(property: 'deposit_status', type: 'string', enum: ['released', 'partial', 'retained']),
+                        new OA\Property(property: 'message', type: 'string', example: 'Early return processed successfully'),
                     ],
-                    type: "object"
+                    type: 'object'
                 )
             )
         ),
-        new OA\Response(response: 400, description: "Bad Request - Not an early return or rental cannot be early returned"),
-        new OA\Response(response: 401, description: "Unauthorized"),
-        new OA\Response(response: 403, description: "Forbidden"),
-        new OA\Response(response: 404, description: "Rental not found"),
+        new OA\Response(response: 400, description: 'Bad Request - Not an early return or rental cannot be early returned'),
+        new OA\Response(response: 401, description: 'Unauthorized'),
+        new OA\Response(response: 403, description: 'Forbidden'),
+        new OA\Response(response: 404, description: 'Rental not found'),
     ]
 )]
-class EarlyReturnEndpoint {}
+class EarlyReturnEndpoint
+{
+}
 
 // GET /api/bikes/available
 #[OA\Get(
-    path: "/api/bikes/available",
-    summary: "Get available bikes for a specific period",
-    description: "Returns bikes that are not blocked (AVAILABLE status) and have no conflicting rentals or maintenances for the specified period",
-    security: [["bearerAuth" => []]],
-    tags: ["Fleet"],
+    path: '/api/bikes/available',
+    summary: 'Get available bikes for a specific period',
+    description: 'Returns bikes that are not blocked (AVAILABLE status) and have no conflicting rentals or maintenances for the specified period',
+    security: [['bearerAuth' => []]],
+    tags: ['Fleet'],
     parameters: [
         new OA\Parameter(
-            name: "start_date",
-            in: "query",
+            name: 'start_date',
+            in: 'query',
             required: true,
-            schema: new OA\Schema(type: "string", format: "date-time"),
-            description: "Start date of the desired period",
-            example: "2024-02-15 10:00:00"
+            schema: new OA\Schema(type: 'string', format: 'date-time'),
+            description: 'Start date of the desired period',
+            example: '2024-02-15 10:00:00'
         ),
         new OA\Parameter(
-            name: "end_date",
-            in: "query",
+            name: 'end_date',
+            in: 'query',
             required: true,
-            schema: new OA\Schema(type: "string", format: "date-time"),
-            description: "End date of the desired period",
-            example: "2024-02-20 18:00:00"
+            schema: new OA\Schema(type: 'string', format: 'date-time'),
+            description: 'End date of the desired period',
+            example: '2024-02-20 18:00:00'
         ),
         new OA\Parameter(
-            name: "category_id",
-            in: "query",
+            name: 'category_id',
+            in: 'query',
             required: false,
-            schema: new OA\Schema(type: "string", format: "uuid"),
-            description: "Filter by category"
+            schema: new OA\Schema(type: 'string', format: 'uuid'),
+            description: 'Filter by category'
         ),
     ],
     responses: [
         new OA\Response(
             response: 200,
-            description: "List of available bikes",
+            description: 'List of available bikes',
             content: new OA\MediaType(
-                mediaType: "application/json",
+                mediaType: 'application/json',
                 schema: new OA\Schema(
                     properties: [
                         new OA\Property(
-                            property: "bikes",
-                            type: "array",
+                            property: 'bikes',
+                            type: 'array',
                             items: new OA\Items(
                                 properties: [
-                                    new OA\Property(property: "id", type: "string", format: "uuid"),
-                                    new OA\Property(property: "name", type: "string", example: "VTT Rockrider 540"),
-                                    new OA\Property(property: "status", type: "string", example: "available"),
-                                    new OA\Property(property: "category_id", type: "string", format: "uuid"),
-                                    new OA\Property(property: "daily_rate", type: "number", format: "float", example: 25.00),
+                                    new OA\Property(property: 'id', type: 'string', format: 'uuid'),
+                                    new OA\Property(property: 'name', type: 'string', example: 'VTT Rockrider 540'),
+                                    new OA\Property(property: 'status', type: 'string', example: 'available'),
+                                    new OA\Property(property: 'category_id', type: 'string', format: 'uuid'),
+                                    new OA\Property(property: 'daily_rate', type: 'number', format: 'float', example: 25.00),
                                 ],
-                                type: "object"
+                                type: 'object'
                             )
                         ),
-                        new OA\Property(property: "count", type: "integer", example: 15),
-                        new OA\Property(property: "period", properties: [
-                            new OA\Property(property: "start_date", type: "string", format: "date-time"),
-                            new OA\Property(property: "end_date", type: "string", format: "date-time"),
-                        ], type: "object"),
+                        new OA\Property(property: 'count', type: 'integer', example: 15),
+                        new OA\Property(property: 'period', properties: [
+                            new OA\Property(property: 'start_date', type: 'string', format: 'date-time'),
+                            new OA\Property(property: 'end_date', type: 'string', format: 'date-time'),
+                        ], type: 'object'),
                     ],
-                    type: "object"
+                    type: 'object'
                 )
             )
         ),
-        new OA\Response(response: 400, description: "Bad Request - Invalid dates"),
-        new OA\Response(response: 401, description: "Unauthorized"),
+        new OA\Response(response: 400, description: 'Bad Request - Invalid dates'),
+        new OA\Response(response: 401, description: 'Unauthorized'),
     ]
 )]
-class GetAvailableBikesEndpoint {}
+class GetAvailableBikesEndpoint
+{
+}
 
 // GET /api/bikes/{id}/availability
 #[OA\Get(
-    path: "/api/bikes/{id}/availability",
-    summary: "Get availability calendar for a specific bike",
-    description: "Returns blocked periods (rentals and maintenances) for a bike",
-    security: [["bearerAuth" => []]],
-    tags: ["Fleet"],
+    path: '/api/bikes/{id}/availability',
+    summary: 'Get availability calendar for a specific bike',
+    description: 'Returns blocked periods (rentals and maintenances) for a bike',
+    security: [['bearerAuth' => []]],
+    tags: ['Fleet'],
     parameters: [
         new OA\Parameter(
-            name: "id",
-            in: "path",
+            name: 'id',
+            in: 'path',
             required: true,
-            schema: new OA\Schema(type: "string", format: "uuid"),
-            description: "Bike ID"
+            schema: new OA\Schema(type: 'string', format: 'uuid'),
+            description: 'Bike ID'
         ),
         new OA\Parameter(
-            name: "start_date",
-            in: "query",
+            name: 'start_date',
+            in: 'query',
             required: true,
-            schema: new OA\Schema(type: "string", format: "date"),
-            example: "2024-02-01"
+            schema: new OA\Schema(type: 'string', format: 'date'),
+            example: '2024-02-01'
         ),
         new OA\Parameter(
-            name: "end_date",
-            in: "query",
+            name: 'end_date',
+            in: 'query',
             required: true,
-            schema: new OA\Schema(type: "string", format: "date"),
-            example: "2024-02-29"
+            schema: new OA\Schema(type: 'string', format: 'date'),
+            example: '2024-02-29'
         ),
     ],
     responses: [
         new OA\Response(
             response: 200,
-            description: "Bike availability calendar",
+            description: 'Bike availability calendar',
             content: new OA\MediaType(
-                mediaType: "application/json",
+                mediaType: 'application/json',
                 schema: new OA\Schema(
                     properties: [
-                        new OA\Property(property: "bike_id", type: "string", format: "uuid"),
+                        new OA\Property(property: 'bike_id', type: 'string', format: 'uuid'),
                         new OA\Property(
-                            property: "blocked_periods",
-                            type: "array",
+                            property: 'blocked_periods',
+                            type: 'array',
                             items: new OA\Items(
                                 properties: [
-                                    new OA\Property(property: "type", type: "string", enum: ["rental", "maintenance"]),
-                                    new OA\Property(property: "start_date", type: "string", format: "date-time"),
-                                    new OA\Property(property: "end_date", type: "string", format: "date-time"),
-                                    new OA\Property(property: "reference_id", type: "string", format: "uuid", description: "Rental or Maintenance ID"),
+                                    new OA\Property(property: 'type', type: 'string', enum: ['rental', 'maintenance']),
+                                    new OA\Property(property: 'start_date', type: 'string', format: 'date-time'),
+                                    new OA\Property(property: 'end_date', type: 'string', format: 'date-time'),
+                                    new OA\Property(property: 'reference_id', type: 'string', format: 'uuid', description: 'Rental or Maintenance ID'),
                                 ],
-                                type: "object"
+                                type: 'object'
                             )
                         ),
                     ],
-                    type: "object"
+                    type: 'object'
                 )
             )
         ),
-        new OA\Response(response: 400, description: "Bad Request"),
-        new OA\Response(response: 401, description: "Unauthorized"),
-        new OA\Response(response: 404, description: "Bike not found"),
+        new OA\Response(response: 400, description: 'Bad Request'),
+        new OA\Response(response: 401, description: 'Unauthorized'),
+        new OA\Response(response: 404, description: 'Bike not found'),
     ]
 )]
-class GetBikeAvailabilityEndpoint {}
+class GetBikeAvailabilityEndpoint
+{
+}
 
 // GET /api/settings/rental
 #[OA\Get(
-    path: "/api/settings/rental",
-    summary: "Get rental settings",
-    description: "Get rental settings for a specific tenant/site scope",
-    security: [["bearerAuth" => []]],
-    tags: ["Settings"],
+    path: '/api/settings/rental',
+    summary: 'Get rental settings',
+    description: 'Get rental settings for a specific tenant/site scope',
+    security: [['bearerAuth' => []]],
+    tags: ['Settings'],
     parameters: [
         new OA\Parameter(
-            name: "tenant_id",
-            in: "query",
+            name: 'tenant_id',
+            in: 'query',
             required: false,
-            schema: new OA\Schema(type: "string", format: "uuid")
+            schema: new OA\Schema(type: 'string', format: 'uuid')
         ),
         new OA\Parameter(
-            name: "site_id",
-            in: "query",
+            name: 'site_id',
+            in: 'query',
             required: false,
-            schema: new OA\Schema(type: "string", format: "uuid")
+            schema: new OA\Schema(type: 'string', format: 'uuid')
         ),
     ],
     responses: [
         new OA\Response(
             response: 200,
-            description: "Rental settings",
+            description: 'Rental settings',
             content: new OA\MediaType(
-                mediaType: "application/json",
+                mediaType: 'application/json',
                 schema: new OA\Schema(
                     properties: [
-                        new OA\Property(property: "id", type: "string", format: "uuid"),
-                        new OA\Property(property: "tenant_id", type: "string", format: "uuid", nullable: true),
-                        new OA\Property(property: "site_id", type: "string", format: "uuid", nullable: true),
-                        new OA\Property(property: "late_tolerance_minutes", type: "integer", example: 30),
-                        new OA\Property(property: "hourly_late_rate", type: "number", format: "float", example: 10.00),
-                        new OA\Property(property: "daily_late_rate", type: "number", format: "float", example: 50.00),
-                        new OA\Property(property: "early_return_enabled", type: "boolean", example: true),
-                        new OA\Property(property: "early_return_fee_type", type: "string", enum: ["percentage", "fixed", "none"]),
-                        new OA\Property(property: "early_return_fee_percentage", type: "number", format: "float", nullable: true, example: 20.00),
-                        new OA\Property(property: "early_return_fee_fixed", type: "number", format: "float", nullable: true, example: 50.00),
-                        new OA\Property(property: "max_rental_duration_days", type: "integer", example: 30),
-                        new OA\Property(property: "min_reservation_hours_ahead", type: "integer", example: 24),
+                        new OA\Property(property: 'id', type: 'string', format: 'uuid'),
+                        new OA\Property(property: 'tenant_id', type: 'string', format: 'uuid', nullable: true),
+                        new OA\Property(property: 'site_id', type: 'string', format: 'uuid', nullable: true),
+                        new OA\Property(property: 'late_tolerance_minutes', type: 'integer', example: 30),
+                        new OA\Property(property: 'hourly_late_rate', type: 'number', format: 'float', example: 10.00),
+                        new OA\Property(property: 'daily_late_rate', type: 'number', format: 'float', example: 50.00),
+                        new OA\Property(property: 'early_return_enabled', type: 'boolean', example: true),
+                        new OA\Property(property: 'early_return_fee_type', type: 'string', enum: ['percentage', 'fixed', 'none']),
+                        new OA\Property(property: 'early_return_fee_percentage', type: 'number', format: 'float', nullable: true, example: 20.00),
+                        new OA\Property(property: 'early_return_fee_fixed', type: 'number', format: 'float', nullable: true, example: 50.00),
+                        new OA\Property(property: 'max_rental_duration_days', type: 'integer', example: 30),
+                        new OA\Property(property: 'min_reservation_hours_ahead', type: 'integer', example: 24),
                     ],
-                    type: "object"
+                    type: 'object'
                 )
             )
         ),
-        new OA\Response(response: 401, description: "Unauthorized"),
-        new OA\Response(response: 403, description: "Forbidden"),
+        new OA\Response(response: 401, description: 'Unauthorized'),
+        new OA\Response(response: 403, description: 'Forbidden'),
     ]
 )]
-class GetRentalSettingsEndpoint {}
+class GetRentalSettingsEndpoint
+{
+}
 
 // PUT /api/settings/rental
 #[OA\Put(
-    path: "/api/settings/rental",
-    summary: "Update rental settings",
-    description: "Create or update rental settings for a specific scope",
-    security: [["bearerAuth" => []]],
-    tags: ["Settings"],
+    path: '/api/settings/rental',
+    summary: 'Update rental settings',
+    description: 'Create or update rental settings for a specific scope',
+    security: [['bearerAuth' => []]],
+    tags: ['Settings'],
     requestBody: new OA\RequestBody(
         required: true,
         content: new OA\MediaType(
-            mediaType: "application/json",
+            mediaType: 'application/json',
             schema: new OA\Schema(
                 properties: [
-                    new OA\Property(property: "tenant_id", type: "string", format: "uuid", nullable: true),
-                    new OA\Property(property: "site_id", type: "string", format: "uuid", nullable: true),
-                    new OA\Property(property: "late_tolerance_minutes", type: "integer", example: 30),
-                    new OA\Property(property: "hourly_late_rate", type: "number", format: "float", example: 10.00),
-                    new OA\Property(property: "daily_late_rate", type: "number", format: "float", example: 50.00),
-                    new OA\Property(property: "early_return_enabled", type: "boolean", example: true),
-                    new OA\Property(property: "early_return_fee_type", type: "string", enum: ["percentage", "fixed", "none"]),
-                    new OA\Property(property: "early_return_fee_percentage", type: "number", format: "float", nullable: true, example: 20.00),
-                    new OA\Property(property: "early_return_fee_fixed", type: "number", format: "float", nullable: true, example: 50.00),
-                    new OA\Property(property: "max_rental_duration_days", type: "integer", example: 30),
-                    new OA\Property(property: "min_reservation_hours_ahead", type: "integer", example: 24),
+                    new OA\Property(property: 'tenant_id', type: 'string', format: 'uuid', nullable: true),
+                    new OA\Property(property: 'site_id', type: 'string', format: 'uuid', nullable: true),
+                    new OA\Property(property: 'late_tolerance_minutes', type: 'integer', example: 30),
+                    new OA\Property(property: 'hourly_late_rate', type: 'number', format: 'float', example: 10.00),
+                    new OA\Property(property: 'daily_late_rate', type: 'number', format: 'float', example: 50.00),
+                    new OA\Property(property: 'early_return_enabled', type: 'boolean', example: true),
+                    new OA\Property(property: 'early_return_fee_type', type: 'string', enum: ['percentage', 'fixed', 'none']),
+                    new OA\Property(property: 'early_return_fee_percentage', type: 'number', format: 'float', nullable: true, example: 20.00),
+                    new OA\Property(property: 'early_return_fee_fixed', type: 'number', format: 'float', nullable: true, example: 50.00),
+                    new OA\Property(property: 'max_rental_duration_days', type: 'integer', example: 30),
+                    new OA\Property(property: 'min_reservation_hours_ahead', type: 'integer', example: 24),
                 ],
-                type: "object"
+                type: 'object'
             )
         )
     ),
     responses: [
         new OA\Response(
             response: 200,
-            description: "Settings updated successfully",
+            description: 'Settings updated successfully',
             content: new OA\MediaType(
-                mediaType: "application/json",
+                mediaType: 'application/json',
                 schema: new OA\Schema(
                     properties: [
-                        new OA\Property(property: "message", type: "string", example: "Settings updated successfully"),
-                        new OA\Property(property: "settings_id", type: "string", format: "uuid"),
+                        new OA\Property(property: 'message', type: 'string', example: 'Settings updated successfully'),
+                        new OA\Property(property: 'settings_id', type: 'string', format: 'uuid'),
                     ],
-                    type: "object"
+                    type: 'object'
                 )
             )
         ),
-        new OA\Response(response: 400, description: "Bad Request"),
-        new OA\Response(response: 401, description: "Unauthorized"),
-        new OA\Response(response: 403, description: "Forbidden"),
+        new OA\Response(response: 400, description: 'Bad Request'),
+        new OA\Response(response: 401, description: 'Unauthorized'),
+        new OA\Response(response: 403, description: 'Forbidden'),
     ]
 )]
-class UpdateRentalSettingsEndpoint {}
+class UpdateRentalSettingsEndpoint
+{
+}
 
 // ------------------------------ TENANT - SITES ------------------------------
 
@@ -2867,7 +3008,9 @@ class UpdateRentalSettingsEndpoint {}
         new OA\Response(response: 403, description: 'Forbidden - X-Tenant-Id required'),
     ]
 )]
-class ListSitesEndpoint {}
+class ListSitesEndpoint
+{
+}
 
 // GET /api/sites/{id}
 #[OA\Get(
@@ -2886,7 +3029,9 @@ class ListSitesEndpoint {}
         new OA\Response(response: 404, description: 'Site not found'),
     ]
 )]
-class GetSiteEndpoint {}
+class GetSiteEndpoint
+{
+}
 
 // POST /api/sites
 #[OA\Post(
@@ -2921,7 +3066,9 @@ class GetSiteEndpoint {}
         new OA\Response(response: 403, description: 'Forbidden - requires manage_sites permission'),
     ]
 )]
-class CreateSiteEndpoint {}
+class CreateSiteEndpoint
+{
+}
 
 // PUT /api/sites/{id}
 #[OA\Put(
@@ -2960,7 +3107,9 @@ class CreateSiteEndpoint {}
         new OA\Response(response: 404, description: 'Site not found'),
     ]
 )]
-class UpdateSiteEndpoint {}
+class UpdateSiteEndpoint
+{
+}
 
 // PUT /api/sites/{id}/status
 #[OA\Put(
@@ -2993,7 +3142,9 @@ class UpdateSiteEndpoint {}
         new OA\Response(response: 404, description: 'Site not found'),
     ]
 )]
-class ChangeSiteStatusEndpoint {}
+class ChangeSiteStatusEndpoint
+{
+}
 
 // DELETE /api/sites/{id}
 #[OA\Delete(
@@ -3012,7 +3163,9 @@ class ChangeSiteStatusEndpoint {}
         new OA\Response(response: 404, description: 'Site not found'),
     ]
 )]
-class DeleteSiteEndpoint {}
+class DeleteSiteEndpoint
+{
+}
 
 // POST /api/register
 #[OA\Post(
@@ -3104,7 +3257,9 @@ class DeleteSiteEndpoint {}
         ),
     ]
 )]
-class RegisterTenantEndpoint {}
+class RegisterTenantEndpoint
+{
+}
 
 // POST /api/tenants
 #[OA\Post(
@@ -3175,7 +3330,9 @@ class RegisterTenantEndpoint {}
         new OA\Response(response: 403, description: 'Forbidden - Requires Super Admin role'),
     ]
 )]
-class CreateTenantEndpoint {}
+class CreateTenantEndpoint
+{
+}
 
 // GET /api/subscription-plans
 #[OA\Get(
@@ -3226,4 +3383,6 @@ class CreateTenantEndpoint {}
         new OA\Response(response: 401, description: 'Unauthorized'),
     ]
 )]
-class ListSubscriptionPlansEndpoint {}
+class ListSubscriptionPlansEndpoint
+{
+}

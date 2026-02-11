@@ -86,7 +86,7 @@ final class KeycloakTokenValidator
                     throw new Exception("Failed to fetch Keycloak JWKS: {$e->getMessage()}", 0, $e);
                 }
 
-                if (! $response->successful()) {
+                if (!$response->successful()) {
                     \Log::error('Failed to fetch Keycloak JWKS - HTTP error', [
                         'url' => $url,
                         'status' => $response->status(),
@@ -140,11 +140,11 @@ final class KeycloakTokenValidator
         // Dédupliquer les issuers
         $validIssuers = array_unique($validIssuers);
 
-        if (! isset($payload->iss)) {
+        if (!isset($payload->iss)) {
             throw new Exception('Missing issuer claim');
         }
 
-        if (! in_array($payload->iss, $validIssuers, true)) {
+        if (!in_array($payload->iss, $validIssuers, true)) {
             \Log::error('Invalid JWT issuer', [
                 'received' => $payload->iss,
                 'expected' => $validIssuers,

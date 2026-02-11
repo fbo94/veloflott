@@ -13,8 +13,7 @@ use Illuminate\Support\Facades\Schema;
  * site_id: Optionnel (NULLABLE) - filtrage par site au sein d'un tenant
  */
 
-return new class extends Migration
-{
+return new class () extends Migration {
     /**
      * Tables avec tenant_id uniquement (données globales au tenant).
      *

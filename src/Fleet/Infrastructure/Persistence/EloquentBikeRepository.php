@@ -52,7 +52,7 @@ final class EloquentBikeRepository implements BikeRepositoryInterface
     ): array {
         $query = BikeEloquentModel::query();
 
-        if (! $includeRetired) {
+        if (!$includeRetired) {
             $query->where('status', '!=', 'retired');
         }
 
@@ -114,7 +114,7 @@ final class EloquentBikeRepository implements BikeRepositoryInterface
         $query = BikeEloquentModel::query();
 
         // Exclure les vélos retirés par défaut
-        if (! $includeRetired) {
+        if (!$includeRetired) {
             $query->where('status', '!=', 'retired');
         }
 

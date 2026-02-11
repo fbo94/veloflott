@@ -11,6 +11,7 @@ use Psr\Log\LoggerInterface;
 final class KeycloakAdminService
 {
     private ?string $accessToken = null;
+
     private ?int $tokenExpiry = null;
 
     public function __construct(
@@ -76,6 +77,7 @@ final class KeycloakAdminService
             if ($location !== null) {
                 // Extraire l'ID depuis l'URL: /admin/realms/{realm}/organizations/{id}
                 $parts = explode('/', $location);
+
                 return end($parts);
             }
 
@@ -93,6 +95,7 @@ final class KeycloakAdminService
                 'name' => $name,
                 'error' => $e->getMessage(),
             ]);
+
             return null;
         }
     }
@@ -145,6 +148,7 @@ final class KeycloakAdminService
                 'id' => $organizationId,
                 'error' => $e->getMessage(),
             ]);
+
             return false;
         }
     }
@@ -172,6 +176,7 @@ final class KeycloakAdminService
                 'id' => $organizationId,
                 'error' => $e->getMessage(),
             ]);
+
             return false;
         }
     }
@@ -201,6 +206,7 @@ final class KeycloakAdminService
                 'id' => $organizationId,
                 'error' => $e->getMessage(),
             ]);
+
             return null;
         }
     }
@@ -229,6 +235,7 @@ final class KeycloakAdminService
             $this->logger->error('Failed to list Keycloak organizations', [
                 'error' => $e->getMessage(),
             ]);
+
             return [];
         }
     }
@@ -266,6 +273,7 @@ final class KeycloakAdminService
                 'user_id' => $userId,
                 'error' => $e->getMessage(),
             ]);
+
             return false;
         }
     }
@@ -294,6 +302,7 @@ final class KeycloakAdminService
                 'user_id' => $userId,
                 'error' => $e->getMessage(),
             ]);
+
             return false;
         }
     }
@@ -342,11 +351,13 @@ final class KeycloakAdminService
                 'error' => $e->getMessage(),
                 'code' => $e->getCode(),
             ]);
+
             throw new \RuntimeException('Keycloak authentication failed: ' . $e->getMessage(), 0, $e);
         } catch (\Exception $e) {
             $this->logger->error('Unexpected error during Keycloak authentication', [
                 'error' => $e->getMessage(),
             ]);
+
             throw new \RuntimeException('Keycloak authentication failed: ' . $e->getMessage(), 0, $e);
         }
     }

@@ -115,13 +115,13 @@ final class EloquentSiteRepository implements SiteRepositoryInterface
     {
         // Formule Haversine simplifiée pour PostgreSQL/MySQL
         // 6371 = rayon de la Terre en km
-        $haversine = "
+        $haversine = '
             (6371 * acos(
                 cos(radians(?)) * cos(radians(latitude)) *
                 cos(radians(longitude) - radians(?)) +
                 sin(radians(?)) * sin(radians(latitude))
             ))
-        ";
+        ';
 
         return SiteEloquentModel::where('tenant_id', $tenantId)
             ->where('status', SiteStatus::ACTIVE->value)

@@ -6,8 +6,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class () extends Migration {
     /**
      * Make models table global by allowing NULL tenant_id.
      * Models can now be shared across all tenants (global catalogue) or specific to a tenant.

@@ -193,7 +193,7 @@ final class Bike
 
     public function isRentable(): bool
     {
-        return $this->status->isRentable() && ! $this->isRetired();
+        return $this->status->isRentable() && !$this->isRetired();
     }
 
     public function isRetired(): bool
@@ -203,7 +203,7 @@ final class Bike
 
     public function canBeModified(): bool
     {
-        return $this->status->canBeModified() && ! $this->isRetired();
+        return $this->status->canBeModified() && !$this->isRetired();
     }
 
     public function canBeRetired(): bool
@@ -229,7 +229,7 @@ final class Bike
         ?string $notes,
         ?PricingClass $pricingClass,
     ): self {
-        if (! $this->canBeModified()) {
+        if (!$this->canBeModified()) {
             throw new \DomainException('Cannot modify this bike in its current status');
         }
 
@@ -304,7 +304,7 @@ final class Bike
 
     public function markAsRented(): self
     {
-        if (! $this->isRentable()) {
+        if (!$this->isRentable()) {
             throw new \DomainException('Bike is not rentable');
         }
 
@@ -383,7 +383,7 @@ final class Bike
 
     public function retire(RetirementReason $reason, ?string $comment = null): self
     {
-        if (! $this->canBeRetired()) {
+        if (!$this->canBeRetired()) {
             throw new \DomainException('Cannot retire a bike that is currently rented');
         }
 

@@ -180,7 +180,7 @@ final class DurationDefinition
 
     public function deactivate(): self
     {
-        if (! $this->isActive) {
+        if (!$this->isActive) {
             throw new \DomainException('Duration is already inactive');
         }
 
@@ -198,7 +198,7 @@ final class DurationDefinition
             throw new \DomainException('Duration code cannot be empty');
         }
 
-        if (! preg_match('/^[a-z0-9_]+$/', $code)) {
+        if (!preg_match('/^[a-z0-9_]+$/', $code)) {
             throw new \DomainException('Duration code must contain only lowercase letters, numbers and underscores');
         }
 
@@ -220,7 +220,7 @@ final class DurationDefinition
 
     private function validateDuration(?int $durationHours, ?int $durationDays): void
     {
-        if ($durationHours === null && $durationDays === null && ! $this->isCustom) {
+        if ($durationHours === null && $durationDays === null && !$this->isCustom) {
             throw new \DomainException('Duration must have either hours or days specified (or be marked as custom)');
         }
 

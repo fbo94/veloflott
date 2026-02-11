@@ -70,7 +70,7 @@ final readonly class RegisterTenantHandler
             ownerName: $command->ownerName,
             subscriptionPlanName: $subscriptionPlan->displayName(),
             trialEndsAt: $trialEndsAt->format('Y-m-d H:i:s'),
-            message: "Organisation créée avec succès. Période d'essai de " . self::TRIAL_DAYS . " jours activée.",
+            message: "Organisation créée avec succès. Période d'essai de " . self::TRIAL_DAYS . ' jours activée.',
         );
     }
 

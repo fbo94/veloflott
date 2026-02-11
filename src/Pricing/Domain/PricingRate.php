@@ -138,7 +138,7 @@ final class PricingRate
 
     public function deactivate(): self
     {
-        if (! $this->isActive) {
+        if (!$this->isActive) {
             throw new \DomainException('Pricing rate is already inactive');
         }
 

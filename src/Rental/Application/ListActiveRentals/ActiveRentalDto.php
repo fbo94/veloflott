@@ -70,7 +70,7 @@ final readonly class ActiveRentalDto
 
     private function getDelayIndicator(): string
     {
-        if (! $this->isLate) {
+        if (!$this->isLate) {
             $now = new \DateTimeImmutable();
             $expected = new \DateTimeImmutable($this->expectedReturnDate);
             $hoursRemaining = ($expected->getTimestamp() - $now->getTimestamp()) / 3600;

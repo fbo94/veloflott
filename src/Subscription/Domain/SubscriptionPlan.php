@@ -12,6 +12,7 @@ namespace Subscription\Domain;
 final class SubscriptionPlan
 {
     private \DateTimeImmutable $createdAt;
+
     private \DateTimeImmutable $updatedAt;
 
     /**

@@ -6,8 +6,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class () extends Migration {
     /**
      * Make size_mapping_configurations table global by allowing NULL tenant_id.
      * Configurations can now be shared across all tenants (global) or specific to a tenant.

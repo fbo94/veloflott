@@ -68,7 +68,7 @@ final class KeycloakOAuthService
 
         $response = Http::asForm()->post($url, $payload);
 
-        if (! $response->successful()) {
+        if (!$response->successful()) {
             \Log::error('Failed to exchange code for token', [
                 'status' => $response->status(),
                 'body' => $response->body(),
@@ -106,7 +106,7 @@ final class KeycloakOAuthService
             'refresh_token' => $refreshToken,
         ]);
 
-        if (! $response->successful()) {
+        if (!$response->successful()) {
             throw new Exception("Failed to refresh token: {$response->body()}");
         }
 
@@ -144,7 +144,7 @@ final class KeycloakOAuthService
             'token_type_hint' => 'refresh_token',
         ]);
 
-        if (! $response->successful()) {
+        if (!$response->successful()) {
             \Log::error('Failed to revoke token from Keycloak', [
                 'status' => $response->status(),
                 'body' => $response->body(),

@@ -28,7 +28,7 @@ final class GetCurrentUserHandler
 
         // Ne pas inclure le tenant pour les super admins
         $tenant = null;
-        if (! $user->isSuperAdmin() && $this->tenantContext->hasTenant()) {
+        if (!$user->isSuperAdmin() && $this->tenantContext->hasTenant()) {
             $tenant = $this->tenantContext->tenant();
         }
 

@@ -26,7 +26,7 @@ final readonly class DeletePricingClassHandler
         // Get bikes count for this pricing class (assuming 0 for now - should be injected from Fleet)
         $bikesCount = 0;
 
-        if (! $this->validator->canDeletePricingClass($command->id, $bikesCount)) {
+        if (!$this->validator->canDeletePricingClass($command->id, $bikesCount)) {
             throw new \DomainException('Cannot delete pricing class: bikes are assigned to this class');
         }
 

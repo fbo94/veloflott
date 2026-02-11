@@ -171,7 +171,7 @@ final class EloquentRentalRepository implements RentalRepositoryInterface
                 $query->where('bike_id', $bikeId);
             });
 
-        if ($statuses !== null && ! empty($statuses)) {
+        if ($statuses !== null && !empty($statuses)) {
             $statusValues = array_map(fn (RentalStatus $status) => $status->value, $statuses);
             $query->whereIn('status', $statusValues);
         }

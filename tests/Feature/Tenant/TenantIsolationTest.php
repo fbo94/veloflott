@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use Customer\Infrastructure\Persistence\Models\CustomerEloquentModel;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tenant\Application\TenantContext;
 use Tenant\Domain\SiteStatus;

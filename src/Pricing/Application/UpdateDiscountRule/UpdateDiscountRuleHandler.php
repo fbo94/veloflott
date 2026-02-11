@@ -37,9 +37,9 @@ final readonly class UpdateDiscountRuleHandler
             priority: $command->priority,
         );
 
-        if ($command->isActive && ! $discountRule->isActive()) {
+        if ($command->isActive && !$discountRule->isActive()) {
             $discountRule->activate();
-        } elseif (! $command->isActive && $discountRule->isActive()) {
+        } elseif (!$command->isActive && $discountRule->isActive()) {
             $discountRule->deactivate();
         }
 

@@ -13,6 +13,7 @@ namespace Tenant\Domain;
 final class Tenant
 {
     private \DateTimeImmutable $createdAt;
+
     private \DateTimeImmutable $updatedAt;
 
     /**

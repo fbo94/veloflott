@@ -40,7 +40,7 @@ final class AuthorizeHandler
             $user = $this->userSyncService->sync($payload);
 
             // 4. Vérifier que l'utilisateur est actif
-            if (! $user->isActive()) {
+            if (!$user->isActive()) {
                 throw new UserDeactivatedException();
             }
 

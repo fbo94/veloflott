@@ -236,7 +236,7 @@ final class DiscountRule
 
     public function deactivate(): self
     {
-        if (! $this->isActive) {
+        if (!$this->isActive) {
             throw new \DomainException('Discount rule is already inactive');
         }
 

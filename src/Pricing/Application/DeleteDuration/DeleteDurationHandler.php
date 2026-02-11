@@ -23,7 +23,7 @@ final readonly class DeleteDurationHandler
             throw new \DomainException("Duration with id {$command->id} not found");
         }
 
-        if (! $this->validator->canDeleteDuration($command->id)) {
+        if (!$this->validator->canDeleteDuration($command->id)) {
             throw new \DomainException('Cannot delete duration: active pricing rates exist for this duration');
         }
 

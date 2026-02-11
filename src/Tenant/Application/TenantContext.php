@@ -22,6 +22,7 @@ use Tenant\Domain\Tenant;
 final class TenantContext
 {
     private ?Tenant $tenant = null;
+
     private ?Site $site = null;
 
     // ===== Setters (utilisés par les middlewares) =====

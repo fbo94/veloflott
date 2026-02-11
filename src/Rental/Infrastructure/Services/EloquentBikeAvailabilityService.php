@@ -6,7 +6,6 @@ namespace Rental\Infrastructure\Services;
 
 use DateTimeImmutable;
 use Fleet\Infrastructure\Persistence\Models\BikeEloquentModel;
-use Illuminate\Support\Facades\DB;
 use Maintenance\Infrastructure\Persistence\MaintenanceEloquentModel;
 use Rental\Application\Services\AvailabilityResult;
 use Rental\Application\Services\BikeAvailabilityServiceInterface;

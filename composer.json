@@ -71,7 +71,10 @@
         "test:coverage": "./vendor/bin/pest --coverage",
         "test:parallel": "./vendor/bin/pest --parallel",
         "cs": "./vendor/bin/phpcs",
-        "cs:fix": "./vendor/bin/phpcbf",
+        "cs:fix": [
+            "./vendor/bin/php-cs-fixer fix --allow-risky=yes",
+            "./vendor/bin/phpcbf || true"
+        ],
         "stan": "./vendor/bin/phpstan analyse --memory-limit=2G",
         "stan:baseline": "./vendor/bin/phpstan analyse --memory-limit=2G --generate-baseline",
         "lint": [

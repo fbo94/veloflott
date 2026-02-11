@@ -10,6 +10,11 @@ use Tenant\Domain\Tenant;
 use Tenant\Domain\TenantStatus;
 use Tenant\Infrastructure\Persistence\Models\TenantEloquentModel;
 
+/**
+ * Trait used in Pest tests via uses() function.
+ *
+ * @phpstan-ignore trait.unused
+ */
 trait SetupTenantContext
 {
     protected TenantEloquentModel $testTenant;

@@ -35,7 +35,7 @@ final readonly class DeclareMaintenanceHandler
         // - RENTED (en location)
         // - MAINTENANCE (déjà en maintenance)
         // - RETIRED (retiré du service)
-        if (! in_array($bike->status(), [BikeStatus::AVAILABLE, BikeStatus::UNAVAILABLE], true)) {
+        if (!in_array($bike->status(), [BikeStatus::AVAILABLE, BikeStatus::UNAVAILABLE], true)) {
             throw MaintenanceException::bikeNotAvailableForMaintenance(
                 $command->bikeId,
                 $bike->status()->value

@@ -13,8 +13,7 @@ use Illuminate\Support\Facades\Schema;
  * Les marques existantes gardent leur tenant_id, les nouvelles peuvent être globales (NULL).
  */
 
-return new class extends Migration
-{
+return new class () extends Migration {
     public function up(): void
     {
         Schema::table('brands', function (Blueprint $table): void {

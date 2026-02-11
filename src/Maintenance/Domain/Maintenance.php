@@ -72,7 +72,7 @@ final class Maintenance
      */
     public function start(): void
     {
-        if (! $this->status->canBeStarted()) {
+        if (!$this->status->canBeStarted()) {
             throw MaintenanceException::cannotStart($this->id, "Current status is {$this->status->value}");
         }
 
@@ -89,7 +89,7 @@ final class Maintenance
         ?string $partsReplaced = null,
         ?int $cost = null,
     ): void {
-        if (! $this->status->canBeCompleted()) {
+        if (!$this->status->canBeCompleted()) {
             throw MaintenanceException::cannotComplete($this->id, "Current status is {$this->status->value}");
         }
 

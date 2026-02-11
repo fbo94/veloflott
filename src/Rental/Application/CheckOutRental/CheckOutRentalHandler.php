@@ -25,7 +25,7 @@ final class CheckOutRentalHandler
         }
 
         // Vérifier que la location peut être clôturée
-        if (! $rental->status()->canCheckOut()) {
+        if (!$rental->status()->canCheckOut()) {
             throw new RentalCannotBeCheckedOutException($command->rentalId, $rental->status());
         }
 

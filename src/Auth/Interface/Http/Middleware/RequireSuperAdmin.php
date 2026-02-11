@@ -30,7 +30,7 @@ final class RequireSuperAdmin
         }
 
         // Vérifier que l'utilisateur est Super Admin
-        if (! $user->isSuperAdmin()) {
+        if (!$user->isSuperAdmin()) {
             return response()->json([
                 'error' => [
                     'code' => 'FORBIDDEN',

@@ -47,6 +47,7 @@ final readonly class CheckInRentalHandler
             if (!$this->availabilityService->isPhysicallyAvailable($item->bikeId())) {
                 $bike = $this->bikeRepository->findById($item->bikeId());
                 $statusValue = $bike?->status()->value ?? 'unknown';
+
                 throw RentalException::cannotCheckIn(
                     $command->rentalId,
                     "Bike {$item->bikeId()} is not physically available (status: {$statusValue})",

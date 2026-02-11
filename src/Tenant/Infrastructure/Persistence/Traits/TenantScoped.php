@@ -57,9 +57,9 @@ trait TenantScoped
 
                     $message = "Cannot create {$table} record without tenant context.";
                     if ($user !== null && $user->isSuperAdmin()) {
-                        $message .= " Super Admin: Please provide X-Tenant-Id header to specify the target tenant.";
+                        $message .= ' Super Admin: Please provide X-Tenant-Id header to specify the target tenant.';
                     } else {
-                        $message .= " Please provide a valid tenant context.";
+                        $message .= ' Please provide a valid tenant context.';
                     }
 
                     throw new \RuntimeException($message);
