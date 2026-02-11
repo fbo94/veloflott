@@ -12,6 +12,9 @@ final readonly class GetAuthorizationUrlResponse
     ) {
     }
 
+    /**
+     * @return array{authorization_url: string, state: string}
+     */
     public function toArray(): array
     {
         return [

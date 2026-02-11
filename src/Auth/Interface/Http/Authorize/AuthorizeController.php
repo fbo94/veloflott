@@ -23,6 +23,7 @@ final class AuthorizeController
         $command = new AuthorizeCommand(
             code: $request->validated('code'),
             state: $request->validated('state'),
+            codeVerifier: $request->validated('code_verifier'),
         );
 
         $response = $this->handler->handle($command);

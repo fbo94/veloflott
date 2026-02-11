@@ -177,7 +177,7 @@ services:
     volumes:
       - ./docker/nginx/entrypoint.sh:/entrypoint.sh:ro
       - ./docker/nginx/conf.d:/etc/nginx/conf.d
-      - ./docker/nginx/ssl:/etc/nginx/ssl
+      - ./nginx/ssl:/etc/nginx/ssl
       - ./public:/var/www/veloflott/public
       - ./storage/app/public:/var/www/veloflott/storage/app/public:ro
     healthcheck:

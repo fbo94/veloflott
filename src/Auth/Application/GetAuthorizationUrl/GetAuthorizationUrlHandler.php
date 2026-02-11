@@ -19,8 +19,12 @@ final class GetAuthorizationUrlHandler
         // Générer un state aléatoire pour la sécurité CSRF
         $state = Str::random(40);
 
-        // Générer l'URL d'autorisation
-        $authorizationUrl = $this->oauthService->getAuthorizationUrl($state);
+        // Générer l'URL d'autorisation avec le PKCE fourni par le frontend
+        $authorizationUrl = $this->oauthService->getAuthorizationUrl(
+            $state,
+            $query->codeChallenge,
+            $query->codeChallengeMethod
+        );
 
         return new GetAuthorizationUrlResponse(
             authorizationUrl: $authorizationUrl,

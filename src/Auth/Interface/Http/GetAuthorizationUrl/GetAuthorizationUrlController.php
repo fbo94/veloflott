@@ -7,10 +7,9 @@ namespace Auth\Interface\Http\GetAuthorizationUrl;
 use Auth\Application\GetAuthorizationUrl\GetAuthorizationUrlHandler;
 use Auth\Application\GetAuthorizationUrl\GetAuthorizationUrlQuery;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 /**
- * Controller pour obtenir l'URL d'autorisation Keycloak.
+ * Controller pour obtenir l'URL d'autorisation Keycloak avec PKCE.
  */
 final class GetAuthorizationUrlController
 {
@@ -19,10 +18,12 @@ final class GetAuthorizationUrlController
     ) {
     }
 
-    public function __invoke(Request $request): JsonResponse
+    public function __invoke(GetAuthorizationUrlRequest $request): JsonResponse
     {
         $query = new GetAuthorizationUrlQuery(
-            redirectUrl: $request->query('redirect_url'),
+            codeChallenge: $request->validated('code_challenge'),
+            codeChallengeMethod: $request->validated('code_challenge_method', 'S256'),
+            redirectUrl: $request->validated('redirect_url'),
         );
 
         $response = $this->handler->handle($query);

@@ -21,8 +21,13 @@ final class AuthorizeHandler
     public function handle(AuthorizeCommand $command): AuthorizeResponse
     {
         try {
-            // 1. Échanger le code contre un token
-            $tokenData = $this->oauthService->exchangeCodeForToken($command->code);
+            \Log::debug('PKCE authorize received', [
+                'code_verifier_length' => strlen($command->codeVerifier),
+                'code_verifier_first_10' => substr($command->codeVerifier, 0, 10),
+            ]);
+
+            // 1. Échanger le code contre un token avec PKCE
+            $tokenData = $this->oauthService->exchangeCodeForToken($command->code, $command->codeVerifier);
 
             // 2. Valider le token reçu
             $payload = $this->tokenValidator->validate($tokenData['access_token']);
@@ -55,6 +60,7 @@ final class AuthorizeHandler
                 ],
             );
         } catch (Exception $e) {
+            dd($e);
             // Si c'est déjà une exception métier, on la propage
             if ($e instanceof InvalidAuthorizationCodeException || $e instanceof UserDeactivatedException) {
                 throw $e;

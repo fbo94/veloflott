@@ -23,9 +23,9 @@ final class KeycloakOAuthService
     }
 
     /**
-     * Génère l'URL d'autorisation Keycloak pour démarrer le flow OAuth2.
+     * Génère l'URL d'autorisation Keycloak pour démarrer le flow OAuth2 avec PKCE.
      */
-    public function getAuthorizationUrl(string $state): string
+    public function getAuthorizationUrl(string $state, string $codeChallenge, string $codeChallengeMethod): string
     {
         $params = http_build_query([
             'client_id' => $this->clientId,
@@ -33,19 +33,21 @@ final class KeycloakOAuthService
             'response_type' => 'code',
             'scope' => 'openid profile email',
             'state' => $state,
+            'code_challenge' => $codeChallenge,
+            'code_challenge_method' => $codeChallengeMethod,
         ]);
 
         return "{$this->keycloakUrl}/realms/{$this->realm}/protocol/openid-connect/auth?{$params}";
     }
 
     /**
-     * Échange le code d'autorisation contre un access token.
+     * Échange le code d'autorisation contre un access token avec PKCE.
      *
      * @return array{access_token: string, refresh_token: string, expires_in: int, token_type: string}
      *
      * @throws Exception
      */
-    public function exchangeCodeForToken(string $code): array
+    public function exchangeCodeForToken(string $code, string $codeVerifier): array
     {
         $url = "{$this->keycloakUrlPrivate}/realms/{$this->realm}/protocol/openid-connect/token";
 
@@ -55,9 +57,10 @@ final class KeycloakOAuthService
             'client_secret' => $this->clientSecret,
             'code' => $code,
             'redirect_uri' => $this->redirectUri,
+            'code_verifier' => $codeVerifier,
         ];
 
-        \Log::debug('Exchanging OAuth2 code for token', [
+        \Log::debug('Exchanging OAuth2 code for token with PKCE', [
             'url' => $url,
             'client_id' => $this->clientId,
             'redirect_uri' => $this->redirectUri,
@@ -118,18 +121,38 @@ final class KeycloakOAuthService
     }
 
     /**
-     * Révoque un token (logout).
+     * Révoque un refresh token (logout côté Keycloak).
+     *
+     * Utilise l'endpoint de révocation OAuth2 (RFC 7009) avec l'URL interne.
+     *
+     * @throws Exception
      */
-    public function revokeToken(string $token): bool
+    public function logout(string $refreshToken): void
     {
-        $url = "{$this->keycloakUrl}/realms/{$this->realm}/protocol/openid-connect/logout";
+        // Utiliser l'endpoint de révocation (fonctionne avec l'URL interne)
+        $url = "{$this->keycloakUrlPrivate}/realms/{$this->realm}/protocol/openid-connect/revoke";
+
+        \Log::debug('Revoking token from Keycloak', [
+            'url' => $url,
+            'client_id' => $this->clientId,
+        ]);
 
         $response = Http::asForm()->post($url, [
             'client_id' => $this->clientId,
             'client_secret' => $this->clientSecret,
-            'refresh_token' => $token,
+            'token' => $refreshToken,
+            'token_type_hint' => 'refresh_token',
         ]);
 
-        return $response->successful();
+        if (! $response->successful()) {
+            \Log::error('Failed to revoke token from Keycloak', [
+                'status' => $response->status(),
+                'body' => $response->body(),
+            ]);
+
+            throw new Exception("Failed to logout: {$response->body()}");
+        }
+
+        \Log::info('Successfully revoked token from Keycloak');
     }
 }

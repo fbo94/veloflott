@@ -6,6 +6,7 @@ use Auth\Interface\Http\Authorize\AuthorizeController;
 use Auth\Interface\Http\GetAuthorizationUrl\GetAuthorizationUrlController;
 use Auth\Interface\Http\GetCurrentUser\GetCurrentUserController;
 use Auth\Interface\Http\ListUsers\ListUsersController;
+use Auth\Interface\Http\Logout\LogoutController;
 use Auth\Interface\Http\ToggleUserStatus\ToggleUserStatusController;
 use Auth\Interface\Http\UpdateUserRole\UpdateUserRoleController;
 use Illuminate\Support\Facades\Route;
@@ -21,11 +22,16 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('api/auth')->group(function () {
     // OAuth2 - Endpoints publics (pas d'authentification requise)
-    Route::get('/authorization-url', GetAuthorizationUrlController::class)
+    // POST car le frontend envoie le code_challenge PKCE
+    Route::post('/authorization-url', GetAuthorizationUrlController::class)
         ->name('auth.authorization-url');
 
     Route::post('/authorize', AuthorizeController::class)
         ->name('auth.authorize');
+
+    // Logout - Ne nécessite pas le middleware keycloak car le token peut être expiré
+    Route::post('/logout', LogoutController::class)
+        ->name('auth.logout');
 });
 
 Route::middleware(['keycloak'])->prefix('api')->group(function () {
