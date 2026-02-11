@@ -70,11 +70,10 @@ final class ResolveTenantMiddleware
 
     private function extractTenantId(Request $request): ?string
     {
-        // 1. Depuis le JWT Keycloak (claim organization)
-        $user = $request->user();
-        if ($user !== null) {
-            // Le claim organization contient l'ID du tenant (Keycloak Organization ID = Tenant ID)
-            $organizationId = $this->getOrganizationFromUser($user);
+        // 1. Depuis le JWT payload stocké par KeycloakAuthenticate
+        $jwtPayload = $request->attributes->get('jwt_payload');
+        if ($jwtPayload !== null) {
+            $organizationId = $this->getOrganizationFromJwt($jwtPayload);
             if ($organizationId !== null) {
                 return $organizationId;
             }
@@ -90,33 +89,25 @@ final class ResolveTenantMiddleware
     }
 
     /**
-     * Extrait l'organization ID depuis l'utilisateur authentifié.
+     * Extrait l'organization ID depuis le payload JWT.
      */
-    private function getOrganizationFromUser(object $user): ?string
+    private function getOrganizationFromJwt(object $payload): ?string
     {
-        // Si l'utilisateur a une méthode pour récupérer l'organization
-        if (method_exists($user, 'getOrganizationId')) {
-            /** @var string|null $organizationId */
-            $organizationId = $user->getOrganizationId();
-
-            return $organizationId;
-        }
-
-        // Si l'utilisateur a un attribut tenant_id
-        if (property_exists($user, 'tenant_id')) {
-            /** @var string|null $tenantId */
-            $tenantId = $user->tenant_id;
-
-            return $tenantId;
-        }
-
-        // Si on peut accéder au token JWT
-        if (method_exists($user, 'token')) {
-            /** @var array<string, mixed>|null $token */
-            $token = $user->token();
-            if ($token !== null && isset($token['organization'])) {
-                return (string) $token['organization'];
+        // Keycloak Organizations ajoute le claim "organization" avec l'ID de l'org
+        if (isset($payload->organization)) {
+            // Le claim peut être un objet avec l'ID ou directement l'ID
+            if (is_object($payload->organization) && isset($payload->organization->id)) {
+                return (string) $payload->organization->id;
             }
+
+            if (is_string($payload->organization)) {
+                return $payload->organization;
+            }
+        }
+
+        // Alternative: chercher dans les claims personnalisés
+        if (isset($payload->tenant_id)) {
+            return (string) $payload->tenant_id;
         }
 
         return null;

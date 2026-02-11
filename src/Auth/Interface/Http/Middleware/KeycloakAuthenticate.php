@@ -18,6 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
  * 3. Synchronise l'utilisateur local
  * 4. Vérifie que l'utilisateur est actif
  * 5. Injecte l'utilisateur dans la request
+ * 6. Stocke le payload JWT pour les middlewares suivants
  */
 final class KeycloakAuthenticate
 {
@@ -53,6 +54,9 @@ final class KeycloakAuthenticate
 
         // 5. Injecter l'utilisateur dans la request
         $request->setUserResolver(fn () => $user);
+
+        // 6. Stocker le payload JWT pour les middlewares suivants (ex: ResolveTenantMiddleware)
+        $request->attributes->set('jwt_payload', $payload);
 
         return $next($request);
     }
