@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Illuminate\Support\Facades\Route;
 use Rental\Interface\Http\CancelRental\CancelRentalController;
+use Rental\Interface\Http\ChangeRentalStatus\ChangeRentalStatusController;
 use Rental\Interface\Http\CheckInRental\CheckInRentalController;
 use Rental\Interface\Http\CheckOutRental\CheckOutRentalController;
 use Rental\Interface\Http\CreateRental\CreateRentalController;
@@ -48,6 +49,10 @@ Route::middleware(['keycloak', 'tenant', 'require.tenant'])->prefix('api/rentals
         ->middleware('permission:create_rentals');
 
     Route::post('/{id}/cancel', CancelRentalController::class)
+        ->middleware('permission:create_rentals');
+
+    // Change rental status (generic endpoint)
+    Route::put('/{id}/status', ChangeRentalStatusController::class)
         ->middleware('permission:create_rentals');
 
     Route::get('/bikes/{bikeId}', GetBikeRentalsController::class)

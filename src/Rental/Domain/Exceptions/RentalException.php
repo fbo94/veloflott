@@ -42,4 +42,9 @@ final class RentalException extends DomainException
     {
         return new self("Bike {$bikeId} is not part of rental {$rentalId}", 400);
     }
+
+    public static function invalidStatusTransition(string $from, string $to): self
+    {
+        return new self("Invalid status transition from '{$from}' to '{$to}'", 400);
+    }
 }
