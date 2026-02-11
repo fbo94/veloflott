@@ -10,7 +10,15 @@ namespace Pricing\Application\ListDefaultDurations;
 final readonly class ListDefaultDurationsResponse
 {
     /**
-     * @param array<int, array{id: string, code: string, label: string, duration_hours: ?int, duration_days: ?int, is_custom: bool, sort_order: int}> $durations
+     * @param array<int, array{
+     *     id: string,
+     *     code: string,
+     *     label: string,
+     *     duration_hours: ?int,
+     *     duration_days: ?int,
+     *     is_custom: bool,
+     *     sort_order: int
+     * }> $durations
      */
     public function __construct(
         public array $durations,

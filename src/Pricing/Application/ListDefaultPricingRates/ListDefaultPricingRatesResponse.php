@@ -10,7 +10,14 @@ namespace Pricing\Application\ListDefaultPricingRates;
 final readonly class ListDefaultPricingRatesResponse
 {
     /**
-     * @param array<int, array{id: string, category_id: string, pricing_class_id: string, duration_id: string, price: float, is_active: bool}> $rates
+     * @param array<int, array{
+     *     id: string,
+     *     category_id: string,
+     *     pricing_class_id: string,
+     *     duration_id: string,
+     *     price: float,
+     *     is_active: bool
+     * }> $rates
      */
     public function __construct(
         public array $rates,
