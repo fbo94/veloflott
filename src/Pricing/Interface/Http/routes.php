@@ -11,6 +11,10 @@ use Pricing\Interface\Http\CreatePricingClass\CreatePricingClassController;
 use Pricing\Interface\Http\DeleteDiscountRule\DeleteDiscountRuleController;
 use Pricing\Interface\Http\DeleteDuration\DeleteDurationController;
 use Pricing\Interface\Http\DeletePricingClass\DeletePricingClassController;
+use Pricing\Interface\Http\ListDefaultDiscountRules\ListDefaultDiscountRulesController;
+use Pricing\Interface\Http\ListDefaultDurations\ListDefaultDurationsController;
+use Pricing\Interface\Http\ListDefaultPricingClasses\ListDefaultPricingClassesController;
+use Pricing\Interface\Http\ListDefaultPricingRates\ListDefaultPricingRatesController;
 use Pricing\Interface\Http\ListDiscountRules\ListDiscountRulesController;
 use Pricing\Interface\Http\ListDurations\ListDurationsController;
 use Pricing\Interface\Http\ListPricingClasses\ListPricingClassesController;
@@ -69,4 +73,20 @@ Route::middleware(['keycloak', 'tenant', 'require.tenant'])->prefix('api/pricing
     // Calcul de tarif
     Route::post('/calculate', CalculatePriceController::class)
         ->middleware('permission:view_bikes');
+});
+
+/*
+|--------------------------------------------------------------------------
+| Default Pricing Templates (no tenant required)
+|--------------------------------------------------------------------------
+|
+| Ces endpoints permettent aux tenants de récupérer les grilles tarifaires
+| par défaut pour les utiliser comme templates lors de leur configuration.
+|
+*/
+Route::middleware(['keycloak'])->prefix('api/pricing/defaults')->group(function () {
+    Route::get('/classes', ListDefaultPricingClassesController::class);
+    Route::get('/durations', ListDefaultDurationsController::class);
+    Route::get('/rates', ListDefaultPricingRatesController::class);
+    Route::get('/discounts', ListDefaultDiscountRulesController::class);
 });

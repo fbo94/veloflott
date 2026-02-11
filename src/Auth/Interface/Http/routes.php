@@ -34,8 +34,8 @@ Route::prefix('api/auth')->group(function () {
         ->name('auth.logout');
 });
 
-Route::middleware(['keycloak'])->prefix('api')->group(function () {
-    // Récupérer l'utilisateur courant
+Route::middleware(['keycloak', 'tenant'])->prefix('api')->group(function () {
+    // Récupérer l'utilisateur courant (inclut les infos du tenant si non super admin)
     Route::get('/me', GetCurrentUserController::class);
 
     // Gestion des utilisateurs (admin uniquement)
