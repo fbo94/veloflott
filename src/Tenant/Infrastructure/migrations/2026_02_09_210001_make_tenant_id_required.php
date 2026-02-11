@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Schema;
  * IMPORTANT: Cette migration doit être exécutée après avoir créé un tenant par défaut
  * et mis à jour les données existantes.
  */
+
 return new class extends Migration
 {
     /**

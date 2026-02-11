@@ -4,18 +4,23 @@ declare(strict_types=1);
 
 namespace Tenant\Application\CreateTenant;
 
+use Psr\Log\LoggerInterface;
 use Ramsey\Uuid\Uuid;
 use Subscription\Domain\SubscriptionPlanRepositoryInterface;
 use Tenant\Domain\Tenant;
 use Tenant\Domain\TenantRepositoryInterface;
 use Tenant\Domain\TenantStatus;
+use Tenant\Infrastructure\Keycloak\KeycloakAdminService;
 
 final readonly class CreateTenantHandler
 {
     public function __construct(
         private TenantRepositoryInterface $tenantRepository,
         private SubscriptionPlanRepositoryInterface $subscriptionPlanRepository,
-    ) {}
+        private KeycloakAdminService $keycloakAdmin,
+        private LoggerInterface $logger,
+    ) {
+    }
 
     public function handle(CreateTenantCommand $command): CreateTenantResponse
     {
@@ -54,6 +59,40 @@ final readonly class CreateTenantHandler
         );
 
         $this->tenantRepository->save($tenant);
+
+        // Créer l'organization dans Keycloak
+        try {
+            $keycloakOrgId = $this->keycloakAdmin->createOrganization(
+                name: $tenant->name(),
+                alias: $tenant->slug(),
+                attributes: [
+                    'tenant_id' => [$tenant->id()],
+                    'subscription_plan_id' => [$tenant->subscriptionPlanId()],
+                    'max_users' => [(string) $tenant->maxUsers()],
+                    'max_bikes' => [(string) $tenant->maxBikes()],
+                    'max_sites' => [(string) $tenant->maxSites()],
+                ]
+            );
+
+            if ($keycloakOrgId !== null) {
+                $this->logger->info('Keycloak organization created', [
+                    'tenant_id' => $tenant->id(),
+                    'keycloak_org_id' => $keycloakOrgId,
+                    'slug' => $tenant->slug(),
+                ]);
+            } else {
+                $this->logger->warning('Failed to create Keycloak organization', [
+                    'tenant_id' => $tenant->id(),
+                    'slug' => $tenant->slug(),
+                ]);
+            }
+        } catch (\Exception $e) {
+            $this->logger->error('Error creating Keycloak organization', [
+                'tenant_id' => $tenant->id(),
+                'error' => $e->getMessage(),
+            ]);
+            // Ne pas bloquer la création du tenant si Keycloak échoue
+        }
 
         return new CreateTenantResponse(
             id: $tenant->id(),

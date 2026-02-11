@@ -11,7 +11,8 @@ final readonly class ListSubscriptionPlansController
 {
     public function __construct(
         private ListSubscriptionPlansHandler $handler,
-    ) {}
+    ) {
+    }
 
     public function __invoke(): JsonResponse
     {

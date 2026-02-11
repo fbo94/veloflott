@@ -14,5 +14,6 @@ final readonly class CreateTenantCommand
         public string $address,
         public ?string $logoUrl,
         public string $subscriptionPlanId,
-    ) {}
+    ) {
+    }
 }

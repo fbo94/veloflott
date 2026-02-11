@@ -162,12 +162,33 @@ final class Tenant
 
     public function updateInformation(
         string $name,
+        string $slug,
         ?string $contactEmail,
         ?string $contactPhone,
+        ?string $address = null,
+        ?string $logoUrl = null,
     ): self {
         $this->name = $name;
+        $this->slug = $slug;
         $this->contactEmail = $contactEmail;
         $this->contactPhone = $contactPhone;
+        $this->address = $address;
+        $this->logoUrl = $logoUrl;
+        $this->updatedAt = new \DateTimeImmutable();
+
+        return $this;
+    }
+
+    public function updateSubscriptionPlan(
+        string $subscriptionPlanId,
+        int $maxUsers,
+        int $maxBikes,
+        int $maxSites,
+    ): self {
+        $this->subscriptionPlanId = $subscriptionPlanId;
+        $this->maxUsers = $maxUsers;
+        $this->maxBikes = $maxBikes;
+        $this->maxSites = $maxSites;
         $this->updatedAt = new \DateTimeImmutable();
 
         return $this;

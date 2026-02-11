@@ -12,7 +12,8 @@ final readonly class RegisterTenantController
 {
     public function __construct(
         private RegisterTenantHandler $handler,
-    ) {}
+    ) {
+    }
 
     public function __invoke(RegisterTenantRequest $request): JsonResponse
     {

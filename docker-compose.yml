@@ -79,7 +79,7 @@ services:
       - app-network
 
   keycloak:
-    image: quay.io/keycloak/keycloak:25.0.0
+    image: quay.io/keycloak/keycloak:26.0.0
     container_name: keycloak
     restart: unless-stopped
     environment:
@@ -97,6 +97,8 @@ services:
       KC_CACHE: ispn
       KC_CACHE_STACK: tcp
       KC_PROXY_HEADERS: xforwarded
+      # Enable Organizations feature
+      KC_FEATURES: organization
     command: [ "start-dev", "--import-realm", "--proxy=edge", "--hostname=keycloak.localhost"]
     ports:
       - "${KEYCLOAK_HTTP_PORT:-8080}:8080"

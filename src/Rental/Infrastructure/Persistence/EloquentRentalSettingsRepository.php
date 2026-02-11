@@ -123,8 +123,8 @@ final class EloquentRentalSettingsRepository implements RentalSettingsRepository
             earlyReturnFeeFixed: $model->early_return_fee_fixed,
             maxRentalDurationDays: $model->max_rental_duration_days,
             minReservationHoursAhead: $model->min_reservation_hours_ahead,
-            createdAt: $model->created_at,
-            updatedAt: $model->updated_at,
+            createdAt: \DateTimeImmutable::createFromInterface($model->created_at),
+            updatedAt: \DateTimeImmutable::createFromInterface($model->updated_at),
         );
     }
 }

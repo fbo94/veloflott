@@ -10,7 +10,8 @@ final readonly class DeleteSiteHandler
 {
     public function __construct(
         private SiteRepositoryInterface $siteRepository,
-    ) {}
+    ) {
+    }
 
     public function handle(DeleteSiteCommand $command): void
     {

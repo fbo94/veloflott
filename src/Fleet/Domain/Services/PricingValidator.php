@@ -26,7 +26,7 @@ final readonly class PricingValidator
     public function canBikeBeRented(Bike $bike): bool
     {
         // Le vélo doit avoir une classe de tarification
-        $pricingClassId = $bike->pricingClassId();
+        $pricingClassId = $bike->pricingClass()?->id();
         if ($pricingClassId === null) {
             return false;
         }
@@ -53,7 +53,7 @@ final readonly class PricingValidator
      */
     public function getAvailableDurations(Bike $bike): array
     {
-        $pricingClassId = $bike->pricingClassId();
+        $pricingClassId = $bike->pricingClass()?->id();
         if ($pricingClassId === null) {
             return [];
         }

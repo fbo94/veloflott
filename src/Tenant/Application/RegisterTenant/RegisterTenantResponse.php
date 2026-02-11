@@ -15,7 +15,8 @@ final readonly class RegisterTenantResponse
         public string $subscriptionPlanName,
         public string $trialEndsAt,
         public string $message,
-    ) {}
+    ) {
+    }
 
     /**
      * @return array<string, mixed>

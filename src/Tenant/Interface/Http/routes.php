@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 use Illuminate\Support\Facades\Route;
 use Tenant\Interface\Http\CreateTenant\CreateTenantController;
+use Tenant\Interface\Http\ListTenants\ListTenantsController;
 use Tenant\Interface\Http\RegisterTenant\RegisterTenantController;
 use Tenant\Interface\Http\SiteController;
+use Tenant\Interface\Http\UpdateTenant\UpdateTenantController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,8 +26,15 @@ Route::post('/api/register', RegisterTenantController::class)
 Route::middleware(['keycloak', 'super-admin'])
     ->prefix('api/tenants')
     ->group(function () {
+        Route::get('/', ListTenantsController::class)
+            ->name('tenants.index');
+
         Route::post('/', CreateTenantController::class)
             ->name('tenants.store');
+
+        Route::put('/{id}', UpdateTenantController::class)
+            ->name('tenants.update')
+            ->where('id', '[0-9a-f-]{36}');
     });
 
 // Routes sites - Nécessitent authentification et contexte tenant

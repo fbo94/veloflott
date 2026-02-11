@@ -79,8 +79,8 @@ final class EloquentDepositRetentionConfigRepository implements DepositRetention
             minorDamageAmount: $model->minor_damage_amount,
             majorDamageAmount: $model->major_damage_amount,
             totalLossAmount: $model->total_loss_amount,
-            createdAt: $model->created_at,
-            updatedAt: $model->updated_at,
+            createdAt: \DateTimeImmutable::createFromInterface($model->created_at),
+            updatedAt: \DateTimeImmutable::createFromInterface($model->updated_at),
         );
     }
 }

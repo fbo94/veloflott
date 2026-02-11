@@ -11,5 +11,6 @@ final readonly class RegisterTenantCommand
         public string $ownerEmail,
         public string $organizationName,
         public string $subscriptionPlanId,
-    ) {}
+    ) {
+    }
 }

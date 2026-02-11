@@ -7,7 +7,7 @@ namespace Dashboard\Application\GetTodayActivity;
 final readonly class GetTodayActivityResponse
 {
     /**
-     * @param  array<int, array{id: string, customer_id: string, start_date: string, expected_return_date: string, status: string, total_amount: int}>  $recentRentals
+     * @param  array<int, array{id: string, customer_id: string, start_date: string, expected_return_date: string, status: string, total_amount: float}>  $recentRentals
      */
     public function __construct(
         public string $date,

@@ -35,7 +35,8 @@ final class SiteController extends Controller
         private readonly GetSiteHandler $getSiteHandler,
         private readonly ListSitesHandler $listSitesHandler,
         private readonly DeleteSiteHandler $deleteSiteHandler,
-    ) {}
+    ) {
+    }
 
     #[OA\Get(
         path: '/api/sites',

@@ -11,7 +11,8 @@ final readonly class ListSitesHandler
 {
     public function __construct(
         private SiteRepositoryInterface $siteRepository,
-    ) {}
+    ) {
+    }
 
     /**
      * @return array<Site>

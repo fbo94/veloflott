@@ -10,7 +10,8 @@ final readonly class ListSubscriptionPlansHandler
 {
     public function __construct(
         private SubscriptionPlanRepositoryInterface $subscriptionPlanRepository,
-    ) {}
+    ) {
+    }
 
     public function handle(): ListSubscriptionPlansResponse
     {

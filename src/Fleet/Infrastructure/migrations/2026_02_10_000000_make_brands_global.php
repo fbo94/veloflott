@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Schema;
  * Les marques sont maintenant partagées entre tous les tenants (Specialized, Trek, Giant...).
  * Les marques existantes gardent leur tenant_id, les nouvelles peuvent être globales (NULL).
  */
+
 return new class extends Migration
 {
     public function up(): void

@@ -9,5 +9,6 @@ final readonly class ListSitesQuery
     public function __construct(
         public string $tenantId,
         public bool $activeOnly = false,
-    ) {}
+    ) {
+    }
 }

@@ -8,5 +8,6 @@ final readonly class GetSiteQuery
 {
     public function __construct(
         public string $siteId,
-    ) {}
+    ) {
+    }
 }

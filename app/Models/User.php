@@ -45,4 +45,12 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    /**
+     * Vérifie si l'utilisateur est un super administrateur.
+     */
+    public function isSuperAdmin(): bool
+    {
+        return isset($this->attributes['role']) && $this->attributes['role'] === 'super_admin';
+    }
 }

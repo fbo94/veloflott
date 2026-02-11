@@ -11,7 +11,8 @@ final readonly class UpdateSiteHandler
 {
     public function __construct(
         private SiteRepositoryInterface $siteRepository,
-    ) {}
+    ) {
+    }
 
     public function handle(UpdateSiteCommand $command): Site
     {

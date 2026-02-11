@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Tenant\Application\CreateTenant;
+namespace Tenant\Application\UpdateTenant;
 
-final readonly class CreateTenantResponse
+final readonly class UpdateTenantResponse
 {
     public function __construct(
         public string $id,
@@ -14,14 +14,14 @@ final readonly class CreateTenantResponse
         public ?string $contactEmail,
         public ?string $contactPhone,
         public ?string $logoUrl,
-        public ?string $subscriptionPlanId,
+        public string $subscriptionPlanId,
         public string $subscriptionPlanName,
         public string $subscriptionPlanDisplayName,
         public int $maxUsers,
         public int $maxBikes,
         public int $maxSites,
         public string $status,
-        public string $createdAt,
+        public string $updatedAt,
     ) {
     }
 
@@ -49,7 +49,7 @@ final readonly class CreateTenantResponse
                 'max_sites' => $this->maxSites,
             ],
             'status' => $this->status,
-            'created_at' => $this->createdAt,
+            'updated_at' => $this->updatedAt,
         ];
     }
 }

@@ -103,7 +103,7 @@ final class RolePermissions
      */
     public static function for(Role $role): array
     {
-        return self::PERMISSIONS[$role->value] ?? [];
+        return self::PERMISSIONS[$role->value];
     }
 
     /**

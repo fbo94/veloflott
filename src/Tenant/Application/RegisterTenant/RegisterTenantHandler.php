@@ -18,7 +18,8 @@ final readonly class RegisterTenantHandler
     public function __construct(
         private TenantRepositoryInterface $tenantRepository,
         private SubscriptionPlanRepositoryInterface $subscriptionPlanRepository,
-    ) {}
+    ) {
+    }
 
     public function handle(RegisterTenantCommand $command): RegisterTenantResponse
     {

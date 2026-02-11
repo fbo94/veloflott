@@ -179,7 +179,7 @@ final class EloquentBikeAvailabilityService implements BikeAvailabilityServiceIn
 
         return $rentals->map(function (RentalEloquentModel $rental) {
             return UnavailabilitySlot::fromRental(
-                rentalId: $rental->id,
+                rentalId: (string) $rental->id,
                 startDate: $rental->start_date,
                 endDate: $rental->expected_return_date,
                 status: $rental->status,

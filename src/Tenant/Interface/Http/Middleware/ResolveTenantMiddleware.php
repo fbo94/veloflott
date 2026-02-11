@@ -26,7 +26,8 @@ final class ResolveTenantMiddleware
     public function __construct(
         private readonly TenantContext $tenantContext,
         private readonly TenantRepositoryInterface $tenantRepository,
-    ) {}
+    ) {
+    }
 
     public function handle(Request $request, Closure $next): Response
     {

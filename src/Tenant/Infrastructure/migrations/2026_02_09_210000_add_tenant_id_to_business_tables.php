@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Schema;
  * tenant_id: Obligatoire (NOT NULL) - isolation des données par tenant
  * site_id: Optionnel (NULLABLE) - filtrage par site au sein d'un tenant
  */
+
 return new class extends Migration
 {
     /**

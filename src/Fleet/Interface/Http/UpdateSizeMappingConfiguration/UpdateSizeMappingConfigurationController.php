@@ -20,7 +20,9 @@ final readonly class UpdateSizeMappingConfigurationController
     {
         try {
             // Transformer le tableau sizes[] en map indexé par letter
-            $sizesMap = collect($request->input('sizes'))
+            /** @var array<string, array{letter: string, cm: array{min: float, max: float}, inch: array{min: float, max: float}}> $sizes */
+            $sizes = $request->input('sizes');
+            $sizesMap = collect($sizes)
                 ->keyBy('letter')
                 ->toArray();
 

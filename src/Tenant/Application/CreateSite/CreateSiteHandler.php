@@ -13,7 +13,8 @@ final readonly class CreateSiteHandler
     public function __construct(
         private SiteRepositoryInterface $siteRepository,
         private TenantRepositoryInterface $tenantRepository,
-    ) {}
+    ) {
+    }
 
     public function handle(CreateSiteCommand $command): Site
     {

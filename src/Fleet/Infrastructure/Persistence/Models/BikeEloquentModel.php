@@ -67,6 +67,9 @@ final class BikeEloquentModel extends Model
         return $this->belongsTo(CategoryEloquentModel::class, 'category_id');
     }
 
+    /**
+     * @return BelongsTo<PricingClassEloquentModel, $this>
+     */
     public function pricingClass(): BelongsTo
     {
         return $this->belongsTo(PricingClassEloquentModel::class, 'pricing_class_id');

@@ -13,7 +13,8 @@ final readonly class ListSubscriptionPlansResponse
      */
     public function __construct(
         private array $plans,
-    ) {}
+    ) {
+    }
 
     /**
      * @return array<string, mixed>

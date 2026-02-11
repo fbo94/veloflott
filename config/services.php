@@ -51,6 +51,9 @@ return [
         'client_id' => env('KEYCLOAK_CLIENT_ID', 'fleet-api'),
         'client_secret' => env('KEYCLOAK_CLIENT_SECRET'),
         'redirect_uri' => env('KEYCLOAK_REDIRECT_URI', env('APP_URL').'/api/auth/callback'),
+        // Admin credentials for Keycloak Admin API
+        'admin_username' => env('KEYCLOAK_ADMIN_USER', 'admin'),
+        'admin_password' => env('KEYCLOAK_ADMIN_PASSWORD', 'admin'),
     ],
 
 ];

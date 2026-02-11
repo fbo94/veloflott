@@ -11,6 +11,7 @@ use Fleet\Domain\BrakeType;
 use Fleet\Domain\FrameSize;
 use Fleet\Domain\FrameSizeLetter;
 use Fleet\Domain\FrameSizeUnit;
+use Fleet\Domain\PricingClass;
 use Fleet\Domain\PricingTier;
 use Fleet\Domain\RetirementReason;
 use Fleet\Domain\UnavailabilityReason;

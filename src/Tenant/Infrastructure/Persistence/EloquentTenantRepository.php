@@ -35,9 +35,25 @@ final class EloquentTenantRepository implements TenantRepositoryInterface
     /**
      * @return Tenant[]
      */
-    public function findAll(): array
+    public function findAll(?string $status = null, ?string $search = null): array
     {
-        return TenantEloquentModel::orderBy('name')
+        $query = TenantEloquentModel::query();
+
+        // Filtrer par statut si fourni
+        if ($status !== null) {
+            $query->where('status', $status);
+        }
+
+        // Recherche textuelle si fournie
+        if ($search !== null && $search !== '') {
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'LIKE', "%{$search}%")
+                    ->orWhere('slug', 'LIKE', "%{$search}%")
+                    ->orWhere('contact_email', 'LIKE', "%{$search}%");
+            });
+        }
+
+        return $query->orderBy('name')
             ->get()
             ->map(fn (TenantEloquentModel $model) => $this->toDomain($model))
             ->all();

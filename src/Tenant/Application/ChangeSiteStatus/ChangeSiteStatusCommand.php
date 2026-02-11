@@ -11,5 +11,6 @@ final readonly class ChangeSiteStatusCommand
     public function __construct(
         public string $siteId,
         public SiteStatus $status,
-    ) {}
+    ) {
+    }
 }

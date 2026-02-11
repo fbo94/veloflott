@@ -26,7 +26,7 @@ interface TenantRepositoryInterface
      *
      * @return Tenant[]
      */
-    public function findAll(): array;
+    public function findAll(?string $status = null, ?string $search = null): array;
 
     /**
      * Retourne les tenants actifs uniquement.

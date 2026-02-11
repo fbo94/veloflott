@@ -23,5 +23,6 @@ final readonly class UpdateSiteCommand
         public ?array $settings = null,
         public ?float $latitude = null,
         public ?float $longitude = null,
-    ) {}
+    ) {
+    }
 }

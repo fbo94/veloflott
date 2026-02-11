@@ -8,5 +8,6 @@ final readonly class DeleteSiteCommand
 {
     public function __construct(
         public string $siteId,
-    ) {}
+    ) {
+    }
 }
