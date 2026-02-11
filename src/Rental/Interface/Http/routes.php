@@ -68,8 +68,8 @@ Route::middleware(['keycloak', 'tenant', 'require.tenant'])->prefix('api/bikes')
 // Rental settings endpoints
 Route::middleware(['keycloak', 'tenant', 'require.tenant'])->prefix('api/settings/rental')->group(function () {
     Route::get('/', GetRentalSettingsController::class)
-        ->middleware('permission:view_settings');
+        ->middleware('permission:view_rentals');
 
     Route::put('/', UpdateRentalSettingsController::class)
-        ->middleware('permission:manage_settings');
+        ->middleware('permission:manage_rates');
 });
