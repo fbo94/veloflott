@@ -24,6 +24,8 @@ class ReassignDataToTenant extends Command
 
     /**
      * Tables avec tenant_id à mettre à jour
+     *
+     * @var array<int, string>
      */
     private array $tenantTables = [
         'bikes',
@@ -47,7 +49,7 @@ class ReassignDataToTenant extends Command
     /**
      * Execute the console command.
      */
-    public function handle()
+    public function handle(): int
     {
         $tenantSlug = $this->argument('tenant-slug');
 

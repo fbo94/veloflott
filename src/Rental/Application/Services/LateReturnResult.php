@@ -17,6 +17,9 @@ final readonly class LateReturnResult
     ) {
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function toArray(): array
     {
         return [

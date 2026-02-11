@@ -1125,19 +1125,19 @@ parameters:
 		-
 			message: '#^Call to an undefined method PHPUnit\\Framework\\TestCase\:\:assertDatabaseHas\(\)\.$#'
 			identifier: method.notFound
-			count: 5
+			count: 8
 			path: tests/Feature/Customer/CustomerTest.php
 
 		-
 			message: '#^Call to an undefined method PHPUnit\\Framework\\TestCase\:\:postJson\(\)\.$#'
 			identifier: method.notFound
-			count: 19
+			count: 32
 			path: tests/Feature/Customer/CustomerTest.php
 
 		-
 			message: '#^Call to an undefined method PHPUnit\\Framework\\TestCase\:\:putJson\(\)\.$#'
 			identifier: method.notFound
-			count: 6
+			count: 8
 			path: tests/Feature/Customer/CustomerTest.php
 
 		-
@@ -1149,7 +1149,19 @@ parameters:
 		-
 			message: '#^Unable to resolve the template type TValue in call to function expect$#'
 			identifier: argument.templateType
-			count: 7
+			count: 15
+			path: tests/Feature/Customer/CustomerTest.php
+
+		-
+			message: '#^Access to an undefined property Customer\\Infrastructure\\Persistence\\Models\\CustomerEloquentModel\|Illuminate\\Database\\Eloquent\\Collection\<int, Customer\\Infrastructure\\Persistence\\Models\\CustomerEloquentModel\>\:\:\$is_risky\.$#'
+			identifier: property.notFound
+			count: 9
+			path: tests/Feature/Customer/CustomerTest.php
+
+		-
+			message: '#^Call to an undefined method Customer\\Infrastructure\\Persistence\\Models\\CustomerEloquentModel\|Illuminate\\Database\\Eloquent\\Collection\<int, Customer\\Infrastructure\\Persistence\\Models\\CustomerEloquentModel\>\:\:refresh\(\)\.$#'
+			identifier: method.notFound
+			count: 5
 			path: tests/Feature/Customer/CustomerTest.php
 
 		-

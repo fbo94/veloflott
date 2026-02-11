@@ -25,6 +25,8 @@ final class KeycloakAdminService
 
     /**
      * Créer une organization dans Keycloak
+     *
+     * @param array<string, mixed> $attributes
      */
     public function createOrganization(
         string $name,
@@ -97,6 +99,8 @@ final class KeycloakAdminService
 
     /**
      * Mettre à jour une organization
+     *
+     * @param array<string, mixed> $attributes
      */
     public function updateOrganization(
         string $organizationId,
@@ -174,6 +178,8 @@ final class KeycloakAdminService
 
     /**
      * Récupérer une organization par son ID
+     *
+     * @return array<string, mixed>|null
      */
     public function getOrganization(string $organizationId): ?array
     {
@@ -202,7 +208,7 @@ final class KeycloakAdminService
     /**
      * Lister toutes les organizations
      *
-     * @return array<int, array>
+     * @return array<int, array<string, mixed>>
      */
     public function listOrganizations(): array
     {
@@ -229,6 +235,8 @@ final class KeycloakAdminService
 
     /**
      * Ajouter un utilisateur à une organization
+     *
+     * @param array<string, mixed> $membershipAttributes
      */
     public function addMember(
         string $organizationId,

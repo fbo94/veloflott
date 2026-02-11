@@ -23,6 +23,9 @@ final readonly class EarlyReturnResponse
     ) {
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function toArray(): array
     {
         return [

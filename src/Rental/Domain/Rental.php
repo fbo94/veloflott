@@ -320,6 +320,8 @@ final class Rental
 
     /**
      * Update return condition for a rental item
+     *
+     * @param array<int, string> $damagePhotos
      */
     public function updateItemReturnCondition(
         string $bikeId,

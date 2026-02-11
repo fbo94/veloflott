@@ -17,19 +17,37 @@ use Fleet\Domain\FrameSizeLetter;
 use Fleet\Domain\FrameSizeUnit;
 use Fleet\Domain\Model;
 use Fleet\Domain\ModelRepositoryInterface;
+use Fleet\Domain\PricingClassRepositoryInterface;
 use Fleet\Domain\WheelSize;
+use Mockery\MockInterface;
 
 beforeEach(function () {
-    $this->bikeRepository = Mockery::mock(BikeRepositoryInterface::class);
-    $this->modelRepository = Mockery::mock(ModelRepositoryInterface::class);
-    $this->brandRepository = Mockery::mock(BrandRepositoryInterface::class);
-    $this->categoryRepository = Mockery::mock(CategoryRepositoryInterface::class);
+    /** @var MockInterface&BikeRepositoryInterface $bikeRepository */
+    $bikeRepository = Mockery::mock(BikeRepositoryInterface::class);
+    $this->bikeRepository = $bikeRepository;
+
+    /** @var MockInterface&ModelRepositoryInterface $modelRepository */
+    $modelRepository = Mockery::mock(ModelRepositoryInterface::class);
+    $this->modelRepository = $modelRepository;
+
+    /** @var MockInterface&BrandRepositoryInterface $brandRepository */
+    $brandRepository = Mockery::mock(BrandRepositoryInterface::class);
+    $this->brandRepository = $brandRepository;
+
+    /** @var MockInterface&CategoryRepositoryInterface $categoryRepository */
+    $categoryRepository = Mockery::mock(CategoryRepositoryInterface::class);
+    $this->categoryRepository = $categoryRepository;
+
+    /** @var MockInterface&PricingClassRepositoryInterface $pricingClassRepository */
+    $pricingClassRepository = Mockery::mock(PricingClassRepositoryInterface::class);
+    $this->pricingClassRepository = $pricingClassRepository;
 
     $this->handler = new CreateBikeHandler(
         $this->bikeRepository,
         $this->modelRepository,
         $this->brandRepository,
-        $this->categoryRepository
+        $this->categoryRepository,
+        $this->pricingClassRepository,
     );
 });
 
@@ -106,6 +124,10 @@ test('can create a bike successfully', function () {
         ->once()
         ->with('category-456')
         ->andReturn($category);
+
+    $this->pricingClassRepository->shouldReceive('findByCode')
+        ->with('standard')
+        ->andReturn(null);
 
     $this->bikeRepository->shouldReceive('save')
         ->once()
@@ -232,6 +254,9 @@ test('handles all optional fields correctly', function () {
     $this->modelRepository->shouldReceive('findById')->andReturn($model);
     $this->brandRepository->shouldReceive('findById')->andReturn($brand);
     $this->categoryRepository->shouldReceive('findById')->andReturn($category);
+    $this->pricingClassRepository->shouldReceive('findByCode')
+        ->with('standard')
+        ->andReturn(null);
     $this->bikeRepository->shouldReceive('save')->once();
 
     // Act

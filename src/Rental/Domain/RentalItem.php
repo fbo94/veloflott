@@ -135,6 +135,8 @@ final class RentalItem
 
     /**
      * Alias for recordCheckOut - used by Rental aggregate
+     *
+     * @param array<int, string> $damagePhotos
      */
     public function recordReturn(
         string $condition,

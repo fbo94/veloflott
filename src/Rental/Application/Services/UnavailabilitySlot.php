@@ -58,6 +58,9 @@ final readonly class UnavailabilitySlot
         return $this->startDate < $endDate && $this->endDate > $startDate;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function toArray(): array
     {
         return [

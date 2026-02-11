@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Pricing\Application;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Pricing\Application\CreatePricingClass\CreatePricingClassCommand;
 use Pricing\Application\CreatePricingClass\CreatePricingClassHandler;
@@ -12,6 +13,7 @@ use Pricing\Domain\PricingClassRepositoryInterface;
 
 final class CreatePricingClassHandlerTest extends TestCase
 {
+    /** @var MockObject&PricingClassRepositoryInterface */
     private PricingClassRepositoryInterface $repository;
     private CreatePricingClassHandler $handler;
 

@@ -11,11 +11,20 @@ use Fleet\Domain\PricingRate;
 use Fleet\Domain\PricingRateRepositoryInterface;
 use Fleet\Domain\Services\NoPricingFoundException;
 use Fleet\Domain\Services\PricingCalculator;
+use Mockery\MockInterface;
 
 beforeEach(function () {
-    $this->rateRepository = Mockery::mock(PricingRateRepositoryInterface::class);
-    $this->durationRepository = Mockery::mock(DurationDefinitionRepositoryInterface::class);
-    $this->discountRepository = Mockery::mock(DiscountRuleRepositoryInterface::class);
+    /** @var MockInterface&PricingRateRepositoryInterface $rateRepository */
+    $rateRepository = Mockery::mock(PricingRateRepositoryInterface::class);
+    $this->rateRepository = $rateRepository;
+
+    /** @var MockInterface&DurationDefinitionRepositoryInterface $durationRepository */
+    $durationRepository = Mockery::mock(DurationDefinitionRepositoryInterface::class);
+    $this->durationRepository = $durationRepository;
+
+    /** @var MockInterface&DiscountRuleRepositoryInterface $discountRepository */
+    $discountRepository = Mockery::mock(DiscountRuleRepositoryInterface::class);
+    $this->discountRepository = $discountRepository;
 
     $this->calculator = new PricingCalculator(
         $this->rateRepository,

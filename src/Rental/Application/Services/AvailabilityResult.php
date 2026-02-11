@@ -21,6 +21,9 @@ final readonly class AvailabilityResult
         return new self(isAvailable: true);
     }
 
+    /**
+     * @param array<int, UnavailabilitySlot> $conflictingSlots
+     */
     public static function unavailable(string $reason, array $conflictingSlots = []): self
     {
         return new self(

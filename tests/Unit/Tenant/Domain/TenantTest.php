@@ -70,12 +70,14 @@ test('can update tenant information', function () {
     // Act
     $tenant->updateInformation(
         name: 'New Name',
+        slug: 'new-name',
         contactEmail: 'new@example.com',
         contactPhone: '+33987654321',
     );
 
     // Assert
     expect($tenant->name())->toBe('New Name');
+    expect($tenant->slug())->toBe('new-name');
     expect($tenant->contactEmail())->toBe('new@example.com');
     expect($tenant->contactPhone())->toBe('+33987654321');
 });

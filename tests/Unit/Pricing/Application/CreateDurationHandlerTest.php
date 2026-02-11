@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Pricing\Application;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Pricing\Application\CreateDuration\CreateDurationCommand;
 use Pricing\Application\CreateDuration\CreateDurationHandler;
@@ -12,6 +13,7 @@ use Pricing\Domain\DurationDefinitionRepositoryInterface;
 
 final class CreateDurationHandlerTest extends TestCase
 {
+    /** @var MockObject&DurationDefinitionRepositoryInterface */
     private DurationDefinitionRepositoryInterface $repository;
     private CreateDurationHandler $handler;
 

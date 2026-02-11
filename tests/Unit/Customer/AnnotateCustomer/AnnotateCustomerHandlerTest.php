@@ -6,9 +6,12 @@ use Customer\Application\AnnotateCustomer\AnnotateCustomerCommand;
 use Customer\Application\AnnotateCustomer\AnnotateCustomerHandler;
 use Customer\Domain\Customer;
 use Customer\Domain\CustomerRepositoryInterface;
+use Mockery\MockInterface;
 
 beforeEach(function () {
-    $this->repository = Mockery::mock(CustomerRepositoryInterface::class);
+    /** @var MockInterface&CustomerRepositoryInterface $repository */
+    $repository = Mockery::mock(CustomerRepositoryInterface::class);
+    $this->repository = $repository;
     $this->handler = new AnnotateCustomerHandler($this->repository);
 });
 

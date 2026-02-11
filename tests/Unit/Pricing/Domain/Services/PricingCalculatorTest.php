@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Pricing\Domain\Services;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Pricing\Domain\DiscountRule;
 use Pricing\Domain\DiscountRuleRepositoryInterface;
@@ -17,8 +18,11 @@ use Pricing\Domain\Services\PricingCalculator;
 
 final class PricingCalculatorTest extends TestCase
 {
+    /** @var MockObject&PricingRateRepositoryInterface */
     private PricingRateRepositoryInterface $rateRepository;
+    /** @var MockObject&DurationDefinitionRepositoryInterface */
     private DurationDefinitionRepositoryInterface $durationRepository;
+    /** @var MockObject&DiscountRuleRepositoryInterface */
     private DiscountRuleRepositoryInterface $discountRepository;
     private PricingCalculator $calculator;
 

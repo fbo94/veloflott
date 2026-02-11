@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Pricing\Application;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Pricing\Application\BulkUpdatePricingRates\BulkUpdatePricingRatesCommand;
 use Pricing\Application\BulkUpdatePricingRates\BulkUpdatePricingRatesHandler;
@@ -12,6 +13,7 @@ use Pricing\Domain\PricingRateRepositoryInterface;
 
 final class BulkUpdatePricingRatesHandlerTest extends TestCase
 {
+    /** @var MockObject&PricingRateRepositoryInterface */
     private PricingRateRepositoryInterface $repository;
 
     private BulkUpdatePricingRatesHandler $handler;

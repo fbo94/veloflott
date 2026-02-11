@@ -60,7 +60,6 @@ final class AuthorizeHandler
                 ],
             );
         } catch (Exception $e) {
-            dd($e);
             // Si c'est déjà une exception métier, on la propage
             if ($e instanceof InvalidAuthorizationCodeException || $e instanceof UserDeactivatedException) {
                 throw $e;

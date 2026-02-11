@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Mockery\MockInterface;
 use Tenant\Application\CreateSite\CreateSiteCommand;
 use Tenant\Application\CreateSite\CreateSiteHandler;
 use Tenant\Domain\Site;
@@ -12,8 +13,14 @@ use Tenant\Domain\TenantRepositoryInterface;
 use Tenant\Domain\TenantStatus;
 
 beforeEach(function () {
-    $this->siteRepository = Mockery::mock(SiteRepositoryInterface::class);
-    $this->tenantRepository = Mockery::mock(TenantRepositoryInterface::class);
+    /** @var MockInterface&SiteRepositoryInterface $siteRepository */
+    $siteRepository = Mockery::mock(SiteRepositoryInterface::class);
+    $this->siteRepository = $siteRepository;
+
+    /** @var MockInterface&TenantRepositoryInterface $tenantRepository */
+    $tenantRepository = Mockery::mock(TenantRepositoryInterface::class);
+    $this->tenantRepository = $tenantRepository;
+
     $this->handler = new CreateSiteHandler(
         $this->siteRepository,
         $this->tenantRepository,

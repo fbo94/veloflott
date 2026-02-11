@@ -16,6 +16,9 @@ final readonly class DepositRetentionResult
     ) {
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function toArray(): array
     {
         return [

@@ -19,11 +19,31 @@ parameters:
 
     # Laravel specific
     ignoreErrors:
-        # Allow dynamic properties on Eloquent models
-        - '#Access to an undefined property [a-zA-Z0-9\\_]+::\$[a-zA-Z0-9_]+#'
+        # Allow dynamic properties on Eloquent models (including union types with Collection)
+        - '#Access to an undefined property .+::\$[a-zA-Z0-9_]+#'
 
         # Ignore HasFactory generics - Laravel limitation
         - '#uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types: TFactory#'
+
+        # Pest PHP test framework - PHPStan doesn't understand Pest's uses() type inference
+        # These methods come from Tests\TestCase which extends Illuminate\Foundation\Testing\TestCase
+        -
+            message: '#^Call to an undefined method PHPUnit\\Framework\\TestCase::(postJson|getJson|putJson|deleteJson|patchJson|json|withoutMiddleware|assertDatabaseHas|assertDatabaseMissing|assertDatabaseCount)\(\)\.$#'
+            paths:
+                - tests/Feature/*
+                - tests/Unit/*
+
+        # Pest PHP throws() method - chained on test() calls
+        -
+            message: '#^Call to an undefined method Pest\\PendingCalls\\TestCall\|Pest\\Support\\HigherOrderTapProxy::throws\(\)\.$#'
+            paths:
+                - tests/*
+
+        # Pest's expect() function template type resolution
+        -
+            message: '#^Unable to resolve the template type (TKey|TValue) in call to function (expect|collect)$#'
+            paths:
+                - tests/*
 
     # Report unmatched ignored errors
     reportUnmatchedIgnoredErrors: false

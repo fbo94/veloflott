@@ -11,10 +11,17 @@ use Fleet\Domain\BikeStatus;
 use Fleet\Domain\BikeStatusHistoryRepositoryInterface;
 use Fleet\Domain\FrameSize;
 use Fleet\Domain\PricingTier;
+use Mockery\MockInterface;
 
 beforeEach(function () {
-    $this->repository = Mockery::mock(BikeRepositoryInterface::class);
-    $this->historyRepository = Mockery::mock(BikeStatusHistoryRepositoryInterface::class);
+    /** @var MockInterface&BikeRepositoryInterface $repository */
+    $repository = Mockery::mock(BikeRepositoryInterface::class);
+    $this->repository = $repository;
+
+    /** @var MockInterface&BikeStatusHistoryRepositoryInterface $historyRepository */
+    $historyRepository = Mockery::mock(BikeStatusHistoryRepositoryInterface::class);
+    $this->historyRepository = $historyRepository;
+
     $this->handler = new ChangeBikeStatusHandler($this->repository, $this->historyRepository);
 });
 
@@ -175,7 +182,7 @@ function createMockBike(string $id, BikeStatus $status): Bike
         frameSize: FrameSize::fromCentimeters(54),
         status: $status,
         pricingTier: PricingTier::STANDARD,
-        pricingClassId: null,
+        pricingClass: null,
         year: 2024,
         serialNumber: null,
         color: null,

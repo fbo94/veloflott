@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Pricing\Domain\Services;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Pricing\Domain\DurationDefinition;
 use Pricing\Domain\DurationDefinitionRepositoryInterface;
@@ -13,7 +14,9 @@ use Pricing\Domain\Services\PricingValidator;
 
 final class PricingValidatorTest extends TestCase
 {
+    /** @var MockObject&PricingRateRepositoryInterface */
     private PricingRateRepositoryInterface $rateRepository;
+    /** @var MockObject&DurationDefinitionRepositoryInterface */
     private DurationDefinitionRepositoryInterface $durationRepository;
     private PricingValidator $validator;
 
