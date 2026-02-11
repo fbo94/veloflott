@@ -11,6 +11,7 @@ use Pricing\Interface\Http\CreatePricingClass\CreatePricingClassController;
 use Pricing\Interface\Http\DeleteDiscountRule\DeleteDiscountRuleController;
 use Pricing\Interface\Http\DeleteDuration\DeleteDurationController;
 use Pricing\Interface\Http\DeletePricingClass\DeletePricingClassController;
+use Pricing\Interface\Http\ImportDefaultPricing\ImportDefaultPricingController;
 use Pricing\Interface\Http\ListDefaultDiscountRules\ListDefaultDiscountRulesController;
 use Pricing\Interface\Http\ListDefaultDurations\ListDefaultDurationsController;
 use Pricing\Interface\Http\ListDefaultPricingClasses\ListDefaultPricingClassesController;
@@ -73,6 +74,10 @@ Route::middleware(['keycloak', 'tenant', 'require.tenant'])->prefix('api/pricing
     // Calcul de tarif
     Route::post('/calculate', CalculatePriceController::class)
         ->middleware('permission:view_bikes');
+
+    // Import de la grille tarifaire par défaut
+    Route::post('/import-defaults', ImportDefaultPricingController::class)
+        ->middleware('permission:manage_rates');
 });
 
 /*
