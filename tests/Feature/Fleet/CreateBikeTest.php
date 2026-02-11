@@ -16,6 +16,7 @@ beforeEach(function () {
     $this->withoutMiddleware();
 
     // Setup tenant context using trait
+    /** @phpstan-ignore method.notFound */
     $this->setUpTenantContext();
 
     // Create necessary data for tests directly in database
