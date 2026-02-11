@@ -5,38 +5,18 @@ declare(strict_types=1);
 use Fleet\Infrastructure\Persistence\Models\BrandEloquentModel;
 use Fleet\Infrastructure\Persistence\Models\CategoryEloquentModel;
 use Fleet\Infrastructure\Persistence\Models\ModelEloquentModel;
+use Helpers\SetupTenantContext;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Str;
-use Tenant\Application\TenantContext;
-use Tenant\Domain\Tenant;
-use Tenant\Domain\TenantStatus;
-use Tenant\Infrastructure\Persistence\Models\TenantEloquentModel;
 
-uses(RefreshDatabase::class);
+uses(RefreshDatabase::class, SetupTenantContext::class);
 
 beforeEach(function () {
     // Disable authentication middleware for tests
     $this->withoutMiddleware();
 
-    // Create tenant and set context
-    $this->tenant = TenantEloquentModel::create([
-        'id' => Str::uuid()->toString(),
-        'name' => 'Test Tenant',
-        'slug' => 'test-tenant',
-        'status' => TenantStatus::ACTIVE->value,
-    ]);
-
-    $tenantContext = app(TenantContext::class);
-    $tenantContext->setTenant(new Tenant(
-        id: $this->tenant->id,
-        name: $this->tenant->name,
-        slug: $this->tenant->slug,
-        domain: null,
-        status: TenantStatus::ACTIVE,
-        contactEmail: null,
-        contactPhone: null,
-        settings: null,
-    ));
+    // Setup tenant context using trait
+    $this->setUpTenantContext();
 
     // Create necessary data for tests directly in database
     $this->brand = BrandEloquentModel::firstOrCreate(

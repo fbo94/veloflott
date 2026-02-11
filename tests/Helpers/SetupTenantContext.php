@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Helpers;
+namespace Helpers;
 
 use Illuminate\Support\Str;
 use Tenant\Application\TenantContext;
