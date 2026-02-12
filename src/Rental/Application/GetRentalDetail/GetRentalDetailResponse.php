@@ -103,13 +103,13 @@ final readonly class GetRentalDetailResponse
             'pricing' => [
                 'items_subtotal' => $this->itemsSubtotal,
                 'equipments_subtotal' => $this->equipmentsSubtotal,
-                'subtotal' => $this->itemsSubtotal + $this->equipmentsSubtotal,
+                'subtotal_ttc' => $this->itemsSubtotal + $this->equipmentsSubtotal,
                 'discount_amount' => $this->discountAmount,
                 'subtotal_after_discount' => ($this->itemsSubtotal + $this->equipmentsSubtotal) - $this->discountAmount,
                 'tax_rate' => $this->taxRate,
                 'tax_amount' => $this->taxAmount,
-                'total_with_tax' => $this->totalWithTax,
-                'total_amount' => $this->totalAmount,
+                'total_ht' => $this->totalWithTax - $this->taxAmount, // Montant HT (TTC - TVA)
+                'total_ttc' => $this->totalWithTax, // Montant TTC final
                 'deposit_amount' => $this->depositAmount,
                 'deposit_status' => $this->depositStatus,
                 'deposit_retained' => $this->depositRetained,

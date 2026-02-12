@@ -206,9 +206,16 @@ final class Rental
 
     public function recalculateTax(): void
     {
-        $subtotalAfterDiscount = $this->totalAmount - $this->discountAmount;
-        $this->taxAmount = round($subtotalAfterDiscount * ($this->taxRate / 100), 2);
-        $this->totalWithTax = $subtotalAfterDiscount + $this->taxAmount;
+        // Les tarifs sont stockés en TTC
+        // On extrait la TVA du montant TTC au lieu de l'ajouter
+        $subtotalTTC = $this->totalAmount - $this->discountAmount;
+
+        // TVA = montant_TTC × taux / (100 + taux)
+        // Ex: 180€ TTC à 20% → TVA = 180 × 20 / 120 = 30€
+        $this->taxAmount = round($subtotalTTC * $this->taxRate / (100 + $this->taxRate), 2);
+
+        // Le total TTC reste le même (c'est le sous-total après réduction)
+        $this->totalWithTax = $subtotalTTC;
     }
 
     public function applyDiscount(float $discountAmount): void
