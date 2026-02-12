@@ -27,16 +27,17 @@ final class SubscriptionPlanSeeder extends Seeder
         $plans = [
             [
                 'id' => Uuid::uuid4()->toString(),
-                'name' => 'free',
-                'display_name' => 'Plan Gratuit',
+                'name' => 'starter',
+                'display_name' => 'Starter',
                 'description' => 'Idéal pour démarrer et tester la plateforme',
-                'price_monthly' => null,
-                'price_yearly' => null,
+                'price_monthly' => 29.00,
+                'price_yearly' => 290.00,
                 'max_users' => 5,
                 'max_bikes' => 50,
                 'max_sites' => 1,
                 'features' => json_encode([
                     'basic_analytics' => true,
+                    'advanced_analytics' => false,
                     'api_access' => false,
                     'custom_branding' => false,
                     'priority_support' => false,
@@ -48,20 +49,20 @@ final class SubscriptionPlanSeeder extends Seeder
             ],
             [
                 'id' => Uuid::uuid4()->toString(),
-                'name' => 'starter',
-                'display_name' => 'Plan Starter',
-                'description' => 'Pour les petites structures en croissance',
-                'price_monthly' => 49.00,
-                'price_yearly' => 490.00, // ~2 mois gratuits
-                'max_users' => 20,
-                'max_bikes' => 200,
-                'max_sites' => 3,
+                'name' => 'pro',
+                'display_name' => 'Pro',
+                'description' => 'Pour les structures en croissance',
+                'price_monthly' => 99.00,
+                'price_yearly' => 990.00,
+                'max_users' => 25,
+                'max_bikes' => 250,
+                'max_sites' => 5,
                 'features' => json_encode([
                     'basic_analytics' => true,
                     'advanced_analytics' => true,
                     'api_access' => true,
                     'custom_branding' => false,
-                    'priority_support' => false,
+                    'priority_support' => true,
                 ]),
                 'is_active' => true,
                 'sort_order' => 2,
@@ -70,34 +71,11 @@ final class SubscriptionPlanSeeder extends Seeder
             ],
             [
                 'id' => Uuid::uuid4()->toString(),
-                'name' => 'professional',
-                'display_name' => 'Plan Professional',
-                'description' => 'Pour les entreprises établies',
-                'price_monthly' => 199.00,
-                'price_yearly' => 1990.00, // ~2 mois gratuits
-                'max_users' => 100,
-                'max_bikes' => 1000,
-                'max_sites' => 10,
-                'features' => json_encode([
-                    'basic_analytics' => true,
-                    'advanced_analytics' => true,
-                    'api_access' => true,
-                    'custom_branding' => true,
-                    'priority_support' => true,
-                    'dedicated_account_manager' => false,
-                ]),
-                'is_active' => true,
-                'sort_order' => 3,
-                'created_at' => $now,
-                'updated_at' => $now,
-            ],
-            [
-                'id' => Uuid::uuid4()->toString(),
                 'name' => 'enterprise',
-                'display_name' => 'Plan Enterprise',
+                'display_name' => 'Enterprise',
                 'description' => 'Solution sur-mesure pour les grandes organisations',
-                'price_monthly' => null, // Sur devis
-                'price_yearly' => null, // Sur devis
+                'price_monthly' => null,
+                'price_yearly' => null,
                 'max_users' => 999999,
                 'max_bikes' => 999999,
                 'max_sites' => 999999,
@@ -112,7 +90,7 @@ final class SubscriptionPlanSeeder extends Seeder
                     'sla_guarantee' => true,
                 ]),
                 'is_active' => true,
-                'sort_order' => 4,
+                'sort_order' => 3,
                 'created_at' => $now,
                 'updated_at' => $now,
             ],
@@ -120,6 +98,6 @@ final class SubscriptionPlanSeeder extends Seeder
 
         DB::table('subscription_plans')->insert($plans);
 
-        $this->command->info('✅ 4 plans d\'abonnement créés avec succès');
+        $this->command->info('✅ 3 plans d\'abonnement créés avec succès (Starter, Pro, Enterprise)');
     }
 }

@@ -58,8 +58,15 @@ final readonly class PricingCalculator
             );
         }
 
-        // 4. Prix de base = tarif × jours
-        $basePrice = $rate->price() * $days;
+        // 4. Calculer le prix de base selon l'unité de la durée
+        // Le tarif est défini pour la durée complète (ex: 100€/semaine)
+        // Il faut calculer combien d'unités de cette durée sont louées
+        $durationUnit = $duration->durationDays() ?? 1; // Unité de base de la durée
+        $numberOfUnits = $days / $durationUnit; // Nombre d'unités louées
+
+        // Prix de base = tarif × nombre d'unités
+        // Ex: Tarif semaine 100€, durée 14 jours → 100€ × (14/7) = 100€ × 2 = 200€
+        $basePrice = $rate->price() * $numberOfUnits;
 
         // 5. Appliquer les réductions dégressives
         $discountRules = $this->discountRepository->findApplicableRules(
@@ -114,11 +121,14 @@ final readonly class PricingCalculator
         $finalPrice = max($finalPrice, 0.0);
 
         // 7. Retourner le calcul détaillé
+        // Calculer le prix réel par jour (tarif de l'unité / nombre de jours de l'unité)
+        $actualPricePerDay = $rate->price() / $durationUnit;
+
         return new PriceCalculation(
             basePrice: $basePrice,
             finalPrice: $finalPrice,
             days: $days,
-            pricePerDay: $rate->price(),
+            pricePerDay: $actualPricePerDay,
             appliedDiscounts: $appliedDiscounts,
             categoryId: $categoryId,
             pricingClassId: $pricingClassId,

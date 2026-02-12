@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Maintenance\Infrastructure;
 
 use Illuminate\Support\ServiceProvider;
+use Maintenance\Domain\CustomMaintenanceReasonRepositoryInterface;
 use Maintenance\Domain\MaintenanceRepositoryInterface;
+use Maintenance\Infrastructure\Persistence\EloquentCustomMaintenanceReasonRepository;
 use Maintenance\Infrastructure\Persistence\EloquentMaintenanceRepository;
 
 final class MaintenanceServiceProvider extends ServiceProvider
@@ -16,6 +18,11 @@ final class MaintenanceServiceProvider extends ServiceProvider
         $this->app->bind(
             MaintenanceRepositoryInterface::class,
             EloquentMaintenanceRepository::class
+        );
+
+        $this->app->bind(
+            CustomMaintenanceReasonRepositoryInterface::class,
+            EloquentCustomMaintenanceReasonRepository::class
         );
     }
 

@@ -29,6 +29,13 @@ interface TenantRepositoryInterface
     public function findAll(?string $status = null, ?string $search = null): array;
 
     /**
+     * Retourne tous les tenants avec leurs statistiques (nombre de bikes, sites, users).
+     *
+     * @return array<int, array{tenant: Tenant, bikes_count: int, sites_count: int, users_count: int}>
+     */
+    public function findAllWithStats(?string $status = null, ?string $search = null): array;
+
+    /**
      * Retourne les tenants actifs uniquement.
      *
      * @return Tenant[]

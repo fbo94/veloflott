@@ -30,6 +30,10 @@ final readonly class BikeDto
         public ?string $pricingClassId,
         public ?string $pricingClassCode,
         public ?string $pricingClassLabel,
+        public ?string $siteId,
+        public ?string $siteName,
+        public ?string $siteSlug,
+        public ?string $siteStatus,
     ) {
     }
 
@@ -59,6 +63,10 @@ final readonly class BikeDto
             pricingClassId: $bikeModel->pricingClass?->id,
             pricingClassCode: $bikeModel->pricingClass?->code,
             pricingClassLabel: $bikeModel->pricingClass?->label,
+            siteId: $bikeModel->site?->id,
+            siteName: $bikeModel->site?->name,
+            siteSlug: $bikeModel->site?->slug,
+            siteStatus: $bikeModel->site?->status,
         );
     }
 
@@ -91,6 +99,12 @@ final readonly class BikeDto
                 'id' => $this->pricingClassId,
                 'code' => $this->pricingClassCode,
                 'label' => $this->pricingClassLabel,
+            ] : null,
+            'site' => $this->siteId !== null ? [
+                'id' => $this->siteId,
+                'name' => $this->siteName,
+                'slug' => $this->siteSlug,
+                'status' => $this->siteStatus,
             ] : null,
         ];
     }

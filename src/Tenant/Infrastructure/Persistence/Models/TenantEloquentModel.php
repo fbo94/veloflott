@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace Tenant\Infrastructure\Persistence\Models;
 
+use Fleet\Infrastructure\Persistence\Models\BikeEloquentModel;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Subscription\Infrastructure\Persistence\Models\SubscriptionPlanEloquentModel;
 
 /**
  * @property string $id
@@ -64,6 +67,22 @@ final class TenantEloquentModel extends Model
         'created_at' => 'immutable_datetime',
         'updated_at' => 'immutable_datetime',
     ];
+
+    /**
+     * @return BelongsTo<SubscriptionPlanEloquentModel, $this>
+     */
+    public function subscriptionPlan(): BelongsTo
+    {
+        return $this->belongsTo(SubscriptionPlanEloquentModel::class, 'subscription_plan_id');
+    }
+
+    /**
+     * @return HasMany<BikeEloquentModel, $this>
+     */
+    public function bikes(): HasMany
+    {
+        return $this->hasMany(BikeEloquentModel::class, 'tenant_id');
+    }
 
     /**
      * @return HasMany<SiteEloquentModel, $this>

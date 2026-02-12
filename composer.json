@@ -39,6 +39,7 @@
             "Maintenance\\": "src/Maintenance/",
             "Dashboard\\": "src/Dashboard/",
             "Tenant\\": "src/Tenant/",
+            "Subscription\\": "src/Subscription/",
             "Shared\\": "src/Shared/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"

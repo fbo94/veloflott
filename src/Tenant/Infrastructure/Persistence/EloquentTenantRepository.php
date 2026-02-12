@@ -37,7 +37,8 @@ final class EloquentTenantRepository implements TenantRepositoryInterface
      */
     public function findAll(?string $status = null, ?string $search = null): array
     {
-        $query = TenantEloquentModel::query();
+        $query = TenantEloquentModel::with('subscriptionPlan')
+            ->withCount(['bikes', 'sites']);
 
         // Filtrer par statut si fourni
         if ($status !== null) {
@@ -60,11 +61,45 @@ final class EloquentTenantRepository implements TenantRepositoryInterface
     }
 
     /**
+     * @return array<int, array{tenant: Tenant, bikes_count: int, sites_count: int, users_count: int}>
+     */
+    public function findAllWithStats(?string $status = null, ?string $search = null): array
+    {
+        $query = TenantEloquentModel::with('subscriptionPlan')
+            ->withCount(['bikes', 'sites']);
+
+        // Filtrer par statut si fourni
+        if ($status !== null) {
+            $query->where('status', $status);
+        }
+
+        // Recherche textuelle si fournie
+        if ($search !== null && $search !== '') {
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'LIKE', "%{$search}%")
+                    ->orWhere('slug', 'LIKE', "%{$search}%")
+                    ->orWhere('contact_email', 'LIKE', "%{$search}%");
+            });
+        }
+
+        return $query->orderBy('name')
+            ->get()
+            ->map(fn (TenantEloquentModel $model) => [
+                'tenant' => $this->toDomain($model),
+                'bikes_count' => $model->bikes_count ?? 0,
+                'sites_count' => $model->sites_count ?? 0,
+                'users_count' => 0, // TODO: Implémenter le comptage des utilisateurs depuis Keycloak
+            ])
+            ->all();
+    }
+
+    /**
      * @return Tenant[]
      */
     public function findActive(): array
     {
-        return TenantEloquentModel::where('status', TenantStatus::ACTIVE->value)
+        return TenantEloquentModel::with('subscriptionPlan')
+            ->where('status', TenantStatus::ACTIVE->value)
             ->orderBy('name')
             ->get()
             ->map(fn (TenantEloquentModel $model) => $this->toDomain($model))

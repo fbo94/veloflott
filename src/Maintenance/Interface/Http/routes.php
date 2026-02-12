@@ -4,13 +4,18 @@ declare(strict_types=1);
 
 use Illuminate\Support\Facades\Route;
 use Maintenance\Interface\Http\CompleteMaintenance\CompleteMaintenanceController;
+use Maintenance\Interface\Http\CreateCustomMaintenanceReason\CreateCustomMaintenanceReasonController;
 use Maintenance\Interface\Http\DeclareMaintenance\DeclareMaintenanceController;
+use Maintenance\Interface\Http\DeleteCustomMaintenanceReason\DeleteCustomMaintenanceReasonController;
 use Maintenance\Interface\Http\DeleteMaintenancePhoto\DeleteMaintenancePhotoController;
 use Maintenance\Interface\Http\GetBikeMaintenanceHistory\GetBikeMaintenanceHistoryController;
+use Maintenance\Interface\Http\GetCustomMaintenanceReasonDetail\GetCustomMaintenanceReasonDetailController;
 use Maintenance\Interface\Http\GetMaintenanceDetail\GetMaintenanceDetailController;
+use Maintenance\Interface\Http\ListCustomMaintenanceReasons\ListCustomMaintenanceReasonsController;
 use Maintenance\Interface\Http\ListMaintenanceReasons\ListMaintenanceReasonsController;
 use Maintenance\Interface\Http\ListMaintenances\ListMaintenancesController;
 use Maintenance\Interface\Http\StartMaintenance\StartMaintenanceController;
+use Maintenance\Interface\Http\UpdateCustomMaintenanceReason\UpdateCustomMaintenanceReasonController;
 use Maintenance\Interface\Http\UploadMaintenancePhoto\UploadMaintenancePhotoController;
 
 Route::middleware(['keycloak', 'tenant', 'require.tenant'])->prefix('api/maintenance')->group(function () {
@@ -47,5 +52,26 @@ Route::middleware(['keycloak', 'tenant', 'require.tenant'])->prefix('api/mainten
         ->middleware('permission:manage_maintenances');
 
     Route::delete('/maintenances/{id}/photos', DeleteMaintenancePhotoController::class)
+        ->middleware('permission:manage_maintenances');
+
+    // CRUD des raisons de maintenance personnalisées (Custom Maintenance Reasons)
+    // Lister toutes les raisons personnalisées
+    Route::get('/custom-reasons', ListCustomMaintenanceReasonsController::class)
+        ->middleware('permission:view_maintenances');
+
+    // Obtenir le détail d'une raison personnalisée
+    Route::get('/custom-reasons/{id}', GetCustomMaintenanceReasonDetailController::class)
+        ->middleware('permission:view_maintenances');
+
+    // Créer une raison personnalisée
+    Route::post('/custom-reasons', CreateCustomMaintenanceReasonController::class)
+        ->middleware('permission:manage_maintenances');
+
+    // Mettre à jour une raison personnalisée
+    Route::put('/custom-reasons/{id}', UpdateCustomMaintenanceReasonController::class)
+        ->middleware('permission:manage_maintenances');
+
+    // Supprimer une raison personnalisée
+    Route::delete('/custom-reasons/{id}', DeleteCustomMaintenanceReasonController::class)
         ->middleware('permission:manage_maintenances');
 });
