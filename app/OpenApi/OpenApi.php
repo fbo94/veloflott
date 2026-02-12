@@ -64,10 +64,30 @@ class OpenApi
 #[OA\Get(
     path: '/api/me',
     summary: 'Get current authenticated user',
+    description: 'Returns information about the currently authenticated user including their tenant assignment and permissions.',
     security: [['bearerAuth' => []]],
     tags: ['Auth'],
     responses: [
-        new OA\Response(response: 200, description: 'Current user returned'),
+        new OA\Response(
+            response: 200,
+            description: 'Current user returned',
+            content: new OA\JsonContent(
+                properties: [
+                    new OA\Property(property: 'id', type: 'string', format: 'uuid', example: 'a511a56c-a3ff-4c97-b23b-65b8acf0b2e1'),
+                    new OA\Property(property: 'tenant_id', type: 'string', format: 'uuid', nullable: true, example: '8d03f7f2-f043-472a-87b0-d06f2c792122'),
+                    new OA\Property(property: 'email', type: 'string', format: 'email', example: 'manager@veloflott.fr'),
+                    new OA\Property(property: 'first_name', type: 'string', example: 'Marie'),
+                    new OA\Property(property: 'last_name', type: 'string', example: 'Dupont'),
+                    new OA\Property(property: 'full_name', type: 'string', example: 'Marie Dupont'),
+                    new OA\Property(property: 'role', type: 'string', enum: ['super_admin', 'admin', 'manager', 'employee'], example: 'manager'),
+                    new OA\Property(property: 'role_label', type: 'string', example: 'Manager'),
+                    new OA\Property(property: 'is_active', type: 'boolean', example: true),
+                    new OA\Property(property: 'permissions', type: 'array', items: new OA\Items(type: 'string'), example: ['view_bikes', 'manage_bikes', 'view_rentals', 'create_rentals']),
+                    new OA\Property(property: 'last_login_at', type: 'string', format: 'date-time', nullable: true, example: '2026-02-12T10:30:00+00:00'),
+                ],
+                type: 'object'
+            )
+        ),
         new OA\Response(response: 401, description: 'Unauthorized'),
     ]
 )]
@@ -79,16 +99,41 @@ class MeEndpoint
 #[OA\Get(
     path: '/api/users',
     summary: 'List users (admin only)',
+    description: 'Returns a list of all users. Requires manage_users permission.',
     security: [['bearerAuth' => []]],
     tags: ['Users'],
     parameters: [
-        new OA\Parameter(name: 'role', in: 'query', required: false, schema: new OA\Schema(type: 'string'), description: 'Filter by role'),
+        new OA\Parameter(name: 'role', in: 'query', required: false, schema: new OA\Schema(type: 'string', enum: ['super_admin', 'admin', 'manager', 'employee']), description: 'Filter by role'),
         new OA\Parameter(name: 'is_active', in: 'query', required: false, schema: new OA\Schema(type: 'boolean'), description: 'Filter by active status'),
     ],
     responses: [
-        new OA\Response(response: 200, description: 'List of users'),
+        new OA\Response(
+            response: 200,
+            description: 'List of users',
+            content: new OA\JsonContent(
+                properties: [
+                    new OA\Property(property: 'users', type: 'array', items: new OA\Items(
+                        properties: [
+                            new OA\Property(property: 'id', type: 'string', format: 'uuid', example: 'a511a56c-a3ff-4c97-b23b-65b8acf0b2e1'),
+                            new OA\Property(property: 'tenant_id', type: 'string', format: 'uuid', nullable: true, example: '8d03f7f2-f043-472a-87b0-d06f2c792122'),
+                            new OA\Property(property: 'email', type: 'string', format: 'email', example: 'manager@veloflott.fr'),
+                            new OA\Property(property: 'first_name', type: 'string', example: 'Marie'),
+                            new OA\Property(property: 'last_name', type: 'string', example: 'Dupont'),
+                            new OA\Property(property: 'full_name', type: 'string', example: 'Marie Dupont'),
+                            new OA\Property(property: 'role', type: 'string', enum: ['super_admin', 'admin', 'manager', 'employee'], example: 'manager'),
+                            new OA\Property(property: 'role_label', type: 'string', example: 'Manager'),
+                            new OA\Property(property: 'is_active', type: 'boolean', example: true),
+                            new OA\Property(property: 'last_login_at', type: 'string', format: 'date-time', nullable: true, example: '2026-02-12T10:30:00+00:00'),
+                        ],
+                        type: 'object'
+                    )),
+                    new OA\Property(property: 'total', type: 'integer', example: 5),
+                ],
+                type: 'object'
+            )
+        ),
         new OA\Response(response: 401, description: 'Unauthorized'),
-        new OA\Response(response: 403, description: 'Forbidden'),
+        new OA\Response(response: 403, description: 'Forbidden - requires manage_users permission'),
     ]
 )]
 class ListUsersEndpoint
@@ -99,23 +144,39 @@ class ListUsersEndpoint
 #[OA\Put(
     path: '/api/users/{id}/role',
     summary: 'Update user role (admin only)',
+    description: 'Updates the role of a specific user. Requires manage_users permission.',
     security: [['bearerAuth' => []]],
     tags: ['Users'],
     parameters: [
-        new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'string')),
+        new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'string', format: 'uuid'), description: 'User ID'),
     ],
     requestBody: new OA\RequestBody(required: true, content: new OA\MediaType(mediaType: 'application/json', schema: new OA\Schema(
         required: ['role'],
         properties: [
-            new OA\Property(property: 'role', type: 'string', example: 'ADMIN'),
+            new OA\Property(property: 'role', type: 'string', enum: ['admin', 'manager', 'employee'], example: 'manager'),
         ],
         type: 'object'
     ))),
     responses: [
-        new OA\Response(response: 200, description: 'Role updated'),
-        new OA\Response(response: 400, description: 'Bad request'),
+        new OA\Response(
+            response: 200,
+            description: 'Role updated',
+            content: new OA\JsonContent(
+                properties: [
+                    new OA\Property(property: 'id', type: 'string', format: 'uuid'),
+                    new OA\Property(property: 'tenant_id', type: 'string', format: 'uuid', nullable: true),
+                    new OA\Property(property: 'email', type: 'string', format: 'email'),
+                    new OA\Property(property: 'role', type: 'string'),
+                    new OA\Property(property: 'role_label', type: 'string'),
+                    new OA\Property(property: 'message', type: 'string', example: 'User role updated successfully'),
+                ],
+                type: 'object'
+            )
+        ),
+        new OA\Response(response: 400, description: 'Bad request - invalid role'),
         new OA\Response(response: 401, description: 'Unauthorized'),
-        new OA\Response(response: 403, description: 'Forbidden'),
+        new OA\Response(response: 403, description: 'Forbidden - requires manage_users permission'),
+        new OA\Response(response: 404, description: 'User not found'),
     ]
 )]
 class UpdateUserRoleEndpoint
@@ -126,15 +187,28 @@ class UpdateUserRoleEndpoint
 #[OA\Post(
     path: '/api/users/{id}/toggle-status',
     summary: 'Toggle user active status (admin only)',
+    description: 'Activates or deactivates a user account. Requires manage_users permission.',
     security: [['bearerAuth' => []]],
     tags: ['Users'],
     parameters: [
-        new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'string')),
+        new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'string', format: 'uuid'), description: 'User ID'),
     ],
     responses: [
-        new OA\Response(response: 200, description: 'Status toggled'),
+        new OA\Response(
+            response: 200,
+            description: 'Status toggled',
+            content: new OA\JsonContent(
+                properties: [
+                    new OA\Property(property: 'id', type: 'string', format: 'uuid'),
+                    new OA\Property(property: 'is_active', type: 'boolean'),
+                    new OA\Property(property: 'message', type: 'string', example: 'User deactivated successfully'),
+                ],
+                type: 'object'
+            )
+        ),
         new OA\Response(response: 401, description: 'Unauthorized'),
-        new OA\Response(response: 403, description: 'Forbidden'),
+        new OA\Response(response: 403, description: 'Forbidden - requires manage_users permission'),
+        new OA\Response(response: 404, description: 'User not found'),
     ]
 )]
 class ToggleUserStatusEndpoint

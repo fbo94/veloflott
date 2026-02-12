@@ -56,6 +56,7 @@ final class EloquentUserRepository implements UserRepositoryInterface
             ['id' => $user->id()],
             [
                 'keycloak_id' => $user->keycloakId(),
+                'tenant_id' => $user->tenantId(),
                 'email' => $user->email(),
                 'first_name' => $user->firstName(),
                 'last_name' => $user->lastName(),
@@ -74,6 +75,7 @@ final class EloquentUserRepository implements UserRepositoryInterface
         return new User(
             id: $model->id,
             keycloakId: $model->keycloak_id,
+            tenantId: $model->tenant_id,
             email: $model->email,
             firstName: $model->first_name,
             lastName: $model->last_name,

@@ -6,7 +6,7 @@ namespace Maintenance\Domain\Exceptions;
 
 use Shared\Domain\DomainException;
 
-final class MaintenanceException extends DomainException
+class MaintenanceException extends DomainException
 {
     public static function notFound(string $maintenanceId): self
     {

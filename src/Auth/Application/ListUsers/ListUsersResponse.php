@@ -25,6 +25,7 @@ final readonly class ListUsersResponse
         $data = array_map(
             fn (User $user) => [
                 'id' => $user->id(),
+                'tenant_id' => $user->tenantId(),
                 'email' => $user->email(),
                 'first_name' => $user->firstName(),
                 'last_name' => $user->lastName(),

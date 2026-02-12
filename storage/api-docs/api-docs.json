@@ -18,10 +18,84 @@
                     "Auth"
                 ],
                 "summary": "Get current authenticated user",
+                "description": "Returns information about the currently authenticated user including their tenant assignment and permissions.",
                 "operationId": "0860ce0a48dc3d10e3e7e51662617304",
                 "responses": {
                     "200": {
-                        "description": "Current user returned"
+                        "description": "Current user returned",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "string",
+                                            "format": "uuid",
+                                            "example": "a511a56c-a3ff-4c97-b23b-65b8acf0b2e1"
+                                        },
+                                        "tenant_id": {
+                                            "type": "string",
+                                            "format": "uuid",
+                                            "example": "8d03f7f2-f043-472a-87b0-d06f2c792122",
+                                            "nullable": true
+                                        },
+                                        "email": {
+                                            "type": "string",
+                                            "format": "email",
+                                            "example": "manager@veloflott.fr"
+                                        },
+                                        "first_name": {
+                                            "type": "string",
+                                            "example": "Marie"
+                                        },
+                                        "last_name": {
+                                            "type": "string",
+                                            "example": "Dupont"
+                                        },
+                                        "full_name": {
+                                            "type": "string",
+                                            "example": "Marie Dupont"
+                                        },
+                                        "role": {
+                                            "type": "string",
+                                            "enum": [
+                                                "super_admin",
+                                                "admin",
+                                                "manager",
+                                                "employee"
+                                            ],
+                                            "example": "manager"
+                                        },
+                                        "role_label": {
+                                            "type": "string",
+                                            "example": "Manager"
+                                        },
+                                        "is_active": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "permissions": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string"
+                                            },
+                                            "example": [
+                                                "view_bikes",
+                                                "manage_bikes",
+                                                "view_rentals",
+                                                "create_rentals"
+                                            ]
+                                        },
+                                        "last_login_at": {
+                                            "type": "string",
+                                            "format": "date-time",
+                                            "example": "2026-02-12T10:30:00+00:00",
+                                            "nullable": true
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     },
                     "401": {
                         "description": "Unauthorized"
@@ -40,6 +114,7 @@
                     "Users"
                 ],
                 "summary": "List users (admin only)",
+                "description": "Returns a list of all users. Requires manage_users permission.",
                 "operationId": "a89fbe482e1790700d2546da4075169b",
                 "parameters": [
                     {
@@ -48,7 +123,13 @@
                         "description": "Filter by role",
                         "required": false,
                         "schema": {
-                            "type": "string"
+                            "type": "string",
+                            "enum": [
+                                "super_admin",
+                                "admin",
+                                "manager",
+                                "employee"
+                            ]
                         }
                     },
                     {
@@ -63,13 +144,86 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "List of users"
+                        "description": "List of users",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "users": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "string",
+                                                        "format": "uuid",
+                                                        "example": "a511a56c-a3ff-4c97-b23b-65b8acf0b2e1"
+                                                    },
+                                                    "tenant_id": {
+                                                        "type": "string",
+                                                        "format": "uuid",
+                                                        "example": "8d03f7f2-f043-472a-87b0-d06f2c792122",
+                                                        "nullable": true
+                                                    },
+                                                    "email": {
+                                                        "type": "string",
+                                                        "format": "email",
+                                                        "example": "manager@veloflott.fr"
+                                                    },
+                                                    "first_name": {
+                                                        "type": "string",
+                                                        "example": "Marie"
+                                                    },
+                                                    "last_name": {
+                                                        "type": "string",
+                                                        "example": "Dupont"
+                                                    },
+                                                    "full_name": {
+                                                        "type": "string",
+                                                        "example": "Marie Dupont"
+                                                    },
+                                                    "role": {
+                                                        "type": "string",
+                                                        "enum": [
+                                                            "super_admin",
+                                                            "admin",
+                                                            "manager",
+                                                            "employee"
+                                                        ],
+                                                        "example": "manager"
+                                                    },
+                                                    "role_label": {
+                                                        "type": "string",
+                                                        "example": "Manager"
+                                                    },
+                                                    "is_active": {
+                                                        "type": "boolean",
+                                                        "example": true
+                                                    },
+                                                    "last_login_at": {
+                                                        "type": "string",
+                                                        "format": "date-time",
+                                                        "example": "2026-02-12T10:30:00+00:00",
+                                                        "nullable": true
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "total": {
+                                            "type": "integer",
+                                            "example": 5
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     },
                     "401": {
                         "description": "Unauthorized"
                     },
                     "403": {
-                        "description": "Forbidden"
+                        "description": "Forbidden - requires manage_users permission"
                     }
                 },
                 "security": [
@@ -85,14 +239,17 @@
                     "Users"
                 ],
                 "summary": "Update user role (admin only)",
+                "description": "Updates the role of a specific user. Requires manage_users permission.",
                 "operationId": "a7ead5ee431a36525d6c11584f9ed6e6",
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
+                        "description": "User ID",
                         "required": true,
                         "schema": {
-                            "type": "string"
+                            "type": "string",
+                            "format": "uuid"
                         }
                     }
                 ],
@@ -107,7 +264,12 @@
                                 "properties": {
                                     "role": {
                                         "type": "string",
-                                        "example": "ADMIN"
+                                        "enum": [
+                                            "admin",
+                                            "manager",
+                                            "employee"
+                                        ],
+                                        "example": "manager"
                                     }
                                 },
                                 "type": "object"
@@ -117,16 +279,51 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Role updated"
+                        "description": "Role updated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "string",
+                                            "format": "uuid"
+                                        },
+                                        "tenant_id": {
+                                            "type": "string",
+                                            "format": "uuid",
+                                            "nullable": true
+                                        },
+                                        "email": {
+                                            "type": "string",
+                                            "format": "email"
+                                        },
+                                        "role": {
+                                            "type": "string"
+                                        },
+                                        "role_label": {
+                                            "type": "string"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "User role updated successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     },
                     "400": {
-                        "description": "Bad request"
+                        "description": "Bad request - invalid role"
                     },
                     "401": {
                         "description": "Unauthorized"
                     },
                     "403": {
-                        "description": "Forbidden"
+                        "description": "Forbidden - requires manage_users permission"
+                    },
+                    "404": {
+                        "description": "User not found"
                     }
                 },
                 "security": [
@@ -142,26 +339,52 @@
                     "Users"
                 ],
                 "summary": "Toggle user active status (admin only)",
+                "description": "Activates or deactivates a user account. Requires manage_users permission.",
                 "operationId": "06bfc33554c8eb7430623f4528bafba4",
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
+                        "description": "User ID",
                         "required": true,
                         "schema": {
-                            "type": "string"
+                            "type": "string",
+                            "format": "uuid"
                         }
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "Status toggled"
+                        "description": "Status toggled",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "string",
+                                            "format": "uuid"
+                                        },
+                                        "is_active": {
+                                            "type": "boolean"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "User deactivated successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     },
                     "401": {
                         "description": "Unauthorized"
                     },
                     "403": {
-                        "description": "Forbidden"
+                        "description": "Forbidden - requires manage_users permission"
+                    },
+                    "404": {
+                        "description": "User not found"
                     }
                 },
                 "security": [

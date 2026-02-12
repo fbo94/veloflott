@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-use Pricing\Domain\DurationDefinitionRepositoryInterface;
 use Pricing\Domain\DiscountRuleRepositoryInterface;
+use Pricing\Domain\DurationDefinition;
+use Pricing\Domain\DurationDefinitionRepositoryInterface;
+use Pricing\Domain\PricingRate;
 use Pricing\Domain\PricingRateRepositoryInterface;
 use Pricing\Domain\Services\PricingCalculator;
-use Pricing\Domain\DurationDefinition;
-use Pricing\Domain\PricingRate;
 
 beforeEach(function () {
     // Mock repositories

@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property string $id
  * @property string $keycloak_id
+ * @property string|null $tenant_id
  * @property string $email
  * @property string|null $first_name
  * @property string|null $last_name
@@ -31,6 +32,7 @@ final class UserEloquentModel extends Model
     protected $fillable = [
         'id',
         'keycloak_id',
+        'tenant_id',
         'email',
         'first_name',
         'last_name',

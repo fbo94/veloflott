@@ -18,6 +18,7 @@ final class User
     public function __construct(
         private readonly string $id,
         private readonly string $keycloakId,
+        private ?string $tenantId,
         private string $email,
         private ?string $firstName,
         private ?string $lastName,
@@ -42,6 +43,11 @@ final class User
     public function keycloakId(): string
     {
         return $this->keycloakId;
+    }
+
+    public function tenantId(): ?string
+    {
+        return $this->tenantId;
     }
 
     public function email(): string
@@ -141,6 +147,14 @@ final class User
     public function changeRole(Role $newRole): self
     {
         $this->role = $newRole;
+        $this->updatedAt = new \DateTimeImmutable();
+
+        return $this;
+    }
+
+    public function assignToTenant(?string $tenantId): self
+    {
+        $this->tenantId = $tenantId;
         $this->updatedAt = new \DateTimeImmutable();
 
         return $this;

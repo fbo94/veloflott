@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
+use Customer\Domain\CustomerRepositoryInterface;
+use Fleet\Domain\BikeRepositoryInterface;
+use Pricing\Domain\DurationDefinitionRepositoryInterface;
+use Pricing\Domain\Services\PricingCalculator;
 use Rental\Application\CreateReservation\CreateReservationHandler;
 use Rental\Application\Services\BikeAvailabilityServiceInterface;
 use Rental\Domain\RentalDuration;
 use Rental\Domain\RentalRepositoryInterface;
 use Rental\Domain\Repository\RentalSettingsRepositoryInterface;
-use Customer\Domain\CustomerRepositoryInterface;
-use Fleet\Domain\BikeRepositoryInterface;
-use Pricing\Domain\Services\PricingCalculator;
-use Pricing\Domain\DurationDefinitionRepositoryInterface;
 
 beforeEach(function () {
     // Créer les mocks des repositories

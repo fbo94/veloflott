@@ -52,9 +52,13 @@ final class UserSyncService
 
     private function createUser(object $tokenPayload): User
     {
+        // Extraire le tenant_id depuis le JWT (organization claim)
+        $tenantId = $this->extractTenantIdFromPayload($tokenPayload);
+
         return new User(
             id: Str::uuid()->toString(),
             keycloakId: $tokenPayload->sub,
+            tenantId: $tenantId,
             email: $tokenPayload->email ?? '',
             firstName: $tokenPayload->given_name ?? null,
             lastName: $tokenPayload->family_name ?? null,
@@ -72,5 +76,25 @@ final class UserSyncService
             firstName: $tokenPayload->given_name ?? $user->firstName(),
             lastName: $tokenPayload->family_name ?? $user->lastName(),
         );
+    }
+
+    private function extractTenantIdFromPayload(object $payload): ?string
+    {
+        // Keycloak Organizations ajoute le claim "organization"
+        if (isset($payload->organization)) {
+            if (is_object($payload->organization) && isset($payload->organization->id)) {
+                return (string) $payload->organization->id;
+            }
+            if (is_string($payload->organization)) {
+                return $payload->organization;
+            }
+        }
+
+        // Alternative: chercher dans les claims personnalisés
+        if (isset($payload->tenant_id)) {
+            return (string) $payload->tenant_id;
+        }
+
+        return null;
     }
 }
